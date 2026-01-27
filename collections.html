@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Collections — Womencypedia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { "primary": "#e8a6a6", "accent-gold": "#D4AF37", "accent-teal": "#4DB6AC", "divider": "#B48CB8", "lavender-soft": "#EDE3F1", "background-cream": "#F5F5F0", "text-main": "#191010", "text-secondary": "#6B6B6B", "border-light": "#DDD8CF" }, fontFamily: { "display": ["Lato", "sans-serif"], "serif": ["Playfair Display", "serif"] } } }
+        }
+    </script>
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display">
+    <!-- Header -->
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="resources.html">Resources</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search" />
+                    </div>
+                    <button
+                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                        aria-label="Open search">
+                        <span class="material-symbols-outlined text-accent-teal">search</span>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html">Donate</a>
+                        <button
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">Sign
+                            In</button>
+                    </div>
+                    <button
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-primary/5 py-16 lg:py-24 text-center">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <span class="text-primary text-sm font-bold uppercase tracking-widest mb-2 block">Explore</span>
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Featured
+                    Collections</h1>
+                <p class="text-text-secondary text-lg max-w-2xl mx-auto">Thematic journeys through history, curated to
+                    reveal the symbolic power of women across time and place.</p>
+                <div class="w-24 h-1 bg-primary rounded-full mx-auto mt-6"></div>
+            </div>
+        </section>
+
+        <!-- Collections Grid -->
+        <section class="py-16 lg:py-24 bg-background-cream">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Collection 1 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                            <img src="images/foremothers.png" alt="Foremothers of Empires"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Foremothers of Empires</h3>
+                            <p class="text-sm text-text-secondary mb-4">Women whose influence shaped kingdoms, defined
+                                dynasties, and altered the course of civilizations through political strategy or
+                                cultural patronage.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 2 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                            <img src="images/missionary.png" alt="Missionary Women"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Missionary Women &
+                                Cross-Cultural Encounters</h3>
+                            <p class="text-sm text-text-secondary mb-4">Women who navigated cultural boundaries,
+                                challenged patriarchal structures, and preserved indigenous knowledge.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 3 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                            <img src="images/indigenous.png" alt="Indigenous Matriarchs"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Indigenous Matriarchs</h3>
+                            <p class="text-sm text-text-secondary mb-4">Custodians of cultural memory, spiritual
+                                authority, and communal identity rooted in land stewardship and ritual knowledge.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 4 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                            <img src="images/african-queens.png" alt="African Queens"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">African Queens & Kingdom
+                                Mothers</h3>
+                            <p class="text-sm text-text-secondary mb-4">Sovereigns, strategists, and state-builders
+                                whose power reshaped continents and shaped the destiny of nations.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 5 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                            <img src="images/diaspora.png" alt="Women of the Diaspora"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Women of the Diaspora</h3>
+                            <p class="text-sm text-text-secondary mb-4">Journeys of resilience, reinvention, and
+                                cultural transformation across borders and generations.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 6 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
+                            <img src="images/conflict-peace.png" alt="Women in Conflict & Peacebuilding"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Women in Conflict &
+                                Peacebuilding</h3>
+                            <p class="text-sm text-text-secondary mb-4">Courage, negotiation, protection, and the
+                                reimagining of survival and community rebuilding.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 7 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">7</span>
+                            <img src="images/science_curie.png" alt="Marie Curie representing Science"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Hidden Figures of Science &
+                                Innovation</h3>
+                            <p class="text-sm text-text-secondary mb-4">Discoverers, inventors, and theorists who
+                                transformed knowledge despite institutional barriers.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 8 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">8</span>
+                            <img src="images/faith_hildegard.png" alt="Hildegard of Bingen representing Women of Faith"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Women of Faith Traditions</h3>
+                            <p class="text-sm text-text-secondary mb-4">Spiritual leaders, reformers, and theologians
+                                who shaped religious thought and practice.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 9 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">9</span>
+                            <img src="images/migration_baker.png" alt="Josephine Baker representing Migration"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Women in Migration</h3>
+                            <p class="text-sm text-text-secondary mb-4">Those who carried identity across borders,
+                                creating hybrid cultures enriching global society.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 10 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">10</span>
+                            <img src="images/oral_angelou.png" alt="Maya Angelou representing Oral Traditions"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Oral Traditions & Storytellers
+                            </h3>
+                            <p class="text-sm text-text-secondary mb-4">Guardians of community memory who preserved
+                                wisdom through spoken word.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 11 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">11</span>
+                            <img src="images/resistance_trung.png" alt="Trưng Sisters representing Resistance Movements"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Resistance Movements</h3>
+                            <p class="text-sm text-text-secondary mb-4">Women who fought oppression, led uprisings, and
+                                challenged unjust systems.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 12 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">12</span>
+                            <img src="images/hypatia.png" alt="Hypatia of Alexandria representing Education & Literacy"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Education & Literacy Pioneers
+                            </h3>
+                            <p class="text-sm text-text-secondary mb-4">Women who opened schools, created curricula, and
+                                fought for access to knowledge.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Collection 13 -->
+                    <article
+                        class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
+                        <div class="relative h-56 overflow-hidden">
+                            <span
+                                class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">13</span>
+                            <img src="images/environment_maathai.png"
+                                alt="Wangari Maathai representing Environmental Stewardship"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-2">Environmental Stewardship</h3>
+                            <p class="text-sm text-text-secondary mb-4">Women who protected land, led conservation
+                                movements, and championed sustainability.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-semibold text-accent-teal hover:text-accent-teal/80">Explore
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                        <span class="font-serif text-lg font-bold">Womencypedia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+                        women.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="browse.html">Browse
+                        Encyclopedia</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="featured.html">Featured
+                        Entries</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="resources.html">Resources</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Organization</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="contributors.html">Contributors</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="research.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="donate.html">Donate</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="nominate.html">Nominate a
+                        Woman</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="share-story.html">Share Your
+                        Story</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/navigation.js"></script>
+</body>
+
+</html>

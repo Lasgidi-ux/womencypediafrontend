@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Resources — Womencypedia</title>
+    <meta name="description" content="Educational resources, teaching materials, glossaries, and research tools.">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { "primary": "#e8a6a6", "accent-gold": "#D4AF37", "accent-teal": "#4DB6AC", "divider": "#B48CB8", "lavender-soft": "#EDE3F1", "background-cream": "#F5F5F0", "text-main": "#191010", "text-secondary": "#6B6B6B", "border-light": "#DDD8CF" }, fontFamily: { "display": ["Lato", "sans-serif"], "serif": ["Playfair Display", "serif"] } } }
+        }
+    </script>
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display">
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="about.html">About</a>
+                        <a class="text-primary text-sm font-medium uppercase tracking-wider border-b-2 border-primary"
+                            href="resources.html">Resources</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search" />
+                    </div>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html">Donate</a>
+                        <button
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">Sign
+                            In</button>
+                    </div>
+                    <button
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="bg-gradient-to-br from-accent-teal/15 via-lavender-soft/30 to-primary/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1200px] px-4 text-center">
+                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Learning
+                    Hub</span>
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-text-main mb-6">Resources</h1>
+                <p class="text-text-secondary text-lg max-w-2xl mx-auto">Teaching materials, reading lists, glossaries,
+                    timelines, maps, and research tools for educators and researchers.</p>
+            </div>
+        </section>
+
+        <section class="py-16 lg:py-20 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl p-8 border border-border-light hover:shadow-lg transition-all">
+                        <div class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6"><span
+                                class="material-symbols-outlined text-primary text-4xl">school</span></div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-3">Teaching Materials</h3>
+                        <p class="text-text-secondary mb-6">Lesson plans, syllabi, and classroom activities for K-12 and
+                            university educators.</p>
+                        <a href="#" class="text-sm font-bold text-accent-teal hover:underline">Explore →</a>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-border-light hover:shadow-lg transition-all">
+                        <div class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-6"><span
+                                class="material-symbols-outlined text-accent-gold text-4xl">library_books</span></div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-3">Reading Lists</h3>
+                        <p class="text-text-secondary mb-6">Curated bibliographies and recommended readings by theme,
+                            region, and era.</p>
+                        <a href="#" class="text-sm font-bold text-accent-gold hover:underline">Browse →</a>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-border-light hover:shadow-lg transition-all">
+                        <div class="size-16 rounded-2xl bg-divider/10 flex items-center justify-center mb-6"><span
+                                class="material-symbols-outlined text-divider text-4xl">dictionary</span></div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-3">Glossary</h3>
+                        <p class="text-text-secondary mb-6">Cultural, historical, and linguistic terms explained with
+                            scholarly precision.</p>
+                        <a href="#" class="text-sm font-bold text-divider hover:underline">Open →</a>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-border-light hover:shadow-lg transition-all">
+                        <div class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-6"><span
+                                class="material-symbols-outlined text-accent-teal text-4xl">timeline</span></div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-3">Timelines</h3>
+                        <p class="text-text-secondary mb-6">Interactive chronological visualizations of dynasties, eras,
+                            and movements.</p>
+                        <a href="#" class="text-sm font-bold text-accent-teal hover:underline">Explore →</a>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-border-light hover:shadow-lg transition-all">
+                        <div class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6"><span
+                                class="material-symbols-outlined text-primary text-4xl">map</span></div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-3">Interactive Maps</h3>
+                        <p class="text-text-secondary mb-6">Geographic visualizations of regions, kingdoms, and
+                            migration routes.</p>
+                        <a href="#" class="text-sm font-bold text-primary hover:underline">View →</a>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-border-light hover:shadow-lg transition-all">
+                        <div class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-6"><span
+                                class="material-symbols-outlined text-accent-gold text-4xl">search</span></div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-3">Research Tools</h3>
+                        <p class="text-text-secondary mb-6">Advanced search, data exports, and citation tools for
+                            academic research.</p>
+                        <a href="#" class="text-sm font-bold text-accent-gold hover:underline">Access →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="teaching-materials" class="py-16 lg:py-20 bg-white">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-text-main mb-4">Teaching Materials</h2>
+                    <p class="text-text-secondary max-w-2xl mx-auto">Comprehensive lesson plans, syllabi, and classroom
+                        activities designed for educators at all levels.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
+                        <h3 class="font-bold text-text-main mb-3">Women's History Syllabus</h3>
+                        <p class="text-text-secondary text-sm mb-4">A complete semester course outline covering women's
+                            contributions across civilizations.</p>
+                        <a href="#" class="text-accent-teal font-bold text-sm hover:underline">Download Syllabus →</a>
+                    </div>
+                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
+                        <h3 class="font-bold text-text-main mb-3">Lesson Plan: Ancient Queens</h3>
+                        <p class="text-text-secondary text-sm mb-4">Interactive activities exploring powerful women
+                            rulers from antiquity.</p>
+                        <a href="#" class="text-accent-teal font-bold text-sm hover:underline">View Lesson Plan →</a>
+                    </div>
+                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
+                        <h3 class="font-bold text-text-main mb-3">Discussion Guides</h3>
+                        <p class="text-text-secondary text-sm mb-4">Ready-to-use discussion prompts and debate topics
+                            for classroom engagement.</p>
+                        <a href="#" class="text-accent-teal font-bold text-sm hover:underline">Browse Guides →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reading-lists" class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-text-main mb-4">Reading Lists</h2>
+                    <p class="text-text-secondary max-w-2xl mx-auto">Curated bibliographies organized by theme, region,
+                        and historical period.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <h3 class="font-bold text-text-main mb-3">African Women Leaders</h3>
+                        <ul class="text-text-secondary text-sm space-y-2 mb-4">
+                            <li>• "Warrior Women of Africa" by Mariama Bâ</li>
+                            <li>• "The Strength of Our Mothers" by Niara Sudarkasa</li>
+                            <li>• "African Women in Revolution" by Wunyabari O. Maloba</li>
+                        </ul>
+                        <a href="#" class="text-accent-gold font-bold text-sm hover:underline">View Full List →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <h3 class="font-bold text-text-main mb-3">Medieval European Queens</h3>
+                        <ul class="text-text-secondary text-sm space-y-2 mb-4">
+                            <li>• "Queens of the Conquest" by Alison Weir</li>
+                            <li>• "Eleanor of Aquitaine" by Marion Meade</li>
+                            <li>• "The She-Wolves" by Helen Castor</li>
+                        </ul>
+                        <a href="#" class="text-accent-gold font-bold text-sm hover:underline">View Full List →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="glossaries" class="py-16 lg:py-20 bg-white">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-text-main mb-4">Glossaries</h2>
+                    <p class="text-text-secondary max-w-2xl mx-auto">Essential terms and concepts explained with
+                        scholarly precision.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-background-cream rounded-lg p-4">
+                        <h4 class="font-bold text-text-main mb-2">Matriarchy</h4>
+                        <p class="text-text-secondary text-sm">A social system where women hold primary power and
+                            authority.</p>
+                    </div>
+                    <div class="bg-background-cream rounded-lg p-4">
+                        <h4 class="font-bold text-text-main mb-2">Suffrage</h4>
+                        <p class="text-text-secondary text-sm">The right to vote in political elections.</p>
+                    </div>
+                    <div class="bg-background-cream rounded-lg p-4">
+                        <h4 class="font-bold text-text-main mb-2">Feminism</h4>
+                        <p class="text-text-secondary text-sm">Advocacy for women's rights on the basis of equality of
+                            the sexes.</p>
+                    </div>
+                    <div class="bg-background-cream rounded-lg p-4">
+                        <h4 class="font-bold text-text-main mb-2">Patriarchy</h4>
+                        <p class="text-text-secondary text-sm">A social system where men hold primary power and
+                            authority.</p>
+                    </div>
+                    <div class="bg-background-cream rounded-lg p-4">
+                        <h4 class="font-bold text-text-main mb-2">Intersectionality</h4>
+                        <p class="text-text-secondary text-sm">The overlapping of social identities that contribute to
+                            discrimination.</p>
+                    </div>
+                    <div class="bg-background-cream rounded-lg p-4">
+                        <h4 class="font-bold text-text-main mb-2">Empowerment</h4>
+                        <p class="text-text-secondary text-sm">The process of becoming stronger and more confident.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <a href="#"
+                        class="inline-flex items-center px-6 py-3 bg-divider text-white font-bold rounded-lg hover:bg-opacity-90">View
+                        Complete Glossary →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="timelines" class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-text-main mb-4">Timelines</h2>
+                    <p class="text-text-secondary max-w-2xl mx-auto">Interactive chronological visualizations of women's
+                        history and achievements.</p>
+                </div>
+                <div class="space-y-8">
+                    <div class="bg-white rounded-xl p-8 border border-border-light">
+                        <h3 class="font-bold text-text-main mb-6 text-center">Key Milestones in Women's History</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-20 text-accent-teal font-bold">3000 BCE</div>
+                                <div class="flex-1">
+                                    <p class="text-text-main font-medium">Enheduanna - First Known Poet</p>
+                                    <p class="text-text-secondary text-sm">Daughter of Sargon of Akkad becomes the
+                                        world's first known author.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-20 text-accent-teal font-bold">1848</div>
+                                <div class="flex-1">
+                                    <p class="text-text-main font-medium">Seneca Falls Convention</p>
+                                    <p class="text-text-secondary text-sm">First women's rights convention in the United
+                                        States.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-20 text-accent-teal font-bold">1920</div>
+                                <div class="flex-1">
+                                    <p class="text-text-main font-medium">19th Amendment Ratified</p>
+                                    <p class="text-text-secondary text-sm">Women gain the right to vote in the United
+                                        States.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-6">
+                            <a href="#" class="text-accent-teal font-bold hover:underline">View Interactive Timeline
+                                →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="maps" class="py-16 lg:py-20 bg-white">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-text-main mb-4">Interactive Maps</h2>
+                    <p class="text-text-secondary max-w-2xl mx-auto">Geographic visualizations of women's historical
+                        impact across regions and cultures.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
+                        <div class="aspect-video bg-primary/10 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary text-6xl">map</span>
+                        </div>
+                        <h3 class="font-bold text-text-main mb-3">Ancient Kingdoms</h3>
+                        <p class="text-text-secondary text-sm mb-4">Explore the territories ruled by legendary queens
+                            and empresses.</p>
+                        <a href="#" class="text-primary font-bold text-sm hover:underline">View Map →</a>
+                    </div>
+                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
+                        <div class="aspect-video bg-accent-teal/10 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-accent-teal text-6xl">map</span>
+                        </div>
+                        <h3 class="font-bold text-text-main mb-3">Migration Routes</h3>
+                        <p class="text-text-secondary text-sm mb-4">Follow the paths of influential women across
+                            continents and eras.</p>
+                        <a href="#" class="text-accent-teal font-bold text-sm hover:underline">View Map →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research-tools" class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-text-main mb-4">Research Tools</h2>
+                    <p class="text-text-secondary max-w-2xl mx-auto">Advanced tools for academic research, data
+                        analysis, and scholarly work.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl p-6 border border-border-light text-center">
+                        <div
+                            class="size-16 bg-accent-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-3xl">search</span>
+                        </div>
+                        <h3 class="font-bold text-text-main mb-3">Advanced Search</h3>
+                        <p class="text-text-secondary text-sm mb-4">Filter by region, era, and topic with boolean
+                            operators.</p>
+                        <a href="#" class="text-accent-gold font-bold text-sm hover:underline">Try Search →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-border-light text-center">
+                        <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-primary text-3xl">download</span>
+                        </div>
+                        <h3 class="font-bold text-text-main mb-3">Data Export</h3>
+                        <p class="text-text-secondary text-sm mb-4">Export biographies and data in multiple formats.</p>
+                        <a href="#" class="text-primary font-bold text-sm hover:underline">Export Data →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-border-light text-center">
+                        <div
+                            class="size-16 bg-accent-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-accent-teal text-3xl">format_quote</span>
+                        </div>
+                        <h3 class="font-bold text-text-main mb-3">Citation Generator</h3>
+                        <p class="text-text-secondary text-sm mb-4">Generate citations in APA, MLA, and Chicago styles.
+                        </p>
+                        <a href="#" class="text-accent-teal font-bold text-sm hover:underline">Generate →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4 text-center">
+                <h2 class="font-serif text-3xl font-bold text-text-main mb-8">Downloadable PDFs</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <span class="material-symbols-outlined text-primary text-4xl mb-4">picture_as_pdf</span>
+                        <h4 class="font-bold text-text-main mb-2">Educator's Guide</h4>
+                        <button
+                            class="w-full py-2 bg-primary/10 text-primary font-bold rounded-lg text-sm hover:bg-primary hover:text-white">Download</button>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <span class="material-symbols-outlined text-accent-gold text-4xl mb-4">picture_as_pdf</span>
+                        <h4 class="font-bold text-text-main mb-2">Timeline Poster</h4>
+                        <button
+                            class="w-full py-2 bg-accent-gold/10 text-accent-gold font-bold rounded-lg text-sm hover:bg-accent-gold hover:text-white">Download</button>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <span class="material-symbols-outlined text-accent-teal text-4xl mb-4">picture_as_pdf</span>
+                        <h4 class="font-bold text-text-main mb-2">Research Guide</h4>
+                        <button
+                            class="w-full py-2 bg-accent-teal/10 text-accent-teal font-bold rounded-lg text-sm hover:bg-accent-teal hover:text-white">Download</button>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <span class="material-symbols-outlined text-divider text-4xl mb-4">picture_as_pdf</span>
+                        <h4 class="font-bold text-text-main mb-2">Glossary Quick Ref</h4>
+                        <button
+                            class="w-full py-2 bg-divider/10 text-divider font-bold rounded-lg text-sm hover:bg-divider hover:text-white">Download</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                        <span class="font-serif text-lg font-bold">Womencypedia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+                        women. A global institution preserving women's stories for future generations.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="browse.html">Browse Encyclopedia</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="featured.html">Featured Entries</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="resources.html">Resources</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="publications.html">Publications</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Organization</h4>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="contributors.html">Contributors</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="research.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="donate.html">Donate</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="nominate.html">Nominate a Woman</a>
+                    <a class="block text-gray-400 hover:text-primary transition-colors text-sm py-1"
+                        href="share-story.html">Share Your Story</a>
+                    <a href="donate.html"
+                        class="inline-flex items-center justify-center w-full mt-4 px-4 py-3 bg-primary/20 text-primary hover:bg-primary hover:text-text-main border border-primary rounded-lg font-bold text-sm transition-colors">Support
+                        Our Mission</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-gray-500 hover:text-primary text-xs">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-primary text-xs">Terms of Use</a>
+                    <a href="#" class="text-gray-500 hover:text-primary text-xs">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/navigation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Browse the Encyclopedia — Womencypedia</title>
+    <meta name="description"
+        content="Explore the world's first interpretive encyclopedia of women. Browse by region, era, domain, or thematic collections.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e8a6a6",
+                        "primary-hover": "#D98F8F",
+                        "accent-gold": "#D4AF37",
+                        "accent-teal": "#4DB6AC",
+                        "divider": "#B48CB8",
+                        "lavender-soft": "#EDE3F1",
+                        "background-cream": "#F5F5F0",
+                        "text-main": "#191010",
+                        "text-secondary": "#6B6B6B",
+                        "border-light": "#DDD8CF",
+                    },
+                    fontFamily: {
+                        "display": ["Lato", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F5F0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #B48CB8;
+            border-radius: 4px;
+        }
+
+        .filter-tab.active {
+            background: #e8a6a6;
+            color: #191010;
+            border-color: #e8a6a6;
+        }
+    </style>
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display">
+
+    <!-- Header -->
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-primary text-sm font-medium uppercase tracking-wider border-b-2 border-primary"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="resources.html">Resources</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search" />
+                    </div>
+                    <button
+                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                        aria-label="Open search">
+                        <span class="material-symbols-outlined text-accent-teal">search</span>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html">Donate</a>
+                        <button
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">Sign
+                            In</button>
+                    </div>
+                    <button
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/15 via-lavender-soft/30 to-accent-gold/10 py-16 lg:py-20">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">The Archive</span>
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">
+                    Browse the Encyclopedia
+                </h1>
+                <p class="text-text-secondary text-lg max-w-2xl mx-auto mb-8">
+                    Explore thousands of women's stories across regions, eras, and domains. Every biography is
+                    researched, verified, and interpreted with scholarly rigor. This platform exists to correct
+                    historical imbalance and build a more complete, truthful record of human history.
+                </p>
+
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto">
+                    <div
+                        class="flex items-center bg-white border border-border-light rounded-xl px-4 py-3 shadow-sm focus-within:border-accent-teal focus-within:ring-2 focus-within:ring-accent-teal/20">
+                        <span class="material-symbols-outlined text-accent-teal text-[24px]">search</span>
+                        <input type="search"
+                            class="flex-1 bg-transparent border-none focus:ring-0 text-base ml-3 placeholder-text-secondary"
+                            placeholder="Search by name, region, era, or keyword..." />
+                        <button
+                            class="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-text-main text-white rounded-lg font-bold text-sm hover:bg-text-main/90 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">tune</span>
+                            Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse Options -->
+        <section class="py-12 bg-background-cream border-b border-border-light">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap gap-3 justify-center mb-8">
+                    <button
+                        class="filter-tab active px-6 py-3 rounded-full border-2 border-border-light font-bold text-sm transition-all">
+                        All Entries
+                    </button>
+                    <button
+                        class="filter-tab px-6 py-3 rounded-full border-2 border-border-light font-bold text-sm hover:border-primary transition-all">
+                        By Region
+                    </button>
+                    <button
+                        class="filter-tab px-6 py-3 rounded-full border-2 border-border-light font-bold text-sm hover:border-primary transition-all">
+                        By Era
+                    </button>
+                    <button
+                        class="filter-tab px-6 py-3 rounded-full border-2 border-border-light font-bold text-sm hover:border-primary transition-all">
+                        By Domain
+                    </button>
+                    <button
+                        class="filter-tab px-6 py-3 rounded-full border-2 border-border-light font-bold text-sm hover:border-primary transition-all">
+                        By Tags
+                    </button>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="flex flex-wrap justify-center gap-8 text-center">
+                    <div>
+                        <span class="block font-serif text-3xl font-bold text-primary">5,000+</span>
+                        <span class="text-sm text-text-secondary">Biographies</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-3xl font-bold text-accent-gold">8</span>
+                        <span class="text-sm text-text-secondary">Continents</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-3xl font-bold text-accent-teal">4</span>
+                        <span class="text-sm text-text-secondary">Historical Eras</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-3xl font-bold text-divider">13</span>
+                        <span class="text-sm text-text-secondary">Collections</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse by Region -->
+        <section class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <span
+                            class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Geography</span>
+                        <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-text-main">Browse by
+                            Region</h2>
+                        <p class="text-text-secondary text-sm leading-relaxed">Women's stories are deeply rooted in
+                            place — in land, culture, language, and community. The regional structure allows readers to
+                            explore women's histories within their cultural and geographic contexts.</p>
+                    </div>
+                    <a href="#"
+                        class="hidden sm:flex items-center gap-2 text-sm font-bold text-text-main hover:text-primary">
+                        View All Regions
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Africa -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-accent-gold/20 to-primary/20 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">Africa</h3>
+                                <p class="text-white/80 text-sm">Queens, Matriarchs & Cultural Leaders</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">1,200+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- Europe -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-divider/20 to-lavender-soft relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">Europe</h3>
+                                <p class="text-white/80 text-sm">Monarchs, Scientists & Revolutionaries</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">980+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- Asia -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-primary/20 to-accent-teal/20 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">Asia</h3>
+                                <p class="text-white/80 text-sm">Dynasty, Philosophy & Continuity</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">850+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- Middle East -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-accent-gold/30 to-primary/10 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">Middle East</h3>
+                                <p class="text-white/80 text-sm">Faith, Law, Poetry & Civilization</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">620+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- North America -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-accent-teal/20 to-divider/20 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">North America</h3>
+                                <p class="text-white/80 text-sm">Indigenous Leaders & Innovators</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">720+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- South America -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-primary/30 to-accent-gold/20 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">South America</h3>
+                                <p class="text-white/80 text-sm">Resistance & Indigenous Sovereignty</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">480+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- Oceania -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-accent-teal/30 to-primary/10 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">Oceania</h3>
+                                <p class="text-white/80 text-sm">Land, Sea & Ancestral Knowledge</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">320+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+
+                    <!-- Antarctica -->
+                    <a href="#"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="h-40 bg-gradient-to-br from-white to-accent-teal/20 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551415923-a2297c7fda79?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="font-serif text-xl font-bold text-white">Antarctica</h3>
+                                <p class="text-white/80 text-sm">Exploration & Environmental Science</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center justify-between">
+                            <span class="text-sm text-text-secondary">45+ entries</span>
+                            <span
+                                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse by Era -->
+        <section class="py-16 lg:py-20 bg-background-cream">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-12">
+                    <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-2 block">Through
+                        Time</span>
+                    <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-text-main">Browse by Era</h2>
+                    <p class="text-text-secondary text-sm leading-relaxed">Women's stories evolve across historical
+                        periods, reflecting shifts in culture, power, and social structure.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Pre-colonial -->
+                    <a href="#"
+                        class="group relative bg-gradient-to-br from-accent-gold/10 to-accent-gold/5 rounded-2xl p-8 border-2 border-transparent hover:border-accent-gold/30 transition-all text-center">
+                        <div
+                            class="size-16 rounded-full bg-accent-gold/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-accent-gold text-3xl">castle</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2">Pre-Colonial</h3>
+                        <p class="text-sm text-text-secondary mb-4">Ancient kingdoms, matriarchal societies, and early
+                            civilizations</p>
+                        <span class="text-xs font-bold text-accent-gold uppercase tracking-wider">Before 1500 CE</span>
+                    </a>
+
+                    <!-- Colonial -->
+                    <a href="#"
+                        class="group relative bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border-2 border-transparent hover:border-primary/30 transition-all text-center">
+                        <div
+                            class="size-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-3xl">sailing</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2">Colonial</h3>
+                        <p class="text-sm text-text-secondary mb-4">Resistance, survival, and cultural preservation
+                            under colonial rule</p>
+                        <span class="text-xs font-bold text-primary uppercase tracking-wider">1500 – 1960 CE</span>
+                    </a>
+
+                    <!-- Post-colonial -->
+                    <a href="#"
+                        class="group relative bg-gradient-to-br from-accent-teal/10 to-accent-teal/5 rounded-2xl p-8 border-2 border-transparent hover:border-accent-teal/30 transition-all text-center">
+                        <div
+                            class="size-16 rounded-full bg-accent-teal/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-accent-teal text-3xl">flag</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2">Post-Colonial</h3>
+                        <p class="text-sm text-text-secondary mb-4">Nation-building, independence movements, and new
+                            leadership</p>
+                        <span class="text-xs font-bold text-accent-teal uppercase tracking-wider">1960 – 2000 CE</span>
+                    </a>
+
+                    <!-- Contemporary -->
+                    <a href="#"
+                        class="group relative bg-gradient-to-br from-divider/10 to-divider/5 rounded-2xl p-8 border-2 border-transparent hover:border-divider/30 transition-all text-center">
+                        <div
+                            class="size-16 rounded-full bg-divider/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-divider text-3xl">public</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2">Contemporary</h3>
+                        <p class="text-sm text-text-secondary mb-4">Modern leaders, innovators, and living legacies</p>
+                        <span class="text-xs font-bold text-divider uppercase tracking-wider">2000 CE – Present</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse by Domain -->
+        <section class="py-16 lg:py-20 bg-lavender-soft/20">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-12">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-2 block">Fields of
+                        Influence</span>
+                    <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-text-main">Browse by Domain
+                    </h2>
+                    <p class="text-text-secondary text-sm leading-relaxed">The category system reflects the diversity of
+                        women's contributions across human history. Each category is a doorway into a different
+                        dimension of women's influence.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Leadership -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">groups_3</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Leadership</h4>
+                        <span class="text-xs text-text-secondary">420 entries</span>
+                    </a>
+
+                    <!-- Culture & Arts -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">palette</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Culture & Arts</h4>
+                        <span class="text-xs text-text-secondary">380 entries</span>
+                    </a>
+
+                    <!-- Spirituality -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">self_improvement</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Spirituality & Faith</h4>
+                        <span class="text-xs text-text-secondary">290 entries</span>
+                    </a>
+
+                    <!-- Politics -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">account_balance</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Politics & Governance</h4>
+                        <span class="text-xs text-text-secondary">350 entries</span>
+                    </a>
+
+                    <!-- Science -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">science</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Science & Innovation</h4>
+                        <span class="text-xs text-text-secondary">245 entries</span>
+                    </a>
+
+                    <!-- Community Builders -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">diversity_2</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Community Builders</h4>
+                        <span class="text-xs text-text-secondary">310 entries</span>
+                    </a>
+
+                    <!-- Activism -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">campaign</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Activism & Justice</h4>
+                        <span class="text-xs text-text-secondary">275 entries</span>
+                    </a>
+
+                    <!-- Education -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">school</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Education</h4>
+                        <span class="text-xs text-text-secondary">340 entries</span>
+                    </a>
+
+                    <!-- Diaspora -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">flight_takeoff</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Diaspora Stories</h4>
+                        <span class="text-xs text-text-secondary">185 entries</span>
+                    </a>
+
+                    <!-- Environmental -->
+                    <a href="#"
+                        class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-2xl">eco</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-text-main">Environment</h4>
+                        <span class="text-xs text-text-secondary">120 entries</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Entries -->
+        <section class="py-16 lg:py-20 bg-background-cream">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Latest
+                            Additions</span>
+                        <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-text-main">Recent Entries
+                        </h2>
+                    </div>
+                    <a href="featured.html"
+                        class="hidden sm:flex items-center gap-2 text-sm font-bold text-text-main hover:text-primary">
+                        View Featured
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Entry Card 1 -->
+                    <a href="biography.html"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
+                            <img src="images/queen-amina.png" alt="Queen Amina of Zazzau"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                            <span
+                                class="absolute top-3 left-3 bg-accent-gold text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-teal uppercase tracking-wider">Pre-Colonial •
+                                Africa</span>
+                            <h3
+                                class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
+                                Queen Amina of Zazzau</h3>
+                            <p class="text-sm text-text-secondary line-clamp-2">Warrior queen who expanded the Hausa
+                                territory and fortified cities across...</p>
+                        </div>
+                    </a>
+
+                    <!-- Entry Card 2 -->
+                    <a href="biography.html"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-accent-teal/20 to-divider/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-accent-teal/40 text-6xl">person</span>
+                            </div>
+                            <span
+                                class="absolute top-3 left-3 bg-accent-gold text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-teal uppercase tracking-wider">Contemporary •
+                                Asia</span>
+                            <h3
+                                class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
+                                Malala Yousafzai</h3>
+                            <p class="text-sm text-text-secondary line-clamp-2">Education activist and youngest Nobel
+                                Prize laureate, advocating for girls'...</p>
+                        </div>
+                    </a>
+
+                    <!-- Entry Card 3 -->
+                    <a href="biography.html"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-divider/20 to-primary/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-divider/40 text-6xl">person</span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-teal uppercase tracking-wider">Colonial •
+                                Europe</span>
+                            <h3
+                                class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
+                                Mary Wollstonecraft</h3>
+                            <p class="text-sm text-text-secondary line-clamp-2">Philosopher and early feminist who wrote
+                                "A Vindication of the Rights of Woman"...</p>
+                        </div>
+                    </a>
+
+                    <!-- Entry Card 4 -->
+                    <a href="biography.html"
+                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
+                        <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-accent-gold/20 to-accent-teal/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-accent-gold/40 text-6xl">person</span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-teal uppercase tracking-wider">Post-Colonial •
+                                Africa</span>
+                            <h3
+                                class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
+                                Wangari Maathai</h3>
+                            <p class="text-sm text-text-secondary line-clamp-2">Environmental activist and Nobel Peace
+                                Prize winner who founded the Green Belt...</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 lg:py-20 bg-gradient-to-br from-primary to-primary-hover">
+            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
+                    Can't Find Who You're Looking For?
+                </h2>
+                <p class="text-white/90 text-lg mb-8 max-w-xl mx-auto">
+                    Help us grow the archive. Nominate a woman whose story deserves to be preserved for generations.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="nominate.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-white text-primary font-bold rounded-lg hover:bg-background-cream transition-colors gap-2">
+                        <span class="material-symbols-outlined">person_add</span>
+                        Nominate a Woman
+                    </a>
+                    <a href="share-story.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-transparent text-white font-bold rounded-lg border-2 border-white hover:bg-white/10 transition-colors gap-2">
+                        <span class="material-symbols-outlined">edit_note</span>
+                        Share Your Story
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Filters Modal -->
+    <div id="filters-modal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-border-light">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-serif text-xl font-bold text-text-main">Advanced Filters</h3>
+                    <button id="close-filters" class="text-text-secondary hover:text-text-main">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Regions -->
+                    <div>
+                        <h4 class="font-bold text-sm text-text-main mb-3 uppercase tracking-wider">Regions</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region" value="africa">
+                                <span class="text-sm">Africa</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region" value="asia">
+                                <span class="text-sm">Asia</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region" value="europe">
+                                <span class="text-sm">Europe</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region" value="middle-east">
+                                <span class="text-sm">Middle East</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region"
+                                    value="north-america">
+                                <span class="text-sm">North America</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region"
+                                    value="south-america">
+                                <span class="text-sm">South America</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region" value="oceania">
+                                <span class="text-sm">Oceania</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="region" value="antarctica">
+                                <span class="text-sm">Antarctica</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Eras -->
+                    <div>
+                        <h4 class="font-bold text-sm text-text-main mb-3 uppercase tracking-wider">Historical Eras</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="era" value="pre-colonial">
+                                <span class="text-sm">Pre-Colonial</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="era" value="colonial">
+                                <span class="text-sm">Colonial</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="era" value="post-colonial">
+                                <span class="text-sm">Post-Colonial</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="era" value="contemporary">
+                                <span class="text-sm">Contemporary</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Domains -->
+                    <div>
+                        <h4 class="font-bold text-sm text-text-main mb-3 uppercase tracking-wider">Fields of Influence
+                        </h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="leadership">
+                                <span class="text-sm">Leadership</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain"
+                                    value="culture-arts">
+                                <span class="text-sm">Culture & Arts</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain"
+                                    value="spirituality">
+                                <span class="text-sm">Spirituality & Faith</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="politics">
+                                <span class="text-sm">Politics & Governance</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="science">
+                                <span class="text-sm">Science & Innovation</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="community">
+                                <span class="text-sm">Community Builders</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="activism">
+                                <span class="text-sm">Activism & Justice</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="education">
+                                <span class="text-sm">Education</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="diaspora">
+                                <span class="text-sm">Diaspora Stories</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="domain" value="environment">
+                                <span class="text-sm">Environment</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Tags -->
+                    <div>
+                        <h4 class="font-bold text-sm text-text-main mb-3 uppercase tracking-wider">Popular Tags</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="tag" value="feminist">
+                                <span class="text-sm">#Feminist</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="tag" value="activist">
+                                <span class="text-sm">#Activist</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="tag" value="scientist">
+                                <span class="text-sm">#Scientist</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="tag" value="artist">
+                                <span class="text-sm">#Artist</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" class="filter-checkbox" data-filter="tag" value="leader">
+                                <span class="text-sm">#Leader</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-6 pt-6 border-t border-border-light">
+                    <button id="apply-filters"
+                        class="flex-1 bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary-hover transition-colors">
+                        Apply Filters
+                    </button>
+                    <button id="clear-filters"
+                        class="px-6 py-3 border border-border-light rounded-lg font-bold text-text-main hover:bg-border-light transition-colors">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                        <span class="font-serif text-lg font-bold">Womencypedia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+                        women.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="browse.html">Browse
+                        Encyclopedia</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="featured.html">Featured
+                        Entries</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="resources.html">Resources</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Organization</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="contributors.html">Contributors</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="research.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="donate.html">Donate</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="nominate.html">Nominate a
+                        Woman</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="share-story.html">Share Your
+                        Story</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/browse.js"></script>
+</body>
+
+</html>

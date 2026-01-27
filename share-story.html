@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Share Your Story — Womencypedia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { "primary": "#e8a6a6", "accent-gold": "#D4AF37", "accent-teal": "#4DB6AC", "divider": "#B48CB8", "lavender-soft": "#EDE3F1", "background-cream": "#F5F5F0", "text-main": "#191010", "text-secondary": "#6B6B6B", "border-light": "#DDD8CF" }, fontFamily: { "display": ["Lato", "sans-serif"], "serif": ["Playfair Display", "serif"] } } }
+        }
+    </script>
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display">
+    <!-- Header -->
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="resources.html">Resources</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search" />
+                    </div>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html">Donate</a>
+                        <button
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold">Sign
+                            In</button>
+                    </div>
+                    <button class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5"
+                        aria-label="Menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-primary/5 py-16 lg:py-20 text-center">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Participate</span>
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Share Your Story
+                </h1>
+                <p class="text-text-secondary text-lg max-w-2xl mx-auto">Do you have a story of resilience, lament,
+                    challenge, or victory? Tell it now — before the world tells it its own way.</p>
+                <div class="w-24 h-1 bg-primary rounded-full mx-auto mt-6"></div>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="py-12 bg-lavender-soft/40">
+            <div class="mx-auto max-w-[800px] px-4 text-center">
+                <span class="material-symbols-outlined text-accent-gold text-4xl mb-4">format_quote</span>
+                <blockquote class="font-serif text-xl lg:text-2xl italic text-text-main leading-relaxed">
+                    "For every woman whose story was ever overlooked, minimized, or forgotten — we are coming for you."
+                </blockquote>
+                <p class="text-text-secondary mt-4">— Atim Utuk, Founder</p>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="py-16 lg:py-24 bg-background-cream">
+            <div class="mx-auto max-w-[700px] px-4 sm:px-6 lg:px-12">
+                <div class="bg-white rounded-xl p-8 md:p-12 shadow-sm border border-border-light">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary text-2xl">auto_stories</span>
+                        </div>
+                        <div>
+                            <h2 class="font-serif text-2xl font-bold text-text-main">Your Story Matters</h2>
+                            <p class="text-text-secondary text-sm">Share your story or the story of a woman in your life
+                            </p>
+                        </div>
+                    </div>
+
+                    <form class="space-y-6">
+                        <!-- Story Type -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2">This story is about:
+                                *</label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="storyType" value="myself"
+                                        class="w-4 h-4 text-primary border-border-light focus:ring-primary" />
+                                    <span>Myself</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="storyType" value="other"
+                                        class="w-4 h-4 text-primary border-border-light focus:ring-primary" />
+                                    <span>Another Woman</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Subject Name -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="subjectName">Name of the
+                                Woman *</label>
+                            <input type="text" id="subjectName" name="subjectName" required
+                                class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal"
+                                placeholder="Full name" />
+                        </div>
+
+                        <!-- Relationship -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2"
+                                for="relationship">Relationship to You (if applicable)</label>
+                            <input type="text" id="relationship" name="relationship"
+                                class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal"
+                                placeholder="e.g., Mother, Grandmother, Mentor, Self" />
+                        </div>
+
+                        <!-- Region -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="storyRegion">Region /
+                                Country</label>
+                            <input type="text" id="storyRegion" name="storyRegion"
+                                class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal"
+                                placeholder="e.g., Nigeria, United States" />
+                        </div>
+
+                        <!-- Story Theme -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="theme">Story Theme
+                                *</label>
+                            <select id="theme" name="theme" required
+                                class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal bg-white">
+                                <option value="">Select a theme...</option>
+                                <option value="resilience">Resilience & Overcoming</option>
+                                <option value="leadership">Leadership & Achievement</option>
+                                <option value="innovation">Innovation & Discovery</option>
+                                <option value="faith">Faith & Spirituality</option>
+                                <option value="education">Education & Mentorship</option>
+                                <option value="community">Community & Service</option>
+                                <option value="family">Family & Legacy</option>
+                                <option value="justice">Justice & Advocacy</option>
+                                <option value="arts">Arts & Culture</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- The Story -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="story">Tell the Story
+                                *</label>
+                            <textarea id="story" name="story" rows="8" required
+                                class="w-full px-4 py-3 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal resize-none"
+                                placeholder="Share the story in your own words. Include details that made this woman unique: her challenges, her victories, her impact on those around her..."></textarea>
+                            <p class="text-xs text-text-secondary mt-2">Minimum 200 words recommended for a complete
+                                story.</p>
+                        </div>
+
+                        <!-- Lessons -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="lessons">What lessons
+                                does this story teach?</label>
+                            <textarea id="lessons" name="lessons" rows="3"
+                                class="w-full px-4 py-3 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal resize-none"
+                                placeholder="What wisdom or lessons can others learn from this story?"></textarea>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-text-main mb-2" for="contactName">Your
+                                    Name *</label>
+                                <input type="text" id="contactName" name="contactName" required
+                                    class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-text-main mb-2" for="contactEmail">Your
+                                    Email *</label>
+                                <input type="email" id="contactEmail" name="contactEmail" required
+                                    class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal" />
+                            </div>
+                        </div>
+
+                        <!-- Permission -->
+                        <div class="pt-4 border-t border-border-light">
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" name="permission" required
+                                    class="w-5 h-5 mt-0.5 text-primary border-border-light rounded focus:ring-primary" />
+                                <span class="text-sm text-text-secondary">I confirm that this story is true to the best
+                                    of my knowledge and I give permission for Womencypedia to publish, edit, and archive
+                                    this story for educational purposes.</span>
+                            </label>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="pt-4">
+                            <button type="submit"
+                                class="w-full h-14 bg-primary text-white font-bold text-lg rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">send</span>
+                                Submit Your Story
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                        <span class="font-serif text-lg font-bold">Womencypedia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+                        women.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="browse.html">Browse
+                        Encyclopedia</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="featured.html">Featured
+                        Entries</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="resources.html">Resources</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Organization</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="contributors.html">Contributors</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="research.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="donate.html">Donate</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="nominate.html">Nominate a
+                        Woman</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="share-story.html">Share Your
+                        Story</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/navigation.js"></script>
+</body>
+
+</html>

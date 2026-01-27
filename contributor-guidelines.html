@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Contributor Guidelines — Womencypedia</title>
+    <meta name="description"
+        content="Comprehensive guidelines for contributors to Womencypedia. Learn about the Contributor's Oath, research standards, ethical guidelines, and submission process.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e8a6a6",
+                        "primary-hover": "#D98F8F",
+                        "accent-gold": "#D4AF37",
+                        "accent-teal": "#4DB6AC",
+                        "accent-teal-dark": "#2F8F86",
+                        "divider": "#B48CB8",
+                        "lavender": "#C8A2C8",
+                        "lavender-soft": "#EDE3F1",
+                        "background-cream": "#F5F5F0",
+                        "background-dark": "#1f1313",
+                        "text-main": "#191010",
+                        "text-secondary": "#6B6B6B",
+                        "border-light": "#DDD8CF",
+                    },
+                    fontFamily: {
+                        "display": ["Lato", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F5F0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #B48CB8;
+            border-radius: 4px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+
+    <!-- Header -->
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="resources.html">Resources</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search" />
+                    </div>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html">Donate</a>
+                        <button
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">Sign
+                            In</button>
+                    </div>
+                    <button
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-accent-teal/5 py-16 lg:py-20">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="text-primary text-sm font-bold uppercase tracking-widest mb-3 block">Join Our
+                    Community</span>
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">
+                    Contributor Guidelines
+                </h1>
+                <p class="text-text-secondary text-lg max-w-2xl mx-auto">
+                    A comprehensive guide for researchers, writers, cultural custodians, and community historians
+                    committed to preserving women's stories.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contributor's Oath -->
+        <section class="py-16 lg:py-20 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                        Commitment</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">The
+                        Contributor's Oath</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Every contributor affirms this formal
+                        commitment to dignity, accuracy, and cultural respect.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 md:p-12 border border-primary/20 shadow-sm">
+                    <div class="text-center mb-8">
+                        <span class="material-symbols-outlined text-primary text-4xl mb-4">handshake</span>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-6">I solemnly affirm my commitment
+                            to:</h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Honor the dignity of every woman</h4>
+                                    <p class="text-sm text-text-secondary">Treat each story with the respect and
+                                        seriousness it deserves</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Write with accuracy and cultural sensitivity
+                                    </h4>
+                                    <p class="text-sm text-text-secondary">Ensure factual correctness and cultural
+                                        appropriateness</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Avoid sensationalism or exploitation</h4>
+                                    <p class="text-sm text-text-secondary">Never exploit trauma or suffering for
+                                        dramatic effect</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Respect community protocols</h4>
+                                    <p class="text-sm text-text-secondary">Honor cultural boundaries and indigenous
+                                        knowledge systems</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Acknowledge uncertainty where sources are
+                                        limited</h4>
+                                    <p class="text-sm text-text-secondary">Be honest about gaps in historical records
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Protect sensitive information</h4>
+                                    <p class="text-sm text-text-secondary">Safeguard vulnerable individuals and
+                                        communities</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mt-1">verified</span>
+                                <div>
+                                    <h4 class="font-bold text-text-main">Uphold Womencypedia's editorial standards</h4>
+                                    <p class="text-sm text-text-secondary">Follow all guidelines for research, writing,
+                                        and ethics</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8">
+                        <p class="text-text-secondary italic">This oath is the ethical foundation of our contributor
+                            community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who Can Contribute -->
+        <section class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Open to
+                        All</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Who Can
+                        Contribute</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">You don't need to be a professional
+                        historian to participate. What matters is your commitment to accuracy, respect, and cultural
+                        sensitivity.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Scholars and Researchers -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-gold/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-2xl">school</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Scholars & Researchers</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Those with academic training in history, gender studies, anthropology, theology, or related
+                            fields.
+                        </p>
+                        <ul class="space-y-1 text-xs text-text-secondary">
+                            <li>• University professors</li>
+                            <li>• Graduate students</li>
+                            <li>• Independent researchers</li>
+                        </ul>
+                    </div>
+
+                    <!-- Community Historians -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-teal/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-teal text-2xl">groups</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Community Historians</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Individuals who carry the stories of their communities, families, or cultural groups.
+                        </p>
+                        <ul class="space-y-1 text-xs text-text-secondary">
+                            <li>• Elders and storytellers</li>
+                            <li>• Cultural custodians</li>
+                            <li>• Family historians</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cultural Custodians -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">diversity_3</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Cultural Custodians</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Keepers of oral traditions and cultural memory from diverse backgrounds.
+                        </p>
+                        <ul class="space-y-1 text-xs text-text-secondary">
+                            <li>• Indigenous knowledge holders</li>
+                            <li>• Traditional practitioners</li>
+                            <li>• Cultural archivists</li>
+                        </ul>
+                    </div>
+
+                    <!-- Students and Writers -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-divider/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-divider text-2xl">edit</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Students & Writers</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Those developing their research and writing skills, from beginners to advanced.
+                        </p>
+                        <ul class="space-y-1 text-xs text-text-secondary">
+                            <li>• Undergraduate students</li>
+                            <li>• Emerging writers</li>
+                            <li>• Aspiring historians</li>
+                        </ul>
+                    </div>
+
+                    <!-- Everyday People -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-lavender/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-lavender text-2xl">person</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Everyday People</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Anyone who knows a woman whose story deserves to be preserved and shared.
+                        </p>
+                        <ul class="space-y-1 text-xs text-text-secondary">
+                            <li>• Family members</li>
+                            <li>• Community members</li>
+                            <li>• Story collectors</li>
+                        </ul>
+                    </div>
+
+                    <!-- Institutions -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-gold/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-2xl">account_balance</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Institutions</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Universities, archives, cultural centers, and organizations with research expertise.
+                        </p>
+                        <ul class="space-y-1 text-xs text-text-secondary">
+                            <li>• Academic institutions</li>
+                            <li>• Cultural organizations</li>
+                            <li>• Research centers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Guidelines -->
+        <section class="py-16 lg:py-20 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-3 block">Research
+                        Standards</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Research
+                        Guidelines</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Building biographies on solid foundations
+                        of evidence and cultural respect.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Types of Sources -->
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-6">Types of Sources</h3>
+                        <div class="space-y-6">
+                            <div class="bg-white rounded-xl p-6 border border-border-light">
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-accent-gold">menu_book</span>
+                                    Primary Sources
+                                </h4>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li>• Letters and diaries</li>
+                                    <li>• Archival documents</li>
+                                    <li>• Contemporary interviews</li>
+                                    <li>• Personal correspondence</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white rounded-xl p-6 border border-border-light">
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-accent-teal">library_books</span>
+                                    Secondary Sources
+                                </h4>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li>• Academic books and articles</li>
+                                    <li>• Historical analyses</li>
+                                    <li>• Scholarly publications</li>
+                                    <li>• Biographical studies</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white rounded-xl p-6 border border-border-light">
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">groups</span>
+                                    Community Sources
+                                </h4>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li>• Oral histories and traditions</li>
+                                    <li>• Family accounts</li>
+                                    <li>• Cultural memory</li>
+                                    <li>• Community narratives</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Best Practices -->
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-text-main mb-6">Research Best Practices</h3>
+                        <div class="bg-white rounded-xl p-6 border border-border-light">
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                    <div>
+                                        <h4 class="font-bold text-text-main">Cross-reference multiple sources</h4>
+                                        <p class="text-sm text-text-secondary">Verify information across different types
+                                            of evidence</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                    <div>
+                                        <h4 class="font-bold text-text-main">Document source limitations</h4>
+                                        <p class="text-sm text-text-secondary">Be transparent about gaps and
+                                            uncertainties</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                    <div>
+                                        <h4 class="font-bold text-text-main">Respect cultural protocols</h4>
+                                        <p class="text-sm text-text-secondary">Follow community guidelines for sensitive
+                                            information</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                    <div>
+                                        <h4 class="font-bold text-text-main">Avoid anachronistic interpretations</h4>
+                                        <p class="text-sm text-text-secondary">Understand historical and cultural
+                                            context</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                    <div>
+                                        <h4 class="font-bold text-text-main">Consult with cultural experts</h4>
+                                        <p class="text-sm text-text-secondary">Seek guidance from relevant communities
+                                            and scholars</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Writing Guidelines -->
+        <section class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Writing
+                        Standards</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Writing
+                        Guidelines</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Crafting biographies with dignity, clarity,
+                        and cultural sensitivity.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Tone & Voice -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-gold/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-2xl">record_voice_over</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Tone & Voice</h3>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li>• Dignified and respectful</li>
+                            <li>• Clear and accessible</li>
+                            <li>• Culturally sensitive</li>
+                            <li>• Academically grounded</li>
+                            <li>• Centered on the woman, not the writer</li>
+                        </ul>
+                    </div>
+
+                    <!-- Structure & Format -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-teal/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-teal text-2xl">list</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Structure & Format</h3>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li>• Follow the 8-section biography format</li>
+                            <li>• Include proper citations</li>
+                            <li>• Use consistent formatting</li>
+                            <li>• Provide source references</li>
+                            <li>• Include cultural context</li>
+                        </ul>
+                    </div>
+
+                    <!-- Ethical Considerations -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">balance</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Ethical Considerations</h3>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li>• Avoid sensationalism</li>
+                            <li>• Respect privacy boundaries</li>
+                            <li>• Honor cultural sensitivities</li>
+                            <li>• Acknowledge uncertainties</li>
+                            <li>• Protect vulnerable information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submission Process -->
+        <section class="py-16 lg:py-20 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-3 block">How to
+                        Contribute</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Submission
+                        Process</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">A clear pathway from research to
+                        publication.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 md:p-12 border border-primary/20">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Step 1 -->
+                        <div class="text-center">
+                            <div
+                                class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-primary text-3xl">search</span>
+                            </div>
+                            <h4 class="font-bold text-text-main mb-2">1. Research</h4>
+                            <p class="text-sm text-text-secondary">Gather sources, conduct interviews, and verify
+                                information following our guidelines.</p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="text-center">
+                            <div
+                                class="size-16 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-accent-gold text-3xl">edit</span>
+                            </div>
+                            <h4 class="font-bold text-text-main mb-2">2. Write</h4>
+                            <p class="text-sm text-text-secondary">Craft your biography following the structure and
+                                ethical guidelines.</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="text-center">
+                            <div
+                                class="size-16 rounded-full bg-accent-teal/10 flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-accent-teal text-3xl">upload</span>
+                            </div>
+                            <h4 class="font-bold text-text-main mb-2">3. Submit</h4>
+                            <p class="text-sm text-text-secondary">Use the Contributor Portal to submit your work for
+                                review.</p>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="text-center">
+                            <div
+                                class="size-16 rounded-full bg-divider/10 flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-divider text-3xl">verified</span>
+                            </div>
+                            <h4 class="font-bold text-text-main mb-2">4. Review</h4>
+                            <p class="text-sm text-text-secondary">Editorial team reviews for accuracy, ethics, and
+                                quality.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 text-center">
+                        <a href="share-story.html"
+                            class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-text-main font-bold rounded-lg hover:bg-primary/80 transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">add</span>
+                            Start Contributing
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support & Resources -->
+        <section class="py-16 lg:py-20 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Get
+                        Help</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Support &
+                        Resources</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">We provide comprehensive support for
+                        contributors at every stage.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Templates -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-gold/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-2xl">description</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Templates</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Download biography templates, citation guides, and formatting tools to get started.
+                        </p>
+                        <a href="#" class="text-accent-gold font-bold text-sm hover:text-accent-gold/80">Download
+                            Templates →</a>
+                    </div>
+
+                    <!-- Training -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-teal/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-teal text-2xl">school</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Training & Workshops</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Join our workshops on research methods, ethical writing, and cultural sensitivity.
+                        </p>
+                        <a href="#" class="text-accent-teal font-bold text-sm hover:text-accent-teal/80">View Schedule
+                            →</a>
+                    </div>
+
+                    <!-- Editorial Support -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">support</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Editorial Support</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Get guidance from our editorial team throughout the research and writing process.
+                        </p>
+                        <a href="mailto:contributors@womencypedia.org"
+                            class="text-primary font-bold text-sm hover:text-primary/80">Contact Support →</a>
+                    </div>
+
+                    <!-- Community -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-divider/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-divider text-2xl">groups</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Contributor Community</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Connect with other contributors, share experiences, and learn from the community.
+                        </p>
+                        <a href="#" class="text-divider font-bold text-sm hover:text-divider/80">Join Community →</a>
+                    </div>
+
+                    <!-- Cultural Consultation -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-lavender/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-lavender text-2xl">diversity_3</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Cultural Consultation</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Access cultural experts and community consultants for sensitive topics.
+                        </p>
+                        <a href="mailto:protocols@womencypedia.org"
+                            class="text-lavender font-bold text-sm hover:text-lavender/80">Request Consultation →</a>
+                    </div>
+
+                    <!-- Quality Assurance -->
+                    <div class="bg-white rounded-xl p-6 border border-border-light">
+                        <div class="size-12 rounded-xl bg-accent-gold/10 flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-2xl">verified</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Quality Assurance</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                            Our review process ensures every biography meets the highest standards.
+                        </p>
+                        <a href="editorial-standards.html"
+                            class="text-accent-gold font-bold text-sm hover:text-accent-gold/80">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                        <span class="font-serif text-lg font-bold">Womencypedia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+                        women.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="browse.html">Browse</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="research.html">Research</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="about.html">About</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Contribute</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="nominate.html">Nominate</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="share-story.html">Share
+                        Story</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="contributor-guidelines.html">Guidelines</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="donate.html">Donate</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Womencypedia. All rights reserved. | Built with dignity for women's stories.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+
+</html>

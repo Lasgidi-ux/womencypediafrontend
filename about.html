@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>About Womencypedia — The World's First Interpretive Encyclopedia of Women</title>
+    <meta name="description"
+        content="Discover the vision, mission, and methodology behind Womencypedia. A scholarly digital encyclopedia dedicated to preserving and interpreting women's stories throughout history.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e8a6a6",
+                        "primary-hover": "#D98F8F",
+                        "accent-gold": "#D4AF37",
+                        "accent-teal": "#4DB6AC",
+                        "accent-teal-dark": "#2F8F86",
+                        "divider": "#B48CB8",
+                        "lavender": "#C8A2C8",
+                        "lavender-soft": "#EDE3F1",
+                        "background-cream": "#F5F5F0",
+                        "background-dark": "#1f1313",
+                        "text-main": "#191010",
+                        "text-secondary": "#6B6B6B",
+                        "border-light": "#DDD8CF",
+                    },
+                    fontFamily: {
+                        "display": ["Lato", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F5F0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #B48CB8;
+            border-radius: 4px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Timeline animation */
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Video placeholder hover */
+        .video-placeholder:hover .play-button {
+            transform: scale(1.1);
+        }
+
+        /* Card hover effects */
+        .mission-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+
+    <!-- Header -->
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-primary text-sm font-medium uppercase tracking-wider border-b-2 border-primary"
+                            href="about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="resources.html">Resources</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search" />
+                    </div>
+                    <button
+                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                        aria-label="Open search">
+                        <span class="material-symbols-outlined text-accent-teal">search</span>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html">Donate</a>
+                        <button
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">Sign
+                            In</button>
+                    </div>
+                    <button
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ============================================ -->
+        <!-- HERO BANNER SECTION -->
+        <!-- ============================================ -->
+        <section class="relative overflow-hidden">
+            <!-- Background with gradient overlay -->
+            <div class="absolute inset-0 z-0">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-primary/30 via-lavender-soft/50 to-accent-gold/20 z-10">
+                </div>
+                <div
+                    class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1920&h=1080&fit=crop')] bg-cover bg-center opacity-20">
+                </div>
+            </div>
+
+            <div class="relative z-20 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 py-20 lg:py-32">
+                <div class="max-w-4xl mx-auto text-center">
+                    <!-- Badge -->
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent-gold/50 bg-white/60 backdrop-blur-sm mb-6">
+                        <span class="material-symbols-outlined text-accent-gold text-[18px]">auto_awesome</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-text-main/80">Scholarly Digital
+                            Encyclopedia</span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h1
+                        class="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-text-main mb-6 leading-tight">
+                        About <span class="italic text-primary">Womencypedia</span>
+                    </h1>
+                    <p class="text-xl sm:text-2xl lg:text-3xl font-serif italic text-text-main/80 mb-4">
+                        A Global Archive of Women's Symbolic Power
+                    </p>
+
+                    <!-- Subtitle -->
+                    <p class="text-xl sm:text-2xl lg:text-3xl font-serif italic text-text-main/80 mb-4">
+                        The World's First Interpretive Encyclopedia of Women
+                    </p>
+
+                    <!-- Description -->
+                    <p class="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
+                        A global cultural archive restoring the stories history overlooked — with dignity, context, and
+                        scholarly rigor. We document not just what women did, but what they <em>meant</em>. Womencypedia
+                        envisions a world where women's stories are no longer scattered, forgotten, or
+                        diminished, but recognized as essential to humanity's collective memory.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="browse.html"
+                            class="inline-flex items-center justify-center h-14 px-8 bg-text-main text-background-cream font-bold rounded-lg hover:bg-text-main/90 transition-colors gap-2">
+                            <span class="material-symbols-outlined text-[20px]">explore</span>
+                            Explore the Encyclopedia
+                        </a>
+                        <a href="editorial-standards.html"
+                            class="inline-flex items-center justify-center h-14 px-8 bg-white/80 backdrop-blur-sm text-text-main font-bold rounded-lg border border-divider hover:border-primary hover:bg-white transition-all gap-2">
+                            <span class="material-symbols-outlined text-[20px]">menu_book</span>
+                            Editorial Standards
+                        </a>
+                    </div>
+
+                    <!-- Decorative divider -->
+                    <div class="flex items-center justify-center gap-4 mt-12">
+                        <div class="w-16 h-[1px] bg-accent-gold/50"></div>
+                        <span class="material-symbols-outlined text-accent-gold text-[24px]">diversity_3</span>
+                        <div class="w-16 h-[1px] bg-accent-gold/50"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom wave decoration -->
+            <div
+                class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background-cream to-transparent z-20">
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MISSION & VISION SECTION -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                        Purpose</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Mission &
+                        Vision</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">The driving force behind every biography we
+                        research, every story we restore.</p>
+                </div>
+
+                <!-- Mission & Vision Cards -->
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    <!-- Mission Card -->
+                    <div
+                        class="mission-card group bg-white rounded-2xl p-8 lg:p-10 border-2 border-transparent hover:border-accent-gold/30 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                        <!-- Accent stripe -->
+                        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent-gold">
+                        </div>
+
+                        <div
+                            class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-4xl">rocket_launch</span>
+                        </div>
+
+                        <h3 class="font-serif text-2xl lg:text-3xl font-bold text-text-main mb-4">Our Mission</h3>
+
+                        <p class="text-text-secondary text-lg leading-relaxed mb-6">
+                            To be the <strong class="text-text-main">definitive global repository</strong> for the
+                            stories of women who have shaped culture, theology, governance, philosophy, innovation, and
+                            human memory across history. We are building the world's most comprehensive, culturally
+                            grounded, ethically governed
+                            archive of women's lives — an archive that interprets meaning, contextualizes leadership,
+                            and reveals the symbolic power women have carried across generations.
+                        </p>
+
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                <span class="text-text-secondary">Scholarly research with cultural sensitivity</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                <span class="text-text-secondary">Interpretive analysis, not just facts</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="material-symbols-outlined text-accent-teal text-[20px] mt-0.5">check_circle</span>
+                                <span class="text-text-secondary">Open access for educators & researchers</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Vision Card -->
+                    <div
+                        class="mission-card group bg-white rounded-2xl p-8 lg:p-10 border-2 border-transparent hover:border-accent-gold/30 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                        <!-- Accent stripe -->
+                        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent-gold to-accent-teal">
+                        </div>
+
+                        <div
+                            class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-6 group-hover:bg-accent-gold/20 transition-colors">
+                            <span class="material-symbols-outlined text-accent-gold text-4xl">visibility</span>
+                        </div>
+
+                        <h3 class="font-serif text-2xl lg:text-3xl font-bold text-text-main mb-4">Our Vision</h3>
+
+                        <p class="text-text-secondary text-lg leading-relaxed mb-6">
+                            A world where <strong class="text-text-main">every woman's story</strong> — from empresses
+                            to everyday heroines — is documented with integrity, interpreted with cultural sensitivity,
+                            and preserved for generations. This platform exists to correct historical imbalance and
+                            build a more complete, truthful record of human history.
+                        </p>
+
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-accent-gold text-[20px] mt-0.5">star</span>
+                                <span class="text-text-secondary">Global representation across all cultures</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-accent-gold text-[20px] mt-0.5">star</span>
+                                <span class="text-text-secondary">Bridging academic rigor with accessibility</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-accent-gold text-[20px] mt-0.5">star</span>
+                                <span class="text-text-secondary">An institution that outlives us all</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- WHAT WE ARE SECTION -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-lavender-soft/40">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <!-- Content -->
+                    <div class="order-2 lg:order-1">
+                        <div class="flex items-center gap-3 text-primary mb-4">
+                            <span class="material-symbols-outlined text-3xl">auto_stories</span>
+                            <span class="text-sm font-bold uppercase tracking-wider text-text-secondary">Our
+                                Identity</span>
+                        </div>
+
+                        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-6">
+                            What is Womencypedia?
+                        </h2>
+
+                        <p class="text-lg text-text-secondary leading-relaxed mb-6">
+                            Womencypedia is a <strong class="text-text-main">scholarly digital encyclopedia and
+                                cultural archive</strong> — a living repository of interpretive essays, biographies,
+                            and primary source collections focused on women throughout history. Unlike traditional
+                            wikis, our content is
+                            <em>curated by historians and cultural experts</em>, ensuring accuracy, depth, and
+                            meaningful context for every entry.
+                        </p>
+
+                        <p class="text-lg text-text-secondary leading-relaxed mb-8">
+                            Unlike traditional wikis, our content is <em>curated by historians and cultural
+                                experts</em>, ensuring accuracy, depth, and meaningful context for every entry.
+                        </p>
+
+                        <!-- Key Differentiators -->
+                        <div class="bg-white rounded-xl p-6 border border-border-light">
+                            <h4 class="font-bold text-text-main mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-accent-teal">difference</span>
+                                What Makes Us Different
+                            </h4>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Curated by historians & scholars</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Citations & bibliography per entry</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Cross-referencing system</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Interpretive, not just factual</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Open-access for all</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Culturally sensitive approach</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Symbolic power analysis</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[18px] mt-0.5">verified</span>
+                                    <span class="text-sm text-text-secondary">Ethical storytelling</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="order-1 lg:order-2">
+                        <div class="relative">
+                            <div
+                                class="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent-gold/20 rounded-2xl blur-xl">
+                            </div>
+                            <div class="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=600&fit=crop"
+                                    alt="Library archives representing scholarly research"
+                                    class="w-full h-full object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-text-main/30 to-transparent"></div>
+                                <div class="absolute bottom-6 left-6 right-6">
+                                    <span
+                                        class="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-sm font-bold text-text-main">
+                                        A Living Archive of Women's History
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- TIMELINE SECTION -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-background-cream overflow-hidden">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                        Journey</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">The
+                        Womencypedia Story</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">From a vision to a global archive — the
+                        milestones that shaped our mission.</p>
+                </div>
+
+                <!-- Timeline - Horizontal on desktop, Vertical on mobile -->
+                <div class="relative">
+                    <!-- Timeline Line (Desktop) -->
+                    <div class="hidden lg:block absolute top-[60px] left-[10%] right-[10%] h-[3px] bg-border-light">
+                    </div>
+                    <div class="hidden lg:block absolute top-[60px] left-[10%] w-[0%] h-[3px] bg-accent-gold transition-all duration-1000"
+                        id="timeline-progress"></div>
+
+                    <!-- Timeline Items -->
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-4">
+                        <!-- Milestone 1 -->
+                        <div class="timeline-item visible flex flex-col items-center text-center relative">
+                            <div
+                                class="size-[120px] rounded-full bg-white border-4 border-accent-gold shadow-lg flex flex-col items-center justify-center mb-6 z-10">
+                                <span class="material-symbols-outlined text-accent-gold text-3xl">lightbulb</span>
+                                <span class="text-lg font-bold text-text-main mt-1">2020</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-text-main mb-2">The Vision</h4>
+                            <p class="text-sm text-text-secondary max-w-[200px]">Founder's vision crystallizes: an
+                                interpretive encyclopedia for women's stories.</p>
+                        </div>
+
+                        <!-- Milestone 2 -->
+                        <div class="timeline-item flex flex-col items-center text-center relative">
+                            <div
+                                class="size-[120px] rounded-full bg-white border-4 border-primary shadow-lg flex flex-col items-center justify-center mb-6 z-10">
+                                <span class="material-symbols-outlined text-primary text-3xl">search</span>
+                                <span class="text-lg font-bold text-text-main mt-1">2021</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-text-main mb-2">Research Begins</h4>
+                            <p class="text-sm text-text-secondary max-w-[200px]">First 100 biographical entries drafted
+                                and verified by scholars.</p>
+                        </div>
+
+                        <!-- Milestone 3 -->
+                        <div class="timeline-item flex flex-col items-center text-center relative">
+                            <div
+                                class="size-[120px] rounded-full bg-white border-4 border-accent-teal shadow-lg flex flex-col items-center justify-center mb-6 z-10">
+                                <span class="material-symbols-outlined text-accent-teal text-3xl">code</span>
+                                <span class="text-lg font-bold text-text-main mt-1">2022</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-text-main mb-2">Platform Development</h4>
+                            <p class="text-sm text-text-secondary max-w-[200px]">Digital encyclopedia architecture takes
+                                shape with scholarly features.</p>
+                        </div>
+
+                        <!-- Milestone 4 -->
+                        <div class="timeline-item flex flex-col items-center text-center relative">
+                            <div
+                                class="size-[120px] rounded-full bg-white border-4 border-lavender shadow-lg flex flex-col items-center justify-center mb-6 z-10">
+                                <span class="material-symbols-outlined text-lavender text-3xl">group</span>
+                                <span class="text-lg font-bold text-text-main mt-1">2024</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-text-main mb-2">Community Growth</h4>
+                            <p class="text-sm text-text-secondary max-w-[200px]">Contributors, scholars, and
+                                institutions join the movement.</p>
+                        </div>
+
+                        <!-- Milestone 5 -->
+                        <div class="timeline-item flex flex-col items-center text-center relative">
+                            <div
+                                class="size-[120px] rounded-full bg-gradient-to-br from-accent-gold to-primary border-4 border-white shadow-lg flex flex-col items-center justify-center mb-6 z-10">
+                                <span class="material-symbols-outlined text-white text-3xl">public</span>
+                                <span class="text-lg font-bold text-white mt-1">2025+</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-text-main mb-2">Global Expansion</h4>
+                            <p class="text-sm text-text-secondary max-w-[200px]">Multilingual support, interactive
+                                features, and worldwide reach.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- VIDEO / INFOGRAPHIC PLACEHOLDER -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-lavender-soft/30">
+            <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-3 block">Discover</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Understanding
+                        Womencypedia</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Watch our introduction or explore our
+                        visual guide to the archive.</p>
+                </div>
+
+                <!-- Video Placeholder -->
+                <div
+                    class="video-placeholder relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-text-main via-text-main/90 to-primary/30 shadow-2xl cursor-pointer group">
+                    <!-- Background pattern -->
+                    <div class="absolute inset-0 opacity-10">
+                        <div
+                            class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#fff_1px,_transparent_1px)] bg-[size:40px_40px]">
+                        </div>
+                    </div>
+
+                    <!-- Play Button -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div
+                            class="play-button size-24 lg:size-32 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/40 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-white text-5xl lg:text-6xl">play_arrow</span>
+                        </div>
+                    </div>
+
+                    <!-- Coming Soon Label -->
+                    <div class="absolute top-6 left-6">
+                        <span
+                            class="bg-accent-gold text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                            Documentary Coming Soon
+                        </span>
+                    </div>
+
+                    <!-- Title Overlay -->
+                    <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-text-main to-transparent">
+                        <h3 class="font-serif text-2xl lg:text-3xl font-bold text-white mb-2">
+                            Restoring Women's Stories
+                        </h3>
+                        <p class="text-white/80 text-sm lg:text-base max-w-xl">
+                            An introduction to the world's first interpretive encyclopedia dedicated to women's
+                            history.
+                        </p>
+                    </div>
+
+                    <!-- Duration badge -->
+                    <div class="absolute bottom-6 right-6">
+                        <span class="bg-black/50 text-white text-xs font-mono px-2 py-1 rounded">12:45</span>
+                    </div>
+                </div>
+
+                <!-- Alternative: Infographic Cards -->
+                <div class="grid sm:grid-cols-3 gap-6 mt-12">
+                    <div
+                        class="bg-white rounded-xl p-6 text-center border border-border-light hover:shadow-lg transition-shadow">
+                        <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-primary text-3xl">library_books</span>
+                        </div>
+                        <div class="font-serif text-3xl font-bold text-primary mb-1">5,000+</div>
+                        <div class="text-sm text-text-secondary">Verified Biographies</div>
+                    </div>
+                    <div
+                        class="bg-white rounded-xl p-6 text-center border border-border-light hover:shadow-lg transition-shadow">
+                        <div
+                            class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-3xl">public</span>
+                        </div>
+                        <div class="font-serif text-3xl font-bold text-accent-gold mb-1">100+</div>
+                        <div class="text-sm text-text-secondary">Countries Represented</div>
+                    </div>
+                    <div
+                        class="bg-white rounded-xl p-6 text-center border border-border-light hover:shadow-lg transition-shadow">
+                        <div
+                            class="size-14 rounded-full bg-accent-teal/10 flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-accent-teal text-3xl">history</span>
+                        </div>
+                        <div class="font-serif text-3xl font-bold text-accent-teal mb-1">5000+</div>
+                        <div class="text-sm text-text-secondary">Years of History</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- METHODOLOGY PREVIEW -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-background-cream">
+            <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                        Approach</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Research &
+                        Editorial Method</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">
+                        Every entry meets the highest standards of historical accuracy and cultural sensitivity.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 relative">
+                    <!-- Connector Line -->
+                    <div class="hidden md:block absolute top-[60px] left-[20%] right-[20%] h-[2px] bg-accent-teal/30">
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div
+                            class="size-[120px] rounded-full bg-white border-2 border-accent-teal flex flex-col items-center justify-center shadow-lg mb-6">
+                            <span class="text-accent-teal text-xs font-bold uppercase tracking-wider mb-1">Step 1</span>
+                            <span class="material-symbols-outlined text-accent-teal text-4xl">search</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Rigorous Research</h3>
+                        <p class="text-sm text-text-secondary max-w-[250px]">Primary documents, verified archives, oral
+                            histories, and peer-reviewed academic journals.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div
+                            class="size-[120px] rounded-full bg-white border-2 border-accent-teal flex flex-col items-center justify-center shadow-lg mb-6">
+                            <span class="text-accent-teal text-xs font-bold uppercase tracking-wider mb-1">Step 2</span>
+                            <span class="material-symbols-outlined text-accent-teal text-4xl">history_edu</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Interpretive Analysis</h3>
+                        <p class="text-sm text-text-secondary max-w-[250px]">Historians contextualize facts within
+                            specific eras, cultures, and social frameworks.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div
+                            class="size-[120px] rounded-full bg-white border-2 border-accent-teal flex flex-col items-center justify-center shadow-lg mb-6">
+                            <span class="text-accent-teal text-xs font-bold uppercase tracking-wider mb-1">Step 3</span>
+                            <span class="material-symbols-outlined text-accent-teal text-4xl">verified</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-3">Scholarly Publication</h3>
+                        <p class="text-sm text-text-secondary max-w-[250px]">Peer-reviewed by our editorial board and
+                            published as open-access resources.</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="research.html"
+                        class="inline-flex items-center gap-2 px-8 py-4 bg-accent-teal text-white font-bold rounded-lg hover:bg-accent-teal-dark transition-colors">
+                        Read Full Editorial Standards
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- GOVERNANCE & LEADERSHIP SECTION -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-white">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                        Structure</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Governance &
+                        Leadership</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">The dedicated team and governing bodies
+                        that
+                        ensure Womencypedia's integrity, scholarly excellence, and long-term sustainability.</p>
+                </div>
+
+                <!-- Leadership Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Board of Directors -->
+                    <div class="bg-background-cream rounded-2xl p-8 border border-border-light">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-accent-gold text-2xl">groups</span>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-text-main">Board of Directors</h3>
+                                <p class="text-sm text-text-secondary">Strategic oversight and governance</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+                            Our board comprises distinguished scholars, historians, and cultural leaders who provide
+                            strategic direction and ensure the encyclopedia's alignment with academic standards.
+                        </p>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li>• Dr. Sarah Johnson - Historian, Oxford University</li>
+                            <li>• Prof. Maria Rodriguez - Cultural Anthropologist</li>
+                            <li>• Dr. Amina Hassan - Women's Studies Scholar</li>
+                            <li>• Atim Utuk - Founder & Executive Director</li>
+                        </ul>
+                    </div>
+
+                    <!-- Editorial Board -->
+                    <div class="bg-background-cream rounded-2xl p-8 border border-border-light">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="size-14 rounded-full bg-accent-teal/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl">history_edu</span>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-text-main">Editorial Board</h3>
+                                <p class="text-sm text-text-secondary">Content quality and scholarly standards</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+                            Leading historians and subject matter experts who review, approve, and maintain the
+                            encyclopedia's scholarly rigor and cultural sensitivity.
+                        </p>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li>• Dr. Elizabeth Chen - Asian History Specialist</li>
+                            <li>• Prof. Fatima Al-Zahra - Islamic Studies</li>
+                            <li>• Dr. Grace Okafor - African Women's History</li>
+                            <li>• Prof. Laura Thompson - Indigenous Studies</li>
+                        </ul>
+                    </div>
+
+                    <!-- Advisory Council -->
+                    <div
+                        class="bg-background-cream rounded-2xl p-8 border border-border-light md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-2xl">lightbulb</span>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-text-main">Advisory Council</h3>
+                                <p class="text-sm text-text-secondary">Global expertise and guidance</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+                            International scholars and cultural leaders who provide counsel on global representation,
+                            emerging research, and strategic partnerships.
+                        </p>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li>• UNESCO Representative</li>
+                            <li>• International Women's History Association</li>
+                            <li>• Global Scholars Network</li>
+                            <li>• Cultural Heritage Organizations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Leadership Commitment -->
+                <div class="bg-gradient-to-r from-lavender-soft to-primary/5 rounded-2xl p-8 lg:p-12 text-center">
+                    <span class="material-symbols-outlined text-primary text-4xl mb-4">verified</span>
+                    <h3 class="font-serif text-2xl lg:text-3xl font-bold text-text-main mb-4">Our Commitment to
+                        Excellence</h3>
+                    <p class="text-text-secondary text-lg max-w-3xl mx-auto">
+                        Womencypedia's governance structure ensures that every decision — from content inclusion to
+                        strategic partnerships — serves our mission of creating the most comprehensive, accurate, and
+                        culturally sensitive archive of women's stories in human history.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- INSTITUTIONAL PARTNERS SECTION -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-lavender-soft/40">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                        Network</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Institutional
+                        Partners</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Universities, research institutions, and
+                        cultural organizations that collaborate with us to advance women's history scholarship.</p>
+                </div>
+
+                <!-- Partner Categories -->
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
+                    <!-- Academic Partners -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-8">
+                            <span class="material-symbols-outlined text-accent-teal text-3xl">school</span>
+                            <h3 class="font-serif text-2xl font-bold text-text-main">Academic Institutions</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div
+                                class="bg-white rounded-xl p-6 border border-border-light hover:shadow-lg transition-shadow">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-text-main">Harvard University</h4>
+                                    <span
+                                        class="text-xs bg-accent-teal/10 text-accent-teal px-2 py-1 rounded-full">Research
+                                        Partner</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Collaborative research on women's roles in early
+                                    modern history and access to primary archives.</p>
+                            </div>
+                            <div
+                                class="bg-white rounded-xl p-6 border border-border-light hover:shadow-lg transition-shadow">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-text-main">University of Oxford</h4>
+                                    <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">Content
+                                        Contributor</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Faculty contributions to medieval women's history
+                                    and peer review of scholarly entries.</p>
+                            </div>
+                            <div
+                                class="bg-white rounded-xl p-6 border border-border-light hover:shadow-lg transition-shadow">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-text-main">SOAS University of London</h4>
+                                    <span
+                                        class="text-xs bg-accent-gold/10 text-accent-gold px-2 py-1 rounded-full">Cultural
+                                        Consultant</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Expertise in global women's histories and
+                                    cultural sensitivity review processes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cultural & Research Organizations -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-8">
+                            <span class="material-symbols-outlined text-primary text-3xl">museum</span>
+                            <h3 class="font-serif text-2xl font-bold text-text-main">Cultural Organizations</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div
+                                class="bg-white rounded-xl p-6 border border-border-light hover:shadow-lg transition-shadow">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-text-main">Smithsonian Institution</h4>
+                                    <span
+                                        class="text-xs bg-accent-teal/10 text-accent-teal px-2 py-1 rounded-full">Archive
+                                        Access</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Access to women's history collections and
+                                    collaborative exhibitions on women's cultural contributions.</p>
+                            </div>
+                            <div
+                                class="bg-white rounded-xl p-6 border border-border-light hover:shadow-lg transition-shadow">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-text-main">UNESCO</h4>
+                                    <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">Global
+                                        Partnership</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Recognition as a key resource for women's
+                                    cultural heritage and inclusion in global education initiatives.</p>
+                            </div>
+                            <div
+                                class="bg-white rounded-xl p-6 border border-border-light hover:shadow-lg transition-shadow">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-text-main">International Women's History Association</h4>
+                                    <span
+                                        class="text-xs bg-accent-gold/10 text-accent-gold px-2 py-1 rounded-full">Professional
+                                        Network</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Collaboration on conferences, publications, and
+                                    professional development for women's history scholars.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Partnership Impact -->
+                <div class="bg-white rounded-2xl p-8 lg:p-12 text-center border border-border-light">
+                    <div class="grid md:grid-cols-3 gap-8 mb-8">
+                        <div>
+                            <div class="font-serif text-4xl font-bold text-accent-teal mb-2">50+</div>
+                            <div class="text-sm text-text-secondary">Partner Institutions</div>
+                        </div>
+                        <div>
+                            <div class="font-serif text-4xl font-bold text-primary mb-2">25+</div>
+                            <div class="text-sm text-text-secondary">Countries Represented</div>
+                        </div>
+                        <div>
+                            <div class="font-serif text-4xl font-bold text-accent-gold mb-2">1000+</div>
+                            <div class="text-sm text-text-secondary">Shared Resources</div>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">
+                        Through these partnerships, Womencypedia gains access to unparalleled resources, expertise, and
+                        networks that enable us to create the most comprehensive and authoritative encyclopedia of
+                        women's
+                        history ever assembled.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- FOUNDER QUOTE -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-28 bg-lavender-soft">
+            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="material-symbols-outlined text-accent-gold text-6xl mb-8">format_quote</span>
+
+                <blockquote
+                    class="font-serif text-2xl sm:text-3xl lg:text-4xl italic text-text-main leading-relaxed mb-10">
+                    "This institution was created from a simple but profound conviction: The world cannot understand
+                    itself without understanding the women who shaped it."
+                </blockquote>
+
+                <div class="w-24 h-[2px] bg-accent-gold mx-auto mb-8"></div>
+
+                <div class="flex flex-col items-center">
+                    <div
+                        class="size-20 rounded-full bg-gradient-to-br from-primary to-accent-gold flex items-center justify-center mb-4">
+                        <span class="font-serif text-2xl font-bold text-white">AU</span>
+                    </div>
+                    <p class="font-bold text-lg text-text-main">Atim Utuk</p>
+                    <p class="text-text-secondary italic">Founder, Womencypedia</p>
+                </div>
+
+                <a href="founders.html"
+                    class="inline-flex items-center gap-2 px-8 py-4 mt-10 rounded-lg border-2 border-text-main text-text-main font-bold hover:bg-text-main hover:text-white transition-all">
+                    Meet the Founder
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- CALL TO ACTION BANNER -->
+        <!-- ============================================ -->
+        <section class="py-20 lg:py-24 bg-gradient-to-br from-primary to-primary-hover">
+            <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                    Join the Movement
+                </h2>
+                <p class="text-white/90 text-lg max-w-2xl mx-auto mb-10">
+                    For every woman whose story was ever overlooked, minimized, or forgotten — we are coming for you.
+                    Be part of building an institution that will outlive us all.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="share-story.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-white text-primary font-bold rounded-lg hover:bg-background-cream transition-colors gap-2">
+                        <span class="material-symbols-outlined">edit_note</span>
+                        Share Your Story
+                    </a>
+                    <a href="nominate.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-transparent text-white font-bold rounded-lg border-2 border-white hover:bg-white/10 transition-colors gap-2">
+                        <span class="material-symbols-outlined">person_add</span>
+                        Nominate a Woman
+                    </a>
+                    <a href="donate.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90 transition-colors gap-2">
+                        <span class="material-symbols-outlined">favorite</span>
+                        Support Our Work
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                        <span class="font-serif text-lg font-bold">Womencypedia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+                        women.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="browse.html">Browse
+                        Encyclopedia</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="featured.html">Featured
+                        Entries</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="resources.html">Resources</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Organization</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                        href="contributors.html">Contributors</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="research.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="donate.html">Donate</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="nominate.html">Nominate a
+                        Woman</a>
+                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="share-story.html">Share Your
+                        Story</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Timeline Animation Script -->
+    <script>
+        // Animate timeline items on scroll
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+    <script src="js/navigation.js"></script>
+</body>
+
+</html>
