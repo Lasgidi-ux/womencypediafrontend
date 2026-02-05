@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build:css:prod",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./css/tailwind.css",
     "build:css:prod": "npx tailwindcss -i ./src/input.css -o ./css/tailwind.css --minify",
     "watch:css": "npx tailwindcss -i ./src/input.css -o ./css/tailwind.css --watch",
