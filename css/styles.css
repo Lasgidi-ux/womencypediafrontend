@@ -9,32 +9,32 @@
     --primary-rose: #E8A6A6;
     --primary-rose-hover: #D98F8F;
     --primary-rose-pressed: #C97878;
-    
+
     /* Lavender Section Backgrounds */
     --lavender: #C8A2C8;
     --lavender-soft: #EDE3F1;
     --lavender-border: #B48CB8;
-    
+
     /* Functional UI Accents - Teal */
     --teal: #4DB6AC;
     --teal-dark: #2F8F86;
     --teal-soft: #E3F4F2;
-    
+
     /* Highlights / Prestige - Gold */
     --gold: #D4AF37;
     --gold-soft: #E9D58A;
     --gold-muted: #C6A646;
-    
+
     /* Enterprise Neutrals */
     --base-cream: #F5F5F0;
     --text-primary: #2E2E2E;
     --text-secondary: #6B6B6B;
     --border-divider: #DDD8CF;
-    
+
     /* Typography */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Lato', sans-serif;
-    
+
     /* Spacing Scale */
     --space-xs: 8px;
     --space-sm: 16px;
@@ -42,13 +42,13 @@
     --space-lg: 32px;
     --space-xl: 48px;
     --space-2xl: 64px;
-    
+
     /* Border Radius */
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
     --radius-xl: 16px;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
@@ -56,7 +56,9 @@
 }
 
 /* Base Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -78,19 +80,41 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
     color: var(--text-primary);
     line-height: 1.2;
     font-weight: 600;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
-h4 { font-size: 1.25rem; }
-h5 { font-size: 1.125rem; }
-h6 { font-size: 1rem; }
+h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h5 {
+    font-size: 1.125rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
 
 p {
     color: var(--text-primary);
@@ -271,12 +295,12 @@ a:hover {
         width: 280px;
         transition: all 0.2s ease;
     }
-    
+
     .navbar__search-desktop:focus-within {
         border-color: var(--teal);
         box-shadow: 0 0 0 2px rgba(77, 182, 172, 0.1);
     }
-    
+
     .navbar__search-desktop input {
         flex: 1;
         border: none;
@@ -285,11 +309,11 @@ a:hover {
         color: var(--text-primary);
         outline: none;
     }
-    
+
     .navbar__search-desktop input::placeholder {
         color: var(--text-secondary);
     }
-    
+
     .navbar__search-desktop svg {
         color: var(--teal);
         margin-right: var(--space-xs);
@@ -397,6 +421,156 @@ a:hover {
     background: var(--border-divider);
     border-radius: 2px;
     margin: 0 auto var(--space-md);
+}
+
+/* Mobile Menu with Accordion - ID based selectors */
+#mobileMenu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: var(--base-cream);
+    border-top-left-radius: var(--radius-xl);
+    border-top-right-radius: var(--radius-xl);
+    border-top: 1px solid var(--border-divider);
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+#mobileMenu.active {
+    transform: translateY(0);
+}
+
+#mobileMenu .w-10 {
+    width: 2.5rem;
+}
+
+#mobileMenu .h-1 {
+    height: 0.25rem;
+}
+
+#mobileMenu .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#mobileMenu .mt-3 {
+    margin-top: 0.75rem;
+}
+
+#mobileMenu .mb-4 {
+    margin-bottom: 1rem;
+}
+
+#mobileMenu .px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+#mobileMenu .pb-4 {
+    padding-bottom: 1rem;
+}
+
+#mobileMenu .pb-8 {
+    padding-bottom: 2rem;
+}
+
+/* Accordion Section Styles */
+#mobileMenu h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+#mobileMenu h3:hover {
+    color: var(--teal);
+}
+
+#mobileMenu .accordion-icon {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+#mobileMenu a {
+    display: block;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(221, 216, 207, 0.5);
+    transition: color 0.2s ease;
+}
+
+#mobileMenu a:hover {
+    color: var(--teal);
+}
+
+#mobileMenu a:last-child {
+    border-bottom: none;
+}
+
+/* CTA Button */
+#mobileMenu .bg-primary {
+    background-color: var(--primary-rose);
+    color: var(--text-primary);
+}
+
+#mobileMenu .bg-primary:hover {
+    background-color: var(--primary-rose-hover);
+}
+
+#mobileMenu .h-12 {
+    height: 3rem;
+}
+
+#mobileMenu .w-full {
+    width: 100%;
+}
+
+#mobileMenu .rounded-lg {
+    border-radius: var(--radius-md);
+}
+
+#mobileMenu .flex {
+    display: flex;
+}
+
+#mobileMenu .items-center {
+    align-items: center;
+}
+
+#mobileMenu .justify-center {
+    justify-content: center;
+}
+
+/* Overlay for mobile menu */
+#menuOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 150;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+#menuOverlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 .bottom-sheet__section {
@@ -985,9 +1159,17 @@ a:hover {
 /* ============================================
    UTILITIES
    ============================================ */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
 
 .sr-only {
     position: absolute;
@@ -1224,6 +1406,7 @@ a:hover {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1245,6 +1428,7 @@ a:hover {
     0% {
         background-position: -200% 0;
     }
+
     100% {
         background-position: 200% 0;
     }

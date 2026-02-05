@@ -17,100 +17,138 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#e8a6a6",
-                        "accent-gold": "#D4AF37",
-                        "accent-teal": "#4DB6AC",
-                        "divider": "#B48CB8",
-                        "lavender-soft": "#EDE3F1",
-                        "background-cream": "#F5F5F0",
-                        "text-main": "#191010",
-                        "text-secondary": "#6B6B6B",
-                        "border-light": "#DDD8CF",
-                    },
-                    fontFamily: {
-                        "display": ["Lato", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"],
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #F5F5F0;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #B48CB8;
-            border-radius: 4px;
-        }
-
-        .prose h2 {
-            font-family: "Playfair Display", serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            color: #191010;
-        }
-
-        .prose h3 {
-            font-family: "Playfair Display", serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-top: 2rem;
-            margin-bottom: 0.75rem;
-            color: #191010;
-        }
-
-        .prose p {
-            margin-bottom: 1.25rem;
-            line-height: 1.8;
-        }
-
-        .prose blockquote {
-            border-left: 4px solid #D4AF37;
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-style: italic;
-            color: #6B6B6B;
-        }
-
-        .prose ul,
-        .prose ol {
-            margin-bottom: 1.25rem;
-            padding-left: 1.5rem;
-        }
-
-        .prose li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footnote {
-            font-size: 0.75rem;
-            vertical-align: super;
-            color: #4DB6AC;
-            cursor: pointer;
-        }
-
-        .footnote:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <!-- Tailwind CSS (Production Build) -->
+    <link rel="stylesheet" href="css/tailwind.css" />
 </head>
 
-<body class="bg-background-cream text-text-main antialiased font-display">
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search women, cultures, eras…"
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+
+        <!-- Explore -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="browse.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="featured.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="collections.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="timelines.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Learn</h3>
+            <a href="education.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="enterprises.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="research.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="publications.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="resources.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
+        </div>
+
+        <!-- Participate -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Participate</h3>
+            <a href="nominate.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
+                a Woman</a>
+            <a href="share-story.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Share
+                Your Story</a>
+            <a href="contributor-guidelines.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
+                Guidelines</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Donate</a>
+        </div>
+
+        <!-- About -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                About</h3>
+            <a href="about.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
+                Us</a>
+            <a href="founders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
+            <a href="contributors.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="methodology.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="editorial-standards.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial
+                Standards</a>
+            <a href="contact.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+
+        <!-- My Profile -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                My Profile</h3>
+            <a href="profile.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
+                Profile</a>
+            <a href="analytics.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
+            <a href="admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
+            <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
+                Biography</a>
+        </div>
+
+        <!-- CTA -->
+        <div class="px-6 pb-8">
+            <a href="share-story.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors">
+                Share Your Story
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
 
     <!-- Header -->
     <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
@@ -125,17 +163,107 @@
                         <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
                         </h2>
                     </a>
-                    <nav class="hidden lg:flex items-center gap-8">
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="index.html">Home</a>
-                        <a class="text-primary text-sm font-medium uppercase tracking-wider border-b-2 border-primary"
-                            href="browse.html">Browse</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="featured.html">Featured</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="about.html">About</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="resources.html">Resources</a>
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Explore<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="index.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a><a
+                                        href="browse.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Browse</a><a
+                                        href="featured.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Featured</a><a
+                                        href="collections.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Collections</a><a
+                                        href="timelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Timelines</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Learn<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="education.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a><a
+                                        href="enterprises.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Enterprises</a><a
+                                        href="research.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Research</a><a
+                                        href="publications.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Publications</a><a
+                                        href="resources.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Resources</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Participate<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    <a href="nominate.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Nominate
+                                        a Woman</a><a href="share-story.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Share
+                                        Your Story</a><a href="contributor-guidelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributor
+                                        Guidelines</a><a href="donate.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Donate</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">About<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    <a href="about.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
+                                        Us</a><a href="founders.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Founders</a><a
+                                        href="contributors.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributors</a><a
+                                        href="methodology.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Methodology</a><a
+                                        href="editorial-standards.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Editorial
+                                        Standards</a><a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">My
+                                Profile<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="profile.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
+                                        Profile</a><a href="analytics.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a><a
+                                        href="admin.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Admin</a><a
+                                        href="biography.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Sample
+                                        Biography</a>
+                                </div>
+                            </div>
+                        </div>
                     </nav>
                 </div>
                 <div class="flex items-center gap-3 lg:gap-6">
@@ -149,11 +277,27 @@
                     <div class="hidden sm:flex items-center gap-4">
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html">Donate</a>
-                        <button
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">Sign
-                            In</button>
+                        <a data-auth="admin-only" href="admin.html"
+                            class="hidden text-sm font-bold text-accent-teal hover:text-accent-teal-dark uppercase tracking-wide">
+                            Admin
+                        </a>
+                        <button data-auth="signin"
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                            Sign In
+                        </button>
+                        <div data-auth="signout" class="hidden flex items-center gap-3">
+                            <a href="profile.html"
+                                class="flex items-center gap-2 text-sm text-text-secondary hover:text-primary">
+                                <span class="material-symbols-outlined text-[18px]">account_circle</span>
+                                <span data-auth="user-info"></span>
+                            </a>
+                            <button
+                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                                Sign Out
+                            </button>
+                        </div>
                     </div>
-                    <button
+                    <button onclick="toggleMenu()"
                         class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
                         aria-label="Open menu">
                         <span class="material-symbols-outlined text-text-main">menu</span>
@@ -506,6 +650,307 @@
                     </div>
                 </div>
 
+                <!-- ============================================ -->
+                <!-- EDITORIAL FRAMEWORK SECTION -->
+                <!-- ============================================ -->
+                <section class="mt-12">
+                    <div
+                        class="bg-gradient-to-r from-accent-teal/10 to-primary/5 rounded-2xl p-8 border border-accent-teal/20">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-accent-teal text-3xl">psychology</span>
+                            <div>
+                                <span
+                                    class="text-xs font-bold uppercase tracking-wider text-accent-teal block">Editorial
+                                    Framework</span>
+                                <h3 class="font-serif text-xl font-bold text-text-main">Interpretive Biography &
+                                    Symbolic Power Analysis</h3>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <!-- Interpretive Approach -->
+                            <div>
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-[20px]">auto_stories</span>
+                                    Interpretive Approach
+                                </h4>
+                                <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                                    Unlike traditional biographical entries that simply catalog facts and achievements,
+                                    Womencypedia employs an interpretive framework that seeks to understand <strong
+                                        class="text-text-main">what women meant</strong> within their cultural,
+                                    historical, and social contexts.
+                                </p>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Analysis of symbolic power and cultural significance</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Contextualization within broader historical narratives</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Examination of how women shaped and were shaped by their societies</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Cultural Grounding -->
+                            <div>
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-accent-gold text-[20px]">public</span>
+                                    Cultural Grounding
+                                </h4>
+                                <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                                    Every biography is grounded in the cultural traditions, belief systems, and social
+                                    structures of the subject's own context, avoiding Western-centric frameworks that
+                                    often distort non-Western women's histories.
+                                </p>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Indigenous perspectives prioritized</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Oral traditions integrated with written sources</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Cultural concepts translated with precision and respect</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================ -->
+                <!-- WRITING STANDARDS SECTION -->
+                <!-- ============================================ -->
+                <section class="mt-12">
+                    <div class="bg-white rounded-2xl p-8 border border-border-light">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-primary text-3xl">menu_book</span>
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-primary block">Writing
+                                    Standards</span>
+                                <h3 class="font-serif text-xl font-bold text-text-main">Structure of Each Biography</h3>
+                            </div>
+                        </div>
+
+                        <p class="text-sm text-text-secondary leading-relaxed mb-6">
+                            Every biography in Womencypedia follows a standardized structure that ensures comprehensive
+                            coverage while allowing for flexibility based on available information and the subject's
+                            unique story.
+                        </p>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <!-- Introduction -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-primary text-2xl mb-2">intro</span>
+                                <h4 class="font-bold text-text-main mb-2">1. Introduction</h4>
+                                <p class="text-xs text-text-secondary">Opening hook, immediate context, and thesis
+                                    statement about the subject's significance</p>
+                            </div>
+
+                            <!-- Early Life -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-primary text-2xl mb-2">child_care</span>
+                                <h4 class="font-bold text-text-main mb-2">2. Early Life</h4>
+                                <p class="text-xs text-text-secondary">Family background, childhood, formative
+                                    experiences, and path to influence</p>
+                            </div>
+
+                            <!-- Path to Influence -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-primary text-2xl mb-2">trending_up</span>
+                                <h4 class="font-bold text-text-main mb-2">3. Path to Influence</h4>
+                                <p class="text-xs text-text-secondary">How the subject gained power, influence, or
+                                    recognition</p>
+                            </div>
+
+                            <!-- Contributions & Impact -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span
+                                    class="material-symbols-outlined text-primary text-2xl mb-2">workspace_premium</span>
+                                <h4 class="font-bold text-text-main mb-2">4. Contributions & Impact</h4>
+                                <p class="text-xs text-text-secondary">Specific achievements, lasting changes, and
+                                    measurable outcomes</p>
+                            </div>
+
+                            <!-- Symbolic Power Analysis -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mb-2">psychology</span>
+                                <h4 class="font-bold text-text-main mb-2">5. Symbolic Power Analysis</h4>
+                                <p class="text-xs text-text-secondary">Interpretation of what the subject symbolized and
+                                    represented culturally</p>
+                            </div>
+
+                            <!-- Cultural Context -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-accent-gold text-2xl mb-2">public</span>
+                                <h4 class="font-bold text-text-main mb-2">6. Cultural Context</h4>
+                                <p class="text-xs text-text-secondary">Broader cultural, historical, and social
+                                    significance</p>
+                            </div>
+
+                            <!-- Legacy & Memory -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-primary text-2xl mb-2">memory</span>
+                                <h4 class="font-bold text-text-main mb-2">7. Legacy & Memory</h4>
+                                <p class="text-xs text-text-secondary">How the subject is remembered, commemorated, and
+                                    continues to influence</p>
+                            </div>
+
+                            <!-- Sources -->
+                            <div class="bg-lavender-soft/20 rounded-xl p-4 border border-border-light">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl mb-2">source</span>
+                                <h4 class="font-bold text-text-main mb-2">8. Sources</h4>
+                                <p class="text-xs text-text-secondary">Primary sources, scholarly references, and oral
+                                    tradition citations</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================ -->
+                <!-- ETHICAL FRAMEWORK SECTION -->
+                <!-- ============================================ -->
+                <section class="mt-12">
+                    <div
+                        class="bg-gradient-to-r from-accent-gold/10 to-primary/5 rounded-2xl p-8 border border-accent-gold/20">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-accent-gold text-3xl">volunteer_activism</span>
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-accent-gold block">Ethical
+                                    Framework</span>
+                                <h3 class="font-serif text-xl font-bold text-text-main">Trauma-Informed & Culturally
+                                    Sensitive Storytelling</h3>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <!-- Trauma-Informed Storytelling -->
+                            <div>
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span
+                                        class="material-symbols-outlined text-accent-gold text-[20px]">heart_broken</span>
+                                    Trauma-Informed Approach
+                                </h4>
+                                <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                                    When covering subjects who experienced violence, oppression, or suffering, we:
+                                </p>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Avoid gratuitous detail of traumatic events</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Center agency and resilience, not just victimhood</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Provide content warnings where appropriate</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-[16px] mt-0.5">check</span>
+                                        <span>Consult survivors or descendant communities when possible</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Cultural Sensitivity -->
+                            <div>
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-[20px]">diversity_3</span>
+                                    Cultural Sensitivity
+                                </h4>
+                                <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                                    We are committed to:
+                                </p>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Respecting sacred and private knowledge</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Using preferred terminology and pronouns</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Avoiding anachronistic judgments on historical figures</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-accent-teal text-[16px] mt-0.5">check</span>
+                                        <span>Collaborating with cultural experts from relevant communities</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Consent & Permissions -->
+                            <div>
+                                <h4 class="font-bold text-text-main mb-3 flex items-center gap-2">
+                                    <span
+                                        class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+                                    Consent & Permissions
+                                </h4>
+                                <p class="text-sm text-text-secondary leading-relaxed mb-4">
+                                    For living subjects or contemporary events, we:
+                                </p>
+                                <ul class="space-y-2 text-sm text-text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+                                        <span>Obtain informed consent for inclusion</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+                                        <span>Respect requests for privacy or anonymity</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+                                        <span>Provide subjects opportunity to review their entries</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span
+                                            class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+                                        <span>Honor cultural protocols around death and ancestors</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-border-light text-center">
+                            <a href="editorial-standards.html"
+                                class="inline-flex items-center gap-2 px-6 py-3 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">menu_book</span>
+                                Read Full Editorial Standards
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Editorial Info -->
                 <div
                     class="mt-8 bg-lavender-soft/30 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -614,39 +1059,76 @@
             </div>
         </div>
     </footer>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/data.js"></script>
     <script src="js/navigation.js"></script>
     <script>
+        // Current biography data
+        let currentBio = null;
+        let useAPI = true;
+
         // Load biography based on URL parameter
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
             const urlParams = new URLSearchParams(window.location.search);
             const bioId = parseInt(urlParams.get('id')) || 3; // Default to Queen Amina
 
-            loadBiography(bioId);
+            await loadBiography(bioId);
+
+            // Check if admin and show edit button
+            setupAdminFeatures();
         });
 
-        function loadBiography(id) {
-            const bio = biographies.find(b => b.id === id);
-            if (!bio) {
+        async function loadBiography(id) {
+            try {
+                // Try API first
+                if (useAPI) {
+                    currentBio = await API.entries.getById(id);
+                }
+            } catch (error) {
+                console.warn('API not available, using static data:', error.message);
+                useAPI = false;
+
+                // Fallback to static data
+                currentBio = typeof biographies !== 'undefined'
+                    ? biographies.find(b => b.id === id)
+                    : null;
+            }
+
+            if (!currentBio) {
                 console.error('Biography not found');
+                // Show error state
+                const main = document.querySelector('main');
+                if (main) {
+                    main.innerHTML = `
+                        <div class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+                            <div class="size-20 rounded-full bg-lavender-soft/50 flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined text-text-secondary/50 text-4xl">person_off</span>
+                            </div>
+                            <h1 class="font-serif text-2xl font-bold text-text-main mb-4">Biography Not Found</h1>
+                            <p class="text-text-secondary mb-8">The biography you're looking for doesn't exist or has been removed.</p>
+                            <a href="browse.html" class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                                Browse All Entries
+                            </a>
+                        </div>
+                    `;
+                }
                 return;
             }
 
             // Update page title and meta
-            document.title = `${bio.name} — Womencypedia`;
+            document.title = `${currentBio.name} — Womencypedia`;
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
-                metaDesc.content = `Read the complete biography of ${bio.name}. ${bio.introduction}`;
+                metaDesc.content = `Read the complete biography of ${currentBio.name}. ${currentBio.introduction || ''}`;
             }
 
-            // Update header
-            updateBiographyHeader(bio);
-
-            // Update main content
-            updateBiographyContent(bio);
-
-            // Update sidebar
-            updateBiographySidebar(bio);
+            // Update page content
+            updateBiographyHeader(currentBio);
+            updateBiographyContent(currentBio);
+            updateBiographySidebar(currentBio);
         }
 
         function updateBiographyHeader(bio) {
@@ -669,7 +1151,7 @@
             // Update subtitle
             const subtitleElement = document.querySelector('p.text-xl.text-text-secondary.italic');
             if (subtitleElement) {
-                subtitleElement.textContent = bio.category;
+                subtitleElement.textContent = bio.category || bio.domain || '';
             }
         }
 
@@ -682,40 +1164,56 @@
             if (summaryDiv) {
                 summaryDiv.innerHTML = `
                     <p class="text-lg leading-relaxed m-0">
-                        <strong class="text-text-main">${bio.name}</strong> ${bio.introduction}
+                        <strong class="text-text-main">${bio.name}</strong> ${bio.introduction || ''}
                     </p>
                 `;
             }
 
-            // For now, keep the existing content structure but update key sections
-            // In a full implementation, this would dynamically generate the entire biography
+            // For dynamic content loading when API provides full content
+            if (bio.fullContent) {
+                // Replace article content with full dynamic content
+                article.innerHTML = bio.fullContent;
+            }
         }
 
         function updateBiographySidebar(bio) {
             // Update related entries
             const relatedContainer = document.querySelector('.space-y-3');
-            if (relatedContainer && bio.relatedWomen.length > 0) {
-                relatedContainer.innerHTML = bio.relatedWomen.map(id => {
-                    const relatedBio = biographies.find(b => b.id === id);
-                    if (!relatedBio) return '';
+            if (relatedContainer && bio.relatedWomen && bio.relatedWomen.length > 0) {
+                const relatedPromises = bio.relatedWomen.map(async id => {
+                    let relatedBio;
+                    try {
+                        if (useAPI) {
+                            relatedBio = await API.entries.getById(id);
+                        }
+                    } catch {
+                        relatedBio = typeof biographies !== 'undefined'
+                            ? biographies.find(b => b.id === id)
+                            : null;
+                    }
+                    return relatedBio;
+                });
 
-                    return `
+                Promise.all(relatedPromises).then(relatedBios => {
+                    relatedContainer.innerHTML = relatedBios.filter(b => b).map(relatedBio => `
                         <a href="biography.html?id=${relatedBio.id}" class="flex items-center gap-3 group">
                             <div class="size-12 rounded-lg bg-white flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary/50">person</span>
+                                ${relatedBio.image
+                            ? `<img src="${relatedBio.image}" alt="" class="size-12 rounded-lg object-cover">`
+                            : '<span class="material-symbols-outlined text-primary/50">person</span>'}
                             </div>
                             <div>
                                 <p class="font-bold text-sm text-text-main group-hover:text-primary">${relatedBio.name}</p>
                                 <p class="text-xs text-text-secondary">Related biography</p>
                             </div>
                         </a>
-                    `;
-                }).join('');
+                    `).join('');
+                });
             }
 
             // Update keywords
             const keywordsContainer = document.querySelector('.flex.flex-wrap.gap-2');
-            if (keywordsContainer) {
+            if (keywordsContainer && bio.tags && bio.tags.length > 0) {
                 keywordsContainer.innerHTML = bio.tags.map(tag => `
                     <span class="px-3 py-1 bg-background-cream text-text-secondary text-xs rounded-full border border-border-light">${tag}</span>
                 `).join('');
@@ -723,7 +1221,7 @@
 
             // Update references
             const referencesList = document.querySelector('ol.space-y-4');
-            if (referencesList && bio.sources.length > 0) {
+            if (referencesList && bio.sources && bio.sources.length > 0) {
                 referencesList.innerHTML = bio.sources.map((source, index) => `
                     <li class="flex gap-3">
                         <span class="text-accent-teal font-bold">[${index + 1}]</span>
@@ -732,7 +1230,93 @@
                 `).join('');
             }
         }
+
+        function setupAdminFeatures() {
+            // Check if user is admin
+            const isAdmin = typeof Auth !== 'undefined' && Auth.isAdmin();
+
+            if (isAdmin && currentBio) {
+                // Add edit button to header actions
+                const actionsContainer = document.querySelector('.flex.flex-wrap.gap-3');
+                if (actionsContainer) {
+                    const editButton = document.createElement('a');
+                    editButton.href = `admin.html#edit-${currentBio.id}`;
+                    editButton.className = 'admin-edit-btn flex items-center gap-2 px-5 py-2.5 bg-accent-teal text-white rounded-lg font-bold text-sm hover:bg-accent-teal/90';
+                    editButton.innerHTML = `
+                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit Entry
+                    `;
+                    actionsContainer.insertBefore(editButton, actionsContainer.firstChild);
+                }
+            }
+        }
     </script>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
+            <button onclick="document.getElementById('login-modal').classList.add('hidden')"
+                class="absolute top-4 right-4 size-8 flex items-center justify-center rounded-full hover:bg-border-light transition-colors">
+                <span class="material-symbols-outlined text-text-secondary">close</span>
+            </button>
+            <div class="text-center mb-6">
+                <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-primary text-3xl">login</span>
+                </div>
+                <h2 class="font-serif text-2xl font-bold text-text-main">Welcome Back</h2>
+                <p class="text-text-secondary text-sm mt-2">Sign in to access your account</p>
+            </div>
+            <form id="login-form" class="space-y-4">
+                <div id="login-error" class="hidden bg-red-100 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
+                <div>
+                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-email">Email</label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">mail</span>
+                        <input type="email" id="login-email" name="email" required placeholder="you@example.com"
+                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-password">Password</label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">lock</span>
+                        <input type="password" id="login-password" name="password" required placeholder="••••••••"
+                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="remember"
+                            class="size-4 rounded border-border-light text-primary focus:ring-primary">
+                        <span class="text-sm text-text-secondary">Remember me</span>
+                    </label>
+                    <a href="forgot-password.html" class="text-sm text-primary hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit"
+                    class="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">login</span>
+                    Sign In
+                </button>
+            </form>
+            <div class="flex items-center gap-4 my-6">
+                <div class="flex-1 h-px bg-border-light"></div>
+                <span class="text-xs text-text-secondary uppercase tracking-wider">New here?</span>
+                <div class="flex-1 h-px bg-border-light"></div>
+            </div>
+            <a href="signup.html"
+                class="w-full h-12 flex items-center justify-center gap-2 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary/10 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">person_add</span>
+                Create an Account
+            </a>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
 </body>
 
 </html>

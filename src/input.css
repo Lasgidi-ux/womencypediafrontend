@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F5F5F0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #B48CB8;
+    border-radius: 4px;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mobile menu animation */
+.mobile-menu {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-menu.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mobile-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Search sheet animation */
+.search-sheet {
+    transition: transform 0.3s ease;
+}
+
+.search-sheet.hidden {
+    transform: translateY(-100%);
+}
+
+.search-sheet.active {
+    transform: translateY(0);
+}
+
+/* Overlay */
+.overlay {
+    transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}

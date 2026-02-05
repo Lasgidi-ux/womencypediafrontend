@@ -3,7 +3,7 @@
  * Enterprise-grade Editorial Knowledge Platform
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
     initNavigation();
     initSearch();
@@ -23,7 +23,7 @@ function initScrollBehavior() {
     let lastScrollTop = 0;
     const scrollThreshold = 10;
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         if (Math.abs(currentScrollTop - lastScrollTop) < scrollThreshold) {
@@ -69,11 +69,11 @@ function initSearch() {
     if (!searchBtn || !searchSheet) return;
 
     // Open search sheet
-    searchBtn.addEventListener('click', function(e) {
+    searchBtn.addEventListener('click', function (e) {
         e.preventDefault();
         searchSheet.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
+
         // Focus search input after animation
         setTimeout(() => {
             if (searchInput) searchInput.focus();
@@ -82,13 +82,13 @@ function initSearch() {
 
     // Close search sheet
     if (searchClose) {
-        searchClose.addEventListener('click', function() {
+        searchClose.addEventListener('click', function () {
             closeSearchSheet();
         });
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && searchSheet.classList.contains('active')) {
             closeSearchSheet();
         }
@@ -102,7 +102,7 @@ function initSearch() {
     // Search form submission
     const searchForm = document.querySelector('.search-sheet__form');
     if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
+        searchForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const query = searchInput?.value.trim();
             if (query) {
@@ -115,31 +115,31 @@ function initSearch() {
 }
 
 /**
- * Mobile Bottom Sheet Menu
+ * Mobile Bottom Sheet Menu with Accordion Categories
  */
 function initMobileMenu() {
     const menuBtn = document.querySelector('.navbar__menu-btn');
-    const bottomSheet = document.querySelector('.bottom-sheet');
-    const menuOverlay = document.querySelector('.menu-overlay');
+    const mobileMenu = document.querySelector('#mobileMenu');
+    const menuOverlay = document.querySelector('#menuOverlay');
 
-    if (!menuBtn || !bottomSheet) return;
+    if (!menuBtn || !mobileMenu) return;
 
     // Open menu
-    menuBtn.addEventListener('click', function(e) {
+    menuBtn.addEventListener('click', function (e) {
         e.preventDefault();
         openMenu();
     });
 
     // Close on overlay click
     if (menuOverlay) {
-        menuOverlay.addEventListener('click', function() {
+        menuOverlay.addEventListener('click', function () {
             closeMenu();
         });
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && bottomSheet.classList.contains('active')) {
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
             closeMenu();
         }
     });
@@ -148,11 +148,11 @@ function initMobileMenu() {
     let touchStartY = 0;
     let touchEndY = 0;
 
-    bottomSheet.addEventListener('touchstart', function(e) {
+    mobileMenu.addEventListener('touchstart', function (e) {
         touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
-    bottomSheet.addEventListener('touchend', function(e) {
+    mobileMenu.addEventListener('touchend', function (e) {
         touchEndY = e.changedTouches[0].screenY;
         handleSwipe();
     }, { passive: true });
@@ -165,21 +165,85 @@ function initMobileMenu() {
     }
 
     function openMenu() {
-        bottomSheet.classList.add('active');
+        mobileMenu.classList.add('active');
         if (menuOverlay) menuOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
+
         // Focus first menu item
-        const firstLink = bottomSheet.querySelector('.bottom-sheet__link');
+        const firstLink = mobileMenu.querySelector('a');
         if (firstLink) {
             setTimeout(() => firstLink.focus(), 300);
         }
     }
 
     function closeMenu() {
-        bottomSheet.classList.remove('active');
+        mobileMenu.classList.remove('active');
         if (menuOverlay) menuOverlay.classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    // Accordion functionality for mobile categories
+    initMobileAccordion();
+}
+
+/**
+ * Mobile Accordion Categories
+ */
+function initMobileAccordion() {
+    const mobileMenu = document.querySelector('#mobileMenu');
+    if (!mobileMenu) return;
+
+    // Add click handlers to section headers
+    const sectionHeaders = mobileMenu.querySelectorAll('h3');
+
+    sectionHeaders.forEach((header, index) => {
+        // Create clickable wrapper for section
+        const section = header.parentElement;
+        section.style.cursor = 'pointer';
+
+        // Add expand icon to header
+        header.innerHTML = `${header.textContent} <span class="material-symbols-outlined accordion-icon" style="float:right;font-size:18px;transition:transform 0.3s ease;">expand_more</span>`;
+
+        // Initially collapse all sections except first
+        if (index > 0) {
+            const links = section.querySelectorAll('a');
+            links.forEach(link => {
+                link.style.display = 'none';
+            });
+        }
+
+        header.addEventListener('click', function (e) {
+            e.preventDefault();
+            toggleSection(section, header);
+        });
+
+        // Also make section container clickable
+        section.addEventListener('click', function (e) {
+            if (e.target === header || header.contains(e.target)) return;
+            const links = section.querySelectorAll('a');
+            if (links.length > 0 && links[0].style.display === 'none') {
+                toggleSection(section, header);
+            }
+        });
+    });
+}
+
+function toggleSection(section, header) {
+    const links = section.querySelectorAll('a');
+    const icon = header.querySelector('.accordion-icon');
+    const isExpanded = links.length > 0 && links[0].style.display !== 'none';
+
+    links.forEach(link => {
+        link.style.display = isExpanded ? 'none' : 'block';
+        link.style.opacity = '0';
+        link.style.transition = 'opacity 0.2s ease';
+        setTimeout(() => {
+            link.style.opacity = '1';
+        }, 50);
+    });
+
+    if (icon) {
+        icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
     }
 }
 
@@ -192,7 +256,7 @@ function initAccessibility() {
     const mainContent = document.querySelector('main');
 
     if (skipLink && mainContent) {
-        skipLink.addEventListener('click', function(e) {
+        skipLink.addEventListener('click', function (e) {
             e.preventDefault();
             mainContent.focus();
             mainContent.scrollIntoView();
@@ -201,21 +265,21 @@ function initAccessibility() {
 
     // Add keyboard navigation for interactive elements
     const interactiveElements = document.querySelectorAll('button, a, input, textarea, select');
-    
+
     interactiveElements.forEach(element => {
         // Ensure visible focus states
-        element.addEventListener('focus', function() {
+        element.addEventListener('focus', function () {
             this.classList.add('focus-visible');
         });
 
-        element.addEventListener('blur', function() {
+        element.addEventListener('blur', function () {
             this.classList.remove('focus-visible');
         });
     });
 
     // Handle reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
+
     if (prefersReducedMotion.matches) {
         document.documentElement.style.setProperty('--transition-duration', '0s');
     }
@@ -232,7 +296,7 @@ function validateForm(formElement) {
         if (!field.value.trim()) {
             isValid = false;
             field.classList.add('error');
-            
+
             // Show error message
             let errorMsg = field.parentElement.querySelector('.error-message');
             if (!errorMsg) {
@@ -269,7 +333,7 @@ function isValidEmail(email) {
  * Smooth scroll for anchor links
  */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
         if (targetId === '#') return;
 
@@ -330,4 +394,40 @@ if ('IntersectionObserver' in window) {
 window.WomencypediaApp = {
     validateForm,
     isValidEmail
+};
+
+// Global toggle functions for inline onclick handlers
+window.toggleMenu = function () {
+    const mobileMenu = document.querySelector('#mobileMenu');
+    const menuOverlay = document.querySelector('#menuOverlay');
+
+    if (!mobileMenu) return;
+
+    if (mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        if (menuOverlay) menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    } else {
+        mobileMenu.classList.add('active');
+        if (menuOverlay) menuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.toggleSearch = function () {
+    const searchSheet = document.querySelector('#searchSheet');
+    if (!searchSheet) return;
+
+    if (searchSheet.classList.contains('active')) {
+        searchSheet.classList.remove('active');
+        document.body.style.overflow = '';
+    } else {
+        searchSheet.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Focus search input
+        const searchInput = searchSheet.querySelector('input[type="search"]');
+        if (searchInput) {
+            setTimeout(() => searchInput.focus(), 300);
+        }
+    }
 };

@@ -4,15 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Featured Entries — Womencypedia</title>
+    <title>Terms of Use — Womencypedia</title>
     <meta name="description"
-        content="Explore curated selections of remarkable women's stories from across history and around the world.">
+        content="Terms and conditions for using Womencypedia. Understand your rights and responsibilities when using our platform.">
 
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
+
     <!-- Tailwind CSS (Production Build) -->
     <link rel="stylesheet" href="css/tailwind.css" />
 </head>
@@ -145,7 +149,6 @@
     </nav>
 
     <!-- Header -->
-    <!-- Header -->
     <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
@@ -162,7 +165,7 @@
                         <!-- Explore Dropdown -->
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
                                 Explore
                                 <span
                                     class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
@@ -176,7 +179,7 @@
                                     <a href="browse.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Browse</a>
                                     <a href="featured.html"
-                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Featured</a>
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Featured</a>
                                     <a href="collections.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Collections</a>
                                     <a href="timelines.html"
@@ -297,12 +300,17 @@
                 </div>
                 <div class="flex items-center gap-3 lg:gap-6">
                     <div
-                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64">
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
                         <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
                         <input
                             class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
-                            placeholder="Search..." type="search" />
+                            placeholder="Search the archive..." type="search" />
                     </div>
+                    <button
+                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                        aria-label="Open search">
+                        <span class="material-symbols-outlined text-accent-teal">search</span>
+                    </button>
                     <div class="hidden sm:flex items-center gap-4">
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html">Donate</a>
@@ -311,7 +319,7 @@
                             Admin
                         </a>
                         <button data-auth="signin"
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold">
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
                             Sign In
                         </button>
                         <div data-auth="signout" class="hidden flex items-center gap-3">
@@ -321,13 +329,14 @@
                                 <span data-auth="user-info"></span>
                             </a>
                             <button
-                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold">
+                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
                                 Sign Out
                             </button>
                         </div>
                     </div>
-                    <button class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5"
-                        aria-label="Menu">
+                    <button onclick="toggleMenu()"
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
                         <span class="material-symbols-outlined text-text-main">menu</span>
                     </button>
                 </div>
@@ -335,255 +344,408 @@
         </div>
     </header>
 
-    <main>
-        <!-- Hero -->
-        <section class="bg-gradient-to-br from-accent-gold/20 via-primary/10 to-lavender-soft/30 py-16 lg:py-24">
-            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12 text-center">
-                <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Editor's
-                    Picks</span>
-                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-text-main mb-6">Featured Entries
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-accent-gold/10 via-background-cream to-primary/5 py-16 lg:py-20">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Legal</span>
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">
+                    Terms of Use
                 </h1>
-                <p class="text-text-secondary text-lg max-w-2xl mx-auto">
-                    Curated selections of remarkable women's stories — chosen for their historical significance,
-                    storytelling depth, and cultural resonance.
+                <p class="text-text-secondary text-lg max-w-2xl mx-auto mb-6">
+                    Please read these terms carefully before using Womencypedia. By accessing our platform, you agree to
+                    be bound by these terms.
                 </p>
+                <div class="w-24 h-1 bg-accent-gold rounded-full mx-auto"></div>
+                <p class="text-sm text-text-secondary mt-6">Last updated: February 3, 2026</p>
             </div>
         </section>
 
-        <!-- Featured Story of the Month -->
+        <!-- Terms Content -->
         <section class="py-16 lg:py-20 bg-background-cream">
-            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
-                <div class="bg-gradient-to-br from-text-main to-text-main/90 rounded-3xl overflow-hidden">
-                    <div class="grid lg:grid-cols-2 gap-0">
-                        <div
-                            class="aspect-[4/3] lg:aspect-auto bg-gradient-to-br from-primary/30 to-accent-gold/30 relative">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-white/20 text-[150px]">person</span>
-                            </div>
-                            <span
-                                class="absolute top-6 left-6 bg-accent-gold text-white text-xs font-bold px-4 py-2 rounded-full uppercase">Story
-                                of the Month</span>
-                        </div>
-                        <div class="p-8 lg:p-12 flex flex-col justify-center">
-                            <div class="flex gap-2 mb-4">
-                                <span
-                                    class="px-3 py-1 bg-white/10 text-white/80 text-xs rounded-full">Pre-Colonial</span>
-                                <span class="px-3 py-1 bg-white/10 text-white/80 text-xs rounded-full">Africa</span>
-                            </div>
-                            <h2 class="font-serif text-3xl lg:text-4xl font-bold text-white mb-4">Queen Nzinga of Ndongo
-                                and Matamba</h2>
-                            <p class="text-white/80 text-lg mb-6 leading-relaxed">
-                                The legendary 17th-century queen who resisted Portuguese colonization for over 40 years,
-                                becoming a symbol of African resistance and diplomatic brilliance.
-                            </p>
-                            <a href="biography.html"
-                                class="inline-flex items-center gap-2 px-6 py-3 bg-white text-text-main font-bold rounded-lg hover:bg-primary hover:text-white transition-colors w-fit">
-                                Read Full Biography
-                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                            </a>
-                        </div>
+            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12">
+                <div class="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-border-light">
+
+                    <!-- Table of Contents -->
+                    <div class="mb-12 p-6 bg-accent-gold/10 rounded-xl border border-border-light">
+                        <h2 class="font-serif text-xl font-bold text-text-main mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-accent-gold">list</span>
+                            Table of Contents
+                        </h2>
+                        <nav class="space-y-2">
+                            <a href="#acceptance"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">1.
+                                Acceptance of Terms</a>
+                            <a href="#use-of-service"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">2. Use of
+                                the Service</a>
+                            <a href="#user-accounts"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">3. User
+                                Accounts</a>
+                            <a href="#user-content"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">4. User
+                                Content and Contributions</a>
+                            <a href="#intellectual-property"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">5.
+                                Intellectual Property</a>
+                            <a href="#prohibited-conduct"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">6.
+                                Prohibited Conduct</a>
+                            <a href="#donations"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">7.
+                                Donations</a>
+                            <a href="#disclaimers"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">8.
+                                Disclaimers</a>
+                            <a href="#limitation"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">9.
+                                Limitation of Liability</a>
+                            <a href="#indemnification"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">10.
+                                Indemnification</a>
+                            <a href="#termination"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">11.
+                                Termination</a>
+                            <a href="#governing-law"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">12.
+                                Governing Law</a>
+                            <a href="#changes-terms"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">13.
+                                Changes to These Terms</a>
+                            <a href="#contact-terms"
+                                class="block text-sm text-text-secondary hover:text-primary transition-colors">14.
+                                Contact Information</a>
+                        </nav>
                     </div>
+
+                    <!-- Section 1 -->
+                    <section id="acceptance" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">1</span>
+                            Acceptance of Terms
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>Welcome to Womencypedia. These Terms of Use ("Terms") govern your access to and use of
+                                the Womencypedia website, services, and content (collectively, the "Service") provided
+                                by Womencypedia Foundation ("we," "us," or "our").</p>
+                            <p>By accessing or using our Service, you agree to be bound by these Terms. If you do not
+                                agree to these Terms, you may not access or use the Service. These Terms apply to all
+                                visitors, users, and others who access or use the Service.</p>
+                            <div class="bg-primary/5 rounded-lg p-4 border-l-4 border-primary">
+                                <p class="text-sm"><strong>Important:</strong> If you are under 13 years of age, you may
+                                    not use the Service. By using the Service, you represent that you are at least 13
+                                    years old.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 2 -->
+                    <section id="use-of-service" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">2</span>
+                            Use of the Service
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>Womencypedia is an educational platform dedicated to preserving and sharing the stories
+                                of women throughout history. You may use the Service for personal, non-commercial, and
+                                educational purposes in accordance with these Terms.</p>
+                            <h3 class="text-lg font-bold text-text-main mt-6">Permitted Uses</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Browsing and reading biographical content</li>
+                                <li>Sharing content through social media with proper attribution</li>
+                                <li>Using content for educational and research purposes</li>
+                                <li>Contributing content in accordance with our Contributor Guidelines</li>
+                                <li>Making donations to support our mission</li>
+                            </ul>
+                            <h3 class="text-lg font-bold text-text-main mt-6">Restricted Uses</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Commercial use without prior written consent</li>
+                                <li>Reproducing substantial portions of content for publication</li>
+                                <li>Creating derivative works without permission</li>
+                                <li>Automated scraping or data collection</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Section 3 -->
+                    <section id="user-accounts" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">3</span>
+                            User Accounts
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>Some features of the Service may require you to create an account. When you create an
+                                account, you agree to:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Provide accurate, current, and complete information</li>
+                                <li>Maintain and update your information as needed</li>
+                                <li>Keep your password confidential and secure</li>
+                                <li>Accept responsibility for all activities under your account</li>
+                                <li>Notify us immediately of any unauthorized access</li>
+                            </ul>
+                            <p>We reserve the right to suspend or terminate accounts that violate these Terms or engage
+                                in suspicious activity.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 4 -->
+                    <section id="user-content" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">4</span>
+                            User Content and Contributions
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>Our Service allows you to submit content, including nominations, stories, comments, and
+                                other materials ("User Content"). By submitting User Content, you:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify,
+                                    publish, and display your User Content in connection with the Service</li>
+                                <li>Represent that you own or have the necessary rights to submit the content</li>
+                                <li>Confirm that the content is accurate to the best of your knowledge</li>
+                                <li>Agree that your content does not violate the rights of any third party</li>
+                            </ul>
+                            <p>We reserve the right to edit, modify, or remove any User Content that violates these
+                                Terms or our editorial standards.</p>
+                            <div class="bg-accent-teal/10 rounded-lg p-4 border-l-4 border-accent-teal mt-4">
+                                <p class="text-sm"><strong>Note:</strong> Please review our <a
+                                        href="contributor-guidelines.html"
+                                        class="text-primary hover:underline">Contributor Guidelines</a> for detailed
+                                    information about content submission requirements.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 5 -->
+                    <section id="intellectual-property" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">5</span>
+                            Intellectual Property
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>The Service and its original content (excluding User Content) are owned by Womencypedia
+                                Foundation and are protected by copyright, trademark, and other intellectual property
+                                laws.</p>
+                            <h3 class="text-lg font-bold text-text-main mt-6">Our Content</h3>
+                            <p>All text, graphics, logos, images, audio, video, and other materials on the Service are
+                                protected by copyright. You may not copy, modify, distribute, or create derivative works
+                                without our express written permission.</p>
+                            <h3 class="text-lg font-bold text-text-main mt-6">Trademarks</h3>
+                            <p>"Womencypedia" and our logo are trademarks of Womencypedia Foundation. You may not use
+                                our trademarks without prior written consent.</p>
+                            <h3 class="text-lg font-bold text-text-main mt-6">Fair Use</h3>
+                            <p>We respect fair use principles for educational and research purposes. Brief quotations
+                                with proper attribution are generally permitted.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 6 -->
+                    <section id="prohibited-conduct" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">6</span>
+                            Prohibited Conduct
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>You agree not to engage in any of the following prohibited activities:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Violating any applicable laws or regulations</li>
+                                <li>Submitting false, misleading, or defamatory content</li>
+                                <li>Harassing, threatening, or intimidating other users</li>
+                                <li>Attempting to gain unauthorized access to our systems</li>
+                                <li>Interfering with the proper functioning of the Service</li>
+                                <li>Using the Service for spam or unsolicited communications</li>
+                                <li>Impersonating another person or entity</li>
+                                <li>Uploading malicious code or viruses</li>
+                                <li>Scraping or collecting user data without consent</li>
+                                <li>Using the Service to discriminate or promote hate</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Section 7 -->
+                    <section id="donations" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">7</span>
+                            Donations
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>Womencypedia Foundation is a non-profit organization. We accept donations to support our
+                                mission. By making a donation, you agree that:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Donations are voluntary and non-refundable</li>
+                                <li>We will use donations in accordance with our mission</li>
+                                <li>Tax deductibility depends on your jurisdiction's laws</li>
+                                <li>We will provide donation receipts as required by law</li>
+                            </ul>
+                            <p>Payment processing is handled by trusted third-party providers. We do not store your
+                                complete payment information.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 8 -->
+                    <section id="disclaimers" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">8</span>
+                            Disclaimers
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY
+                                KIND, EITHER EXPRESS OR IMPLIED.</p>
+                            <p>We do not warrant that:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>The Service will be uninterrupted, secure, or error-free</li>
+                                <li>All content is complete, accurate, or up-to-date</li>
+                                <li>The Service will meet your specific requirements</li>
+                                <li>Any errors in the Service will be corrected</li>
+                            </ul>
+                            <p>While we strive for historical accuracy, biographical content represents our best
+                                scholarly interpretation and may be subject to revision as new information becomes
+                                available.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 9 -->
+                    <section id="limitation" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">9</span>
+                            Limitation of Liability
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, WOMENCYPEDIA FOUNDATION SHALL NOT BE LIABLE FOR
+                                ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR
+                                RELATED TO YOUR USE OF THE SERVICE.</p>
+                            <p>Our total liability shall not exceed the amount you paid to us, if any, in the twelve
+                                (12) months prior to the claim.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 10 -->
+                    <section id="indemnification" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">10</span>
+                            Indemnification
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>You agree to indemnify, defend, and hold harmless Womencypedia Foundation and its
+                                officers, directors, employees, and volunteers from any claims, damages, losses,
+                                liabilities, and expenses (including legal fees) arising from:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Your use of the Service</li>
+                                <li>Your violation of these Terms</li>
+                                <li>Your User Content</li>
+                                <li>Your violation of any rights of another party</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Section 11 -->
+                    <section id="termination" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">11</span>
+                            Termination
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>We may terminate or suspend your access to the Service immediately, without prior notice
+                                or liability, for any reason, including if you breach these Terms.</p>
+                            <p>Upon termination:</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Your right to use the Service will immediately cease</li>
+                                <li>We may delete your account and associated data</li>
+                                <li>Provisions that by nature should survive termination will remain in effect</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Section 12 -->
+                    <section id="governing-law" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">12</span>
+                            Governing Law
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>These Terms shall be governed by and construed in accordance with the laws of the
+                                jurisdiction in which Womencypedia Foundation is registered, without regard to its
+                                conflict of law provisions.</p>
+                            <p>Any disputes arising from these Terms or the Service shall be resolved through good-faith
+                                negotiation, and if necessary, binding arbitration or litigation in the appropriate
+                                courts.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 13 -->
+                    <section id="changes-terms" class="mb-10">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">13</span>
+                            Changes to These Terms
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>We reserve the right to modify these Terms at any time. We will notify users of
+                                significant changes by posting the new Terms on this page and updating the "Last
+                                updated" date.</p>
+                            <p>Your continued use of the Service after changes become effective constitutes acceptance
+                                of the revised Terms. We encourage you to review these Terms periodically.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 14 -->
+                    <section id="contact-terms" class="mb-6">
+                        <h2 class="font-serif text-2xl font-bold text-text-main mb-4 flex items-center gap-3">
+                            <span
+                                class="flex items-center justify-center size-8 rounded-lg bg-accent-gold/20 text-accent-gold font-bold text-sm">14</span>
+                            Contact Information
+                        </h2>
+                        <div class="prose prose-lg text-text-secondary leading-relaxed space-y-4">
+                            <p>If you have any questions about these Terms of Use, please contact us:</p>
+                            <div class="bg-accent-gold/10 rounded-xl p-6 border border-border-light mt-6">
+                                <p class="mb-2"><strong>Womencypedia Foundation</strong></p>
+                                <p class="flex items-center gap-2 mb-2">
+                                    <span class="material-symbols-outlined text-accent-gold text-[18px]">mail</span>
+                                    <a href="mailto:legal@womencypedia.org"
+                                        class="text-primary hover:underline">legal@womencypedia.org</a>
+                                </p>
+                                <p class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-accent-gold text-[18px]">language</span>
+                                    <a href="contact.html" class="text-primary hover:underline">Contact Form</a>
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
                 </div>
             </div>
         </section>
 
-        <!-- Featured Collections -->
-        <section class="py-16 lg:py-20 bg-lavender-soft/30">
-            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
-                <div class="text-center mb-12">
-                    <span
-                        class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Thematic</span>
-                    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-text-main">Featured Collections</h2>
-                </div>
-
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Collection 1 -->
-                    <a href="#"
-                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="images/african-queens.png" alt="African Queens & Matriarchs"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="font-serif text-xl font-bold text-white">African Queens & Matriarchs</h3>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-text-secondary mb-3">Women whose political, spiritual, and cultural
-                                authority shaped kingdoms and civilizations.</p>
-                            <span class="text-xs font-bold text-accent-teal">42 entries →</span>
-                        </div>
+        <!-- Related Links -->
+        <section class="py-12 bg-accent-gold/10">
+            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12">
+                <h2 class="font-serif text-xl font-bold text-text-main mb-6 text-center">Related Legal Documents</h2>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="privacy-policy.html"
+                        class="flex items-center gap-2 px-6 py-3 bg-white border border-border-light rounded-lg hover:border-primary hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary">shield</span>
+                        <span class="font-medium">Privacy Policy</span>
                     </a>
-
-                    <!-- Collection 2 -->
-                    <a href="#"
-                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="images/science_curie.png" alt="Hidden Figures of Science"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="font-serif text-xl font-bold text-white">Hidden Figures of Science</h3>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-text-secondary mb-3">Women whose scientific brilliance shaped the
-                                world despite erasure from official records.</p>
-                            <span class="text-xs font-bold text-accent-teal">38 entries →</span>
-                        </div>
+                    <a href="contributor-guidelines.html"
+                        class="flex items-center gap-2 px-6 py-3 bg-white border border-border-light rounded-lg hover:border-primary hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary">edit_note</span>
+                        <span class="font-medium">Contributor Guidelines</span>
                     </a>
-
-                    <!-- Collection 3 -->
-                    <a href="#"
-                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="images/faith_hildegard.png" alt="Women of Faith Traditions"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="font-serif text-xl font-bold text-white">Women of Faith Traditions</h3>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-text-secondary mb-3">Spiritual leaders, theologians, healers, and
-                                guardians of sacred knowledge across traditions.</p>
-                            <span class="text-xs font-bold text-accent-teal">55 entries →</span>
-                        </div>
-                    </a>
-
-                    <!-- Collection 4 -->
-                    <a href="#"
-                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="images/resistance_trung.png" alt="Women in Resistance"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="font-serif text-xl font-bold text-white">Women in Resistance</h3>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-text-secondary mb-3">Activists who challenged oppression, led
-                                movements, and transformed societies.</p>
-                            <span class="text-xs font-bold text-accent-teal">67 entries →</span>
-                        </div>
-                    </a>
-
-                    <!-- Collection 5 -->
-                    <a href="#"
-                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="images/oral_angelou.png" alt="Women in Oral Traditions"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="font-serif text-xl font-bold text-white">Women in Oral Traditions</h3>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-text-secondary mb-3">Storytellers, genealogists, and cultural memory
-                                keepers who preserved history through voice.</p>
-                            <span class="text-xs font-bold text-accent-teal">29 entries →</span>
-                        </div>
-                    </a>
-
-                    <!-- Collection 6 -->
-                    <a href="#"
-                        class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="images/environment_maathai.png" alt="Environmental Stewards"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="font-serif text-xl font-bold text-white">Environmental Stewards</h3>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-sm text-text-secondary mb-3">Protectors of land, water, climate, and
-                                biodiversity throughout history.</p>
-                            <span class="text-xs font-bold text-accent-teal">24 entries →</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Editor's Picks Grid -->
-        <section class="py-16 lg:py-20 bg-background-cream">
-            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
-                <div class="text-center mb-12">
-                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-2 block">Curated</span>
-                    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-text-main">Editor's Picks</h2>
-                </div>
-
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Entry cards -->
-                    <a href="biography.html"
-                        class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="aspect-[4/3] bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary/30 text-5xl">person</span>
-                        </div>
-                        <div class="p-4">
-                            <span class="text-xs font-bold text-accent-teal uppercase">Colonial • Africa</span>
-                            <h3 class="font-serif text-lg font-bold text-text-main mt-1 group-hover:text-primary">Mary
-                                Mitchell Slessor</h3>
-                            <p class="text-sm text-text-secondary mt-1 line-clamp-2">Scottish missionary who became a
-                                cultural bridge in Nigeria...</p>
-                        </div>
-                    </a>
-
-                    <a href="biography.html"
-                        class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="aspect-[4/3] bg-gradient-to-br from-accent-teal/20 to-divider/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-accent-teal/30 text-5xl">person</span>
-                        </div>
-                        <div class="p-4">
-                            <span class="text-xs font-bold text-accent-teal uppercase">Post-Colonial • Africa</span>
-                            <h3 class="font-serif text-lg font-bold text-text-main mt-1 group-hover:text-primary">Rev.
-                                Mgbeke George Okore</h3>
-                            <p class="text-sm text-text-secondary mt-1 line-clamp-2">Pioneer whose leadership reshaped
-                                the Presbyterian Church...</p>
-                        </div>
-                    </a>
-
-                    <a href="biography.html"
-                        class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="aspect-[4/3] bg-gradient-to-br from-divider/20 to-primary/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-divider/30 text-5xl">person</span>
-                        </div>
-                        <div class="p-4">
-                            <span class="text-xs font-bold text-accent-teal uppercase">Contemporary • Middle East</span>
-                            <h3 class="font-serif text-lg font-bold text-text-main mt-1 group-hover:text-primary">
-                                Tawakkol Karman</h3>
-                            <p class="text-sm text-text-secondary mt-1 line-clamp-2">Nobel Peace Prize laureate and
-                                human rights activist...</p>
-                        </div>
-                    </a>
-
-                    <a href="biography.html"
-                        class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="aspect-[4/3] bg-gradient-to-br from-accent-gold/20 to-accent-teal/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-accent-gold/30 text-5xl">person</span>
-                        </div>
-                        <div class="p-4">
-                            <span class="text-xs font-bold text-accent-teal uppercase">Pre-Colonial • Asia</span>
-                            <h3 class="font-serif text-lg font-bold text-text-main mt-1 group-hover:text-primary">
-                                Empress Wu Zetian</h3>
-                            <p class="text-sm text-text-secondary mt-1 line-clamp-2">The only woman to assume the title
-                                of Empress of China...</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="text-center mt-10">
-                    <a href="browse.html"
-                        class="inline-flex items-center gap-2 px-8 py-4 bg-text-main text-white font-bold rounded-lg hover:bg-text-main/90">
-                        Browse All Entries
-                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    <a href="editorial-standards.html"
+                        class="flex items-center gap-2 px-6 py-3 bg-white border border-border-light rounded-lg hover:border-primary hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary">fact_check</span>
+                        <span class="font-medium">Editorial Standards</span>
                     </a>
                 </div>
             </div>
@@ -704,70 +866,10 @@
             </div>
         </div>
     </footer>
-    <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
-            <button onclick="document.getElementById('login-modal').classList.add('hidden')"
-                class="absolute top-4 right-4 size-8 flex items-center justify-center rounded-full hover:bg-border-light transition-colors">
-                <span class="material-symbols-outlined text-text-secondary">close</span>
-            </button>
-            <div class="text-center mb-6">
-                <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <span class="material-symbols-outlined text-primary text-3xl">login</span>
-                </div>
-                <h2 class="font-serif text-2xl font-bold text-text-main">Welcome Back</h2>
-                <p class="text-text-secondary text-sm mt-2">Sign in to access your account</p>
-            </div>
-            <form id="login-form" class="space-y-4">
-                <div id="login-error" class="hidden bg-red-100 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
-                <div>
-                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-email">Email</label>
-                    <div class="relative">
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">mail</span>
-                        <input type="email" id="login-email" name="email" required placeholder="you@example.com"
-                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-password">Password</label>
-                    <div class="relative">
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">lock</span>
-                        <input type="password" id="login-password" name="password" required placeholder="••••••••"
-                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
-                    </div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" name="remember"
-                            class="size-4 rounded border-border-light text-primary focus:ring-primary">
-                        <span class="text-sm text-text-secondary">Remember me</span>
-                    </label>
-                    <a href="forgot-password.html" class="text-sm text-primary hover:underline">Forgot password?</a>
-                </div>
-                <button type="submit"
-                    class="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-                    <span class="material-symbols-outlined text-[20px]">login</span>
-                    Sign In
-                </button>
-            </form>
-            <div class="flex items-center gap-4 my-6">
-                <div class="flex-1 h-px bg-border-light"></div>
-                <span class="text-xs text-text-secondary uppercase tracking-wider">New here?</span>
-                <div class="flex-1 h-px bg-border-light"></div>
-            </div>
-            <a href="signup.html"
-                class="w-full h-12 flex items-center justify-center gap-2 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary/10 transition-colors">
-                <span class="material-symbols-outlined text-[20px]">person_add</span>
-                Create an Account
-            </a>
-        </div>
-    </div>
-
     <script src="js/config.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/navigation.js"></script>
 </body>
 

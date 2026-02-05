@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>African Queens — Womencypedia Collections</title>
+    <meta name="description"
+        content="Explore the powerful legacies of African queens, warrior monarchs, and female rulers who shaped the continent's history.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="../css/tailwind.css" />
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+
+    <!-- Header -->
+    <header id="navbar"
+        class="w-full border-b border-divider bg-background-cream sticky top-0 z-50 transition-transform duration-300">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a class="flex items-center gap-2 lg:gap-3 group" href="../index.html">
+                        <div
+                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
+                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
+                        </div>
+                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
+                        </h2>
+                    </a>
+                    <!-- Desktop Nav -->
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="../index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="../browse.html">Browse</a>
+                        <a class="text-primary text-sm font-medium uppercase tracking-wider border-b-2 border-primary"
+                            href="../collections.html">Collections</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="../about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="../resources.html">Resources</a>
+                    </nav>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <a href="../collections.html"
+                        class="hidden sm:block text-sm font-medium text-text-secondary hover:text-primary transition-colors">←
+                        All Collections</a>
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMenu()"
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="min-h-screen">
+        <!-- Hero Section -->
+        <section
+            class="relative py-16 lg:py-24 bg-gradient-to-br from-accent-gold/20 via-primary/10 to-lavender-soft/40 overflow-hidden">
+            <div class="absolute inset-0 opacity-10"
+                style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.15\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+            </div>
+            <div class="relative mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12 text-center">
+                <span
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-accent-gold/20 text-accent-gold text-sm font-bold rounded-full mb-6 border border-accent-gold/30">
+                    <span class="material-symbols-outlined text-lg">auto_awesome</span>
+                    Featured Collection
+                </span>
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-text-main mb-6">
+                    African Queens
+                </h1>
+                <p class="text-text-secondary text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
+                    Discover the remarkable stories of African queens, warrior monarchs, and female rulers who governed
+                    kingdoms, led armies, and shaped the continent's history for centuries.
+                </p>
+                <div class="flex items-center justify-center gap-6 mt-8 text-sm text-text-secondary">
+                    <span class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">group</span>
+                        <span id="entry-count">Loading...</span> Biographies
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-gold">public</span>
+                        Africa
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Entries Grid -->
+        <section class="py-16 lg:py-24">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <!-- Loading State -->
+                <div id="loading-state" class="text-center py-12">
+                    <span class="material-symbols-outlined text-primary text-5xl animate-spin mb-4 block">refresh</span>
+                    <p class="text-text-secondary">Loading collection...</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="error-state" class="hidden text-center py-12 bg-red-50 rounded-2xl border border-red-100">
+                    <span class="material-symbols-outlined text-red-400 text-5xl mb-4 block">error</span>
+                    <p class="text-red-600 font-medium mb-4">Failed to load collection</p>
+                    <button onclick="loadCollection()"
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90">
+                        <span class="material-symbols-outlined">refresh</span>
+                        Try Again
+                    </button>
+                </div>
+
+                <!-- Entries Grid -->
+                <div id="entries-grid" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Entries will be dynamically loaded here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden text-center py-12">
+                    <span class="material-symbols-outlined text-text-secondary text-5xl mb-4 block">search_off</span>
+                    <p class="text-text-secondary font-medium">No entries found in this collection yet.</p>
+                    <a href="../nominate.html"
+                        class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90">
+                        <span class="material-symbols-outlined">add</span>
+                        Nominate Someone
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Collections -->
+        <section class="py-16 bg-lavender-soft/30 border-t border-border-light">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <h2 class="font-serif text-2xl lg:text-3xl font-bold text-text-main mb-8 text-center">Explore More
+                    Collections</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <a href="foremothers.html"
+                        class="bg-white rounded-xl p-4 border border-border-light hover:shadow-md hover:border-primary/30 transition-all text-center group">
+                        <span
+                            class="material-symbols-outlined text-primary text-2xl mb-2 group-hover:scale-110 transition-transform block">history</span>
+                        <span class="font-medium text-sm text-text-main">Foremothers</span>
+                    </a>
+                    <a href="indigenous-matriarchs.html"
+                        class="bg-white rounded-xl p-4 border border-border-light hover:shadow-md hover:border-primary/30 transition-all text-center group">
+                        <span
+                            class="material-symbols-outlined text-accent-teal text-2xl mb-2 group-hover:scale-110 transition-transform block">diversity_3</span>
+                        <span class="font-medium text-sm text-text-main">Indigenous Matriarchs</span>
+                    </a>
+                    <a href="conflict-peace.html"
+                        class="bg-white rounded-xl p-4 border border-border-light hover:shadow-md hover:border-primary/30 transition-all text-center group">
+                        <span
+                            class="material-symbols-outlined text-accent-gold text-2xl mb-2 group-hover:scale-110 transition-transform block">gavel</span>
+                        <span class="font-medium text-sm text-text-main">Conflict & Peace</span>
+                    </a>
+                    <a href="diaspora.html"
+                        class="bg-white rounded-xl p-4 border border-border-light hover:shadow-md hover:border-primary/30 transition-all text-center group">
+                        <span
+                            class="material-symbols-outlined text-primary text-2xl mb-2 group-hover:scale-110 transition-transform block">public</span>
+                        <span class="font-medium text-sm text-text-main">Diaspora</span>
+                    </a>
+                    <a href="missionary-women.html"
+                        class="bg-white rounded-xl p-4 border border-border-light hover:shadow-md hover:border-primary/30 transition-all text-center group">
+                        <span
+                            class="material-symbols-outlined text-lavender text-2xl mb-2 group-hover:scale-110 transition-transform block">church</span>
+                        <span class="font-medium text-sm text-text-main">Missionary Women</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+            <div class="flex flex-col items-center text-center">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
+                    <span class="font-serif text-lg font-bold">Womencypedia</span>
+                </div>
+                <p class="text-gray-400 text-sm mb-6 max-w-md">
+                    The world's first interpretive encyclopedia of women.
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="../privacy-policy.html" class="text-gray-500 hover:text-primary text-sm">Privacy</a>
+                    <a href="../terms-of-use.html" class="text-gray-500 hover:text-primary text-sm">Terms</a>
+                    <a href="../contact.html" class="text-gray-500 hover:text-primary text-sm">Contact</a>
+                </div>
+                <p class="text-xs text-gray-500 mt-6">© 2026 Womencypedia Foundation</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/data.js"></script>
+
+    <script>
+        const COLLECTION_CATEGORY = 'African Queenship';
+        const COLLECTION_REGION = 'Africa';
+
+        async function loadCollection() {
+            const loadingState = document.getElementById('loading-state');
+            const errorState = document.getElementById('error-state');
+            const entriesGrid = document.getElementById('entries-grid');
+            const emptyState = document.getElementById('empty-state');
+            const entryCount = document.getElementById('entry-count');
+
+            // Show loading
+            loadingState.classList.remove('hidden');
+            errorState.classList.add('hidden');
+            entriesGrid.classList.add('hidden');
+            emptyState.classList.add('hidden');
+
+            try {
+                // Try API first
+                const response = await fetch(`${CONFIG.API_BASE_URL}/archive/filter?region=${COLLECTION_REGION}&category=${COLLECTION_CATEGORY}`);
+
+                if (!response.ok) throw new Error('API error');
+
+                const data = await response.json();
+                const entries = data.entries || data || [];
+
+                loadingState.classList.add('hidden');
+
+                if (entries.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    entryCount.textContent = '0';
+                    return;
+                }
+
+                entryCount.textContent = entries.length;
+                renderEntries(entries);
+                entriesGrid.classList.remove('hidden');
+
+            } catch (error) {
+                console.log('API unavailable, using fallback data');
+                // Use fallback static data
+                if (typeof DATA !== 'undefined' && DATA.entries) {
+                    const filteredEntries = DATA.entries.filter(e =>
+                        e.region === COLLECTION_REGION ||
+                        e.category === COLLECTION_CATEGORY ||
+                        (e.tags && e.tags.some(t => t.toLowerCase().includes('queen')))
+                    );
+
+                    loadingState.classList.add('hidden');
+
+                    if (filteredEntries.length === 0) {
+                        emptyState.classList.remove('hidden');
+                        entryCount.textContent = '0';
+                    } else {
+                        entryCount.textContent = filteredEntries.length;
+                        renderEntries(filteredEntries);
+                        entriesGrid.classList.remove('hidden');
+                    }
+                } else {
+                    loadingState.classList.add('hidden');
+                    errorState.classList.remove('hidden');
+                }
+            }
+        }
+
+        function renderEntries(entries) {
+            const grid = document.getElementById('entries-grid');
+            grid.innerHTML = entries.map(entry => `
+                <a href="../biography.html?id=${entry.id || entry.entry_id}" 
+                   class="bg-white rounded-2xl border border-border-light overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all group">
+                    <div class="h-48 bg-gradient-to-br from-accent-gold/20 to-primary/10 flex items-center justify-center">
+                        ${entry.image_url || entry.image
+                    ? `<img src="${entry.image_url || entry.image}" alt="${entry.full_name || entry.name}" class="w-full h-full object-cover">`
+                    : `<span class="material-symbols-outlined text-primary/30 text-6xl">person</span>`
+                }
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-lg font-bold text-text-main group-hover:text-primary transition-colors mb-2">
+                            ${entry.full_name || entry.name}
+                        </h3>
+                        <p class="text-text-secondary text-sm line-clamp-2 mb-4">
+                            ${entry.biography || entry.introduction || 'Learn about this remarkable woman\'s story.'}
+                        </p>
+                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded-full">${entry.region || 'Africa'}</span>
+                            ${entry.category ? `<span class="px-2 py-1 bg-accent-gold/10 text-accent-gold rounded-full">${entry.category}</span>` : ''}
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', loadCollection);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "womencypedia-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./css/tailwind.css",
+    "build:css:prod": "npx tailwindcss -i ./src/input.css -o ./css/tailwind.css --minify",
+    "watch:css": "npx tailwindcss -i ./src/input.css -o ./css/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lasgidi-ux/womencypedia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Lasgidi-ux/womencypedia/issues"
+  },
+  "homepage": "https://github.com/Lasgidi-ux/womencypedia#readme",
+  "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "tailwindcss": "^3.4.19"
+  }
+}

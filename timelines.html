@@ -4,16 +4,24 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Research & Method — Womencypedia</title>
+    <title>Interactive Timelines — Womencypedia</title>
+    <meta name="description"
+        content="Explore women's history through interactive timelines. Filter by era, region, and domain to discover women's contributions across time.">
+
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400,1,500&family=Lato:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
-    <!-- Tailwind CSS (Production Build) -->
+
+    <!-- Tailwind CSS -->
     <link rel="stylesheet" href="css/tailwind.css" />
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
@@ -144,8 +152,10 @@
     </nav>
 
     <!-- Header -->
+
     <!-- Header -->
-    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+    <header id="navbar"
+        class="w-full border-b border-divider bg-background-cream dark:bg-background-dark sticky top-0 z-50 transition-transform duration-300">
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
@@ -161,8 +171,11 @@
                         <!-- Explore Dropdown -->
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Explore<span
-                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                Explore
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
@@ -176,15 +189,18 @@
                                     <a href="collections.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Collections</a>
                                     <a href="timelines.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Timelines</a>
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Timelines</a>
                                 </div>
                             </div>
                         </div>
                         <!-- Learn Dropdown -->
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">Learn<span
-                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Learn
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
@@ -194,7 +210,7 @@
                                     <a href="enterprises.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Enterprises</a>
                                     <a href="research.html"
-                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Research</a>
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Research</a>
                                     <a href="publications.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Publications</a>
                                     <a href="resources.html"
@@ -205,8 +221,11 @@
                         <!-- Participate Dropdown -->
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Participate<span
-                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Participate
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
@@ -228,8 +247,11 @@
                         <!-- About Dropdown -->
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">About<span
-                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                About
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
@@ -254,9 +276,11 @@
                         <!-- My Profile Dropdown -->
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">My
-                                Profile<span
-                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                My Profile
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
                             <div
                                 class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
@@ -277,18 +301,23 @@
                     </nav>
                 </div>
                 <div class="flex items-center gap-3 lg:gap-6">
+                    <!-- Desktop Search -->
                     <div
-                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        class="hidden md:flex items-center bg-white/50 dark:bg-white/5 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
                         <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
                         <input
                             class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
                             placeholder="Search the archive..." type="search" />
                     </div>
-                    <button
+
+                    <!-- Mobile Search Button -->
+                    <button onclick="toggleSearch()"
                         class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
                         aria-label="Open search">
                         <span class="material-symbols-outlined text-accent-teal">search</span>
                     </button>
+
+                    <!-- Desktop Actions -->
                     <div class="hidden sm:flex items-center gap-4">
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html">Donate</a>
@@ -323,370 +352,242 @@
     </header>
 
     <main>
-        <!-- Hero -->
-        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-primary/5 py-16 lg:py-24 text-center">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/10 via-lavender-soft/30 to-accent-gold/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Explore
+                    History</span>
+                <h1
+                    class="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-main mb-6 leading-tight">
+                    Interactive Timelines
+                </h1>
+                <p class="text-xl sm:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+                    Travel through time and discover women's contributions to history. Filter by era, region, and
+                    domain.
+                </p>
+            </div>
+        </section>
+
+        <!-- Timeline Controls -->
+        <section class="py-8 bg-white border-b border-border-light">
             <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
-                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Our
-                    Approach</span>
-                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4">Research &
-                    Editorial Method</h1>
-                <p class="text-text-secondary text-lg max-w-2xl mx-auto">How we ensure every story meets the highest
-                    standards of historical accuracy, cultural sensitivity, and scholarly rigor.</p>
-                <div class="w-24 h-1 bg-primary rounded-full mx-auto mt-6"></div>
+                <div class="flex flex-wrap gap-4 items-center justify-between">
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <!-- Era Filter -->
+                        <select id="era-filter"
+                            class="appearance-none bg-lavender-soft/50 border border-border-light rounded-lg px-4 py-2.5 pr-10 text-sm font-medium">
+                            <option value="all">All Eras</option>
+                            <option value="ancient">Ancient (3000 BCE - 500 CE)</option>
+                            <option value="medieval">Medieval (500 CE - 1500 CE)</option>
+                            <option value="colonial">Colonial (1500 CE - 1900 CE)</option>
+                            <option value="modern">Modern (1900 CE - Present)</option>
+                        </select>
+
+                        <!-- Region Filter -->
+                        <select id="region-filter"
+                            class="appearance-none bg-lavender-soft/50 border border-border-light rounded-lg px-4 py-2.5 pr-10 text-sm font-medium">
+                            <option value="all">All Regions</option>
+                            <option value="africa">Africa</option>
+                            <option value="asia">Asia</option>
+                            <option value="europe">Europe</option>
+                            <option value="americas">Americas</option>
+                            <option value="oceania">Oceania</option>
+                        </select>
+
+                        <!-- Domain Filter -->
+                        <select id="domain-filter"
+                            class="appearance-none bg-lavender-soft/50 border border-border-light rounded-lg px-4 py-2.5 pr-10 text-sm font-medium">
+                            <option value="all">All Domains</option>
+                            <option value="leadership">Leadership & Politics</option>
+                            <option value="science">Science & Innovation</option>
+                            <option value="arts">Arts & Culture</option>
+                            <option value="faith">Faith & Spirituality</option>
+                            <option value="enterprise">Enterprise & Economy</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <button id="zoom-in"
+                            class="p-2 rounded-lg border border-border-light hover:bg-lavender-soft transition-colors"
+                            aria-label="Zoom in">
+                            <span class="material-symbols-outlined">zoom_in</span>
+                        </button>
+                        <button id="zoom-out"
+                            class="p-2 rounded-lg border border-border-light hover:bg-lavender-soft transition-colors"
+                            aria-label="Zoom out">
+                            <span class="material-symbols-outlined">zoom_out</span>
+                        </button>
+                        <button id="reset-zoom"
+                            class="px-4 py-2 rounded-lg border border-border-light text-sm font-medium hover:bg-lavender-soft transition-colors">
+                            Reset View
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Method Steps -->
+        <!-- Timeline Visualization -->
         <section class="py-16 lg:py-24 bg-lavender-soft/40">
-            <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
-                <div class="grid md:grid-cols-3 gap-8 relative">
-                    <div
-                        class="hidden md:block absolute top-[24px] left-[16%] right-[16%] h-[2px] bg-accent-teal/30 z-0">
-                    </div>
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div id="timeline-container"
+                    class="bg-white rounded-2xl border border-border-light p-8 min-h-[600px] relative overflow-hidden">
+                    <div id="timeline-chart"></div>
+                </div>
 
-                    <div class="relative flex flex-col items-center text-center z-10">
-                        <div
-                            class="size-14 rounded-full bg-white border-2 border-accent-teal flex items-center justify-center shadow-md mb-4">
-                            <span class="material-symbols-outlined text-accent-teal text-2xl">search</span>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg border-t-4 border-accent-teal shadow-sm w-full h-full">
-                            <span class="text-accent-teal text-xs font-bold uppercase tracking-widest mb-2 block">Step
-                                1</span>
-                            <h3 class="font-serif text-xl font-bold text-text-main mb-3">Rigorous Research</h3>
-                            <p class="text-text-secondary text-sm leading-relaxed">We source primary documents, verified
-                                archives, oral histories, and peer-reviewed academic journals to build a factual
-                                foundation for every entry.</p>
-                        </div>
+                <!-- Timeline Legend -->
+                <div class="mt-8 flex flex-wrap gap-6 justify-center">
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-primary"></span>
+                        <span class="text-sm text-text-secondary">Leadership & Politics</span>
                     </div>
-
-                    <div class="relative flex flex-col items-center text-center z-10">
-                        <div
-                            class="size-14 rounded-full bg-white border-2 border-accent-teal flex items-center justify-center shadow-md mb-4">
-                            <span class="material-symbols-outlined text-accent-teal text-2xl">history_edu</span>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg border-t-4 border-accent-teal shadow-sm w-full h-full">
-                            <span class="text-accent-teal text-xs font-bold uppercase tracking-widest mb-2 block">Step
-                                2</span>
-                            <h3 class="font-serif text-xl font-bold text-text-main mb-3">Interpretive Analysis</h3>
-                            <p class="text-text-secondary text-sm leading-relaxed">Historians and cultural experts
-                                contextualize facts, interpreting the significance of each woman's life within her
-                                specific era, culture, and social context.</p>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-accent-teal"></span>
+                        <span class="text-sm text-text-secondary">Science & Innovation</span>
                     </div>
-
-                    <div class="relative flex flex-col items-center text-center z-10">
-                        <div
-                            class="size-14 rounded-full bg-white border-2 border-accent-teal flex items-center justify-center shadow-md mb-4">
-                            <span class="material-symbols-outlined text-accent-teal text-2xl">public</span>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg border-t-4 border-accent-teal shadow-sm w-full h-full">
-                            <span class="text-accent-teal text-xs font-bold uppercase tracking-widest mb-2 block">Step
-                                3</span>
-                            <h3 class="font-serif text-xl font-bold text-text-main mb-3">Scholarly Publication</h3>
-                            <p class="text-text-secondary text-sm leading-relaxed">Final entries are peer-reviewed by
-                                our editorial board and published as open-access resources for educators, students,
-                                researchers, and the public.</p>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-accent-gold"></span>
+                        <span class="text-sm text-text-secondary">Arts & Culture</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-primary/40"></span>
+                        <span class="text-sm text-text-secondary">Faith & Spirituality</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-accent-gold/40"></span>
+                        <span class="text-sm text-text-secondary">Enterprise & Economy</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Editorial Standards -->
-        <section class="py-16 lg:py-24 bg-background-cream">
-            <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
-                <div class="text-center mb-12">
-                    <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-text-main mb-4">Editorial
-                        Standards</h2>
-                    <p class="text-text-secondary max-w-2xl mx-auto">Our commitment to excellence in every biography we
-                        publish.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-xl border border-border-light">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-2xl">fact_check</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main">Fact Verification</h3>
-                        </div>
-                        <p class="text-text-secondary leading-relaxed">Every biographical claim is verified against
-                            multiple sources. We prioritize primary documents and academic scholarship over secondary
-                            sources.</p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl border border-border-light">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-2xl">diversity_3</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main">Cultural Sensitivity</h3>
-                        </div>
-                        <p class="text-text-secondary leading-relaxed">We consult with cultural experts and community
-                            representatives to ensure respectful, accurate portrayals that honor each woman's heritage.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl border border-border-light">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-2xl">balance</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main">Balanced Perspective</h3>
-                        </div>
-                        <p class="text-text-secondary leading-relaxed">We present women as complex individuals,
-                            acknowledging both achievements and challenges without hagiography or sensationalism.</p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl border border-border-light">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary text-2xl">source</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main">Source Transparency</h3>
-                        </div>
-                        <p class="text-text-secondary leading-relaxed">Every entry includes full citations and source
-                            documentation, allowing readers to verify information and pursue deeper research.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contributor Guidelines -->
-        <section class="py-16 lg:py-24 bg-lavender-soft/30">
-            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12">
-                <div class="text-center mb-12">
-                    <h2 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-text-main mb-4">For
-                        Contributors</h2>
-                    <p class="text-text-secondary">Guidelines for submitting stories and nominations to Womencypedia.
-                    </p>
-                </div>
-
-                <div class="bg-white rounded-xl p-8 md:p-12 border border-border-light">
-                    <div class="space-y-6">
-                        <div class="flex gap-4">
-                            <div
-                                class="size-8 rounded-full bg-accent-teal flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                                1</div>
-                            <div>
-                                <h4 class="font-bold text-text-main mb-1">Accuracy First</h4>
-                                <p class="text-text-secondary text-sm">Provide accurate information to the best of your
-                                    knowledge. Include dates, locations, and specific details whenever possible.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div
-                                class="size-8 rounded-full bg-accent-teal flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                                2</div>
-                            <div>
-                                <h4 class="font-bold text-text-main mb-1">Cite Your Sources</h4>
-                                <p class="text-text-secondary text-sm">Include any known sources: books, articles,
-                                    family records, oral histories, or archives that support the story.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div
-                                class="size-8 rounded-full bg-accent-teal flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                                3</div>
-                            <div>
-                                <h4 class="font-bold text-text-main mb-1">Respect Privacy</h4>
-                                <p class="text-text-secondary text-sm">For living individuals or recent history, ensure
-                                    you have appropriate permissions and respect privacy boundaries.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div
-                                class="size-8 rounded-full bg-accent-teal flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                                4</div>
-                            <div>
-                                <h4 class="font-bold text-text-main mb-1">Cultural Context</h4>
-                                <p class="text-text-secondary text-sm">Help us understand the cultural, historical, and
-                                    social context in which the woman lived and worked.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-10 pt-8 border-t border-border-light text-center">
-                        <p class="text-text-secondary mb-6">Ready to contribute?</p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="nominate.html"
-                                class="inline-flex items-center justify-center h-12 px-8 bg-primary text-white font-bold rounded-lg hover:bg-primary/90">Nominate
-                                a Woman</a>
-                            <a href="share-story.html"
-                                class="inline-flex items-center justify-center h-12 px-8 border border-divider text-text-main font-bold rounded-lg hover:border-primary hover:text-primary">Share
-                                Your Story</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Research Article -->
+        <!-- Featured Timeline Stories -->
         <section class="py-16 lg:py-24 bg-background-cream">
             <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
                 <div class="text-center mb-16">
-                    <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Latest
-                        Research</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Research &
-                        Insights</h2>
-                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">In-depth analysis and commentary from our
-                        editorial team</p>
-                </div>
-
-                <!-- Featured Article Card -->
-                <article class="bg-white rounded-2xl overflow-hidden border border-border-light shadow-lg">
-                    <div class="grid lg:grid-cols-2">
-                        <div
-                            class="h-64 lg:h-auto bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-6xl opacity-30">article</span>
-                        </div>
-                        <div class="p-8 lg:p-12">
-                            <span
-                                class="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">Analysis</span>
-                            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-text-main mb-4">The Evolution of
-                                Women's Symbolic Power in Pre-Colonial Africa</h3>
-                            <p class="text-text-secondary text-lg leading-relaxed mb-6">
-                                An exploration of how women exercised authority, influence, and leadership across
-                                different African societies before European colonization.
-                            </p>
-                            <div class="flex items-center gap-4 text-sm text-text-secondary mb-6">
-                                <span class="flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[16px]">person</span> By Dr. Sarah
-                                    Johnson
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span> January
-                                    15, 2026
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[16px]">schedule</span> 12 min read
-                                </span>
-                            </div>
-                            <a href="#"
-                                class="inline-flex items-center justify-center h-12 px-8 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors gap-2">
-                                <span class="material-symbols-outlined text-[20px]">read_more</span>
-                                Read Full Article
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Recent Articles List -->
-        <section class="py-16 lg:py-24 bg-lavender-soft/40">
-            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
-                <div class="text-center mb-12">
-                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Recent
-                        Articles</h2>
+                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Featured
+                        Timeline Stories</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Explore key moments in women's history
+                        through
+                        our curated timeline collections.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Article 2 -->
-                    <article
-                        class="bg-white rounded-xl p-6 border border-border-light hover:shadow-md transition-shadow">
-                        <span
-                            class="text-accent-teal text-xs font-bold uppercase tracking-wider mb-2 block">Commentary</span>
-                        <h3 class="font-serif text-lg font-bold text-text-main mb-3">The Missionary Encounter: Women's
-                            Roles in Colonial Transitions</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
-                            Examining how women's spiritual authority was affected by missionary activities in the 19th
-                            century.
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-text-secondary">By Prof. Maria Rodriguez</span>
-                            <a href="#" class="text-primary text-sm font-bold hover:underline">Read More →</a>
+                    <!-- Story 1 -->
+                    <a href="biography.html"
+                        class="bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-lg transition-all group">
+                        <div
+                            class="h-48 bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary text-6xl opacity-30">castle</span>
                         </div>
-                    </article>
-
-                    <!-- Article 3 -->
-                    <article
-                        class="bg-white rounded-xl p-6 border border-border-light hover:shadow-md transition-shadow">
-                        <span
-                            class="text-accent-gold text-xs font-bold uppercase tracking-wider mb-2 block">Research</span>
-                        <h3 class="font-serif text-lg font-bold text-text-main mb-3">Indigenous Matriarchs: Traditional
-                            Leadership Systems</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
-                            A deep dive into matriarchal structures in indigenous societies across different continents.
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-text-secondary">By Dr. Sarah Johnson</span>
-                            <a href="#" class="text-primary text-sm font-bold hover:underline">Read More →</a>
+                        <div class="p-6">
+                            <span class="text-accent-gold text-xs font-bold uppercase tracking-wider mb-2 block">Ancient
+                                Era</span>
+                            <h3
+                                class="font-serif text-xl font-bold text-text-main mb-3 group-hover:text-primary transition-colors">
+                                Women Rulers of the Ancient World</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed mb-4">From Cleopatra to Boudica,
+                                explore the powerful women who ruled ancient civilizations.</p>
+                            <span class="text-primary text-sm font-bold">Explore Timeline →</span>
                         </div>
-                    </article>
+                    </a>
 
-                    <!-- Article 4 -->
-                    <article
-                        class="bg-white rounded-xl p-6 border border-border-light hover:shadow-md transition-shadow">
-                        <span class="text-primary text-xs font-bold uppercase tracking-wider mb-2 block">Analysis</span>
-                        <h3 class="font-serif text-lg font-bold text-text-main mb-3">Economic Empowerment: Women
-                            Entrepreneurs Across History</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
-                            Tracing women's economic contributions through different eras and civilizations.
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-text-secondary">By Dr. Amina Hassan</span>
-                            <a href="#" class="text-primary text-sm font-bold hover:underline">Read More →</a>
+                    <!-- Story 2 -->
+                    <a href="biography.html"
+                        class="bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-lg transition-all group">
+                        <div
+                            class="h-48 bg-gradient-to-br from-accent-teal/20 to-primary/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-accent-teal text-6xl opacity-30">science</span>
                         </div>
-                    </article>
-                </div>
+                        <div class="p-6">
+                            <span
+                                class="text-accent-teal text-xs font-bold uppercase tracking-wider mb-2 block">Medieval
+                                Era</span>
+                            <h3
+                                class="font-serif text-xl font-bold text-text-main mb-3 group-hover:text-primary transition-colors">
+                                Women of Science in the Middle Ages</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed mb-4">Discover the often overlooked
+                                contributions of women to science during the medieval period.</p>
+                            <span class="text-primary text-sm font-bold">Explore Timeline →</span>
+                        </div>
+                    </a>
 
-                <div class="text-center mt-10">
-                    <a href="#"
-                        class="inline-flex items-center justify-center h-12 px-8 border border-border-light text-text-main font-bold rounded-lg hover:bg-white transition-colors gap-2">
-                        <span class="material-symbols-outlined text-[20px]">article</span>
-                        View All Articles
+                    <!-- Story 3 -->
+                    <a href="biography.html"
+                        class="bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-lg transition-all group">
+                        <div
+                            class="h-48 bg-gradient-to-br from-accent-gold/20 to-primary/20 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-accent-gold text-6xl opacity-30">trending_up</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-primary text-xs font-bold uppercase tracking-wider mb-2 block">Modern
+                                Era</span>
+                            <h3
+                                class="font-serif text-xl font-bold text-text-main mb-3 group-hover:text-primary transition-colors">
+                                Women's Economic Empowerment</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed mb-4">Track the economic achievements
+                                of women from the industrial revolution to today.</p>
+                            <span class="text-primary text-sm font-bold">Explore Timeline →</span>
+                        </div>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Linked Biographies Section -->
-        <section class="py-16 lg:py-24 bg-background-cream">
-            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+        <!-- Timeline Methodology -->
+        <section class="py-16 lg:py-24 bg-white">
+            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12">
                 <div class="text-center mb-12">
-                    <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Related
-                        Biographies</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Women
-                        Mentioned in This Research</h2>
+                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">About Our
+                        Timelines</h2>
                 </div>
 
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <a href="biography.html"
-                        class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-all group">
-                        <h3
-                            class="font-serif text-lg font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
-                            Queen Amina of Zazzau</h3>
-                        <p class="text-text-secondary text-xs mb-3">Warrior Queen of Zazzau</p>
-                        <span class="text-primary text-xs font-bold">View Biography →</span>
-                    </a>
-                    <a href="biography.html"
-                        class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-all group">
-                        <h3
-                            class="font-serif text-lg font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
-                            Hildegard of Bingen</h3>
-                        <p class="text-text-secondary text-xs mb-3">German Benedictine Abbess</p>
-                        <span class="text-primary text-xs font-bold">View Biography →</span>
-                    </a>
-                    <a href="biography.html"
-                        class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-all group">
-                        <h3
-                            class="font-serif text-lg font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
-                            Moremi Ajasoro</h3>
-                        <p class="text-text-secondary text-xs mb-3">Queen of Ile-Ife</p>
-                        <span class="text-primary text-xs font-bold">View Biography →</span>
-                    </a>
-                    <a href="biography.html"
-                        class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-all group">
-                        <h3
-                            class="font-serif text-lg font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
-                            Yaa Asantewaa</h3>
-                        <p class="text-text-secondary text-xs mb-3">Asante Queen Mother</p>
-                        <span class="text-primary text-xs font-bold">View Biography →</span>
-                    </a>
+                <div class="bg-lavender-soft/30 rounded-xl p-8 border border-border-light">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">public</span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-text-main">Global Perspective</h3>
+                            </div>
+                            <p class="text-text-secondary text-sm leading-relaxed">Our timelines prioritize women's
+                                stories from across the globe, with special attention to regions and cultures often
+                                overlooked in traditional historical narratives.</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="size-10 rounded-lg bg-accent-teal/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-accent-teal">category</span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-text-main">Multiple Domains</h3>
+                            </div>
+                            <p class="text-text-secondary text-sm leading-relaxed">We track women's contributions across
+                                leadership, science, arts, faith, and enterprise to show the full spectrum of their
+                                historical impact.</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="size-10 rounded-lg bg-accent-gold/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-accent-gold">update</span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-text-main">Living Archive</h3>
+                            </div>
+                            <p class="text-text-secondary text-sm leading-relaxed">Our timelines are continuously
+                                updated as new research emerges and community nominations are processed through our
+                                editorial methodology.</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">link</span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-text-main">Connected Stories</h3>
+                            </div>
+                            <p class="text-text-secondary text-sm leading-relaxed">Each timeline event connects to full
+                                biographies in our archive, allowing you to explore women's lives in greater depth.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -806,6 +707,7 @@
             </div>
         </div>
     </footer>
+
     <!-- Login Modal -->
     <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
@@ -867,6 +769,8 @@
         </div>
     </div>
 
+    <!-- Timeline JavaScript -->
+    <script src="js/timeline.js"></script>
     <script src="js/config.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
