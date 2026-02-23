@@ -5,6 +5,16 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Nominate a Woman — Womencypedia</title>
+
+    <!-- Auth state pre-check - prevents flash of wrong auth state -->
+    <script>
+        (function () {
+            const token = localStorage.getItem('womencypedia_access_token');
+            if (token && document.body) {
+                document.body.classList.add('authenticated');
+            }
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -14,9 +24,36 @@
         rel="stylesheet" />
     <!-- Tailwind CSS (Production Build) -->
     <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/nominate.html">
+    <meta property="og:title" content="Nominate a Woman — Womencypedia">
+    <meta property="og:description"
+        content="Nominate a woman whose story deserves to be preserved in the world's first interpretive encyclopedia of women.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nominate a Woman — Womencypedia">
+    <meta name="twitter:description"
+        content="Nominate a woman whose story deserves to be preserved in the world's first interpretive encyclopedia of women.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/nominate.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
-<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
     <!-- Skip Link -->
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
@@ -128,8 +165,9 @@
                 Profile</a>
             <a href="analytics.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
-            <a href="admin.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
+            <a data-auth="admin-only" href="admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary"
+                style="display:none">Admin</a>
             <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
                 Biography</a>
         </div>
@@ -149,13 +187,10 @@
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
-                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
-                        <div
-                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
-                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
-                        </div>
-                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
-                        </h2>
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-6">
                         <div class="relative group"><button
@@ -164,7 +199,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="index.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a><a
                                         href="browse.html"
@@ -184,7 +219,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="education.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a><a
                                         href="enterprises.html"
@@ -204,7 +239,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="nominate.html"
                                         class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Nominate
                                         a Woman</a><a href="share-story.html"
@@ -222,7 +257,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="about.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
                                         Us</a><a href="founders.html"
@@ -245,14 +280,14 @@
                             <div
                                 class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
                                         Profile</a><a href="analytics.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a><a
-                                        href="admin.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Admin</a><a
-                                        href="biography.html"
+                                        data-auth="admin-only" href="admin.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        style="display:none">Admin</a><a href="biography.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
                                         Biography</a>
                                 </div>
@@ -291,6 +326,7 @@
                                 <span data-auth="user-info"></span>
                             </a>
                             <button
+                                onclick="if(typeof Auth !== 'undefined') { Auth.logout().then(() => { window.location.href = 'index.html'; }); } else { localStorage.removeItem('womencypedia_access_token'); localStorage.removeItem('womencypedia_refresh_token'); localStorage.removeItem('womencypedia_user'); window.location.href = 'index.html'; }"
                                 class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
                                 Sign Out
                             </button>
@@ -306,7 +342,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
         <!-- Hero -->
         <section class="bg-gradient-to-br from-primary/10 via-background-cream to-primary/5 py-16 lg:py-20 text-center">
             <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
@@ -726,9 +762,12 @@
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
                 <!-- Brand -->
                 <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
-                        <span class="font-serif text-xl font-bold">Womencypedia</span>
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                            <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                            <span
+                                class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        </a>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
@@ -837,6 +876,7 @@
     <script src="js/config.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/mockApi.js"></script>
     <script src="js/api.js"></script>
     <script src="js/forms.js"></script>
     <!-- Login Modal -->
@@ -900,10 +940,66 @@
         </div>
     </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/auth.js"></script>
     <script src="js/navigation.js"></script>
+    <script>
+        // Protect this page - ALWAYS require contributor or admin authentication
+        document.addEventListener('DOMContentLoaded', function () {
+            // Use Auth.protectPage() for consistent security
+            if (!Auth.protectPage('user')) {
+                return; // protectPage handles redirect
+            }
+        });
+    </script>
+
+    <!-- Global Search -->
+    <script>
+        // Enhanced global search across all pages
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Dark Mode -->
+    <script>
+        // Dark mode toggle
+
+        function updateDarkModeIcon() {
+            const icon = document.getElementById('darkModeIcon');
+            if (icon) {
+                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+            }
+        }
+        // Apply saved theme
+        (function () {
+            const saved = localStorage.getItem('womencypedia_theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
+        })();
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>

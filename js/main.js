@@ -349,6 +349,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 /**
+ * Global Error Handler for Uncaught Promise Rejections
+ * Catches unhandled API errors and shows user-friendly notifications
+ */
+window.addEventListener('unhandledrejection', function (event) {
+    // Prevent default browser error logging
+    event.preventDefault();
+
+    // Log error for debugging
+    console.error('Unhandled Promise Rejection:', event.reason);
+
+    // Show user-friendly notification
+    const errorMessage = event.reason?.message || event.reason || 'An unexpected error occurred';
+
+    // Only show toast if UI is available and loaded
+    if (typeof UI !== 'undefined' && UI.showToast) {
+        UI.showToast('Something went wrong. Please try again.', 'error');
+    } else {
+        // Fallback: log to console if UI not available
+        console.warn('UI not available for toast notification');
+    }
+});
+
+/**
+ * Global Error Handler for Uncaught Errors
+ */
+window.addEventListener('error', function (event) {
+    // Log error for debugging
+    console.error('Global Error:', event.error);
+
+    // Don't prevent default - let the error propagate for debugging
+    // But we can show a notification for unexpected errors
+    if (event.error && typeof event.error.message !== 'undefined') {
+        // Only notify for non-critical errors
+        if (typeof UI !== 'undefined' && UI.showToast) {
+            // Only show if not a resource loading error (images, scripts, etc.)
+            if (event.target.tagName !== 'IMG' && event.target.tagName !== 'SCRIPT' && event.target.tagName !== 'LINK') {
+                UI.showToast('An error occurred. Please refresh the page.', 'error');
+            }
+        }
+    }
+});
+
+/**
  * Lazy loading for images
  */
 if ('IntersectionObserver' in window) {

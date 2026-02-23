@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Submit Content — Womencypedia Registry</title>
+    <meta name="description"
+        content="Submit articles, case studies, and reports to the Womencypedia Institutional Registry.">
+
+    <!-- Auth state pre-check -->
+    <script>
+        (function () {
+            const token = localStorage.getItem('womencypedia_access_token');
+            if (token && document.body) {
+                document.body.classList.add('authenticated');
+            }
+        })();
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/controlled-contributions.html">
+    <meta property="og:title" content="Submit Content — Womencypedia Registry">
+    <meta property="og:description"
+        content="Submit articles, case studies, and reports to the Womencypedia Institutional Registry.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search content..."
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Home</a>
+            <a href="browse.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Browse</a>
+            <a href="browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Browse Leaders</a>
+            <a href="apply-verification.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Apply for Verification</a>
+        </div>
+        <div class="px-6 pb-8">
+            <a href="browse-leaders.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center">
+                Explore Registry
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="navbar" class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+
+                    <!-- Desktop Nav -->
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <!-- Explore Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Explore
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="browse.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Browse</a>
+                                    <a href="featured.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Featured</a>
+                                    <a href="collections.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Collections</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Registry Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                Registry
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[220px]">
+                                    <a href="browse-leaders.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Browse
+                                        Leaders</a>
+                                    <a href="apply-verification.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Apply for
+                                        Verification</a>
+                                    <a href="controlled-contributions.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium bg-primary/10">Submit
+                                        Content</a>
+                                    <div class="border-t border-border-light my-1"></div>
+                                    <a href="partners.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Partners</a>
+                                    <a href="fellowship.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Fellowships</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- About Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                About
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="about.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">About
+                                        Us</a>
+                                    <a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSearch()" aria-label="Search" class="p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <div class="hidden lg:flex items-center gap-3" id="auth-buttons">
+                        <a href="login.html"
+                            class="px-4 py-2 text-sm font-medium text-text-main hover:text-primary">Sign In</a>
+                        <a href="signup.html"
+                            class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-hover">Join</a>
+                    </div>
+                    <button onclick="toggleMenu()" aria-label="Menu"
+                        class="lg:hidden p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-accent-teal/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <span
+                        class="inline-block bg-primary/10 text-primary text-sm font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider">
+                        Controlled Contributions
+                    </span>
+                    <h1 class="font-heading text-4xl lg:text-5xl font-bold text-text-main mb-6">
+                        Submit Your Content
+                    </h1>
+                    <p class="text-lg lg:text-xl text-text-secondary mb-8">
+                        Contribute articles, case studies, and reports to the Womencypedia Institutional Registry. All
+                        submissions undergo editorial review before publication.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Types -->
+        <section class="py-12 bg-white border-b border-border-light">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 bg-background-cream rounded-xl">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">article</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-2">Articles</h3>
+                        <p class="text-sm text-text-secondary">In-depth analysis and thought leadership on women-led
+                            organizations and leadership.</p>
+                    </div>
+                    <div class="text-center p-6 bg-background-cream rounded-xl">
+                        <div
+                            class="w-14 h-14 bg-accent-teal/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-accent-teal text-2xl">menu_book</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-2">Case Studies</h3>
+                        <p class="text-sm text-text-secondary">Detailed examinations of successful women-led initiatives
+                            and programs.</p>
+                    </div>
+                    <div class="text-center p-6 bg-background-cream rounded-xl">
+                        <div
+                            class="w-14 h-14 bg-accent-gold/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-accent-gold text-2xl">assessment</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-2">Reports</h3>
+                        <p class="text-sm text-text-secondary">Research findings, annual reports, and policy
+                            recommendations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submission Form -->
+        <section class="py-12 lg:py-16">
+            <div class="mx-auto max-w-3xl px-4 sm:px-6">
+                <form id="contribution-form" class="space-y-8">
+                    <!-- Content Type Selection -->
+                    <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light">
+                        <h2 class="font-heading text-xl font-bold text-text-main mb-6">Content Type</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="contentType" value="article" checked class="peer sr-only">
+                                <div
+                                    class="p-4 border-2 border-border-light rounded-xl text-center peer-checked:border-primary peer-checked:bg-primary/5 transition-colors">
+                                    <span class="material-symbols-outlined text-3xl text-primary mb-2">article</span>
+                                    <p class="font-medium">Article</p>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="contentType" value="case_study" class="peer sr-only">
+                                <div
+                                    class="p-4 border-2 border-border-light rounded-xl text-center peer-checked:border-primary peer-checked:bg-primary/5 transition-colors">
+                                    <span class="material-symbols-outlined text-3xl text-primary mb-2">menu_book</span>
+                                    <p class="font-medium">Case Study</p>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="contentType" value="report" class="peer sr-only">
+                                <div
+                                    class="p-4 border-2 border-border-light rounded-xl text-center peer-checked:border-primary peer-checked:bg-primary/5 transition-colors">
+                                    <span class="material-symbols-outlined text-3xl text-primary mb-2">assessment</span>
+                                    <p class="font-medium">Report</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Basic Information -->
+                    <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light">
+                        <h2 class="font-heading text-xl font-bold text-text-main mb-6">Basic Information</h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label for="title" class="block text-sm font-medium text-text-main mb-2">
+                                    Title <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="title" name="title" required
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                    placeholder="Enter a compelling title">
+                            </div>
+
+                            <div>
+                                <label for="excerpt" class="block text-sm font-medium text-text-main mb-2">
+                                    Short Description <span class="text-red-500">*</span>
+                                </label>
+                                <textarea id="excerpt" name="excerpt" rows="3" required
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                    placeholder="Brief summary of your content (150-200 characters)"></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="country" class="block text-sm font-medium text-text-main mb-2">
+                                        Country
+                                    </label>
+                                    <select id="country" name="country"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Select country</option>
+                                        <option value="Nigeria">Nigeria</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="Ghana">Ghana</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Other Africa">Other African Country</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="sector" class="block text-sm font-medium text-text-main mb-2">
+                                        Sector
+                                    </label>
+                                    <select id="sector" name="sector"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Select sector</option>
+                                        <option value="Government">Government</option>
+                                        <option value="Private Sector">Private Sector</option>
+                                        <option value="Non-Profit">Non-Profit</option>
+                                        <option value="Academic">Academic</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Environmental">Environmental</option>
+                                        <option value="Human Rights">Human Rights</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light">
+                        <h2 class="font-heading text-xl font-bold text-text-main mb-6">Content</h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label for="content" class="block text-sm font-medium text-text-main mb-2">
+                                    Main Content <span class="text-red-500">*</span>
+                                </label>
+                                <textarea id="content" name="content" rows="12" required
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary font-mono text-sm"
+                                    placeholder="Write your article, case study, or report content here..."></textarea>
+                                <p class="mt-2 text-sm text-text-secondary">
+                                    Minimum 800 words for articles and case studies, 1500 words for reports.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Author Information -->
+                    <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light">
+                        <h2 class="font-heading text-xl font-bold text-text-main mb-6">Author Information</h2>
+
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="authorName" class="block text-sm font-medium text-text-main mb-2">
+                                        Author Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="authorName" name="authorName" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="Your full name">
+                                </div>
+
+                                <div>
+                                    <label for="authorEmail" class="block text-sm font-medium text-text-main mb-2">
+                                        Email <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="email" id="authorEmail" name="authorEmail" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="your@email.com">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="authorBio" class="block text-sm font-medium text-text-main mb-2">
+                                    Author Bio
+                                </label>
+                                <textarea id="authorBio" name="authorBio" rows="3"
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                    placeholder="Brief biography (optional)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Organization -->
+                    <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light">
+                        <h2 class="font-heading text-xl font-bold text-text-main mb-6">Related Organization</h2>
+
+                        <div>
+                            <label for="relatedLeader" class="block text-sm font-medium text-text-main mb-2">
+                                Related Verified Organization (Optional)
+                            </label>
+                            <select id="relatedLeader" name="relatedLeader"
+                                class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                <option value="">Select an organization</option>
+                                <option value="1">African Women in Agriculture</option>
+                                <option value="2">TechWomen Foundation</option>
+                                <option value="3">Women in Science Africa</option>
+                            </select>
+                            <p class="mt-2 text-sm text-text-secondary">
+                                Link your content to a verified organization in our registry.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" id="terms" name="terms" required
+                                class="mt-1 w-4 h-4 text-primary border-border-light rounded focus:ring-primary">
+                            <label for="terms" class="text-sm text-text-secondary">
+                                I confirm that this content is original and I have the right to submit it. I agree to
+                                the <a href="terms-of-use.html" class="text-primary underline">Terms of Use</a> and <a
+                                    href="privacy-policy.html" class="text-primary underline">Privacy Policy</a>. All
+                                submissions undergo editorial review and may take 5-10 business days for processing.
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-colors">
+                            <span class="flex items-center gap-2">
+                                Submit for Review
+                                <span class="material-symbols-outlined">send</span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="success-message" class="hidden text-center py-12">
+                    <div class="w-20 h-20 bg-accent-teal/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-accent-teal text-4xl">check_circle</span>
+                    </div>
+                    <h2 class="font-heading text-3xl font-bold text-text-main mb-4">Submission Received!</h2>
+                    <p class="text-text-secondary mb-8">
+                        Thank you for your contribution. Our editorial team will review your submission within 5-10
+                        business days. You will receive an email notification with the outcome.
+                    </p>
+                    <div class="flex items-center justify-center gap-4">
+                        <a href="browse-leaders.html"
+                            class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover">
+                            Explore Registry
+                        </a>
+                        <a href="index.html"
+                            class="px-6 py-3 border border-border-light text-text-main font-medium rounded-lg hover:bg-background-cream">
+                            Return Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guidelines -->
+        <section class="py-12 bg-white border-t border-border-light">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6">
+                <h2 class="font-heading text-2xl font-bold text-text-main mb-6 text-center">Submission Guidelines</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-3 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            What We Look For
+                        </h3>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• Original, well-researched content</li>
+                            <li>• Focus on women-led organizations</li>
+                            <li>• Actionable insights and data</li>
+                            <li>• Diverse geographic representation</li>
+                            <li>• Professional, objective tone</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-3 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-red-500">cancel</span>
+                            What We Don't Accept
+                        </h3>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• Promotional or marketing content</li>
+                            <li>• Plagiarized or copyrighted material</li>
+                            <li>• Misinformation or unverified claims</li>
+                            <li>• Discriminatory or offensive content</li>
+                            <li>• Content that violates our policies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                    <span class="text-white/70 text-sm">&copy; 2024 Womencypedia. All rights reserved.</span>
+                </div>
+                <div class="flex gap-6 text-sm">
+                    <a href="privacy-policy.html" class="text-white/50 hover:text-white">Privacy</a>
+                    <a href="terms-of-use.html" class="text-white/50 hover:text-white">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Form submission
+        document.getElementById('contribution-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            const submissionData = {
+                title: formData.get('title'),
+                type: formData.get('contentType'),
+                excerpt: formData.get('excerpt'),
+                content: formData.get('content'),
+                authorName: formData.get('authorName'),
+                authorEmail: formData.get('authorEmail'),
+                authorBio: formData.get('authorBio'),
+                country: formData.get('country'),
+                sector: formData.get('sector'),
+                relatedLeader: formData.get('relatedLeader'),
+                status: 'pending_review',
+                submittedAt: new Date().toISOString()
+            };
+
+            try {
+                // Try to submit to API
+                if (typeof CONFIG !== 'undefined' && CONFIG.USE_STRAPI) {
+                    const response = await fetch(`${CONFIG.API_BASE_URL}/api/contributions`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ data: submissionData })
+                    });
+
+                    if (response.ok) {
+                        showSuccess();
+                        return;
+                    }
+                }
+
+                // Fallback
+                console.log('Contribution submitted:', submissionData);
+                localStorage.setItem('contribution_submission', JSON.stringify(submissionData));
+                showSuccess();
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                showSuccess();
+            }
+        });
+
+        function showSuccess() {
+            document.getElementById('contribution-form').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

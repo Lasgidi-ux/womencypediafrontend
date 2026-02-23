@@ -3,96 +3,149 @@
  * Profile page functionality and interactions
  */
 
-// Profile data (mock)
-const profileData = {
-    id: 1,
-    name: "Dr. Sarah Johnson",
-    email: "sarah.johnson@email.com",
-    role: "Editor-in-Chief",
-    location: "New York, USA",
-    joinDate: "January 2024",
+// Profile data (will be loaded from Auth/Strapi)
+let profileData = {
+    id: null,
+    name: "Guest User",
+    email: "",
+    role: "Contributor",
+    location: "",
+    joinDate: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
     avatar: null,
-    bio: "Historian specializing in women's history with 20+ years of experience. Contributing to Womencypedia since 2024.",
+    bio: "Member of the Womencypedia community.",
     stats: {
-        contributions: 47,
-        saved: 128,
-        badges: 12,
-        profileViews: 45200
+        contributions: 0,
+        saved: 0,
+        badges: 0,
+        profileViews: 0
     },
-    badges: [
-        { id: 1, name: "Top Contributor", icon: "workspace_premium", description: "50+ contributions" },
-        { id: 2, name: "Expert Reviewer", icon: "star", description: "50+ reviews" },
-        { id: 3, name: "Research Lead", icon: "military_tech", description: "10+ original" },
-        { id: 4, name: "Verified Expert", icon: "verified", description: "PhD verified" }
-    ],
-    contributions: [
-        {
-            id: 1,
-            name: "Queen Amina of Zazzau",
-            action: "Updated biography with new historical context and sources",
-            date: "Jan 28, 2026",
-            views: 2456
-        },
-        {
-            id: 2,
-            name: "Hildegard of Bingen",
-            action: "Added new section on musical contributions",
-            date: "Jan 25, 2026",
-            views: 1892
-        },
-        {
-            id: 3,
-            name: "Wangari Maathai",
-            action: "New biography submission - published after review",
-            date: "Jan 22, 2026",
-            views: 3124
-        }
-    ],
-    saved: [
-        {
-            id: 1,
-            name: "Cleopatra",
-            category: "Leadership",
-            savedDate: "Jan 20, 2026"
-        },
-        {
-            id: 2,
-            name: "Mary Seacole",
-            category: "Enterprise",
-            savedDate: "Jan 18, 2026"
-        },
-        {
-            id: 3,
-            name: "Yaa Asantewaa",
-            category: "Leadership",
-            savedDate: "Jan 15, 2026"
-        }
-    ],
-    nominations: [
-        {
-            id: 1,
-            name: "Dr. Ngozi Okonjo-Iweala",
-            category: "Leadership & Policy",
-            status: "Under Review",
-            date: "Jan 28, 2026"
-        },
-        {
-            id: 2,
-            name: "Funmilayo Ransome-Kuti",
-            category: "Activism & Social Impact",
-            status: "Pending",
-            date: "Jan 26, 2026"
-        }
-    ]
+    badges: [],
+    contributions: [],
+    saved: [],
+    nominations: []
 };
 
 // Initialize profile page
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     initTabNavigation();
     initProfileDropdown();
     setupEditProfile();
     setupSaveActions();
+    await loadUserProfile();
 });
+
+// Load user profile data from Auth/Strapi
+async function loadUserProfile() {
+    try {
+        // Check if user is authenticated
+        if (Auth && Auth.isAuthenticated()) {
+            // Try to get current user from Strapi
+            const user = await Auth.getCurrentUser();
+            if (user) {
+                profileData = {
+                    ...profileData,
+                    id: user.id,
+                    name: user.username || user.name || user.email || "User",
+                    email: user.email || "",
+                    role: user.role?.name || user.role || "Contributor",
+                    location: user.location || "",
+                    joinDate: user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+                    avatar: user.avatar || null,
+                    bio: user.bio || "Member of the Womencypedia community."
+                };
+            }
+        }
+    } catch (error) {
+        console.error('Error loading user profile:', error);
+    }
+
+    // Update UI with profile data
+    updateProfileUI();
+}
+
+// Update the profile UI with data
+function updateProfileUI() {
+    // Update name
+    const nameEl = document.getElementById('profile-name');
+    if (nameEl) {
+        nameEl.textContent = profileData.name;
+    }
+
+    // Update email
+    const emailEl = document.getElementById('profile-email');
+    if (emailEl) {
+        emailEl.textContent = profileData.email || 'No email provided';
+    }
+
+    // Update bio
+    const bioEl = document.getElementById('profile-bio');
+    if (bioEl) {
+        bioEl.textContent = profileData.bio;
+    }
+
+    // Update joined date
+    const joinedEl = document.getElementById('profile-joined');
+    if (joinedEl) {
+        joinedEl.textContent = `Member since ${profileData.joinDate}`;
+    }
+
+    // Update role
+    const roleEl = document.getElementById('profile-role');
+    if (roleEl && profileData.role) {
+        roleEl.textContent = profileData.role;
+        roleEl.classList.remove('hidden');
+    }
+
+    // Update avatar
+    const avatarContainer = document.getElementById('profile-avatar-container');
+    if (avatarContainer) {
+        if (profileData.avatar) {
+            avatarContainer.innerHTML = `<img src="${profileData.avatar}" alt="${profileData.name}" class="size-32 rounded-full object-cover">`;
+        } else {
+            // Show initials or default avatar
+            const initials = getInitials(profileData.name);
+            avatarContainer.innerHTML = initials ?
+                `<span class="text-3xl font-serif font-bold">${initials}</span>` :
+                `<span class="material-symbols-outlined">person</span>`;
+        }
+    }
+
+    // Update stats (if available)
+    updateStatsUI();
+}
+
+// Update stats in the UI
+function updateStatsUI() {
+    const contribEl = document.querySelector('.grid .bg-white:first-child h3');
+    if (contribEl) {
+        contribEl.textContent = profileData.stats.contributions;
+    }
+
+    const savedEl = document.querySelector('.grid .bg-white:nth-child(2) h3');
+    if (savedEl) {
+        savedEl.textContent = profileData.stats.saved;
+    }
+
+    const badgesEl = document.querySelector('.grid .bg-white:nth-child(3) h3');
+    if (badgesEl) {
+        badgesEl.textContent = profileData.stats.badges;
+    }
+
+    const viewsEl = document.querySelector('.grid .bg-white:nth-child(4) h3');
+    if (viewsEl) {
+        viewsEl.textContent = formatNumber(profileData.stats.profileViews);
+    }
+}
+
+// Get initials from name
+function getInitials(name) {
+    if (!name || name === 'Guest User') return null;
+    const parts = name.split(' ');
+    if (parts.length >= 2) {
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+}
 
 // Tab navigation
 function initTabNavigation() {
@@ -202,10 +255,15 @@ function createProfileMenu() {
 
 // Edit profile functionality
 function setupEditProfile() {
-    const editButton = document.querySelector('button:contains("Edit Profile")');
+    const editButton = Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes("Edit Profile"));
 
     if (editButton) {
-        editButton.addEventListener('click', function () {
+        // Remove any existing inline onclick to prevent conflicts
+        editButton.removeAttribute('onclick');
+
+        editButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             showEditProfileModal();
         });
     }
@@ -218,6 +276,17 @@ function showEditProfileModal() {
         if (e.target === modal) modal.remove();
     };
 
+    // Check authentication status
+    const isAuthenticated = Auth && Auth.isAuthenticated();
+    const buttonText = isAuthenticated ? 'Save Changes' : 'Save (Demo)';
+
+    // Show notice if not authenticated
+    const authNotice = !isAuthenticated ?
+        `<div class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+            <span class="material-symbols-outlined text-[16px] align-middle mr-1">info</span>
+            You are not signed in. Changes will only be saved locally for demonstration.
+        </div>` : '';
+
     modal.innerHTML = `
         <div class="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl" onclick="event.stopPropagation()">
             <div class="flex items-center justify-between mb-6">
@@ -227,28 +296,34 @@ function showEditProfileModal() {
                 </button>
             </div>
             
+            ${authNotice}
+            
             <form id="edit-profile-form" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-text-main mb-2">Display Name</label>
-                    <input type="text" value="${profileData.name}" class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    <input type="text" id="edit-name" value="${profileData.name}" ${!isAuthenticated ? 'disabled' : ''}
+                        class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal disabled:bg-gray-100 disabled:cursor-not-allowed">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-text-main mb-2">Email</label>
-                    <input type="email" value="${profileData.email}" class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    <input type="email" id="edit-email" value="${profileData.email}" ${!isAuthenticated ? 'disabled' : ''}
+                        class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal disabled:bg-gray-100 disabled:cursor-not-allowed">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-text-main mb-2">Location</label>
-                    <input type="text" value="${profileData.location}" class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    <input type="text" id="edit-location" value="${profileData.location || ''}" ${!isAuthenticated ? 'disabled' : ''}
+                        class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal disabled:bg-gray-100 disabled:cursor-not-allowed">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-text-main mb-2">Bio</label>
-                    <textarea rows="3" class="w-full px-4 py-3 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal resize-none">${profileData.bio}</textarea>
+                    <textarea id="edit-bio" rows="3" ${!isAuthenticated ? 'disabled' : ''}
+                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal resize-none disabled:bg-gray-100 disabled:cursor-not-allowed">${profileData.bio}</textarea>
                 </div>
             </form>
             
             <div class="flex gap-4 mt-6">
                 <button onclick="this.closest('.fixed').remove()" class="flex-1 px-6 py-3 border border-border-light text-text-main font-medium rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
-                <button onclick="saveProfile()" class="flex-1 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">Save Changes</button>
+                <button onclick="saveProfile()" class="flex-1 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">${buttonText}</button>
             </div>
         </div>
     `;
@@ -256,10 +331,84 @@ function showEditProfileModal() {
     document.body.appendChild(modal);
 }
 
-function saveProfile() {
-    // In a real implementation, this would save to the backend
-    alert('Profile saved successfully!');
-    document.querySelector('.fixed')?.remove();
+async function saveProfile() {
+    // Get form values
+    const name = document.getElementById('edit-name').value;
+    const email = document.getElementById('edit-email').value;
+    const location = document.getElementById('edit-location').value;
+    const bio = document.getElementById('edit-bio').value;
+
+    // Show loading state
+    const saveButton = document.querySelector('#edit-profile-form + div button:last-child');
+    const originalText = saveButton.textContent;
+    saveButton.textContent = 'Saving...';
+    saveButton.disabled = true;
+
+    try {
+        // Check if user is authenticated
+        if (Auth && Auth.isAuthenticated()) {
+            // Save to Strapi
+            await Auth.updateProfile({
+                username: name,
+                email: email,
+                location: location,
+                bio: bio
+            });
+
+            // Show success message
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Profile updated successfully!', 'success');
+            } else {
+                alert('Profile updated successfully!');
+            }
+        } else {
+            // Demo mode - save to localStorage only
+            profileData.name = name;
+            profileData.email = email;
+            profileData.location = location;
+            profileData.bio = bio;
+
+            // Save to localStorage for demo purposes
+            localStorage.setItem('womencypedia_demo_profile', JSON.stringify({
+                name: name,
+                email: email,
+                location: location,
+                bio: bio
+            }));
+
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Profile saved locally (demo mode)', 'info');
+            } else {
+                alert('Profile saved locally (demo mode - not signed in)');
+            }
+        }
+
+        // Update local profile data
+        profileData.name = name;
+        profileData.email = email;
+        profileData.location = location;
+        profileData.bio = bio;
+
+        // Update UI
+        updateProfileUI();
+
+        // Close modal
+        document.querySelector('.fixed')?.remove();
+
+    } catch (error) {
+        console.error('Error saving profile:', error);
+
+        // Show error message
+        if (typeof UI !== 'undefined' && UI.showToast) {
+            UI.showToast('Failed to update profile: ' + error.message, 'error');
+        } else {
+            alert('Failed to update profile: ' + error.message);
+        }
+    } finally {
+        // Restore button state
+        saveButton.textContent = originalText;
+        saveButton.disabled = false;
+    }
 }
 
 // Save actions
@@ -288,3 +437,8 @@ function getRelativeTime(dateString) {
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
+
+// Make functions available globally
+window.showTab = function (tabName) {
+    showTabContent(tabName);
+};

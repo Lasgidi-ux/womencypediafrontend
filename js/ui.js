@@ -2,6 +2,7 @@
  * Womencypedia UI Utilities
  * 
  * Common UI components and helper functions for the frontend.
+ * All innerHTML assignments use Security.sanitize() for XSS protection.
  */
 
 const UI = {
@@ -17,13 +18,16 @@ const UI = {
 
         if (!el) return;
 
+        // Use Security for XSS protection
+        const safeMessage = typeof Security !== 'undefined' ? Security.escapeHtml(message) : message;
+
         el.innerHTML = `
             <div class="flex flex-col items-center justify-center py-16">
                 <div class="relative">
                     <div class="w-12 h-12 rounded-full border-4 border-lavender-soft"></div>
                     <div class="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin absolute top-0 left-0"></div>
                 </div>
-                <p class="mt-4 text-text-secondary text-sm">${message}</p>
+                <p class="mt-4 text-text-secondary text-sm">${safeMessage}</p>
             </div>
         `;
     },
@@ -41,13 +45,16 @@ const UI = {
 
         if (!el) return;
 
+        // Use Security for XSS protection
+        const safeMessage = typeof Security !== 'undefined' ? Security.escapeHtml(message) : message;
+
         el.innerHTML = `
             <div class="flex flex-col items-center justify-center py-16 text-center">
                 <div class="size-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
                     <span class="material-symbols-outlined text-red-500 text-3xl">error</span>
                 </div>
                 <h3 class="font-serif text-xl font-bold text-text-main mb-2">Something went wrong</h3>
-                <p class="text-text-secondary text-sm mb-6 max-w-md">${message}</p>
+                <p class="text-text-secondary text-sm mb-6 max-w-md">${safeMessage}</p>
                 ${retryCallback ? `
                     <button id="retry-btn" class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">refresh</span>
@@ -85,16 +92,22 @@ const UI = {
             actionUrl = null
         } = options;
 
+        // Use Security for XSS protection
+        const safeTitle = typeof Security !== 'undefined' ? Security.escapeHtml(title) : title;
+        const safeMessage = typeof Security !== 'undefined' ? Security.escapeHtml(message) : message;
+        const safeActionText = actionText && typeof Security !== 'undefined' ? Security.escapeHtml(actionText) : actionText;
+        const safeActionUrl = actionUrl && typeof Security !== 'undefined' ? Security.sanitizeUrl(actionUrl) : actionUrl;
+
         el.innerHTML = `
             <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
                 <div class="size-16 rounded-full bg-lavender-soft/50 flex items-center justify-center mb-4">
                     <span class="material-symbols-outlined text-text-secondary/50 text-3xl">${icon}</span>
                 </div>
-                <h3 class="font-serif text-xl font-bold text-text-main mb-2">${title}</h3>
-                <p class="text-text-secondary text-sm mb-6 max-w-md">${message}</p>
-                ${actionText && actionUrl ? `
-                    <a href="${actionUrl}" class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
-                        ${actionText}
+                <h3 class="font-serif text-xl font-bold text-text-main mb-2">${safeTitle}</h3>
+                <p class="text-text-secondary text-sm mb-6 max-w-md">${safeMessage}</p>
+                ${safeActionText && safeActionUrl ? `
+                    <a href="${safeActionUrl}" class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                        ${safeActionText}
                     </a>
                 ` : ''}
             </div>
@@ -223,6 +236,13 @@ const UI = {
 
         const color = eraColors[bio.era] || 'primary';
 
+        // Sanitize user-generated content for XSS protection
+        const safeName = typeof Security !== 'undefined' ? Security.escapeHtml(bio.name) : bio.name;
+        const safeIntroduction = typeof Security !== 'undefined' ? Security.escapeHtml(bio.introduction || bio.summary || '') : (bio.introduction || bio.summary || '');
+        const safeEra = typeof Security !== 'undefined' ? Security.escapeHtml(bio.era) : bio.era;
+        const safeRegion = typeof Security !== 'undefined' ? Security.escapeHtml(bio.region) : bio.region;
+        const safeImage = bio.image && typeof Security !== 'undefined' ? Security.sanitizeUrl(bio.image) : bio.image;
+
         return `
             <div class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all relative" data-entry-id="${bio.id}">
                 ${showAdminActions ? `
@@ -237,8 +257,8 @@ const UI = {
                 ` : ''}
                 <a href="biography.html?id=${bio.id}" class="block">
                     <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
-                        ${bio.image ? `
-                            <img src="${bio.image}" alt="${bio.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        ${safeImage ? `
+                            <img src="${safeImage}" alt="${safeName}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                         ` : `
                             <div class="absolute inset-0 bg-gradient-to-br from-${color}/20 to-lavender-soft flex items-center justify-center">
                                 <span class="material-symbols-outlined text-${color}/40 text-6xl">person</span>
@@ -248,14 +268,17 @@ const UI = {
                         ${bio.status === 'pending' ? '<span class="absolute top-3 left-3 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">PENDING</span>' : ''}
                     </div>
                     <div class="p-5">
-                        <span class="text-xs font-bold text-${color} uppercase tracking-wider">${bio.era} • ${bio.region}</span>
+                        <span class="text-xs font-bold text-${color} uppercase tracking-wider">${safeEra} • ${safeRegion}</span>
                         <h3 class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
-                            ${bio.name}
+                            ${safeName}
                         </h3>
-                        <p class="text-sm text-text-secondary line-clamp-2">${bio.introduction || bio.summary || ''}</p>
+                        <p class="text-sm text-text-secondary line-clamp-2">${safeIntroduction}</p>
                         ${bio.tags && bio.tags.length > 0 ? `
                             <div class="flex flex-wrap gap-1 mt-3">
-                                ${bio.tags.slice(0, 3).map(tag => `<span class="text-xs bg-lavender-soft px-2 py-1 rounded">${tag}</span>`).join('')}
+                                ${bio.tags.slice(0, 3).map(tag => {
+            const safeTag = typeof Security !== 'undefined' ? Security.escapeHtml(tag) : tag;
+            return `<span class="text-xs bg-lavender-soft px-2 py-1 rounded">${safeTag}</span>`;
+        }).join('')}
                             </div>
                         ` : ''}
                     </div>

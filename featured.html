@@ -15,9 +15,36 @@
         rel="stylesheet" />
     <!-- Tailwind CSS (Production Build) -->
     <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/featured.html">
+    <meta property="og:title" content="Featured Entries — Womencypedia">
+    <meta property="og:description"
+        content="Explore featured biographies and stories of remarkable women from around the world.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Featured Entries — Womencypedia">
+    <meta name="twitter:description"
+        content="Explore featured biographies and stories of remarkable women from around the world.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/featured.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
-<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
     <!-- Skip Link -->
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
@@ -129,8 +156,9 @@
                 Profile</a>
             <a href="analytics.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
-            <a href="admin.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
+            <a data-auth="admin-only" href="admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary"
+                style="display:none">Admin</a>
             <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
                 Biography</a>
         </div>
@@ -150,13 +178,9 @@
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
-                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
-                        <div
-                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
-                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
-                        </div>
-                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
-                        </h2>
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-6">
                         <!-- Explore Dropdown -->
@@ -170,7 +194,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="index.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a>
                                     <a href="browse.html"
@@ -196,7 +220,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="education.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a>
                                     <a href="enterprises.html"
@@ -222,7 +246,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="nominate.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Nominate
                                         a Woman</a>
@@ -249,7 +273,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="about.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
                                         Us</a>
@@ -279,14 +303,15 @@
                             <div
                                 class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
                                         Profile</a>
                                     <a href="analytics.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a>
-                                    <a href="admin.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Admin</a>
+                                    <a data-auth="admin-only" href="admin.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        style="display:none">Admin</a>
                                     <a href="biography.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
                                         Biography</a>
@@ -326,6 +351,7 @@
                             </button>
                         </div>
                     </div>
+
                     <button class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5"
                         aria-label="Menu">
                         <span class="material-symbols-outlined text-text-main">menu</span>
@@ -335,7 +361,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
         <!-- Hero -->
         <section class="bg-gradient-to-br from-accent-gold/20 via-primary/10 to-lavender-soft/30 py-16 lg:py-24">
             <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12 text-center">
@@ -398,11 +424,12 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Collection 1 -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="images/african-queens.png" alt="African Queens & Matriarchs"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="font-serif text-xl font-bold text-white">African Queens & Matriarchs</h3>
@@ -416,11 +443,12 @@
                     </a>
 
                     <!-- Collection 2 -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="images/science_curie.png" alt="Hidden Figures of Science"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="font-serif text-xl font-bold text-white">Hidden Figures of Science</h3>
@@ -434,11 +462,12 @@
                     </a>
 
                     <!-- Collection 3 -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="images/faith_hildegard.png" alt="Women of Faith Traditions"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="font-serif text-xl font-bold text-white">Women of Faith Traditions</h3>
@@ -452,11 +481,12 @@
                     </a>
 
                     <!-- Collection 4 -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="images/resistance_trung.png" alt="Women in Resistance"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="font-serif text-xl font-bold text-white">Women in Resistance</h3>
@@ -470,11 +500,12 @@
                     </a>
 
                     <!-- Collection 5 -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="images/oral_angelou.png" alt="Women in Oral Traditions"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="font-serif text-xl font-bold text-white">Women in Oral Traditions</h3>
@@ -488,11 +519,12 @@
                     </a>
 
                     <!-- Collection 6 -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="images/environment_maathai.png" alt="Environmental Stewards"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="font-serif text-xl font-bold text-white">Environmental Stewards</h3>
@@ -596,9 +628,11 @@
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
                 <!-- Brand -->
                 <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
-                        <span class="font-serif text-xl font-bold">Womencypedia</span>
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
@@ -769,6 +803,54 @@
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/navigation.js"></script>
+
+    <!-- Global Search -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Dark Mode -->
+    <script>
+
+        function updateDarkModeIcon() {
+            const icon = document.getElementById('darkModeIcon');
+            if (icon) {
+                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+            }
+        }
+        (function () {
+            const saved = localStorage.getItem('womencypedia_theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
+        })();
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>

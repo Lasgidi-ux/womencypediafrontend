@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Fellowships — Womencypedia Registry</title>
+    <meta name="description"
+        content="Discover fellowship programs and opportunities for women leaders and emerging leaders.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/fellowship.html">
+    <meta property="og:title" content="Fellowships — Womencypedia Registry">
+    <meta property="og:description" content="Discover fellowship programs and opportunities for women leaders.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display min-h-screen">
+
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search fellowships..."
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Home</a>
+            <a href="browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Browse Leaders</a>
+            <a href="fellowship.html"
+                class="block py-3 text-base font-medium text-primary hover:text-primary">Fellowships</a>
+            <a href="partners.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Partners</a>
+        </div>
+        <div class="px-6 pb-8">
+            <a href="apply-verification.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center">
+                Apply for Verification
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="navbar" class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider py-2">
+                                Explore
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="browse.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Browse</a>
+                                    <a href="browse-leaders.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Browse Leaders</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                Registry
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[220px]">
+                                    <a href="browse-leaders.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Browse Leaders</a>
+                                    <a href="apply-verification.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Apply for Verification</a>
+                                    <a href="controlled-contributions.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Submit Content</a>
+                                    <div class="border-t border-border-light my-1"></div>
+                                    <a href="partners.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Partners</a>
+                                    <a href="fellowship.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium bg-primary/10">Fellowships</a>
+                                    <a href="reports.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Reports</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider py-2">
+                                About
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="about.html" class="block px-4 py-2.5 text-sm hover:bg-primary/10">About
+                                        Us</a>
+                                    <a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSearch()" class="p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button onclick="toggleMenu()" class="lg:hidden p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen">
+        <!-- Hero -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-accent-teal/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <span
+                        class="inline-block bg-primary/10 text-primary text-sm font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider">
+                        Fellowship Programs
+                    </span>
+                    <h1 class="font-heading text-4xl lg:text-5xl font-bold text-text-main mb-6">
+                        Leadership Fellowships
+                    </h1>
+                    <p class="text-lg lg:text-xl text-text-secondary">
+                        Discover fellowship programs and opportunities for women leaders, emerging leaders, and
+                        change-makers worldwide.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Tabs -->
+        <section class="py-8 bg-white border-b border-border-light">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="filterFellowships('all')"
+                        class="filter-btn px-5 py-2 bg-primary text-white font-medium rounded-full text-sm"
+                        data-filter="all">All Programs</button>
+                    <button onclick="filterFellowships('leadership')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="leadership">Leadership</button>
+                    <button onclick="filterFellowships('research')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="research">Research</button>
+                    <button onclick="filterFellowships('entrepreneurship')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="entrepreneurship">Entrepreneurship</button>
+                    <button onclick="filterFellowships('academic')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="academic">Academic</button>
+                    <button onclick="filterFellowships('open')"
+                        class="filter-btn px-5 py-2 bg-accent-teal/10 text-accent-teal font-medium rounded-full text-sm"
+                        data-filter="open">
+                        <span class="flex items-center gap-1">
+                            <span class="w-2 h-2 bg-accent-teal rounded-full"></span>
+                            Currently Open
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fellowships List -->
+        <section class="py-12 lg:py-16">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6">
+                <div class="space-y-6" id="fellowships-list">
+                    <!-- Fellowship 1 -->
+                    <div class="fellowship-card bg-white rounded-2xl p-6 lg:p-8 border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="leadership" data-status="open">
+                        <div class="flex flex-col lg:flex-row lg:items-start gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <span
+                                            class="inline-block bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded mb-2">LEADERSHIP</span>
+                                        <span
+                                            class="inline-flex items-center gap-1 bg-accent-teal/10 text-accent-teal text-xs font-bold px-2 py-1 rounded ml-2">
+                                            <span class="w-1.5 h-1.5 bg-accent-teal rounded-full"></span>
+                                            Open
+                                        </span>
+                                    </div>
+                                    <a href="#"
+                                        class="shrink-0 px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-hover">
+                                        Apply Now
+                                    </a>
+                                </div>
+                                <h3 class="font-heading text-xl font-bold text-text-main mb-2">Women Leaders Fellowship
+                                </h3>
+                                <p class="text-text-secondary mb-4">A year-long program for mid-career women leaders in
+                                    Africa, providing leadership training, mentorship, and networking opportunities.</p>
+                                <div class="flex flex-wrap gap-4 text-sm text-text-secondary">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Africa (Hybrid)
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">schedule</span>
+                                        12 months
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">payments</span>
+                                        Stipend included
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-border-light flex items-center justify-between text-sm">
+                            <span class="text-text-secondary">Deadline: <strong class="text-text-main">March 31,
+                                    2024</strong></span>
+                            <span class="text-text-secondary">Organization: <strong class="text-text-main">African
+                                    Leadership Academy</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Fellowship 2 -->
+                    <div class="fellowship-card bg-white rounded-2xl p-6 lg:p-8 border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="research" data-status="open">
+                        <div class="flex flex-col lg:flex-row lg:items-start gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <span
+                                            class="inline-block bg-accent-teal/10 text-accent-teal text-xs font-bold px-2 py-1 rounded mb-2">RESEARCH</span>
+                                        <span
+                                            class="inline-flex items-center gap-1 bg-accent-teal/10 text-accent-teal text-xs font-bold px-2 py-1 rounded ml-2">
+                                            <span class="w-1.5 h-1.5 bg-accent-teal rounded-full"></span>
+                                            Open
+                                        </span>
+                                    </div>
+                                    <a href="#"
+                                        class="shrink-0 px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-hover">
+                                        Apply Now
+                                    </a>
+                                </div>
+                                <h3 class="font-heading text-xl font-bold text-text-main mb-2">Women in Research
+                                    Fellowship</h3>
+                                <p class="text-text-secondary mb-4">Supporting women researchers studying women's
+                                    leadership, gender equality, and social impact in developing countries.</p>
+                                <div class="flex flex-wrap gap-4 text-sm text-text-secondary">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Global (Remote)
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">schedule</span>
+                                        6 months
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">payments</span>
+                                        Grant: $10,000
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-border-light flex items-center justify-between text-sm">
+                            <span class="text-text-secondary">Deadline: <strong class="text-text-main">April 15,
+                                    2024</strong></span>
+                            <span class="text-text-secondary">Organization: <strong class="text-text-main">Institute for
+                                    Gender Studies</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Fellowship 3 -->
+                    <div class="fellowship-card bg-white rounded-2xl p-6 lg:p-8 border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="entrepreneurship" data-status="open">
+                        <div class="flex flex-col lg:flex-row lg:items-start gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <span
+                                            class="inline-block bg-accent-gold/10 text-accent-gold text-xs font-bold px-2 py-1 rounded mb-2">ENTREPRENEURSHIP</span>
+                                        <span
+                                            class="inline-flex items-center gap-1 bg-accent-teal/10 text-accent-teal text-xs font-bold px-2 py-1 rounded ml-2">
+                                            <span class="w-1.5 h-1.5 bg-accent-teal rounded-full"></span>
+                                            Open
+                                        </span>
+                                    </div>
+                                    <a href="#"
+                                        class="shrink-0 px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-hover">
+                                        Apply Now
+                                    </a>
+                                </div>
+                                <h3 class="font-heading text-xl font-bold text-text-main mb-2">Women Entrepreneurs
+                                    Accelerator</h3>
+                                <p class="text-text-secondary mb-4">A 3-month accelerator program for women-led startups
+                                    focused on social impact and sustainable development.</p>
+                                <div class="flex flex-wrap gap-4 text-sm text-text-secondary">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Global (Virtual)
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">schedule</span>
+                                        3 months
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">payments</span>
+                                        Equity-free
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-border-light flex items-center justify-between text-sm">
+                            <span class="text-text-secondary">Deadline: <strong
+                                    class="text-text-main">Rolling</strong></span>
+                            <span class="text-text-secondary">Organization: <strong class="text-text-main">Global Impact
+                                    Hub</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Fellowship 4 -->
+                    <div class="fellowship-card bg-white rounded-2xl p-6 lg:p-8 border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="academic" data-status="upcoming">
+                        <div class="flex flex-col lg:flex-row lg:items-start gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <span
+                                            class="inline-block bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded mb-2">ACADEMIC</span>
+                                        <span
+                                            class="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded ml-2">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                            Upcoming
+                                        </span>
+                                    </div>
+                                    <a href="#"
+                                        class="shrink-0 px-4 py-2 border border-border-light text-text-main text-sm font-bold rounded-lg hover:bg-background-cream">
+                                        Learn More
+                                    </a>
+                                </div>
+                                <h3 class="font-heading text-xl font-bold text-text-main mb-2">Visiting Scholars Program
+                                </h3>
+                                <p class="text-text-secondary mb-4">Academic fellowship for women scholars researching
+                                    women's leadership, gender policy, and development studies.</p>
+                                <div class="flex flex-wrap gap-4 text-sm text-text-secondary">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        United Kingdom
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">schedule</span>
+                                        6-12 months
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">payments</span>
+                                        Fully Funded
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-border-light flex items-center justify-between text-sm">
+                            <span class="text-text-secondary">Opens: <strong class="text-text-main">June 1,
+                                    2024</strong></span>
+                            <span class="text-text-secondary">Organization: <strong class="text-text-main">Oxford
+                                    University</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subscribe -->
+        <section class="py-12 lg:py-16 bg-white border-t border-border-light">
+            <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+                <h2 class="font-heading text-2xl font-bold text-text-main mb-4">Stay Updated</h2>
+                <p class="text-text-secondary mb-6">Get notified about new fellowship opportunities.</p>
+                <form class="flex gap-3 max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your email"
+                        class="flex-1 px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    <button type="submit"
+                        class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                    <span class="text-white/70 text-sm">&copy; 2024 Womencypedia. All rights reserved.</span>
+                </div>
+                <div class="flex gap-6 text-sm">
+                    <a href="privacy-policy.html" class="text-white/50 hover:text-white">Privacy</a>
+                    <a href="terms-of-use.html" class="text-white/50 hover:text-white">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        function filterFellowships(type) {
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === type) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-background-cream');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-background-cream');
+                }
+            });
+
+            // Filter fellowships
+            document.querySelectorAll('.fellowship-card').forEach(card => {
+                if (type === 'all') {
+                    card.style.display = 'block';
+                } else if (type === 'open') {
+                    if (card.dataset.status === 'open') {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else {
+                    if (card.dataset.type === type) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

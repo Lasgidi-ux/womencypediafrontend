@@ -19,9 +19,36 @@
 
     <!-- Tailwind CSS (Production Build) -->
     <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/browse.html">
+    <meta property="og:title" content="Browse Encyclopedia — Womencypedia">
+    <meta property="og:description"
+        content="Browse thousands of verified biographies of women who shaped history across all regions, eras, and domains.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Browse Encyclopedia — Womencypedia">
+    <meta name="twitter:description"
+        content="Browse thousands of verified biographies of women who shaped history across all regions, eras, and domains.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/browse.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
-<body class="bg-background-cream text-text-main antialiased font-display">
+<body class="bg-background-cream text-text-main antialiased font-display min-h-screen">
 
     <!-- Skip Link -->
     <a href="#main-content"
@@ -134,8 +161,9 @@
                 Profile</a>
             <a href="analytics.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
-            <a href="admin.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
+            <a data-auth="admin-only" href="admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary"
+                style="display:none">Admin</a>
             <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
                 Biography</a>
         </div>
@@ -154,13 +182,9 @@
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
-                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
-                        <div
-                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
-                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
-                        </div>
-                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
-                        </h2>
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-6">
                         <!-- Explore Dropdown -->
@@ -174,7 +198,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="index.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a>
                                     <a href="browse.html"
@@ -200,7 +224,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="education.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a>
                                     <a href="enterprises.html"
@@ -226,7 +250,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="nominate.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Nominate
                                         a Woman</a>
@@ -253,7 +277,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="about.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
                                         Us</a>
@@ -283,14 +307,15 @@
                             <div
                                 class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
                                         Profile</a>
                                     <a href="analytics.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a>
-                                    <a href="admin.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Admin</a>
+                                    <a data-auth="admin-only" href="admin.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        style="display:none">Admin</a>
                                     <a href="biography.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
                                         Biography</a>
@@ -341,7 +366,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-primary/15 via-lavender-soft/30 to-accent-gold/10 py-16 lg:py-20">
             <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
@@ -531,7 +556,8 @@
                         class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="relative h-48 lg:h-56 overflow-hidden">
                             <img src="images/queen-amina.png" alt="Queen Amina of Zazzau"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
                                 <span class="text-white/80 text-xs font-medium uppercase tracking-wider">Leadership •
@@ -645,7 +671,7 @@
                             place — in land, culture, language, and community. The regional structure allows readers to
                             explore women's histories within their cultural and geographic contexts.</p>
                     </div>
-                    <a href="#"
+                    <a href="javascript:void(0)"
                         class="hidden sm:flex items-center gap-2 text-sm font-bold text-text-main hover:text-primary">
                         View All Regions
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -654,11 +680,11 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Africa -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-accent-gold/20 to-primary/20 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_historical.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -674,11 +700,11 @@
                     </a>
 
                     <!-- Europe -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-divider/20 to-lavender-soft relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_landscape.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -694,11 +720,11 @@
                     </a>
 
                     <!-- Asia -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-primary/20 to-accent-teal/20 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_cultural_1.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -714,11 +740,11 @@
                     </a>
 
                     <!-- Middle East -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-accent-gold/30 to-primary/10 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_cultural_2.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -734,11 +760,11 @@
                     </a>
 
                     <!-- North America -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-accent-teal/20 to-divider/20 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_cultural_3.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -754,11 +780,11 @@
                     </a>
 
                     <!-- South America -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-primary/30 to-accent-gold/20 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_historical.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -774,11 +800,11 @@
                     </a>
 
                     <!-- Oceania -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-accent-teal/30 to-primary/10 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_landscape.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -794,11 +820,11 @@
                     </a>
 
                     <!-- Antarctica -->
-                    <a href="#"
+                    <a href="biography.html"
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="h-40 bg-gradient-to-br from-white to-accent-teal/20 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551415923-a2297c7fda79?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                                class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_cultural_1.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4">
@@ -829,7 +855,7 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Pre-colonial -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group relative bg-gradient-to-br from-accent-gold/10 to-accent-gold/5 rounded-2xl p-8 border-2 border-transparent hover:border-accent-gold/30 transition-all text-center">
                         <div
                             class="size-16 rounded-full bg-accent-gold/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
@@ -842,7 +868,7 @@
                     </a>
 
                     <!-- Colonial -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group relative bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border-2 border-transparent hover:border-primary/30 transition-all text-center">
                         <div
                             class="size-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
@@ -855,7 +881,7 @@
                     </a>
 
                     <!-- Post-colonial -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group relative bg-gradient-to-br from-accent-teal/10 to-accent-teal/5 rounded-2xl p-8 border-2 border-transparent hover:border-accent-teal/30 transition-all text-center">
                         <div
                             class="size-16 rounded-full bg-accent-teal/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
@@ -868,7 +894,7 @@
                     </a>
 
                     <!-- Contemporary -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group relative bg-gradient-to-br from-divider/10 to-divider/5 rounded-2xl p-8 border-2 border-transparent hover:border-divider/30 transition-all text-center">
                         <div
                             class="size-16 rounded-full bg-divider/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
@@ -897,7 +923,7 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                     <!-- Leadership -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -908,7 +934,7 @@
                     </a>
 
                     <!-- Culture & Arts -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -919,7 +945,7 @@
                     </a>
 
                     <!-- Spirituality -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -930,7 +956,7 @@
                     </a>
 
                     <!-- Politics -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -941,7 +967,7 @@
                     </a>
 
                     <!-- Science -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -952,7 +978,7 @@
                     </a>
 
                     <!-- Community Builders -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -963,7 +989,7 @@
                     </a>
 
                     <!-- Activism -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -974,7 +1000,7 @@
                     </a>
 
                     <!-- Education -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -985,7 +1011,7 @@
                     </a>
 
                     <!-- Diaspora -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -996,7 +1022,7 @@
                     </a>
 
                     <!-- Environmental -->
-                    <a href="#"
+                    <a href="browse.html"
                         class="group bg-white rounded-xl p-6 text-center border border-border-light hover:border-primary hover:shadow-lg transition-all">
                         <div
                             class="size-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
@@ -1032,7 +1058,8 @@
                         class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                         <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
                             <img src="images/queen-amina.png" alt="Queen Amina of Zazzau"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy" />
                             <span
                                 class="absolute top-3 left-3 bg-accent-gold text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
                         </div>
@@ -1325,11 +1352,11 @@
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Collection 1 -->
-                <a href="#"
+                <a href="biography.html"
                     class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                     <div class="h-48 bg-gradient-to-br from-primary/20 to-accent-gold/20 relative overflow-hidden">
                         <div
-                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_portrait_1.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                         <div class="absolute top-4 left-4">
@@ -1354,11 +1381,11 @@
                 </a>
 
                 <!-- Collection 2 -->
-                <a href="#"
+                <a href="biography.html"
                     class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                     <div class="h-48 bg-gradient-to-br from-accent-teal/20 to-primary/20 relative overflow-hidden">
                         <div
-                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_portrait_2.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                         <div class="absolute top-4 left-4">
@@ -1383,11 +1410,11 @@
                 </a>
 
                 <!-- Collection 3 -->
-                <a href="#"
+                <a href="biography.html"
                     class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                     <div class="h-48 bg-gradient-to-br from-accent-gold/30 to-primary/10 relative overflow-hidden">
                         <div
-                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_portrait_3.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                         <div class="absolute top-4 left-4">
@@ -1412,11 +1439,11 @@
                 </a>
 
                 <!-- Collection 4 -->
-                <a href="#"
+                <a href="biography.html"
                     class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                     <div class="h-48 bg-gradient-to-br from-divider/20 to-lavender-soft relative overflow-hidden">
                         <div
-                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_portrait_4.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                         <div class="absolute top-4 left-4">
@@ -1440,11 +1467,11 @@
                 </a>
 
                 <!-- Collection 5 -->
-                <a href="#"
+                <a href="biography.html"
                     class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                     <div class="h-48 bg-gradient-to-br from-primary/30 to-accent-gold/20 relative overflow-hidden">
                         <div
-                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_portrait_1.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                         <div class="absolute top-4 left-4">
@@ -1469,11 +1496,11 @@
                 </a>
 
                 <!-- Collection 6 -->
-                <a href="#"
+                <a href="biography.html"
                     class="group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all">
                     <div class="h-48 bg-gradient-to-br from-accent-teal/30 to-primary/10 relative overflow-hidden">
                         <div
-                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=300&fit=crop')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            class="absolute inset-0 bg-[url('images/placeholders/hyper_realistic_portrait_2.png')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-text-main/60 to-transparent"></div>
                         <div class="absolute top-4 left-4">
@@ -1628,9 +1655,11 @@
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
                 <!-- Brand -->
                 <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
-                        <span class="font-serif text-xl font-bold">Womencypedia</span>
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
@@ -1809,10 +1838,60 @@
     <script src="js/config.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/mockApi.js"></script>
     <script src="js/api.js"></script>
     <script src="js/data.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/browse.js"></script>
+
+    <!-- Global Search -->
+    <script>
+        // Enhanced global search across all pages
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Dark Mode -->
+    <script>
+
+        function updateDarkModeIcon() {
+            const icon = document.getElementById('darkModeIcon');
+            if (icon) {
+                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+            }
+        }
+        // Apply saved theme
+        (function () {
+            const saved = localStorage.getItem('womencypedia_theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
+        })();
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>

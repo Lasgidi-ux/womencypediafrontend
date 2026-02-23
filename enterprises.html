@@ -19,9 +19,34 @@
 
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/enterprises.html">
+    <meta property="og:title" content="Enterprises — Womencypedia">
+    <meta property="og:description" content="Inspiring stories of women-led enterprises and innovation throughout history.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Enterprises — Womencypedia">
+    <meta name="twitter:description" content="Inspiring stories of women-led enterprises and innovation throughout history.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/enterprises.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
-<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30">
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
     <!-- Skip Link -->
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
@@ -133,8 +158,8 @@
                 Profile</a>
             <a href="analytics.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
-            <a href="admin.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
+            <a data-auth="admin-only" href="admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary" style="display:none">Admin</a>
             <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
                 Biography</a>
         </div>
@@ -155,13 +180,9 @@
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
-                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
-                        <div
-                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
-                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
-                        </div>
-                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
-                        </h2>
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-6">
                         <div class="relative group"><button
@@ -170,7 +191,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="index.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a><a
                                         href="browse.html"
@@ -190,7 +211,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="education.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a><a
                                         href="enterprises.html"
@@ -210,7 +231,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="nominate.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Nominate
                                         a Woman</a><a href="share-story.html"
@@ -228,7 +249,7 @@
                             <div
                                 class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
                                     <a href="about.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
                                         Us</a><a href="founders.html"
@@ -251,13 +272,12 @@
                             <div
                                 class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div
-                                    class="bg-white dark:bg-background-dark border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
                                         Profile</a><a href="analytics.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a><a
-                                        href="admin.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Admin</a><a
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a><a data-auth="admin-only" href="admin.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" style="display:none">Admin</a><a
                                         href="biography.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
                                         Biography</a>
@@ -307,7 +327,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-accent-gold/20 via-lavender-soft/30 to-primary/10 py-16 lg:py-24">
             <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
@@ -335,7 +355,7 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Category 1: Trade & Commerce -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -348,7 +368,7 @@
                     </a>
 
                     <!-- Category 2: Agriculture & Food -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-4 group-hover:bg-accent-teal/20 transition-colors">
@@ -361,7 +381,7 @@
                     </a>
 
                     <!-- Category 3: Manufacturing -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-4 group-hover:bg-accent-gold/20 transition-colors">
@@ -374,7 +394,7 @@
                     </a>
 
                     <!-- Category 4: Healthcare -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -387,7 +407,7 @@
                     </a>
 
                     <!-- Category 5: Finance -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-4 group-hover:bg-accent-teal/20 transition-colors">
@@ -400,7 +420,7 @@
                     </a>
 
                     <!-- Category 6: Education -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-4 group-hover:bg-accent-gold/20 transition-colors">
@@ -413,7 +433,7 @@
                     </a>
 
                     <!-- Category 7: Arts & Crafts -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -426,7 +446,7 @@
                     </a>
 
                     <!-- Category 8: Technology -->
-                    <a href="#"
+                    <a href="about.html"
                         class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
                         <div
                             class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-4 group-hover:bg-accent-teal/20 transition-colors">
@@ -582,7 +602,7 @@
                     <div class="bg-white rounded-2xl p-8 border border-border-light">
                         <h3 class="font-serif text-xl font-bold text-text-main mb-6">Explore by Region</h3>
                         <div class="space-y-4">
-                            <a href="#"
+                            <a href="education.html"
                                 class="flex items-center gap-4 p-4 rounded-lg hover:bg-lavender-soft transition-colors group">
                                 <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
                                     <span class="material-symbols-outlined text-primary">public</span>
@@ -596,7 +616,7 @@
                                 <span
                                     class="material-symbols-outlined text-text-secondary group-hover:text-primary">arrow_forward</span>
                             </a>
-                            <a href="#"
+                            <a href="education.html"
                                 class="flex items-center gap-4 p-4 rounded-lg hover:bg-lavender-soft transition-colors group">
                                 <div class="size-10 rounded-full bg-accent-teal/10 flex items-center justify-center">
                                     <span class="material-symbols-outlined text-accent-teal">public</span>
@@ -610,7 +630,7 @@
                                 <span
                                     class="material-symbols-outlined text-text-secondary group-hover:text-accent-teal">arrow_forward</span>
                             </a>
-                            <a href="#"
+                            <a href="education.html"
                                 class="flex items-center gap-4 p-4 rounded-lg hover:bg-lavender-soft transition-colors group">
                                 <div class="size-10 rounded-full bg-accent-gold/10 flex items-center justify-center">
                                     <span class="material-symbols-outlined text-accent-gold">public</span>
@@ -624,7 +644,7 @@
                                 <span
                                     class="material-symbols-outlined text-text-secondary group-hover:text-accent-gold">arrow_forward</span>
                             </a>
-                            <a href="#"
+                            <a href="education.html"
                                 class="flex items-center gap-4 p-4 rounded-lg hover:bg-lavender-soft transition-colors group">
                                 <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
                                     <span class="material-symbols-outlined text-primary">public</span>
@@ -773,15 +793,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
         <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
                 <!-- Brand -->
                 <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
-                        <span class="font-serif text-xl font-bold">Womencypedia</span>
-                    </div>
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+            </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
                     <div class="flex gap-4">
@@ -874,14 +896,14 @@
                         Profile</a>
                     <a href="analytics.html"
                         class="text-gray-400 hover:text-white text-sm transition-colors">Analytics</a>
-                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors">Admin</a>
+                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors" data-auth="admin-only">Admin</a>
                     <a href="biography.html" class="text-gray-400 hover:text-white text-sm transition-colors">Sample
                         Biography</a>
                 </div>
                 <div class="text-center">
-                    <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a href="#"
-                            class="text-gray-400 hover:text-white">Privacy Policy</a> | <a href="#"
-                            class="text-gray-400 hover:text-white">Terms of Use</a></p>
+                    <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white">Privacy Policy</a> | <a
+                            href="terms-of-use.html" class="text-gray-400 hover:text-white">Terms of Use</a></p>
                 </div>
             </div>
         </div>
@@ -952,6 +974,56 @@
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/navigation.js"></script>
+
+    <!-- Global Search -->
+    <script>
+        // Enhanced global search across all pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Dark Mode -->
+    <script>
+                
+        function updateDarkModeIcon() {
+            const icon = document.getElementById('darkModeIcon');
+            if (icon) {
+                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+            }
+        }
+        // Apply saved theme
+        (function() {
+            const saved = localStorage.getItem('womencypedia_theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
+        })();
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>
+

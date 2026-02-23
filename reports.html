@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Reports — Womencypedia Registry</title>
+    <meta name="description"
+        content="Access reports, research papers, and publications on women-led leadership systems.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/reports.html">
+    <meta property="og:title" content="Reports — Womencypedia Registry">
+    <meta property="og:description" content="Access reports and publications on women-led leadership systems.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display min-h-screen">
+
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search reports..."
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Home</a>
+            <a href="browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Browse Leaders</a>
+            <a href="reports.html" class="block py-3 text-base font-medium text-primary hover:text-primary">Reports</a>
+        </div>
+        <div class="px-6 pb-8">
+            <a href="apply-verification.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center">
+                Apply for Verification
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="navbar" class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider py-2">
+                                Explore
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="browse.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Browse</a>
+                                    <a href="browse-leaders.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Browse Leaders</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                Registry
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[220px]">
+                                    <a href="browse-leaders.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Browse Leaders</a>
+                                    <a href="apply-verification.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Apply for Verification</a>
+                                    <a href="controlled-contributions.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Submit Content</a>
+                                    <div class="border-t border-border-light my-1"></div>
+                                    <a href="partners.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Partners</a>
+                                    <a href="fellowship.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Fellowships</a>
+                                    <a href="reports.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium bg-primary/10">Reports</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider py-2">
+                                About
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="about.html" class="block px-4 py-2.5 text-sm hover:bg-primary/10">About
+                                        Us</a>
+                                    <a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm hover:bg-primary/10">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSearch()" class="p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button onclick="toggleMenu()" class="lg:hidden p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen">
+        <!-- Hero -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-accent-teal/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <span
+                        class="inline-block bg-primary/10 text-primary text-sm font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider">
+                        Research & Reports
+                    </span>
+                    <h1 class="font-heading text-4xl lg:text-5xl font-bold text-text-main mb-6">
+                        Publications & Research
+                    </h1>
+                    <p class="text-lg lg:text-xl text-text-secondary">
+                        Access our library of reports, research papers, and publications on women-led leadership systems
+                        and organizational impact.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Categories -->
+        <section class="py-8 bg-white border-b border-border-light">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="filterReports('all')"
+                        class="filter-btn px-5 py-2 bg-primary text-white font-medium rounded-full text-sm"
+                        data-filter="all">All Reports</button>
+                    <button onclick="filterReports('annual')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="annual">Annual Reports</button>
+                    <button onclick="filterReports('research')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="research">Research Papers</button>
+                    <button onclick="filterReports('case_study')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="case_study">Case Studies</button>
+                    <button onclick="filterReports('policy')"
+                        class="filter-btn px-5 py-2 bg-background-cream font-medium rounded-full text-sm hover:bg-primary/10"
+                        data-filter="policy">Policy Briefs</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Report -->
+        <section class="py-12 lg:py-16">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="mb-8">
+                    <h2 class="font-heading text-2xl font-bold text-text-main flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">star</span>
+                        Featured Report
+                    </h2>
+                </div>
+
+                <div
+                    class="bg-gradient-to-br from-primary/5 to-accent-teal/5 rounded-2xl p-8 lg:p-12 border border-primary/20">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span
+                                class="inline-block bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded mb-4">2024
+                                ANNUAL REPORT</span>
+                            <h3 class="font-heading text-2xl lg:text-3xl font-bold text-text-main mb-4">
+                                State of Women-Led Organizations in Africa
+                            </h3>
+                            <p class="text-text-secondary mb-6">
+                                Our comprehensive annual report examining the growth, challenges, and impact of
+                                women-led organizations across the African continent.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="#"
+                                    class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover">
+                                    <span class="material-symbols-outlined">download</span>
+                                    Download PDF
+                                </a>
+                                <a href="#"
+                                    class="inline-flex items-center gap-2 px-6 py-3 border border-border-light text-text-main font-bold rounded-lg hover:bg-white">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                    Read Online
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hidden lg:block">
+                            <div
+                                class="w-full h-64 bg-white rounded-xl border border-border-light flex items-center justify-center">
+                                <span class="material-symbols-outlined text-8xl text-primary/30">description</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports List -->
+        <section class="py-12 lg:py-16 bg-white border-t border-border-light">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="mb-8">
+                    <h2 class="font-heading text-2xl font-bold text-text-main">All Publications</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reports-grid">
+                    <!-- Report 1 -->
+                    <div class="report-card bg-background-cream rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="research">
+                        <div
+                            class="h-40 bg-gradient-to-br from-primary/20 to-accent-teal/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-primary/30">article</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-primary">RESEARCH PAPER</span>
+                            <h3 class="font-heading font-bold text-text-main mt-2 mb-2">Women in STEM Leadership</h3>
+                            <p class="text-sm text-text-secondary mb-4">Analysis of women leaders in science and
+                                technology across developing nations.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                Download <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Report 2 -->
+                    <div class="report-card bg-background-cream rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="annual">
+                        <div
+                            class="h-40 bg-gradient-to-br from-accent-gold/20 to-primary/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-accent-gold/30">assessment</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-gold">ANNUAL REPORT</span>
+                            <h3 class="font-heading font-bold text-text-main mt-2 mb-2">2023 Impact Report</h3>
+                            <p class="text-sm text-text-secondary mb-4">Our yearly review of programs, growth, and
+                                community impact.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                Download <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Report 3 -->
+                    <div class="report-card bg-background-cream rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="case_study">
+                        <div
+                            class="h-40 bg-gradient-to-br from-accent-teal/20 to-primary/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-accent-teal/30">menu_book</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-teal">CASE STUDY</span>
+                            <h3 class="font-heading font-bold text-text-main mt-2 mb-2">Cooperative Model Success</h3>
+                            <p class="text-sm text-text-secondary mb-4">How women agricultural cooperatives are
+                                transforming rural economies.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                Read More <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Report 4 -->
+                    <div class="report-card bg-background-cream rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="policy">
+                        <div
+                            class="h-40 bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-primary/30">policy</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-primary">POLICY BRIEF</span>
+                            <h3 class="font-heading font-bold text-text-main mt-2 mb-2">Gender Parity in Governance</h3>
+                            <p class="text-sm text-text-secondary mb-4">Recommendations for achieving gender balance in
+                                organizational leadership.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                Download <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Report 5 -->
+                    <div class="report-card bg-background-cream rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="research">
+                        <div
+                            class="h-40 bg-gradient-to-br from-accent-teal/20 to-accent-gold/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-accent-teal/30">article</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-primary">RESEARCH PAPER</span>
+                            <h3 class="font-heading font-bold text-text-main mt-2 mb-2">Funding Gap Analysis</h3>
+                            <p class="text-sm text-text-secondary mb-4">Understanding the funding landscape for
+                                women-led organizations.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                Download <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Report 6 -->
+                    <div class="report-card bg-background-cream rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow"
+                        data-type="case_study">
+                        <div
+                            class="h-40 bg-gradient-to-br from-accent-gold/20 to-accent-teal/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-accent-gold/30">menu_book</span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-accent-gold">CASE STUDY</span>
+                            <h3 class="font-heading font-bold text-text-main mt-2 mb-2">Tech Incubator Model</h3>
+                            <p class="text-sm text-text-secondary mb-4">How a women-led tech incubator is scaling across
+                                East Africa.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                                Read More <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="py-12 lg:py-16">
+            <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+                <h2 class="font-heading text-2xl font-bold text-text-main mb-4">Stay Informed</h2>
+                <p class="text-text-secondary mb-6">Subscribe to receive our latest reports and publications.</p>
+                <form class="flex gap-3 max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your email"
+                        class="flex-1 px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    <button type="submit"
+                        class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                    <span class="text-white/70 text-sm">&copy; 2024 Womencypedia. All rights reserved.</span>
+                </div>
+                <div class="flex gap-6 text-sm">
+                    <a href="privacy-policy.html" class="text-white/50 hover:text-white">Privacy</a>
+                    <a href="terms-of-use.html" class="text-white/50 hover:text-white">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        function filterReports(type) {
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === type) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-background-cream');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-background-cream');
+                }
+            });
+
+            // Filter reports
+            document.querySelectorAll('.report-card').forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

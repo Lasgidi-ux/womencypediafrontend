@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your Womencypedia account settings, preferences, and privacy options.">
+    <title>Account Settings | Womencypedia</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #e5e7eb;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background: linear-gradient(135deg, #be185d, #0d9488);
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        .settings-nav-item.active {
+            background: linear-gradient(135deg, rgba(190, 24, 93, 0.1), rgba(13, 148, 136, 0.1));
+            border-color: #be185d;
+        }
+    </style>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/settings.html">
+    <meta property="og:title" content="Settings — Womencypedia">
+    <meta property="og:description" content="Manage your Womencypedia account settings.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Settings — Womencypedia">
+    <meta name="twitter:description" content="Manage your Womencypedia account settings.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/settings.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+
+<body class="bg-background-cream min-h-screen text-text-main antialiased">
+    <!-- Header -->
+    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                    <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                    <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                </a>
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="profile.html"
+                        class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Profile</a>
+                    <a href="browse.html"
+                        class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Browse</a>
+                    <a href="index.html"
+                        class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Home</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Settings Navigation Sidebar -->
+            <aside class="md:w-64 flex-shrink-0">
+                <nav class="space-y-2">
+                    <button onclick="showSection('profile')"
+                        class="settings-nav-item active w-full flex items-center px-4 py-3 text-left text-text-main rounded-xl border-2 border-primary hover:bg-primary/10 transition-all"
+                        data-section="profile">
+                        <span class="material-symbols-outlined mr-3 text-primary">person</span>
+                        Profile
+                    </button>
+                    <button onclick="showSection('security')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="security">
+                        <span class="material-symbols-outlined mr-3">lock</span>
+                        Security
+                    </button>
+                    <button onclick="showSection('notifications')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="notifications">
+                        <span class="material-symbols-outlined mr-3">notifications</span>
+                        Notifications
+                    </button>
+                    <button onclick="showSection('privacy')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="privacy">
+                        <span class="material-symbols-outlined mr-3 text-accent-teal">security</span>
+                        Privacy
+                    </button>
+                    <button onclick="showSection('appearance')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="appearance">
+                        <span class="material-symbols-outlined mr-3 text-accent-gold">palette</span>
+                        Appearance
+                    </button>
+                    <button onclick="showSection('connected')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="connected">
+                        <span class="material-symbols-outlined mr-3">link</span>
+                        Connected Accounts
+                    </button>
+                    <button onclick="showSection('danger')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-red-500 rounded-xl border-2 border-transparent hover:bg-red-50 transition-all"
+                        data-section="danger">
+                        <span class="material-symbols-outlined mr-3">warning</span>
+                        Danger Zone
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- Settings Content -->
+            <div class="flex-grow">
+                <!-- Profile Section -->
+                <section id="section-profile"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6">Profile Settings</h2>
+
+                    <!-- Avatar Upload -->
+                    <div class="flex items-center gap-6 mb-8 pb-8 border-b border-border-light">
+                        <div class="relative">
+                            <div id="user-avatar"
+                                class="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent-teal flex items-center justify-center text-white text-3xl font-bold overflow-hidden">
+                                <span id="avatar-initials">JD</span>
+                            </div>
+                            <button
+                                class="absolute -bottom-2 -right-2 p-2 bg-primary rounded-full text-white hover:bg-primary-hover transition-colors shadow-lg">
+                                <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                            </button>
+                        </div>
+                        <div>
+                            <h3 class="text-text-main font-semibold mb-1">Profile Photo</h3>
+                            <p class="text-text-secondary text-sm mb-3">Upload a photo to personalize your profile</p>
+                            <div class="flex gap-3">
+                                <button
+                                    class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors">Upload
+                                    Photo</button>
+                                <button
+                                    class="px-4 py-2 text-text-secondary text-sm font-medium hover:text-red-500 transition-colors">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Form -->
+                    <form id="profile-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">First Name</label>
+                                <input type="text" name="firstName" id="firstName"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter first name">
+                            </div>
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">Last Name</label>
+                                <input type="text" name="lastName" id="lastName"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter last name">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Email Address</label>
+                            <input type="email" name="email" id="email"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                placeholder="your@email.com">
+                            <p class="text-text-secondary text-xs mt-2">This email is used for account notifications and
+                                login.</p>
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Bio</label>
+                            <textarea name="bio" id="bio" rows="4"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+                                placeholder="Tell us about yourself..."></textarea>
+                            <p class="text-text-secondary text-xs mt-2">Brief description for your profile. Max 160
+                                characters.</p>
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Location</label>
+                            <input type="text" name="location" id="location"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                placeholder="City, Country">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit"
+                                class="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-colors shadow-lg shadow-primary/25">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Security Section -->
+                <section id="section-security"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6">Security Settings</h2>
+
+                    <!-- Change Password -->
+                    <div class="mb-8 pb-8 border-b border-border-light">
+                        <h3 class="text-lg font-semibold text-text-main mb-4">Change Password</h3>
+                        <form id="password-form" class="space-y-4">
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">Current Password</label>
+                                <input type="password" name="currentPassword"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter current password">
+                            </div>
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">New Password</label>
+                                <input type="password" name="newPassword"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter new password">
+                            </div>
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">Confirm New
+                                    Password</label>
+                                <input type="password" name="confirmPassword"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Confirm new password">
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit"
+                                    class="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-colors shadow-lg shadow-primary/25">
+                                    Update Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Two-Factor Authentication -->
+                    <div class="mb-8 pb-8 border-b border-border-light">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-main">Two-Factor Authentication</h3>
+                                <p class="text-text-secondary text-sm">Add an extra layer of security to your account
+                                </p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="2fa-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Active Sessions -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-text-main mb-4">Active Sessions</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="p-2 bg-green-100 rounded-lg">
+                                        <span class="material-symbols-outlined text-green-600">computer</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-main font-medium">Current Session</p>
+                                        <p class="text-text-secondary text-sm">Windows • Chrome • Lagos, Nigeria</p>
+                                    </div>
+                                </div>
+                                <span
+                                    class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Active
+                                    Now</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 text-red-500 text-sm hover:text-red-600 transition-colors">
+                            Sign out of all other sessions
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section id="section-notifications"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6">Notification Preferences</h2>
+
+                    <div class="space-y-6">
+                        <!-- Email Notifications -->
+                        <div class="pb-6 border-b border-border-light">
+                            <h3 class="text-lg font-semibold text-text-main mb-4">Email Notifications</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">New biography published</p>
+                                        <p class="text-text-secondary text-sm">Get notified when a new biography
+                                            matching your interests is published</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Weekly digest</p>
+                                        <p class="text-text-secondary text-sm">Receive a weekly summary of trending
+                                            biographies</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Nomination updates</p>
+                                        <p class="text-text-secondary text-sm">Updates on nominations you've submitted
+                                        </p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Marketing emails</p>
+                                        <p class="text-text-secondary text-sm">News, updates, and promotional content
+                                        </p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Push Notifications -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-main mb-4">Push Notifications</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Enable push notifications</p>
+                                        <p class="text-text-secondary text-sm">Receive real-time notifications in your
+                                            browser</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy Section -->
+                <section id="section-privacy"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6">Privacy Settings</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between pb-6 border-b border-border-light">
+                            <div>
+                                <p class="text-text-main">Profile visibility</p>
+                                <p class="text-text-secondary text-sm">Make your profile visible to other users</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between pb-6 border-b border-border-light">
+                            <div>
+                                <p class="text-text-main">Show reading history</p>
+                                <p class="text-text-secondary text-sm">Allow others to see what you've been reading</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between pb-6 border-b border-border-light">
+                            <div>
+                                <p class="text-text-main">Show saved collections</p>
+                                <p class="text-text-secondary text-sm">Display your bookmarked biographies on your
+                                    profile</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-text-main">Data collection</p>
+                                <p class="text-text-secondary text-sm">Allow us to collect usage data to improve your
+                                    experience</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-4 bg-gray-50 rounded-xl">
+                        <p class="text-text-secondary text-sm">
+                            <strong class="text-text-main">Data Export:</strong> You can request a copy of your data at
+                            any time.
+                            <a href="profile.html" class="text-primary hover:underline">Request Data Export</a>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Appearance Section -->
+                <section id="section-appearance"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6">Appearance Settings</h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-main mb-4">Theme</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <button class="p-4 bg-gray-900 border-2 border-primary rounded-xl text-center">
+                                    <div class="w-full h-12 bg-gray-800 rounded-lg mb-2"></div>
+                                    <span class="text-white text-sm">Dark</span>
+                                </button>
+                                <button
+                                    class="p-4 bg-gray-50 border-2 border-border-light rounded-xl text-center hover:border-gray-400 transition-colors">
+                                    <div class="w-full h-12 bg-gray-200 rounded-lg mb-2"></div>
+                                    <span class="text-text-main text-sm">Light</span>
+                                </button>
+                                <button
+                                    class="p-4 bg-gray-100 border-2 border-transparent rounded-xl text-center hover:border-gray-400 transition-colors">
+                                    <div class="w-full h-12 bg-gradient-to-b from-gray-800 to-white rounded-lg mb-2">
+                                    </div>
+                                    <span class="text-text-main text-sm">System</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="pb-6 border-b border-border-light">
+                            <h3 class="text-lg font-semibold text-text-main mb-4">Font Size</h3>
+                            <input type="range" min="12" max="20" value="16" class="w-full accent-primary">
+                            <div class="flex justify-between text-text-secondary text-sm mt-2">
+                                <span>Small</span>
+                                <span>Default</span>
+                                <span>Large</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Connected Accounts Section -->
+                <section id="section-connected"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6">Connected Accounts</h2>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-border-light">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                            fill="#4285F4" />
+                                        <path
+                                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                            fill="#34A853" />
+                                        <path
+                                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                                            fill="#FBBC05" />
+                                        <path
+                                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                            fill="#EA4335" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-text-main font-medium">Google</p>
+                                    <p class="text-text-secondary text-sm">Not connected</p>
+                                </div>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shadow-md">
+                                Connect
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-border-light">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-text-main font-medium">GitHub</p>
+                                    <p class="text-text-secondary text-sm">Not connected</p>
+                                </div>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shadow-md">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Danger Zone Section -->
+                <section id="section-danger"
+                    class="settings-section bg-white rounded-2xl border border-red-200 p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-red-500 mb-6">Danger Zone</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 bg-red-50 rounded-xl border border-red-200">
+                            <div>
+                                <p class="text-text-main font-medium">Delete Account</p>
+                                <p class="text-text-secondary text-sm">Permanently delete your account and all
+                                    associated data</p>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                            <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                            <span
+                                class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
+                        women.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-400 hover:text-primary" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary" aria-label="X (Twitter)">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Explore -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Explore</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="index.html">Home</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="browse.html">Browse</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="featured.html">Featured</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="collections.html">Collections</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="timelines.html">Timelines</a>
+                </div>
+
+                <!-- Learn -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Learn</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="education.html">Education</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="enterprises.html">Enterprises</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="research.html">Research</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="publications.html">Publications</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="resources.html">Resources</a>
+                </div>
+
+                <!-- Participate -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Participate</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="nominate.html">Nominate a Woman</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="share-story.html">Share Your Story</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contributor-guidelines.html">Contributor Guidelines</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="donate.html">Donate</a>
+                </div>
+
+                <!-- About -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contributors.html">Contributors</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="methodology.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="editorial-standards.html">Editorial Standards</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contact.html">Contact</a>
+                </div>
+            </div>
+
+            <!-- Quick Links Row -->
+            <div class="border-t border-gray-800 pt-8 mt-8">
+                <div class="flex flex-wrap gap-6 justify-center mb-6">
+                    <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
+                        Profile</a>
+                    <a href="analytics.html"
+                        class="text-gray-400 hover:text-white text-sm transition-colors">Analytics</a>
+                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors"
+                        data-auth="admin-only">Admin</a>
+                    <a href="biography.html" class="text-gray-400 hover:text-white text-sm transition-colors">Sample
+                        Biography</a>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white">Privacy Policy</a> | <a
+                            href="terms-of-use.html" class="text-gray-400 hover:text-white">Terms of Use</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Tab navigation
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.settings-section').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Show selected section
+            document.getElementById('section-' + section).classList.remove('hidden');
+
+            // Update nav items
+            document.querySelectorAll('.settings-nav-item').forEach(btn => {
+                btn.classList.remove('active', 'text-text-main', 'border-primary', 'bg-primary/10');
+                btn.classList.add('text-text-secondary', 'border-transparent');
+
+                if (btn.dataset.section === section) {
+                    btn.classList.add('active', 'text-text-main', 'border-primary', 'bg-primary/10');
+                    btn.classList.remove('text-text-secondary', 'border-transparent');
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            // ALWAYS require authentication - security critical
+            // Use Auth.protectPage() for consistent security
+            if (!Auth.protectPage('user')) {
+                return; // protectPage handles redirect
+            }
+
+            // Load user data
+            loadUserData();
+        });
+
+        // Load user data
+        function loadUserData() {
+            const user = Auth.getUser();
+            if (user) {
+                // Update avatar initials
+                const initials = user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'JD';
+                document.getElementById('avatar-initials').textContent = initials;
+
+                // Update form fields
+                if (user.name) {
+                    const nameParts = user.name.split(' ');
+                    document.getElementById('firstName').value = nameParts[0] || '';
+                    document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+                }
+                if (user.email) {
+                    document.getElementById('email').value = user.email;
+                }
+                if (user.bio) {
+                    document.getElementById('bio').value = user.bio;
+                }
+                if (user.location) {
+                    document.getElementById('location').value = user.location;
+                }
+            }
+        }
+
+        // Profile form submission
+        document.getElementById('profile-form')?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = {
+                name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`.trim(),
+                email: document.getElementById('email').value,
+                bio: document.getElementById('bio').value,
+                location: document.getElementById('location').value
+            };
+
+            // Show loading state
+            const submitBtn = this.querySelector('[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Saving...';
+
+            try {
+                // In demo mode, just update local storage
+                const currentUser = Auth._currentUser || {};
+                const updatedUser = { ...currentUser, ...formData };
+                localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(updatedUser));
+                Auth._currentUser = updatedUser;
+
+                // Update avatar initials
+                const initials = formData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                document.getElementById('avatar-initials').textContent = initials;
+
+                UI.showToast('Profile updated successfully!', 'success');
+            } catch (error) {
+                console.error('Profile update error:', error);
+                UI.showToast('Failed to update profile', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        // Password form submission
+        document.getElementById('password-form')?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const currentPassword = this.querySelector('[name="currentPassword"]').value;
+            const newPassword = this.querySelector('[name="newPassword"]').value;
+            const confirmPassword = this.querySelector('[name="confirmPassword"]').value;
+
+            if (newPassword !== confirmPassword) {
+                UI.showToast('New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                UI.showToast('Password must be at least 8 characters', 'error');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = this.querySelector('[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Updating...';
+
+            try {
+                // Demo mode - simulate password change
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                UI.showToast('Password updated successfully!', 'success');
+                this.reset();
+            } catch (error) {
+                console.error('Password update error:', error);
+                UI.showToast('Failed to update password', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+
+    <!-- Global Search -->
+    <script>
+        // Enhanced global search across all pages
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Dark Mode -->
+    <script>
+        // Dark mode toggle
+
+        function updateDarkModeIcon() {
+            const icon = document.getElementById('darkModeIcon');
+            if (icon) {
+                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+            }
+        }
+        // Apply saved theme
+        (function () {
+            const saved = localStorage.getItem('womencypedia_theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
+        })();
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

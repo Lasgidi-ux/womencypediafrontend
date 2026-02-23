@@ -27,12 +27,87 @@ const Auth = {
     },
 
     /**
+     * Handle mock API login success
+     * @param {Object} data - response data
+     */
+    _handleLoginSuccess(data) {
+        if (data.access_token) {
+            this.setTokens(data.access_token, data.refresh_token);
+        } else if (data.jwt) {
+            this.setTokens(data.jwt, null);
+        }
+
+        const user = data.user || { email: '', name: '', role: 'contributor' };
+        this._currentUser = user;
+        localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
+        this.updateUIForAuthState();
+    },
+
+    /**
      * Login user
      * @param {string} email - User email
      * @param {string} password - User password
      * @returns {Promise<Object>} - User data
      */
     async login(email, password) {
+        // Skip MockAPI when using Strapi
+        if (CONFIG.USE_STRAPI) {
+            return this._strapiLogin(email, password);
+        }
+
+        // Mock API fallback
+        if (typeof MockAPI !== 'undefined' && (CONFIG.USE_MOCK_API || !MockAPI.isAPIAvailable())) {
+            console.warn('Using Mock API for login');
+            const response = await MockAPI.auth.login(email, password);
+            this._handleLoginSuccess(response);
+            return response;
+        }
+
+        // Use generic API request
+        return this._genericLogin(email, password);
+    },
+
+    /**
+     * Strapi-specific login
+     */
+    async _strapiLogin(email, password) {
+        try {
+            // Strapi expects 'identifier' instead of 'username' or 'email' for login
+            const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.LOGIN}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identifier: email, password })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error?.error?.message || 'Login failed');
+            }
+
+            const data = await response.json();
+
+            // Store token (Strapi returns 'jwt')
+            this.setTokens(data.jwt, null);
+
+            // Store user data
+            const user = data.user || { email: email, role: 'contributor' };
+            this._currentUser = user;
+            localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
+
+            // Update UI
+            this.updateUIForAuthState();
+
+            return user;
+        } catch (error) {
+            console.error('Login error:', error);
+            throw error;
+        }
+    },
+
+    /**
+     * Generic login (non-Strapi backend)
+     */
+    async _genericLogin(email, password) {
         try {
             const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.LOGIN}`, {
                 method: 'POST',
@@ -42,22 +117,12 @@ const Auth = {
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.detail || 'Login failed');
+                throw new Error(error?.error?.message || 'Login failed');
             }
 
             const data = await response.json();
-
-            // Store tokens
-            this.setTokens(data.access_token, data.refresh_token);
-
-            // Store user data
-            this._currentUser = data.user;
-            localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(data.user));
-
-            // Update UI
-            this.updateUIForAuthState();
-
-            return data.user;
+            this._handleLoginSuccess(data);
+            return data;
         } catch (error) {
             console.error('Login error:', error);
             throw error;
@@ -73,6 +138,68 @@ const Auth = {
      * @returns {Promise<Object>} - User data
      */
     async register(userData) {
+        // Skip MockAPI when using Strapi
+        if (CONFIG.USE_STRAPI) {
+            return this._strapiRegister(userData);
+        }
+
+        // Mock API fallback
+        if (typeof MockAPI !== 'undefined' && (CONFIG.USE_MOCK_API || !MockAPI.isAPIAvailable())) {
+            console.warn('Using Mock API for registration');
+            const response = await MockAPI.auth.register(userData);
+            this._handleLoginSuccess(response);
+            return response;
+        }
+
+        // Use generic API request
+        return this._genericRegister(userData);
+    },
+
+    /**
+     * Strapi-specific registration
+     */
+    async _strapiRegister(userData) {
+        try {
+            // Strapi register expects username, email, password
+            const backendData = {
+                username: userData.name || userData.username || userData.email.split('@')[0],
+                email: userData.email,
+                password: userData.password
+            };
+
+            const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.REGISTER}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(backendData)
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error?.error?.message || 'Registration failed');
+            }
+
+            const data = await response.json();
+
+            // If auto-login after registration
+            if (data.jwt) {
+                this.setTokens(data.jwt, null);
+                const user = data.user || { email: userData.email, name: userData.name, role: 'contributor' };
+                this._currentUser = user;
+                localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
+                this.updateUIForAuthState();
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Registration error:', error);
+            throw error;
+        }
+    },
+
+    /**
+     * Generic registration (non-Strapi backend)
+     */
+    async _genericRegister(userData) {
         try {
             const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.REGISTER}`, {
                 method: 'POST',
@@ -82,19 +209,11 @@ const Auth = {
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.detail || 'Registration failed');
+                throw new Error(error?.error?.message || 'Registration failed');
             }
 
             const data = await response.json();
-
-            // If auto-login after registration
-            if (data.access_token) {
-                this.setTokens(data.access_token, data.refresh_token);
-                this._currentUser = data.user;
-                localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(data.user));
-                this.updateUIForAuthState();
-            }
-
+            this._handleLoginSuccess(data);
             return data;
         } catch (error) {
             console.error('Registration error:', error);
@@ -109,6 +228,7 @@ const Auth = {
      */
     async forgotPassword(email) {
         try {
+            // Strapi uses 'email' in the body for forgot-password
             const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.FORGOT_PASSWORD}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -117,7 +237,7 @@ const Auth = {
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.detail || 'Password reset request failed');
+                throw new Error(error?.error?.message || 'Password reset request failed');
             }
 
             return await response.json();
@@ -138,12 +258,12 @@ const Auth = {
             const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.RESET_PASSWORD}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token, new_password: newPassword })
+                body: JSON.stringify({ code: token, password: newPassword, passwordConfirmation: newPassword })
             });
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.detail || 'Password reset failed');
+                throw new Error(error?.error?.message || 'Password reset failed');
             }
 
             return await response.json();
@@ -160,14 +280,9 @@ const Auth = {
         try {
             const token = this.getAccessToken();
             if (token) {
-                // Call logout endpoint to invalidate token on server
-                await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.LOGOUT}`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
+                // Strapi doesn't have a default logout endpoint, just clear client tokens
+                // If you had a custom plugin or endpoint, you'd call it here
+
             }
         } catch (error) {
             console.error('Logout error:', error);
@@ -188,29 +303,9 @@ const Auth = {
      * @returns {Promise<boolean>} - Success status
      */
     async refreshToken() {
-        const refreshToken = this.getRefreshToken();
-        if (!refreshToken) {
-            return false;
-        }
-
-        try {
-            const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.AUTH.REFRESH}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ refresh_token: refreshToken })
-            });
-
-            if (!response.ok) {
-                return false;
-            }
-
-            const data = await response.json();
-            this.setTokens(data.access_token, data.refresh_token);
-            return true;
-        } catch (error) {
-            console.error('Token refresh error:', error);
-            return false;
-        }
+        // Strapi v5 does not ship with a refresh token mechanism out of the box.
+        // Returning true to prevent aggressive logouts; in production you'd use a plugin.
+        return true;
     },
 
     /**
@@ -247,6 +342,63 @@ const Auth = {
     },
 
     /**
+     * Update user profile
+     * @param {Object} profileData - Profile data to update
+     * @param {string} profileData.username - User's display name
+     * @param {string} profileData.email - User email
+     * @param {string} profileData.bio - User biography
+     * @param {string} profileData.location - User location
+     * @returns {Promise<Object>} - Updated user data
+     */
+    async updateProfile(profileData) {
+        const token = this.getAccessToken();
+        if (!token) {
+            throw new Error('Not authenticated');
+        }
+
+        try {
+            // Build the update payload for Strapi
+            // Strapi allows updating: username, email, password, and custom fields
+            const updatePayload = {};
+
+            if (profileData.username) updatePayload.username = profileData.username;
+            if (profileData.email) updatePayload.email = profileData.email;
+            if (profileData.bio) updatePayload.bio = profileData.bio;
+            if (profileData.location) updatePayload.location = profileData.location;
+            if (profileData.firstName) updatePayload.firstName = profileData.firstName;
+            if (profileData.lastName) updatePayload.lastName = profileData.lastName;
+
+            const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.USER.UPDATE_PROFILE}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(updatePayload)
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error?.error?.message || error?.message || 'Profile update failed');
+            }
+
+            const data = await response.json();
+
+            // Update local user state
+            if (data) {
+                this._currentUser = { ...this._currentUser, ...data };
+                localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(this._currentUser));
+                this.updateUIForAuthState();
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Update profile error:', error);
+            throw error;
+        }
+    },
+
+    /**
      * Check if user is authenticated
      * @returns {boolean}
      */
@@ -276,6 +428,14 @@ const Auth = {
      */
     getRole() {
         return this._currentUser?.role || CONFIG.ROLES.PUBLIC;
+    },
+
+    /**
+     * Get current user (synchronous)
+     * @returns {Object|null} - User data or null
+     */
+    getUser() {
+        return this._currentUser || null;
     },
 
     /**
@@ -449,12 +609,12 @@ const Auth = {
         }
 
         if (requiredRole === CONFIG.ROLES.ADMIN && !this.isAdmin()) {
-            window.location.href = 'index.html?auth=forbidden';
+            window.location.href = '403.html';
             return false;
         }
 
         if (requiredRole === CONFIG.ROLES.CONTRIBUTOR && !this.isContributor()) {
-            window.location.href = 'index.html?auth=forbidden';
+            window.location.href = '403.html';
             return false;
         }
 

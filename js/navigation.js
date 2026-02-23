@@ -79,6 +79,24 @@ function createMobileNavigation() {
                 class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
         </div>
 
+        <!-- Registry -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Registry</h3>
+            <a href="${pathPrefix}browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse Leaders</a>
+            <a href="${pathPrefix}apply-verification.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Apply for Verification</a>
+            <a href="${pathPrefix}controlled-contributions.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Submit Content</a>
+            <a href="${pathPrefix}partners.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Partners</a>
+            <a href="${pathPrefix}fellowship.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Fellowships</a>
+            <a href="${pathPrefix}reports.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Reports</a>
+        </div>
+
         <!-- Learn -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
@@ -144,6 +162,12 @@ function createMobileNavigation() {
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
             <a href="${pathPrefix}biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
                 Biography</a>
+            <!-- Sign Out - shown when authenticated -->
+            <button onclick="handleMobileLogout()"
+                class="block w-full text-left py-3 text-base font-medium text-red-600 hover:text-red-700 border-t border-border-light mt-2"
+                id="mobile-signout-btn" style="display: none;">
+                Sign Out
+            </button>
         </div>
 
         <!-- CTA -->
@@ -396,3 +420,64 @@ function initKeyboardNavigation() {
 // Make functions globally available
 window.toggleMenu = toggleMenu;
 window.toggleSearch = toggleSearch;
+
+/**
+ * Handle mobile menu logout
+ */
+function handleMobileLogout() {
+    // Close menu first
+    toggleMenu();
+
+    // Use Auth.logout() if available, otherwise do basic logout
+    if (typeof Auth !== 'undefined' && typeof Auth.logout === 'function') {
+        Auth.logout().then(() => {
+            window.location.href = 'index.html';
+        });
+    } else {
+        // Fallback: clear storage and redirect
+        localStorage.removeItem('womencypedia_access_token');
+        localStorage.removeItem('womencypedia_refresh_token');
+        localStorage.removeItem('womencypedia_user');
+        window.location.href = 'index.html';
+    }
+}
+
+window.handleMobileLogout = handleMobileLogout;
+
+/**
+ * Update mobile menu auth state
+ */
+function updateMobileMenuAuthState() {
+    const signOutBtn = document.getElementById('mobile-signout-btn');
+    if (!signOutBtn) return;
+
+    // Check for token
+    const token = localStorage.getItem('womencypedia_access_token');
+    if (token) {
+        signOutBtn.style.display = 'block';
+    } else {
+        signOutBtn.style.display = 'none';
+    }
+}
+
+/**
+ * Initialize auth state listeners
+ */
+function initAuthStateListener() {
+    // Run on DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateMobileMenuAuthState);
+    } else {
+        updateMobileMenuAuthState();
+    }
+
+    // Also run when storage changes (in case of logout in another tab)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'womencypedia_access_token') {
+            updateMobileMenuAuthState();
+        }
+    });
+}
+
+// Initialize auth state listener
+initAuthStateListener();
