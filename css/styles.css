@@ -1433,3 +1433,193 @@ a:hover {
         background-position: 200% 0;
     }
 }
+
+/* ============================================
+   RTL (Right-to-Left) SUPPORT
+   For Arabic, Hebrew, and other RTL languages
+   ============================================ */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+body.rtl .hero__description {
+    padding-left: 0;
+    padding-right: var(--space-md);
+    border-left: none;
+    border-right: 4px solid var(--primary-rose);
+}
+
+body.rtl .navbar__search-desktop svg {
+    margin-right: 0;
+    margin-left: var(--space-xs);
+}
+
+body.rtl .material-symbols-outlined {
+    direction: ltr;
+}
+
+/* Flip flex gap directions for RTL */
+body.rtl .flex-row-reverse {
+    flex-direction: row;
+}
+
+/* Fix dropdown positioning for RTL */
+body.rtl .absolute.left-0 {
+    left: auto;
+    right: 0;
+}
+
+body.rtl .absolute.right-0 {
+    right: auto;
+    left: 0;
+}
+
+/* RTL border adjustments */
+body.rtl .border-l {
+    border-left: none;
+    border-right: 1px solid var(--border-divider);
+}
+
+body.rtl .border-r {
+    border-right: none;
+    border-left: 1px solid var(--border-divider);
+}
+
+/* RTL padding adjustments */
+body.rtl .pl-14 {
+    padding-left: 0;
+    padding-right: 3.5rem;
+}
+
+body.rtl .ml-2 {
+    margin-left: 0;
+    margin-right: 0.5rem;
+}
+
+body.rtl .mr-2 {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/* ============================================
+   LANGUAGE SWITCHER DROPDOWN
+   ============================================ */
+.lang-dropdown {
+    animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   LOADING SKELETON ANIMATION
+   ============================================ */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Spin animation for loading */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   PROSE / RICH TEXT from CMS
+   ============================================ */
+.prose h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.prose h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.prose p {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+}
+
+.prose ul,
+.prose ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+body.rtl .prose ul,
+body.rtl .prose ol {
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
+.prose blockquote {
+    border-left: 4px solid var(--primary-rose);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+body.rtl .prose blockquote {
+    border-left: none;
+    border-right: 4px solid var(--primary-rose);
+    padding-left: 0;
+    padding-right: 1rem;
+}
+
+.prose img {
+    border-radius: var(--radius-md);
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+}
+
+.prose a {
+    color: var(--teal);
+    text-decoration: underline;
+}
+
+.prose a:hover {
+    color: var(--teal-dark);
+}

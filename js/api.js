@@ -4,40 +4,18 @@
  * Centralized API client for all backend communications.
  * Handles HTTP requests, error handling, and response processing.
  * Supports both custom backend and Strapi CMS.
- * Falls back to MockAPI when backend is unavailable.
+ * Uses Strapi CMS as the primary data source.
  */
 
 const API = {
-    // Track if using mock API
-    _useMockAPI: false,
-
     // Track if using Strapi CMS
-    _useStrapi: false,
+    _useStrapi: true,
 
     /**
-     * Initialize API and check backend availability
+     * Initialize API — Strapi CMS is the sole data source
      */
     async init() {
-        // Initialize mock API (only if not using Strapi)
-        if (typeof MockAPI !== 'undefined' && !CONFIG.USE_STRAPI) {
-            MockAPI.init();
-        }
-
-        // Check if we should use mock API
-        this._useMockAPI = CONFIG.USE_MOCK_API === true;
-
-        // Check if using Strapi
         this._useStrapi = CONFIG.USE_STRAPI === true;
-
-        // If mock API is available, check if real API is reachable
-        if (typeof MockAPI !== 'undefined' && !this._useMockAPI && !this._useStrapi) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            this._useMockAPI = !MockAPI.isAPIAvailable();
-        }
-
-        if (this._useMockAPI) {
-            console.info('Using Mock API - backend unavailable');
-        }
 
         if (this._useStrapi) {
             console.info('Using Strapi CMS mode');
@@ -45,10 +23,10 @@ const API = {
     },
 
     /**
-     * Check if using mock API
+     * Check if using mock API (always false — mock API removed)
      */
     isUsingMockAPI() {
-        return this._useMockAPI;
+        return false;
     },
 
     /**
@@ -72,17 +50,12 @@ const API = {
      * @returns {Promise<Object>} - Response data
      */
     async request(endpoint, options = {}) {
-        // Use Strapi API if enabled
+        // Use Strapi API if enabled (primary path)
         if (this._useStrapi && typeof StrapiAPI !== 'undefined') {
             return this._strapiRequest(endpoint, options);
         }
 
-        // Use mock API if enabled
-        if (this._useMockAPI && typeof MockAPI !== 'undefined') {
-            return this._mockRequest(endpoint, options);
-        }
-
-        // Use generic request for real API
+        // Fallback to generic request
         return this._genericRequest(endpoint, options);
     },
 
@@ -168,90 +141,139 @@ const API = {
             }
         }
 
+        // Leaders endpoints
+        if (endpoint.startsWith('/api/leaders')) {
+            if (endpoint === '/api/leaders' && method === 'GET') {
+                const params = this._parseQueryParams(endpoint);
+                return StrapiAPI.leaders.getAll(params);
+            }
+            if (endpoint.includes('filters[slug]')) {
+                const slugMatch = endpoint.match(/filters\[slug\]\[\$eq\]=([^&]+)/);
+                if (slugMatch) return StrapiAPI.leaders.get(slugMatch[1]);
+            }
+            if (endpoint.includes('filters[featured]')) {
+                return StrapiAPI.leaders.getFeatured();
+            }
+            if (endpoint.includes('filters[verified]')) {
+                return StrapiAPI.leaders.getVerified();
+            }
+            if (endpoint.includes('filters[country]')) {
+                const match = endpoint.match(/filters\[country\]\[\$eq\]=([^&]+)/);
+                if (match) return StrapiAPI.leaders.getByCountry(match[1]);
+            }
+            if (endpoint.includes('filters[continent]')) {
+                const match = endpoint.match(/filters\[continent\]\[\$eq\]=([^&]+)/);
+                if (match) return StrapiAPI.leaders.getByContinent(match[1]);
+            }
+            if (endpoint.includes('filters[sector]')) {
+                const match = endpoint.match(/filters\[sector\]\[\$eq\]=([^&]+)/);
+                if (match) return StrapiAPI.leaders.getBySector(match[1]);
+            }
+            const leaderId = endpointParts[2];
+            if (leaderId && !endpoint.includes('?')) {
+                return StrapiAPI.leaders.get(leaderId);
+            }
+        }
+
+        // Partners endpoints
+        if (endpoint.startsWith('/api/partners')) {
+            if (endpoint === '/api/partners' && method === 'GET') {
+                return StrapiAPI.partners.getAll();
+            }
+            if (endpoint.includes('filters[slug]')) {
+                const slugMatch = endpoint.match(/filters\[slug\]\[\$eq\]=([^&]+)/);
+                if (slugMatch) return StrapiAPI.partners.get(slugMatch[1]);
+            }
+            if (endpoint.includes('filters[featured]')) {
+                return StrapiAPI.partners.getFeatured();
+            }
+            if (endpoint.includes('filters[tier]')) {
+                const match = endpoint.match(/filters\[tier\]\[\$eq\]=([^&]+)/);
+                if (match) return StrapiAPI.partners.getByTier(match[1]);
+            }
+            const partnerId = endpointParts[2];
+            if (partnerId && !endpoint.includes('?')) {
+                return StrapiAPI.partners.get(partnerId);
+            }
+        }
+
+        // Fellowships endpoints
+        if (endpoint.startsWith('/api/fellowships')) {
+            if (endpoint === '/api/fellowships' && method === 'GET') {
+                return StrapiAPI.fellowships.getAll();
+            }
+            if (endpoint.includes('filters[slug]')) {
+                const slugMatch = endpoint.match(/filters\[slug\]\[\$eq\]=([^&]+)/);
+                if (slugMatch) return StrapiAPI.fellowships.get(slugMatch[1]);
+            }
+            if (endpoint.includes('filters[featured]')) {
+                return StrapiAPI.fellowships.getFeatured();
+            }
+            if (endpoint.includes('filters[status][$eq]=open')) {
+                return StrapiAPI.fellowships.getOpen();
+            }
+            if (endpoint.includes('filters[fellowshipType]')) {
+                const match = endpoint.match(/filters\[fellowshipType\]\[\$eq\]=([^&]+)/);
+                if (match) return StrapiAPI.fellowships.getByType(match[1]);
+            }
+            const fellowshipId = endpointParts[2];
+            if (fellowshipId && !endpoint.includes('?')) {
+                return StrapiAPI.fellowships.get(fellowshipId);
+            }
+        }
+
+        // Contributions endpoints
+        if (endpoint.startsWith('/api/contributions')) {
+            if (endpoint === '/api/contributions' && method === 'GET') {
+                return StrapiAPI.contributions.getAll();
+            }
+            if (endpoint === '/api/contributions' && method === 'POST') {
+                const body = options.body ? JSON.parse(options.body) : {};
+                return StrapiAPI.contributions.submit(body.data || body);
+            }
+            if (endpoint.includes('filters[slug]')) {
+                const slugMatch = endpoint.match(/filters\[slug\]\[\$eq\]=([^&]+)/);
+                if (slugMatch) return StrapiAPI.contributions.get(slugMatch[1]);
+            }
+            if (endpoint.includes('filters[featured]')) {
+                return StrapiAPI.contributions.getFeatured();
+            }
+            if (endpoint.includes('filters[status][$eq]=published')) {
+                return StrapiAPI.contributions.getPublished();
+            }
+            if (endpoint.includes('filters[type]')) {
+                const match = endpoint.match(/filters\[type\]\[\$eq\]=([^&]+)/);
+                if (match) return StrapiAPI.contributions.getByType(match[1]);
+            }
+            const contribId = endpointParts[2];
+            if (contribId && !endpoint.includes('?')) {
+                return StrapiAPI.contributions.get(contribId);
+            }
+        }
+
+        // Verification Applications endpoints
+        if (endpoint.startsWith('/api/verification-applications')) {
+            if (endpoint === '/api/verification-applications' && method === 'GET') {
+                return StrapiAPI.verificationApplications.getAll();
+            }
+            if (endpoint === '/api/verification-applications' && method === 'POST') {
+                const body = options.body ? JSON.parse(options.body) : {};
+                return StrapiAPI.verificationApplications.submit(body.data || body);
+            }
+            if (endpoint.includes('filters[status][$eq]=pending')) {
+                return StrapiAPI.verificationApplications.getPending();
+            }
+            const appId = endpointParts[2];
+            if (appId && !endpoint.includes('?')) {
+                return StrapiAPI.verificationApplications.get(appId);
+            }
+        }
+
         // Use generic request for other endpoints
         return this._genericRequest(endpoint, options);
     },
 
-    /**
-     * Route request to mock API
-     */
-    async _mockRequest(endpoint, options = {}) {
-        const method = options.method || 'GET';
-        const endpointParts = endpoint.split('/').filter(p => p);
-
-        // Auth endpoints
-        if (endpoint.startsWith('/auth/')) {
-            const authEndpoint = endpointParts[1];
-            if (authEndpoint === 'login' && method === 'POST') {
-                const body = options.body ? JSON.parse(options.body) : {};
-                return MockAPI.auth.login(body.email, body.password);
-            }
-            if (authEndpoint === 'register' && method === 'POST') {
-                const body = options.body ? JSON.parse(options.body) : {};
-                return MockAPI.auth.register(body);
-            }
-            if (authEndpoint === 'logout' && method === 'POST') {
-                return MockAPI.auth.logout();
-            }
-            if (authEndpoint === 'refresh' && method === 'POST') {
-                const body = options.body ? JSON.parse(options.body) : {};
-                return MockAPI.auth.refresh(body.refresh_token);
-            }
-            if (authEndpoint === 'me' && method === 'GET') {
-                return MockAPI.auth.getMe();
-            }
-            if (authEndpoint === 'forgot-password' && method === 'POST') {
-                const body = options.body ? JSON.parse(options.body) : {};
-                return MockAPI.auth.forgotPassword(body.email);
-            }
-            if (authEndpoint === 'reset-password' && method === 'POST') {
-                const body = options.body ? JSON.parse(options.body) : {};
-                return MockAPI.auth.resetPassword(body.token, body.new_password);
-            }
-        }
-
-        // Entries endpoints
-        if (endpoint.startsWith('/entries') || endpoint.startsWith('/api/biographies')) {
-            if ((endpoint === '/entries' || endpoint === '/api/biographies') && method === 'GET') {
-                const params = this._parseQueryParams(endpoint);
-                return MockAPI.entries.getAll(params);
-            }
-            if (endpoint.includes('/entries/search') && method === 'GET') {
-                const params = this._parseQueryParams(endpoint);
-                return MockAPI.entries.search(params.q || '', params);
-            }
-
-            // Check for slug-based lookup
-            const slugMatch = endpoint.match(/\/entries\/slug\/([^/?\s]+)/i) ||
-                endpoint.match(/\/api\/biographies\/slug\/([^/?\s]+)/i);
-            if (slugMatch && method === 'GET') {
-                return MockAPI.entries.getBySlug(slugMatch[1]);
-            }
-
-            // Check for filter-based lookup (e.g., ?filters[slug][$eq]=value)
-            if (endpoint.includes('filters[slug]') && method === 'GET') {
-                const slugParam = endpoint.match(/filters\[slug\]\[\$eq\]=([^&]+)/);
-                if (slugParam) {
-                    return MockAPI.entries.getBySlug(decodeURIComponent(slugParam[1]));
-                }
-            }
-
-            const entryId = endpointParts[1] || endpointParts[2];
-            if (entryId && !endpoint.includes('?')) {
-                return MockAPI.entries.getById(entryId);
-            }
-        }
-
-        // Collections endpoints
-        if (endpoint.startsWith('/collections') || endpoint.startsWith('/api/collections')) {
-            if ((endpoint === '/collections' || endpoint === '/api/collections') && method === 'GET') {
-                return MockAPI.collections.getAll();
-            }
-        }
-
-        // Use generic request for other endpoints
-        return this._genericRequest(endpoint, options);
-    },
+    // Mock API routing removed — all data fetched from Strapi CMS
 
     /**
      * Generic request handler for unmapped endpoints

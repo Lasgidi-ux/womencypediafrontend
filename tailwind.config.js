@@ -14,7 +14,6 @@ module.exports = {
         "lavender": "#C8A2C8",
         "lavender-soft": "#EDE3F1",
         "background-cream": "#F5F5F0",
-        "background-dark": "#1f1313",
         "text-main": "#191010",
         "text-secondary": "#6B6B6B",
         "border-light": "#DDD8CF",

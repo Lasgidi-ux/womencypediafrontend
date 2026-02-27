@@ -40,7 +40,6 @@
 
     <!-- Open Graph / SEO -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://womencypedia.org/analytics.html">
     <meta property="og:title" content="Analytics — Womencypedia">
     <meta property="og:description" content="View your contribution analytics and activity on Womencypedia.">
     <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
@@ -49,7 +48,6 @@
     <meta name="twitter:title" content="Analytics — Womencypedia">
     <meta name="twitter:description" content="View your contribution analytics and activity on Womencypedia.">
     <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
-    <link rel="canonical" href="https://womencypedia.org/analytics.html">
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
@@ -168,8 +166,6 @@
             <a href="profile.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
                 Profile</a>
-            <a href="analytics.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
             <a data-auth="admin-only" href="admin.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary"
                 style="display:none">Admin</a>
@@ -647,13 +643,8 @@
 
             <!-- Quick Links Row -->
             <div class="border-t border-gray-800 pt-8 mt-8">
-                <div class="flex flex-wrap gap-6 justify-center mb-6">
                     <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
                         Profile</a>
-                    <a href="analytics.html"
-                        class="text-gray-400 hover:text-white text-sm transition-colors">Analytics</a>
-                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors">Admin</a>
-                    <a href="biography.html" class="text-gray-400 hover:text-white text-sm transition-colors">Sample
                         Biography</a>
                 </div>
                 <div class="text-center">
@@ -736,6 +727,7 @@
 
     <!-- Scripts -->
     <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/analytics.js"></script>
@@ -766,26 +758,6 @@
                 });
             });
         });
-    </script>
-    <!-- Dark Mode -->
-    <script>
-        // Dark mode toggle
-
-        function updateDarkModeIcon() {
-            const icon = document.getElementById('darkModeIcon');
-            if (icon) {
-                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
-            }
-        }
-        // Apply saved theme
-        (function () {
-            const saved = localStorage.getItem('womencypedia_theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
-        })();
     </script>
 
     <!-- Service Worker Registration -->

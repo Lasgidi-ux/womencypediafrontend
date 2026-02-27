@@ -15,3 +15,23 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Strapi
+womencypedia-cms/.tmp/
+womencypedia-cms/dist/
+womencypedia-cms/.strapi/
+womencypedia-cms/database/
+womencypedia-cms/.cache/
+womencypedia-cms/exports/
+
+# Build artifacts
+css/tailwind.css.map
+
+# Python helper scripts (dev-only)
+__pycache__/
+*.pyc
+
+# Setup/install logs (one-time use)
+cms_setup.log
+strapi_install.log
+strapi_setup_log.txt

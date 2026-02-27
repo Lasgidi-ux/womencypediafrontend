@@ -50,20 +50,12 @@ const Auth = {
      * @returns {Promise<Object>} - User data
      */
     async login(email, password) {
-        // Skip MockAPI when using Strapi
+        // Use Strapi authentication
         if (CONFIG.USE_STRAPI) {
             return this._strapiLogin(email, password);
         }
 
-        // Mock API fallback
-        if (typeof MockAPI !== 'undefined' && (CONFIG.USE_MOCK_API || !MockAPI.isAPIAvailable())) {
-            console.warn('Using Mock API for login');
-            const response = await MockAPI.auth.login(email, password);
-            this._handleLoginSuccess(response);
-            return response;
-        }
-
-        // Use generic API request
+        // Fallback to generic API request
         return this._genericLogin(email, password);
     },
 
@@ -89,8 +81,11 @@ const Auth = {
             // Store token (Strapi returns 'jwt')
             this.setTokens(data.jwt, null);
 
-            // Store user data
+            // Store user data - normalize role from Strapi object to string
             const user = data.user || { email: email, role: 'contributor' };
+            if (user.role && typeof user.role === 'object') {
+                user.role = user.role.type || user.role.name || 'public';
+            }
             this._currentUser = user;
             localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
 
@@ -138,20 +133,12 @@ const Auth = {
      * @returns {Promise<Object>} - User data
      */
     async register(userData) {
-        // Skip MockAPI when using Strapi
+        // Use Strapi registration
         if (CONFIG.USE_STRAPI) {
             return this._strapiRegister(userData);
         }
 
-        // Mock API fallback
-        if (typeof MockAPI !== 'undefined' && (CONFIG.USE_MOCK_API || !MockAPI.isAPIAvailable())) {
-            console.warn('Using Mock API for registration');
-            const response = await MockAPI.auth.register(userData);
-            this._handleLoginSuccess(response);
-            return response;
-        }
-
-        // Use generic API request
+        // Fallback to generic API request
         return this._genericRegister(userData);
     },
 
@@ -304,7 +291,23 @@ const Auth = {
      */
     async refreshToken() {
         // Strapi v5 does not ship with a refresh token mechanism out of the box.
-        // Returning true to prevent aggressive logouts; in production you'd use a plugin.
+        // Validate that the token still exists; if not, force logout.
+        const token = this.getAccessToken();
+        if (!token) {
+            return false;
+        }
+        // Basic JWT expiration check (decode payload without verification)
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            if (payload.exp && payload.exp * 1000 < Date.now()) {
+                // Token expired
+                this.clearStorage();
+                return false;
+            }
+        } catch (e) {
+            // If token can't be decoded, it's invalid
+            return false;
+        }
         return true;
     },
 
@@ -332,6 +335,10 @@ const Auth = {
             }
 
             const data = await response.json();
+            // Normalize role from Strapi object to string
+            if (data.role && typeof data.role === 'object') {
+                data.role = data.role.type || data.role.name || 'public';
+            }
             this._currentUser = data;
             localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(data));
             return data;
@@ -606,6 +613,11 @@ const Auth = {
         if (!this.isAuthenticated()) {
             window.location.href = 'index.html?auth=required';
             return false;
+        }
+
+        // 'user' means any authenticated user — already checked above
+        if (requiredRole === 'user' || requiredRole === 'authenticated') {
+            return true;
         }
 
         if (requiredRole === CONFIG.ROLES.ADMIN && !this.isAdmin()) {

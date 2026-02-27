@@ -73,7 +73,8 @@
                 <div class="flex items-center gap-8 lg:gap-12">
                     <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
                         <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
-                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
 
                     <!-- Desktop Nav -->
@@ -202,8 +203,6 @@
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
                                         Profile</a>
-                                    <a href="analytics.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a>
                                     <a data-auth="admin-only" href="admin.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
                                         style="display:none">Admin</a>
@@ -382,9 +381,10 @@
                 <div class="col-span-2 md:col-span-1">
                     <div class="flex items-center justify-center gap-3 mb-4">
                         <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
-                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
-                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
-                    </a>
+                            <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                            <span
+                                class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        </a>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
@@ -473,15 +473,6 @@
 
             <!-- Quick Links Row -->
             <div class="border-t border-gray-800 pt-8 mt-8">
-                <div class="flex flex-wrap gap-6 justify-center mb-6">
-                    <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
-                        Profile</a>
-                    <a href="analytics.html"
-                        class="text-gray-400 hover:text-white text-sm transition-colors">Analytics</a>
-                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors">Admin</a>
-                    <a href="biography.html" class="text-gray-400 hover:text-white text-sm transition-colors">Sample
-                        Biography</a>
-                </div>
                 <div class="text-center">
                     <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
                             href="privacy-policy.html" class="text-gray-400 hover:text-white">Privacy Policy</a> | <a
@@ -493,9 +484,12 @@
 
     <!-- Scripts -->
     <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/data.js"></script>
+    <script src="js/strapi-api.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/navigation.js"></script>
     <script>
         // Search state
         let searchState = {
@@ -609,16 +603,41 @@
             pagination.classList.add('hidden');
 
             try {
-                // Try API search first
+                // Search via Strapi API
                 let results = [];
+                try {
+                    let url = `${CONFIG.API_BASE_URL}/api/biographies?populate=image,tags&pagination[page]=${searchState.page}&pagination[pageSize]=${searchState.perPage}`;
+                    if (searchState.query) {
+                        url += `&filters[$or][0][name][$containsi]=${encodeURIComponent(searchState.query)}`;
+                        url += `&filters[$or][1][introduction][$containsi]=${encodeURIComponent(searchState.query)}`;
+                    }
+                    if (searchState.era) {
+                        url += `&filters[era][$eq]=${encodeURIComponent(searchState.era)}`;
+                    }
+                    if (searchState.region) {
+                        url += `&filters[region][$eq]=${encodeURIComponent(searchState.region)}`;
+                    }
+                    if (searchState.category) {
+                        url += `&filters[category][$eq]=${encodeURIComponent(searchState.category)}`;
+                    }
 
-                if (typeof MockAPI !== 'undefined') {
-                    // Use mock data
-                    const allEntries = MockAPI.entries.getAll();
-                    results = filterResults(allEntries);
-                } else {
-                    // Use sample data
+                    const response = await fetch(url, { headers: { 'Cache-Control': 'no-cache' }, cache: 'no-store' });
+                    if (response.ok) {
+                        const result = await response.json();
+                        results = (result.data || []).map(item => {
+                            const attrs = item.attributes || item;
+                            return { id: item.id, ...attrs };
+                        });
+                        searchState.totalResults = result.meta?.pagination?.total || results.length;
+                    } else {
+                        // Fallback to sample data
+                        results = filterResults(getSampleData());
+                        searchState.totalResults = results.length;
+                    }
+                } catch (e) {
+                    console.warn('Strapi search failed, using sample data');
                     results = filterResults(getSampleData());
+                    searchState.totalResults = results.length;
                 }
 
                 // Update state
@@ -782,24 +801,6 @@
         }
     </script>
 
-    <!-- Dark Mode -->
-    <script>
-
-        function updateDarkModeIcon() {
-            const icon = document.getElementById('darkModeIcon');
-            if (icon) {
-                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
-            }
-        }
-        (function () {
-            const saved = localStorage.getItem('womencypedia_theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
-        })();
-    </script>
 </body>
 
 </html>

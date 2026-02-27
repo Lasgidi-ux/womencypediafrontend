@@ -122,7 +122,6 @@
 <div class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
 <a class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" href="profile.html">My
                                         Profile</a>
-<a class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" href="analytics.html">Analytics</a>
 <a class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" data-auth="admin-only" href="admin.html" style="display:none">Admin</a>
 <a class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" href="biography.html">Sample
                                         Biography</a>
@@ -504,12 +503,8 @@
 </div>
 <!-- Quick Links Row -->
 <div class="border-t border-gray-800 pt-8 mt-8">
-<div class="flex flex-wrap gap-6 justify-center mb-6">
 <a class="text-gray-400 hover:text-white text-sm transition-colors" href="profile.html">My
                         Profile</a>
-<a class="text-gray-400 hover:text-white text-sm transition-colors" href="analytics.html">Analytics</a>
-<a class="text-gray-400 hover:text-white text-sm transition-colors" href="admin.html">Admin</a>
-<a class="text-gray-400 hover:text-white text-sm transition-colors" href="biography.html">Sample
                         Biography</a>
 </div>
 <div class="text-center">
@@ -518,23 +513,5 @@
 </div>
 </div>
 </footer>
-<!-- Dark Mode -->
-<script>
-
-        function updateDarkModeIcon() {
-            const icon = document.getElementById('darkModeIcon');
-            if (icon) {
-                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
-            }
-        }
-        (function () {
-            const saved = localStorage.getItem('womencypedia_theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
-        })();
-    </script>
 </body>
 </html>

@@ -1,0 +1,64 @@
+services:
+  - type: web
+    name: womencypedia-cms
+    runtime: node
+    region: oregon
+    plan: starter
+    rootDir: womencypedia-cms
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: womencypedia-db
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: womencypedia-db
+          property: port
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: womencypedia-db
+          property: database
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: womencypedia-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: womencypedia-db
+          property: password
+      - key: DATABASE_SSL
+        value: "true"
+      - key: APP_KEYS
+        generateValue: true
+      - key: API_TOKEN_SALT
+        generateValue: true
+      - key: ADMIN_JWT_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: TRANSFER_TOKEN_SALT
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: PUBLIC_URL
+        sync: false
+      # Cloudinary (set manually in Render dashboard)
+      - key: CLOUDINARY_NAME
+        sync: false
+      - key: CLOUDINARY_KEY
+        sync: false
+      - key: CLOUDINARY_SECRET
+        sync: false
+
+databases:
+  - name: womencypedia-db
+    plan: starter
+    region: oregon
+    databaseName: womencypedia
+    user: womencypedia

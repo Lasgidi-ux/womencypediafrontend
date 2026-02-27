@@ -110,14 +110,16 @@
         },
         "organizationType": {
             "type": "enumeration",
-            ["Government Agency",
+            "enum": [
+                "Government Agency",
                 "NGO",
                 "Social Enterprise",
                 "Company",
                 "Foundation",
                 "Institution",
                 "Association",
-                "Cooperatives"]: ,
+                "Cooperatives"
+            ],
             "required": true
         },
         "foundingYear": {

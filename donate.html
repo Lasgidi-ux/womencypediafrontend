@@ -25,12 +25,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://womencypedia.org/donate.html">
     <meta property="og:title" content="Donate — Womencypedia">
-    <meta property="og:description" content="Support Womencypedia's mission to restore women's stories that history overlooked.">
+    <meta property="og:description"
+        content="Support Womencypedia's mission to restore women's stories that history overlooked.">
     <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
     <meta property="og:site_name" content="Womencypedia">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Donate — Womencypedia">
-    <meta name="twitter:description" content="Support Womencypedia's mission to restore women's stories that history overlooked.">
+    <meta name="twitter:description"
+        content="Support Womencypedia's mission to restore women's stories that history overlooked.">
     <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
     <link rel="canonical" href="https://womencypedia.org/donate.html">
 
@@ -151,10 +153,9 @@
             <a href="profile.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
                 Profile</a>
-            <a href="analytics.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
             <a data-auth="admin-only" href="admin.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary" style="display:none">Admin</a>
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary"
+                style="display:none">Admin</a>
             <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
                 Biography</a>
         </div>
@@ -176,7 +177,8 @@
                 <div class="flex items-center gap-8 lg:gap-12">
                     <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
                         <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
-                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-6">
                         <div class="relative group"><button
@@ -269,10 +271,11 @@
                                     class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
-                                        Profile</a><a href="analytics.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a><a data-auth="admin-only" href="admin.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" style="display:none">Admin</a><a
-                                        href="biography.html"
+                                        Profile</a>
+                                    <a data-auth="admin-only" href="admin.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        style="display:none">Admin</a>
+                                    <a href="biography.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
                                         Biography</a>
                                 </div>
@@ -311,7 +314,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <button class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5"
                         aria-label="Menu">
                         <span class="material-symbols-outlined text-text-main">menu</span>
@@ -358,7 +361,7 @@
 
                 <div class="grid md:grid-cols-3 gap-6 mb-12">
                     <!-- One-time -->
-                    <div
+                    <div data-donation-type="one-time"
                         class="bg-white rounded-xl p-8 border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all text-center">
                         <div
                             class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
@@ -367,24 +370,25 @@
                         <h3 class="font-serif text-xl font-bold text-text-main mb-2">One-Time Gift</h3>
                         <p class="text-text-secondary text-sm mb-6">Make an immediate impact with a single donation.</p>
                         <div class="grid grid-cols-2 gap-2 mb-4">
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$25</button>
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$50</button>
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$100</button>
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$250</button>
+                            <button data-amount="25"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$25</button>
+                            <button data-amount="50"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$50</button>
+                            <button data-amount="100"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$100</button>
+                            <button data-amount="250"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$250</button>
                         </div>
-                        <input type="text" placeholder="Custom amount"
-                            class="w-full h-10 px-4 border border-border-light rounded text-sm mb-4" />
-                        <button
-                            class="w-full h-12 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90">Donate
+                        <input type="text" data-custom-amount placeholder="Custom amount ($)"
+                            class="w-full h-10 px-4 border border-border-light rounded text-sm mb-4 focus:border-accent-gold focus:ring-1 focus:ring-accent-gold" />
+                        <button data-donate-action
+                            class="w-full h-12 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90 transition-colors cursor-pointer">Donate
                             Now</button>
                     </div>
 
                     <!-- Monthly -->
-                    <div class="bg-white rounded-xl p-8 border-2 border-accent-gold shadow-lg text-center relative">
+                    <div data-donation-type="monthly"
+                        class="bg-white rounded-xl p-8 border-2 border-accent-gold shadow-lg text-center relative">
                         <div
                             class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-gold text-white text-xs font-bold px-3 py-1 rounded-full">
                             Most Impact</div>
@@ -395,24 +399,24 @@
                         <h3 class="font-serif text-xl font-bold text-text-main mb-2">Monthly Supporter</h3>
                         <p class="text-text-secondary text-sm mb-6">Sustain our work with recurring support.</p>
                         <div class="grid grid-cols-2 gap-2 mb-4">
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$10/mo</button>
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$25/mo</button>
-                            <button
-                                class="h-10 rounded border border-accent-gold bg-accent-gold/10 font-semibold text-sm">$50/mo</button>
-                            <button
-                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm">$100/mo</button>
+                            <button data-amount="10"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$10/mo</button>
+                            <button data-amount="25"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$25/mo</button>
+                            <button data-amount="50"
+                                class="h-10 rounded border border-accent-gold bg-accent-gold/10 font-semibold text-sm transition-all cursor-pointer">$50/mo</button>
+                            <button data-amount="100"
+                                class="h-10 rounded border border-border-light hover:border-accent-gold hover:bg-accent-gold/5 font-semibold text-sm transition-all cursor-pointer">$100/mo</button>
                         </div>
-                        <input type="text" placeholder="Custom amount"
-                            class="w-full h-10 px-4 border border-border-light rounded text-sm mb-4" />
-                        <button
-                            class="w-full h-12 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90">Become
+                        <input type="text" data-custom-amount placeholder="Custom amount ($/mo)"
+                            class="w-full h-10 px-4 border border-border-light rounded text-sm mb-4 focus:border-accent-gold focus:ring-1 focus:ring-accent-gold" />
+                        <button data-donate-action
+                            class="w-full h-12 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90 transition-colors cursor-pointer">Become
                             a Supporter</button>
                     </div>
 
                     <!-- Legacy -->
-                    <div
+                    <div data-donation-type="legacy"
                         class="bg-white rounded-xl p-8 border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all text-center">
                         <div
                             class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
@@ -434,8 +438,8 @@
                                     class="material-symbols-outlined text-accent-gold text-sm">check</span> Annual
                                 report</li>
                         </ul>
-                        <button
-                            class="w-full h-12 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90">Join
+                        <button data-donate-action
+                            class="w-full h-12 bg-accent-gold text-white font-bold rounded-lg hover:bg-accent-gold/90 transition-colors cursor-pointer">Join
                             the Circle</button>
                     </div>
                 </div>
@@ -499,17 +503,18 @@
     </main>
 
     <!-- Footer -->
-        <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
         <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
                 <!-- Brand -->
                 <div class="col-span-2 md:col-span-1">
                     <div class="flex items-center justify-center gap-3 mb-4">
-                <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
-                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
-                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
-                    </a>
-            </div>
+                        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                            <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                            <span
+                                class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        </a>
+                    </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
                     <div class="flex gap-4">
@@ -597,14 +602,12 @@
 
             <!-- Quick Links Row -->
             <div class="border-t border-gray-800 pt-8 mt-8">
-                <div class="flex flex-wrap gap-6 justify-center mb-6">
+                <div class="flex flex-wrap gap-4 mb-4">
                     <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
                         Profile</a>
-                    <a href="analytics.html"
-                        class="text-gray-400 hover:text-white text-sm transition-colors">Analytics</a>
-                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors" data-auth="admin-only">Admin</a>
                     <a href="biography.html" class="text-gray-400 hover:text-white text-sm transition-colors">Sample
                         Biography</a>
+                    <a href="pricing.html" class="text-gray-400 hover:text-white text-sm transition-colors">Pricing</a>
                 </div>
                 <div class="text-center">
                     <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
@@ -676,16 +679,18 @@
     </div>
 
     <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/donate.js"></script>
     <script src="js/navigation.js"></script>
 
     <!-- Global Search -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const searchInputs = document.querySelectorAll('input[type="search"]');
             searchInputs.forEach(input => {
-                input.addEventListener('keydown', function(e) {
+                input.addEventListener('keydown', function (e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         const query = this.value.trim();
@@ -698,24 +703,6 @@
         });
     </script>
 
-    <!-- Dark Mode -->
-    <script>
-        
-        function updateDarkModeIcon() {
-            const icon = document.getElementById('darkModeIcon');
-            if (icon) {
-                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
-            }
-        }
-        (function() {
-            const saved = localStorage.getItem('womencypedia_theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
-        })();
-    </script>
 
     <!-- Service Worker Registration -->
     <script>
@@ -730,4 +717,3 @@
 </body>
 
 </html>
-

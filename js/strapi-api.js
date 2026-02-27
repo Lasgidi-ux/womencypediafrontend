@@ -489,6 +489,259 @@ const StrapiAPI = {
                 queryParams: params
             });
         }
+    },
+
+    // ============================================
+    // LEADERS (Institutional Registry)
+    // ============================================
+
+    leaders: {
+        async getAll(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.LEADERS, {
+                method: 'GET',
+                contentType: 'leaders',
+                queryParams: params
+            });
+        },
+
+        async get(idOrSlug) {
+            if (isNaN(idOrSlug)) {
+                const response = await StrapiAPI.request(
+                    CONFIG.ENDPOINTS.STRAPI.LEADER_BY_SLUG(idOrSlug),
+                    { method: 'GET', contentType: 'leaders' }
+                );
+                return response.entries?.[0] || null;
+            }
+            return StrapiAPI.request(`${CONFIG.ENDPOINTS.STRAPI.LEADERS}/${idOrSlug}`, {
+                method: 'GET',
+                contentType: 'leaders'
+            });
+        },
+
+        async getFeatured(limit = 6) {
+            return StrapiAPI.request(
+                `${CONFIG.ENDPOINTS.STRAPI.LEADERS_FEATURED}&pagination[pageSize]=${limit}`,
+                { method: 'GET', contentType: 'leaders' }
+            );
+        },
+
+        async getVerified(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.LEADERS_VERIFIED, {
+                method: 'GET',
+                contentType: 'leaders',
+                queryParams: params
+            });
+        },
+
+        async getByCountry(country, params = {}) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.LEADERS_BY_COUNTRY(country),
+                { method: 'GET', contentType: 'leaders', queryParams: params }
+            );
+        },
+
+        async getByContinent(continent, params = {}) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.LEADERS_BY_CONTINENT(continent),
+                { method: 'GET', contentType: 'leaders', queryParams: params }
+            );
+        },
+
+        async getBySector(sector, params = {}) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.LEADERS_BY_SECTOR(sector),
+                { method: 'GET', contentType: 'leaders', queryParams: params }
+            );
+        }
+    },
+
+    // ============================================
+    // PARTNERS
+    // ============================================
+
+    partners: {
+        async getAll(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.PARTNERS, {
+                method: 'GET',
+                contentType: 'partners',
+                queryParams: params
+            });
+        },
+
+        async get(idOrSlug) {
+            if (isNaN(idOrSlug)) {
+                const response = await StrapiAPI.request(
+                    CONFIG.ENDPOINTS.STRAPI.PARTNER_BY_SLUG(idOrSlug),
+                    { method: 'GET', contentType: 'partners' }
+                );
+                return response.entries?.[0] || null;
+            }
+            return StrapiAPI.request(`${CONFIG.ENDPOINTS.STRAPI.PARTNERS}/${idOrSlug}`, {
+                method: 'GET',
+                contentType: 'partners'
+            });
+        },
+
+        async getFeatured(limit = 6) {
+            return StrapiAPI.request(
+                `${CONFIG.ENDPOINTS.STRAPI.PARTNERS_FEATURED}&pagination[pageSize]=${limit}`,
+                { method: 'GET', contentType: 'partners' }
+            );
+        },
+
+        async getByTier(tier, params = {}) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.PARTNERS_BY_TIER(tier),
+                { method: 'GET', contentType: 'partners', queryParams: params }
+            );
+        }
+    },
+
+    // ============================================
+    // FELLOWSHIPS
+    // ============================================
+
+    fellowships: {
+        async getAll(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.FELLOWSHIPS, {
+                method: 'GET',
+                contentType: 'fellowships',
+                queryParams: params
+            });
+        },
+
+        async get(idOrSlug) {
+            if (isNaN(idOrSlug)) {
+                const response = await StrapiAPI.request(
+                    CONFIG.ENDPOINTS.STRAPI.FELLOWSHIP_BY_SLUG(idOrSlug),
+                    { method: 'GET', contentType: 'fellowships' }
+                );
+                return response.entries?.[0] || null;
+            }
+            return StrapiAPI.request(`${CONFIG.ENDPOINTS.STRAPI.FELLOWSHIPS}/${idOrSlug}`, {
+                method: 'GET',
+                contentType: 'fellowships'
+            });
+        },
+
+        async getFeatured(limit = 6) {
+            return StrapiAPI.request(
+                `${CONFIG.ENDPOINTS.STRAPI.FELLOWSHIPS_FEATURED}&pagination[pageSize]=${limit}`,
+                { method: 'GET', contentType: 'fellowships' }
+            );
+        },
+
+        async getOpen(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.FELLOWSHIPS_OPEN, {
+                method: 'GET',
+                contentType: 'fellowships',
+                queryParams: params
+            });
+        },
+
+        async getByType(type, params = {}) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.FELLOWSHIPS_BY_TYPE(type),
+                { method: 'GET', contentType: 'fellowships', queryParams: params }
+            );
+        }
+    },
+
+    // ============================================
+    // CONTRIBUTIONS
+    // ============================================
+
+    contributions: {
+        async getAll(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.CONTRIBUTIONS, {
+                method: 'GET',
+                contentType: 'contributions',
+                queryParams: params
+            });
+        },
+
+        async get(idOrSlug) {
+            if (isNaN(idOrSlug)) {
+                const response = await StrapiAPI.request(
+                    CONFIG.ENDPOINTS.STRAPI.CONTRIBUTION_BY_SLUG(idOrSlug),
+                    { method: 'GET', contentType: 'contributions' }
+                );
+                return response.entries?.[0] || null;
+            }
+            return StrapiAPI.request(`${CONFIG.ENDPOINTS.STRAPI.CONTRIBUTIONS}/${idOrSlug}`, {
+                method: 'GET',
+                contentType: 'contributions'
+            });
+        },
+
+        async getFeatured(limit = 6) {
+            return StrapiAPI.request(
+                `${CONFIG.ENDPOINTS.STRAPI.CONTRIBUTIONS_FEATURED}&pagination[pageSize]=${limit}`,
+                { method: 'GET', contentType: 'contributions' }
+            );
+        },
+
+        async getPublished(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.CONTRIBUTIONS_PUBLISHED, {
+                method: 'GET',
+                contentType: 'contributions',
+                queryParams: params
+            });
+        },
+
+        async getByType(type, params = {}) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.CONTRIBUTIONS_BY_TYPE(type),
+                { method: 'GET', contentType: 'contributions', queryParams: params }
+            );
+        },
+
+        async submit(contributionData) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.CONTRIBUTION_SUBMIT, {
+                method: 'POST',
+                contentType: 'contributions',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: contributionData })
+            });
+        }
+    },
+
+    // ============================================
+    // VERIFICATION APPLICATIONS
+    // ============================================
+
+    verificationApplications: {
+        async getAll(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.VERIFICATION_APPLICATIONS, {
+                method: 'GET',
+                contentType: 'verification-applications',
+                queryParams: params
+            });
+        },
+
+        async get(id) {
+            return StrapiAPI.request(
+                CONFIG.ENDPOINTS.STRAPI.VERIFICATION_APPLICATION_BY_ID(id),
+                { method: 'GET', contentType: 'verification-applications' }
+            );
+        },
+
+        async getPending(params = {}) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.VERIFICATION_APPLICATIONS_PENDING, {
+                method: 'GET',
+                contentType: 'verification-applications',
+                queryParams: params
+            });
+        },
+
+        async submit(applicationData) {
+            return StrapiAPI.request(CONFIG.ENDPOINTS.STRAPI.VERIFICATION_APPLICATION_SUBMIT, {
+                method: 'POST',
+                contentType: 'verification-applications',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: applicationData })
+            });
+        }
     }
 };
 

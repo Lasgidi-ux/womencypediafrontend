@@ -185,8 +185,6 @@
             <a href="profile.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
                 Profile</a>
-            <a href="analytics.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
             <a data-auth="admin-only" href="admin.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary" style="display:none">Admin</a>
             <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
@@ -302,8 +300,6 @@
                                     class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
                                     <a href="profile.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
-                                        Profile</a><a href="analytics.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Analytics</a><a data-auth="admin-only" href="admin.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" style="display:none">Admin</a><a
                                         href="biography.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
@@ -856,13 +852,8 @@
 
             <!-- Quick Links Row -->
             <div class="border-t border-gray-800 pt-8 mt-8">
-                <div class="flex flex-wrap gap-6 justify-center mb-6">
                     <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
                         Profile</a>
-                    <a href="analytics.html"
-                        class="text-gray-400 hover:text-white text-sm transition-colors">Analytics</a>
-                    <a href="admin.html" class="text-gray-400 hover:text-white text-sm transition-colors" data-auth="admin-only">Admin</a>
-                    <a href="biography.html" class="text-gray-400 hover:text-white text-sm transition-colors">Sample
                         Biography</a>
                 </div>
                 <div class="text-center">
@@ -907,25 +898,6 @@
                 });
             });
         });
-    </script>
-    <!-- Dark Mode -->
-    <script>
-                
-        function updateDarkModeIcon() {
-            const icon = document.getElementById('darkModeIcon');
-            if (icon) {
-                icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
-            }
-        }
-        // Apply saved theme
-        (function() {
-            const saved = localStorage.getItem('womencypedia_theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-            document.addEventListener('DOMContentLoaded', updateDarkModeIcon);
-        })();
     </script>
 
     <!-- Service Worker Registration -->

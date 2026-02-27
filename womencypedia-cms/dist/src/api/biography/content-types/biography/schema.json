@@ -8,8 +8,7 @@
         "description": "Interpretive biographies of remarkable women throughout history"
     },
     "options": {
-        "draftAndPublish": true,
-        "i18n": true
+        "draftAndPublish": true
     },
     "pluginOptions": {
         "i18n": {
@@ -19,12 +18,12 @@
     "attributes": {
         "name": {
             "type": "string",
-            "required": true,
             "pluginOptions": {
                 "i18n": {
                     "localized": false
                 }
-            }
+            },
+            "required": true
         },
         "slug": {
             "type": "uid",
@@ -33,6 +32,12 @@
         },
         "region": {
             "type": "enumeration",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            },
+            "required": true,
             "enum": [
                 "Africa",
                 "Europe",
@@ -42,32 +47,32 @@
                 "South America",
                 "Oceania",
                 "Global"
-            ],
-            "required": true,
+            ]
+        },
+        "era": {
+            "type": "enumeration",
             "pluginOptions": {
                 "i18n": {
                     "localized": false
                 }
-            }
-        },
-        "era": {
-            "type": "enumeration",
+            },
+            "required": true,
             "enum": [
                 "Ancient",
                 "Pre-colonial",
                 "Colonial",
                 "Post-colonial",
                 "Contemporary"
-            ],
-            "required": true,
+            ]
+        },
+        "category": {
+            "type": "enumeration",
             "pluginOptions": {
                 "i18n": {
                     "localized": false
                 }
-            }
-        },
-        "category": {
-            "type": "enumeration",
+            },
+            "required": true,
             "enum": [
                 "Leadership",
                 "Culture & Arts",
@@ -78,13 +83,7 @@
                 "Activism & Justice",
                 "Education",
                 "Diaspora Stories"
-            ],
-            "required": true,
-            "pluginOptions": {
-                "i18n": {
-                    "localized": false
-                }
-            }
+            ]
         },
         "domain": {
             "type": "string",
@@ -96,12 +95,12 @@
         },
         "introduction": {
             "type": "richtext",
-            "required": true,
             "pluginOptions": {
                 "i18n": {
                     "localized": true
                 }
-            }
+            },
+            "required": true
         },
         "earlyLife": {
             "type": "richtext",
@@ -153,29 +152,29 @@
         },
         "image": {
             "type": "media",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            },
             "multiple": false,
             "required": false,
             "allowedTypes": [
                 "images"
-            ],
+            ]
+        },
+        "gallery": {
+            "type": "media",
             "pluginOptions": {
                 "i18n": {
                     "localized": false
                 }
-            }
-        },
-        "gallery": {
-            "type": "media",
+            },
             "multiple": true,
             "required": false,
             "allowedTypes": [
                 "images"
-            ],
-            "pluginOptions": {
-                "i18n": {
-                    "localized": false
-                }
-            }
+            ]
         },
         "tags": {
             "type": "relation",
@@ -214,20 +213,12 @@
         },
         "featured": {
             "type": "boolean",
-            "default": false,
             "pluginOptions": {
                 "i18n": {
                     "localized": false
                 }
-            }
-        },
-        "publishedAt": {
-            "type": "datetime"
-        },
-        "createdBy": {
-            "type": "relation",
-            "relation": "oneToOne",
-            "target": "admin::user"
+            },
+            "default": false
         }
     }
 }

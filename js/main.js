@@ -106,12 +106,23 @@ function initSearch() {
             e.preventDefault();
             const query = searchInput?.value.trim();
             if (query) {
-                // Handle search - in real app would send to API
-                console.log('Searching for:', query);
-                // window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                window.location.href = 'browse.html?search=' + encodeURIComponent(query);
             }
         });
     }
+
+    // Also handle Enter key on any search input across the site
+    document.querySelectorAll('input[type="search"]').forEach(input => {
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = this.value.trim();
+                if (query) {
+                    window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                }
+            }
+        });
+    });
 }
 
 /**
@@ -439,38 +450,81 @@ window.WomencypediaApp = {
     isValidEmail
 };
 
-// Global toggle functions for inline onclick handlers
-window.toggleMenu = function () {
-    const mobileMenu = document.querySelector('#mobileMenu');
-    const menuOverlay = document.querySelector('#menuOverlay');
+// NOTE: toggleMenu and toggleSearch are defined in navigation.js
+// Do NOT redefine them here to avoid conflicts.
 
-    if (!mobileMenu) return;
+/**
+ * Wire up desktop Sign In / Sign Out buttons
+ * Sign In buttons redirect to login page.
+ * Sign Out buttons call Auth.logout().
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    // Sign In buttons
+    document.querySelectorAll('[data-auth="signin"]').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.location.href = 'login.html';
+        });
+    });
 
-    if (mobileMenu.classList.contains('active')) {
-        mobileMenu.classList.remove('active');
-        if (menuOverlay) menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    } else {
-        mobileMenu.classList.add('active');
-        if (menuOverlay) menuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    // Sign Out buttons (inside [data-auth="signout"] containers)
+    document.querySelectorAll('[data-auth="signout"] button').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (typeof Auth !== 'undefined' && typeof Auth.logout === 'function') {
+                Auth.logout().then(() => {
+                    window.location.href = 'index.html';
+                });
+            } else {
+                // Fallback: clear storage and redirect
+                localStorage.removeItem('womencypedia_access_token');
+                localStorage.removeItem('womencypedia_refresh_token');
+                localStorage.removeItem('womencypedia_user');
+                window.location.href = 'index.html';
+            }
+        });
+    });
+
+    // Update auth UI state on load
+    updateDesktopAuthUI();
+});
+
+/**
+ * Update desktop auth UI based on current login state
+ */
+function updateDesktopAuthUI() {
+    const token = localStorage.getItem('womencypedia_access_token');
+    const isLoggedIn = !!token;
+
+    // Show/hide sign-in vs sign-out buttons
+    document.querySelectorAll('[data-auth="signin"]').forEach(el => {
+        el.style.display = isLoggedIn ? 'none' : '';
+    });
+    document.querySelectorAll('[data-auth="signout"]').forEach(el => {
+        el.style.display = isLoggedIn ? 'flex' : 'none';
+    });
+
+    // Show admin link only for admin users
+    const userData = localStorage.getItem('womencypedia_user');
+    let isAdmin = false;
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            isAdmin = user.role === 'admin' || user.role?.type === 'admin';
+        } catch (e) { /* ignore parse errors */ }
     }
-};
+    document.querySelectorAll('[data-auth="admin-only"]').forEach(el => {
+        el.style.display = isAdmin ? '' : 'none';
+    });
 
-window.toggleSearch = function () {
-    const searchSheet = document.querySelector('#searchSheet');
-    if (!searchSheet) return;
-
-    if (searchSheet.classList.contains('active')) {
-        searchSheet.classList.remove('active');
-        document.body.style.overflow = '';
-    } else {
-        searchSheet.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        // Focus search input
-        const searchInput = searchSheet.querySelector('input[type="search"]');
-        if (searchInput) {
-            setTimeout(() => searchInput.focus(), 300);
-        }
+    // Show user info (name or email)
+    if (isLoggedIn && userData) {
+        try {
+            const user = JSON.parse(userData);
+            const displayName = user.username || user.email || '';
+            document.querySelectorAll('[data-auth="user-info"]').forEach(el => {
+                el.textContent = displayName;
+            });
+        } catch (e) { /* ignore parse errors */ }
     }
-};
+}

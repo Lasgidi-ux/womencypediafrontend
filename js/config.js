@@ -21,8 +21,9 @@
 //           4. Development fallback (localhost)
 const API_BASE_URL = window.API_STRAPI_URL ||
     window.API_BASE_URL ||
-    'https://strapi.womencypedia.org' ||  // production
-    'http://localhost:1337';  // development fallback
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:1337'   // development
+        : 'https://strapi.womencypedia.org');  // production
 
 const CONFIG = {
     // API Base URL - Environment configurable via window.API_STRAPI_URL or window.API_BASE_URL
@@ -36,9 +37,9 @@ const CONFIG = {
     // Strapi is the recommended CMS for this project
     USE_STRAPI: true,
 
-    // Use mock API when backend is unavailable
-    // Set to true to force mock API, false to use real API, undefined to auto-detect
-    USE_MOCK_API: undefined,
+    // Mock API is disabled — Strapi CMS is the primary data source
+    // All content is fetched at runtime from Strapi REST API
+    USE_MOCK_API: false,
 
     // API Endpoints
     // Use STRAPI_ENDPOINTS when USE_STRAPI is true
@@ -135,14 +136,6 @@ const CONFIG = {
             FEATURED: '/api/biographies?filters[featured][$eq]=true'
         },
 
-        // Collections - Legacy format
-        COLLECTIONS: {
-            LIST: '/api/collections',
-            GET: (id) => `/api/collections/${id}`,
-            GET_BY_SLUG: (slug) => `/api/collections?filters[slug][$eq]=${slug}`,
-            SAVED: '/api/saved-entries'
-        },
-
         // Tags - Legacy format
         TAGS: {
             LIST: '/api/tags',
@@ -236,17 +229,34 @@ const CONFIG = {
         TIMEOUT: 30000, // 30 seconds
         RETRY_ATTEMPTS: 3,
         RETRY_DELAY: 1000 // 1 second
-    }
+    },
+
+    // Strapi URL alias (used by donate.js and other modules)
+    STRAPI_URL: API_BASE_URL,
+
+    // Strapi Admin Panel URL
+    STRAPI_ADMIN_URL: API_BASE_URL + '/admin',
+
+    // Payment Gateway Keys
+    // Replace with your live keys in production
+    // For Paystack: https://dashboard.paystack.com/#/settings/developers
+    // For Flutterwave: https://app.flutterwave.com/dashboard/settings/apis
+    PAYSTACK_PUBLIC_KEY: window.PAYSTACK_PUBLIC_KEY || '',
+    FLUTTERWAVE_PUBLIC_KEY: window.FLUTTERWAVE_PUBLIC_KEY || '',
+    PAYSTACK_MONTHLY_PLAN: window.PAYSTACK_MONTHLY_PLAN || ''
 };
 
 // Freeze configuration to prevent accidental modifications
 Object.freeze(CONFIG);
 Object.freeze(CONFIG.ENDPOINTS);
 Object.freeze(CONFIG.ENDPOINTS.AUTH);
+Object.freeze(CONFIG.ENDPOINTS.STRAPI);
 Object.freeze(CONFIG.ENDPOINTS.ENTRIES);
 Object.freeze(CONFIG.ENDPOINTS.COMMENTS);
 Object.freeze(CONFIG.ENDPOINTS.CONTRIBUTIONS);
 Object.freeze(CONFIG.ENDPOINTS.COLLECTIONS);
+Object.freeze(CONFIG.ENDPOINTS.TAGS);
+Object.freeze(CONFIG.ENDPOINTS.EDUCATION_MODULES);
 Object.freeze(CONFIG.ENDPOINTS.NOTIFICATIONS);
 Object.freeze(CONFIG.ENDPOINTS.USER);
 Object.freeze(CONFIG.ENDPOINTS.CONTACT);

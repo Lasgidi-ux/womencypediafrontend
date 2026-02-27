@@ -212,12 +212,27 @@ const Search = {
                 }
             }
 
-            // Fallback to local/mock data
-            if (results.length === 0 && typeof MockAPI !== 'undefined') {
-                const allEntries = MockAPI.entries.getAll();
-                results = this.filterResults(allEntries);
-                this._state.totalResults = results.length;
-                results = this.paginateResults(results);
+            // Fallback to Strapi full search if API.entries failed
+            if (results.length === 0) {
+                try {
+                    let url = `${CONFIG.API_BASE_URL}/api/biographies?populate=image,tags&pagination[page]=${this._state.page}&pagination[pageSize]=${this._state.perPage}`;
+                    if (this._state.query) {
+                        url += `&filters[$or][0][name][$containsi]=${encodeURIComponent(this._state.query)}`;
+                        url += `&filters[$or][1][introduction][$containsi]=${encodeURIComponent(this._state.query)}`;
+                    }
+                    if (this._state.filters.era) url += `&filters[era][$eq]=${encodeURIComponent(this._state.filters.era)}`;
+                    if (this._state.filters.region) url += `&filters[region][$eq]=${encodeURIComponent(this._state.filters.region)}`;
+                    if (this._state.filters.category) url += `&filters[category][$eq]=${encodeURIComponent(this._state.filters.category)}`;
+
+                    const resp = await fetch(url, { headers: { 'Cache-Control': 'no-cache' }, cache: 'no-store' });
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        results = (data.data || []).map(item => ({ id: item.id, ...(item.attributes || item) }));
+                        this._state.totalResults = data.meta?.pagination?.total || results.length;
+                    }
+                } catch (strapiErr) {
+                    console.warn('Strapi search fallback failed:', strapiErr);
+                }
             }
 
             this._state.results = results;
