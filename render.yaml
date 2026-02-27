@@ -1,7 +1,7 @@
 services:
   - type: web
     name: womencypedia-cms
-    runtime: node
+    env: node
     region: oregon
     plan: starter
     rootDir: womencypedia-cms
