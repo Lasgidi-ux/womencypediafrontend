@@ -1,7 +1,7 @@
 services:
   - type: web
     name: womencypedia-cms
-    env: node
+    runtime: node
     region: oregon
     plan: starter
     rootDir: womencypedia-cms
@@ -48,7 +48,6 @@ services:
         generateValue: true
       - key: PUBLIC_URL
         sync: false
-      # Cloudinary (set manually in Render dashboard)
       - key: CLOUDINARY_NAME
         sync: false
       - key: CLOUDINARY_KEY
@@ -58,7 +57,7 @@ services:
 
 databases:
   - name: womencypedia-db
-    plan: starter
+    plan: free
     region: oregon
     databaseName: womencypedia
     user: womencypedia
