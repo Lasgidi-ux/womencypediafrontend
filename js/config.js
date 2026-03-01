@@ -23,11 +23,11 @@ const API_BASE_URL = window.API_STRAPI_URL ||
     window.API_BASE_URL ||
     (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:1337'   // development
-        : 'https://strapi.womencypedia.org');  // production
+        : 'https://womencypedia-cms.onrender.com');  // production (Render)
 
 const CONFIG = {
     // API Base URL - Environment configurable via window.API_STRAPI_URL or window.API_BASE_URL
-    // Production: https://strapi.womencypedia.org
+    // Production: https://womencypedia-cms.onrender.com
     // Development: http://localhost:1337
     API_BASE_URL: API_BASE_URL,
 
