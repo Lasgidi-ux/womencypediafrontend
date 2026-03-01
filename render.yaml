@@ -34,6 +34,9 @@ services:
           property: password
       - key: DATABASE_SSL
         value: "true"
+      # Render managed Postgres uses self-signed SSL certs — Node.js rejects them
+      # by default. Connection is still encrypted (DATABASE_SSL=true). This is
+      # Render's standard recommendation, not a workaround.
       - key: DATABASE_SSL_REJECT_UNAUTHORIZED
         value: "false"
       - key: APP_KEYS
