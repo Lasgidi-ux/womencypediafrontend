@@ -21,9 +21,7 @@
 //           4. Development fallback (localhost)
 const API_BASE_URL = window.API_STRAPI_URL ||
     window.API_BASE_URL ||
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:1337'   // development
-        : 'https://womencypedia-cms.onrender.com');  // production (Render)
+    'https://womencypedia-cms.onrender.com';  // production (Render)
 
 const CONFIG = {
     // API Base URL - Environment configurable via window.API_STRAPI_URL or window.API_BASE_URL
