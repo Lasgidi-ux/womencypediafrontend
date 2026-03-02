@@ -4,49 +4,286 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Contributors & Collaborators — Womencypedia</title>
+    <title>Contributors — Womencypedia</title>
     <meta name="description"
-        content="Acknowledging the scholars, researchers, institutions, and community partners who make Womencypedia possible.">
+        content="Meet the scholars, researchers, and historians who bring women's stories to life at Womencypedia.">
+
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { theme: { extend: { colors: { "primary": "#e8a6a6", "accent-gold": "#D4AF37", "accent-teal": "#4DB6AC", "divider": "#B48CB8", "lavender-soft": "#EDE3F1", "background-cream": "#F5F5F0", "text-main": "#191010", "text-secondary": "#6B6B6B", "border-light": "#DDD8CF" }, fontFamily: { "display": ["Lato", "sans-serif"], "serif": ["Playfair Display", "serif"] } } } }
-    </script>
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/contributors.html">
+    <meta property="og:title" content="Contributors — Womencypedia">
+    <meta property="og:description" content="Meet the scholars, researchers, and volunteers who make Womencypedia possible.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contributors — Womencypedia">
+    <meta name="twitter:description" content="Meet the scholars, researchers, and volunteers who make Womencypedia possible.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/contributors.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
-<body class="bg-background-cream text-text-main antialiased font-display">
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
+
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search women, cultures, eras…"
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+
+        <!-- Explore -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="browse.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="featured.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="collections.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="timelines.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Learn</h3>
+            <a href="education.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="enterprises.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="research.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="publications.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="resources.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
+        </div>
+
+        <!-- Participate -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Participate</h3>
+            <a href="nominate.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
+                a Woman</a>
+            <a href="share-story.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Share
+                Your Story</a>
+            <a href="contributor-guidelines.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
+                Guidelines</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Donate</a>
+        </div>
+
+        <!-- About -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                About</h3>
+            <a href="about.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
+                Us</a>
+            <a href="founders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
+            <a href="contributors.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="methodology.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="editorial-standards.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial
+                Standards</a>
+            <a href="contact.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+
+        <!-- My Profile -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                My Profile</h3>
+            <a href="profile.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
+                Profile</a>
+            <a data-auth="admin-only" href="admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary" style="display:none">Admin</a>
+            <a href="biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
+                Biography</a>
+        </div>
+
+        <!-- CTA -->
+        <div class="px-6 pb-8">
+            <a href="share-story.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors">
+                Share Your Story
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
     <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
-                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
-                        <div
-                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
-                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
-                        </div>
-                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
-                        </h2>
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
-                    <nav class="hidden lg:flex items-center gap-8">
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="index.html">Home</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="browse.html">Browse</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="featured.html">Featured</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="about.html">About</a>
-                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
-                            href="resources.html">Resources</a>
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Explore<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="index.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a><a
+                                        href="browse.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Browse</a><a
+                                        href="featured.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Featured</a><a
+                                        href="collections.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Collections</a><a
+                                        href="timelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Timelines</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Learn<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="education.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a><a
+                                        href="enterprises.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Enterprises</a><a
+                                        href="research.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Research</a><a
+                                        href="publications.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Publications</a><a
+                                        href="resources.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Resources</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">Participate<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    <a href="nominate.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Nominate
+                                        a Woman</a><a href="share-story.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Share
+                                        Your Story</a><a href="contributor-guidelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributor
+                                        Guidelines</a><a href="donate.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Donate</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">About<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    <a href="about.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
+                                        Us</a><a href="founders.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Founders</a><a
+                                        href="contributors.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Contributors</a><a
+                                        href="methodology.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Methodology</a><a
+                                        href="editorial-standards.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Editorial
+                                        Standards</a><a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group"><button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">My
+                                Profile<span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span></button>
+                            <div
+                                class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="profile.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">My
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" style="display:none">Admin</a><a
+                                        href="biography.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Sample
+                                        Biography</a>
+                                </div>
+                            </div>
+                        </div>
                     </nav>
                 </div>
                 <div class="flex items-center gap-3 lg:gap-6">
                     <div
-                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64">
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
                         <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
                         <input
                             class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
@@ -55,12 +292,29 @@
                     <div class="hidden sm:flex items-center gap-4">
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html">Donate</a>
-                        <button
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold">Sign
-                            In</button>
+                        <a data-auth="admin-only" href="admin.html"
+                            class="hidden text-sm font-bold text-accent-teal hover:text-accent-teal-dark uppercase tracking-wide">
+                            Admin
+                        </a>
+                        <button data-auth="signin"
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                            Sign In
+                        </button>
+                        <div data-auth="signout" class="hidden flex items-center gap-3">
+                            <a href="profile.html"
+                                class="flex items-center gap-2 text-sm text-text-secondary hover:text-primary">
+                                <span class="material-symbols-outlined text-[18px]">account_circle</span>
+                                <span data-auth="user-info"></span>
+                            </a>
+                            <button
+                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                                Sign Out
+                            </button>
+                        </div>
                     </div>
-                    <button class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5"
-                        aria-label="Menu">
+                    <button onclick="toggleMenu()"
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
                         <span class="material-symbols-outlined text-text-main">menu</span>
                     </button>
                 </div>
@@ -68,230 +322,700 @@
         </div>
     </header>
 
-    <main>
-        <!-- Hero -->
-        <section class="bg-gradient-to-br from-divider/20 via-lavender-soft/30 to-primary/10 py-16 lg:py-24">
-            <div class="mx-auto max-w-[1200px] px-4 text-center">
-                <span class="text-divider text-sm font-bold uppercase tracking-widest mb-3 block">Our Community</span>
-                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-text-main mb-6">Contributors &
-                    Collaborators</h1>
-                <p class="text-text-secondary text-lg max-w-2xl mx-auto">Acknowledging the scholars, researchers,
-                    institutions, community partners, and public supporters who make Womencypedia possible.</p>
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/10 via-lavender-soft/30 to-accent-gold/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-3 block">Our
+                    Community</span>
+                <h1
+                    class="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-main mb-6 leading-tight">
+                    Our Contributors
+                </h1>
+                <p class="text-xl sm:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+                    Meet the scholars, researchers, historians, and storytellers dedicated to restoring women's stories
+                    to history.
+                </p>
             </div>
         </section>
 
-        <!-- Editorial Board -->
-        <section class="py-16 lg:py-20 bg-background-cream">
-            <div class="mx-auto max-w-[1100px] px-4">
-                <div class="text-center mb-12">
+        <!-- Editorial Team -->
+        <section class="py-16 lg:py-24 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-3 block">Leadership</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Editorial Team
+                    </h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Our senior editors ensure every biography
+                        meets the highest standards of scholarly rigor and cultural sensitivity.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Editor 1 -->
+                    <div
+                        class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-all group">
+                        <div class="relative mb-6">
+                            <div class="aspect-[4/5] rounded-xl overflow-hidden bg-lavender-soft">
+                                <div
+                                    class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent-gold/20">
+                                    <span
+                                        class="material-symbols-outlined text-primary text-6xl opacity-50">person</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-3 right-3">
+                                <span
+                                    class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-text-main shadow-sm">Editor-in-Chief</span>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-1">Dr. Adaeze Okonkwo</h3>
+                        <p class="text-accent-teal text-sm font-medium mb-3">Professor of African History</p>
+                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+                            Specialist in pre-colonial African women's leadership and symbolic power systems. Leading
+                            our editorial vision since 2023.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
+                                <span class="material-symbols-outlined text-[14px]">school</span> PhD, Yale
+                            </span>
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-accent-gold/10 text-accent-gold text-xs font-medium rounded">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 47 Entries
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Editor 2 -->
+                    <div
+                        class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-all group">
+                        <div class="relative mb-6">
+                            <div class="aspect-[4/5] rounded-xl overflow-hidden bg-lavender-soft">
+                                <div
+                                    class="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent-teal/20 to-primary/20">
+                                    <span
+                                        class="material-symbols-outlined text-accent-teal text-6xl opacity-50">person</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-3 right-3">
+                                <span
+                                    class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-text-main shadow-sm">Senior
+                                    Editor</span>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-1">Dr. Mei-Lin Chen</h3>
+                        <p class="text-accent-teal text-sm font-medium mb-3">Asian Women's History</p>
+                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+                            Expert in East Asian women's spiritual traditions and pre-modern leadership structures.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
+                                <span class="material-symbols-outlined text-[14px]">school</span> PhD, Oxford
+                            </span>
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-accent-gold/10 text-accent-gold text-xs font-medium rounded">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 32 Entries
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Editor 3 -->
+                    <div
+                        class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-all group">
+                        <div class="relative mb-6">
+                            <div class="aspect-[4/5] rounded-xl overflow-hidden bg-lavender-soft">
+                                <div
+                                    class="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent-gold/20 to-primary/20">
+                                    <span
+                                        class="material-symbols-outlined text-accent-gold text-6xl opacity-50">person</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-3 right-3">
+                                <span
+                                    class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-text-main shadow-sm">Senior
+                                    Editor</span>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-1">Dr. Fatima Al-Hassan</h3>
+                        <p class="text-accent-teal text-sm font-medium mb-3">Islamic Civilization</p>
+                        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+                            Scholar of women in Islamic golden age, focusing on science, medicine, and leadership.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
+                                <span class="material-symbols-outlined text-[14px]">school</span> PhD, Cambridge
+                            </span>
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-accent-gold/10 text-accent-gold text-xs font-medium rounded">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 28 Entries
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recognition Badges -->
+        <section class="py-16 lg:py-24 bg-lavender-soft/40">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
                     <span
-                        class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-2 block">Governance</span>
-                    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-text-main">Editorial Board</h2>
-                    <p class="text-text-secondary mt-4">Distinguished scholars who guide our editorial standards and
-                        research integrity.</p>
+                        class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-3 block">Excellence</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Contributor
+                        Recognition</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Our contributors earn badges based on the
+                        quality and impact of their contributions to the archive.</p>
                 </div>
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white rounded-xl p-6 text-center border border-border-light">
-                        <div
-                            class="size-20 rounded-full bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center mx-auto mb-4">
-                            <span class="font-serif text-2xl font-bold text-primary">AU</span>
+                    <!-- Bronze Badge -->
+                    <div
+                        class="bg-white rounded-xl p-6 border border-border-light text-center hover:shadow-lg transition-shadow">
+                        <div class="size-20 mx-auto mb-4 rounded-full bg-bronze-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-bronze text-4xl">emoji_events</span>
                         </div>
-                        <h4 class="font-bold text-text-main">Atim Utuk</h4>
-                        <p class="text-sm text-accent-teal font-medium">Founder & Editor-in-Chief</p>
-                        <p class="text-xs text-text-secondary mt-2">University of Edinburgh</p>
+                        <h3 class="font-serif text-lg font-bold text-text-main mb-2">Emerging Scholar</h3>
+                        <p class="text-text-secondary text-sm mb-4">For contributors who have published their first 5
+                            biographies</p>
+                        <span
+                            class="inline-flex items-center gap-1 px-3 py-1 bg-bronze/10 text-bronze text-xs font-bold uppercase tracking-wider rounded-full">
+                            Bronze Badge
+                        </span>
                     </div>
-                    <div class="bg-white rounded-xl p-6 text-center border border-border-light">
-                        <div
-                            class="size-20 rounded-full bg-gradient-to-br from-accent-teal/20 to-divider/20 flex items-center justify-center mx-auto mb-4">
-                            <span class="material-symbols-outlined text-accent-teal/50 text-3xl">person</span>
+
+                    <!-- Silver Badge -->
+                    <div
+                        class="bg-white rounded-xl p-6 border border-border-light text-center hover:shadow-lg transition-shadow">
+                        <div class="size-20 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-gray-400 text-4xl">workspace_premium</span>
                         </div>
-                        <h4 class="font-bold text-text-main">Position Open</h4>
-                        <p class="text-sm text-accent-teal font-medium">Regional Editor, Africa</p>
-                        <p class="text-xs text-text-secondary mt-2">Apply now</p>
+                        <h3 class="font-serif text-lg font-bold text-text-main mb-2">Research Contributor</h3>
+                        <p class="text-text-secondary text-sm mb-4">For 10+ high-quality biographies with extensive
+                            source documentation</p>
+                        <span
+                            class="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-500 text-xs font-bold uppercase tracking-wider rounded-full">
+                            Silver Badge
+                        </span>
                     </div>
-                    <div class="bg-white rounded-xl p-6 text-center border border-border-light">
+
+                    <!-- Gold Badge -->
+                    <div
+                        class="bg-white rounded-xl p-6 border border-border-light text-center hover:shadow-lg transition-shadow">
                         <div
-                            class="size-20 rounded-full bg-gradient-to-br from-divider/20 to-primary/20 flex items-center justify-center mx-auto mb-4">
-                            <span class="material-symbols-outlined text-divider/50 text-3xl">person</span>
+                            class="size-20 mx-auto mb-4 rounded-full bg-accent-gold/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-accent-gold text-4xl">stars</span>
                         </div>
-                        <h4 class="font-bold text-text-main">Position Open</h4>
-                        <p class="text-sm text-accent-teal font-medium">Regional Editor, Asia</p>
-                        <p class="text-xs text-text-secondary mt-2">Apply now</p>
+                        <h3 class="font-serif text-lg font-bold text-text-main mb-2">Master Biographer</h3>
+                        <p class="text-text-secondary text-sm mb-4">For 25+ exemplary biographies reviewed by peers as
+                            "exemplary"</p>
+                        <span
+                            class="inline-flex items-center gap-1 px-3 py-1 bg-accent-gold/10 text-accent-gold text-xs font-bold uppercase tracking-wider rounded-full">
+                            Gold Badge
+                        </span>
                     </div>
-                    <div class="bg-white rounded-xl p-6 text-center border border-border-light">
-                        <div
-                            class="size-20 rounded-full bg-gradient-to-br from-accent-gold/20 to-accent-teal/20 flex items-center justify-center mx-auto mb-4">
-                            <span class="material-symbols-outlined text-accent-gold/50 text-3xl">person</span>
+
+                    <!-- Platinum Badge -->
+                    <div
+                        class="bg-white rounded-xl p-6 border border-border-light text-center hover:shadow-lg transition-shadow">
+                        <div class="size-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary text-4xl">military_tech</span>
                         </div>
-                        <h4 class="font-bold text-text-main">Position Open</h4>
-                        <p class="text-sm text-accent-teal font-medium">Cultural Sensitivity Advisor</p>
-                        <p class="text-xs text-text-secondary mt-2">Apply now</p>
+                        <h3 class="font-serif text-lg font-bold text-text-main mb-2">Distinguished Fellow</h3>
+                        <p class="text-text-secondary text-sm mb-4">Lifetime achievement recognition for exceptional
+                            contributions</p>
+                        <span
+                            class="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider rounded-full">
+                            Platinum Badge
+                        </span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Institutional Partners -->
-        <section class="py-16 lg:py-20 bg-lavender-soft/30">
-            <div class="mx-auto max-w-[1100px] px-4">
-                <div class="text-center mb-12">
-                    <span
-                        class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Partnerships</span>
-                    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-text-main">Institutional Partners</h2>
+        <!-- Contributors Grid -->
+        <section class="py-16 lg:py-24 bg-background-cream">
+            <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-3 block">Community</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main mb-4">Our
+                        Contributors</h2>
+                    <p class="text-text-secondary text-lg max-w-2xl mx-auto">Scholars and researchers from around the
+                        world contributing to the archive.</p>
                 </div>
 
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl p-8 border border-border-light text-center">
-                        <span class="material-symbols-outlined text-accent-gold text-5xl mb-4">school</span>
-                        <h4 class="font-bold text-text-main mb-2">Universities</h4>
-                        <p class="text-sm text-text-secondary">Academic institutions collaborating on research, student
-                            contributions, and educational programs.</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-8 border border-border-light text-center">
-                        <span class="material-symbols-outlined text-primary text-5xl mb-4">account_balance</span>
-                        <h4 class="font-bold text-text-main mb-2">Archives & Museums</h4>
-                        <p class="text-sm text-text-secondary">Cultural institutions providing archival materials,
-                            images, and historical expertise.</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-8 border border-border-light text-center">
-                        <span class="material-symbols-outlined text-accent-teal text-5xl mb-4">groups</span>
-                        <h4 class="font-bold text-text-main mb-2">Community Organizations</h4>
-                        <p class="text-sm text-text-secondary">Local groups contributing oral histories, cultural
-                            knowledge, and community narratives.</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-8 border border-border-light text-center">
-                        <span class="material-symbols-outlined text-divider text-5xl mb-4">church</span>
-                        <h4 class="font-bold text-text-main mb-2">Faith Communities</h4>
-                        <p class="text-sm text-text-secondary">Religious institutions sharing stories of women in
-                            spiritual traditions.</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-8 border border-border-light text-center">
-                        <span class="material-symbols-outlined text-accent-gold text-5xl mb-4">volunteer_activism</span>
-                        <h4 class="font-bold text-text-main mb-2">NGOs & Foundations</h4>
-                        <p class="text-sm text-text-secondary">Non-profits supporting our mission through funding and
-                            advocacy.</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-8 border border-border-light text-center">
-                        <span class="material-symbols-outlined text-primary text-5xl mb-4">public</span>
-                        <h4 class="font-bold text-text-main mb-2">The General Public</h4>
-                        <p class="text-sm text-text-secondary">Families, communities, and individuals sharing their
-                            stories.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contributor Recognition -->
-        <section class="py-16 lg:py-20 bg-background-cream">
-            <div class="mx-auto max-w-[1100px] px-4">
-                <div class="text-center mb-12">
-                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-2 block">Recognition</span>
-                    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-text-main">Contributor Recognition</h2>
-                    <p class="text-text-secondary mt-4">We honor those who help build this global archive.</p>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 border border-border-light">
-                    <div class="grid md:grid-cols-3 gap-8 text-center">
-                        <div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Contributor 1 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
                             <div
-                                class="size-16 rounded-full bg-accent-gold/20 flex items-center justify-center mx-auto mb-4">
-                                <span class="material-symbols-outlined text-accent-gold text-3xl">military_tech</span>
+                                class="size-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-primary text-2xl">person</span>
                             </div>
-                            <h4 class="font-bold text-text-main mb-2">Gold Contributors</h4>
-                            <p class="text-sm text-text-secondary">50+ verified biographies contributed</p>
-                            <p class="text-xs text-accent-gold font-bold mt-2">Names listed annually</p>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Amara Diallo</h3>
+                                <p class="text-accent-teal text-xs truncate">West African History</p>
+                            </div>
                         </div>
-                        <div>
-                            <div
-                                class="size-16 rounded-full bg-divider/20 flex items-center justify-center mx-auto mb-4">
-                                <span class="material-symbols-outlined text-divider text-3xl">workspace_premium</span>
-                            </div>
-                            <h4 class="font-bold text-text-main mb-2">Silver Contributors</h4>
-                            <p class="text-sm text-text-secondary">20+ verified biographies contributed</p>
-                            <p class="text-xs text-divider font-bold mt-2">Names listed annually</p>
-                        </div>
-                        <div>
-                            <div
-                                class="size-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
-                                <span class="material-symbols-outlined text-primary text-3xl">star</span>
-                            </div>
-                            <h4 class="font-bold text-text-main mb-2">All Contributors</h4>
-                            <p class="text-sm text-text-secondary">Every contribution credited on entries</p>
-                            <p class="text-xs text-primary font-bold mt-2">Visible on each biography</p>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Specialist in Senegambian women's resistance movements and oral traditions.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 12 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2024
+                            </span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- CTA -->
-        <section class="py-16 bg-gradient-to-r from-divider to-primary">
-            <div class="mx-auto max-w-[900px] px-4 text-center">
-                <h2 class="font-serif text-3xl lg:text-4xl font-bold text-white mb-4">Become a Contributor</h2>
-                <p class="text-white/90 text-lg mb-8">Join our global community of scholars, researchers, and
-                    storytellers preserving women's history.</p>
-                <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="share-story.html"
-                        class="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary font-bold rounded-lg hover:bg-background-cream">
-                        <span class="material-symbols-outlined text-[18px]">edit_note</span>
-                        Share a Story
+                    <!-- Contributor 2 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-accent-teal/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Yuki Tanaka</h3>
+                                <p class="text-accent-teal text-xs truncate">Japanese Women's Studies</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Expert in Heian period court women and Buddhist nuns.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 8 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2024
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 3 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-accent-gold text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Sofia Garcia</h3>
+                                <p class="text-accent-teal text-xs truncate">Latin American Studies</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Researching Indigenous women leaders and colonial resistance.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 15 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2023
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 4 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-primary text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Priya Sharma</h3>
+                                <p class="text-accent-teal text-xs truncate">South Asian History</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Specialist in Mughal women rulers and Rajput queens.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 21 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2023
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 5 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-accent-teal/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Elena Volkov</h3>
+                                <p class="text-accent-teal text-xs truncate">Eastern European History</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Expert in Slavic women saints and medieval leadership.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 9 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2024
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 6 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-accent-gold text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Aisha Oconnell
+                                </h3>
+                                <p class="text-accent-teal text-xs truncate">African Diaspora Studies</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Researching Atlantic slave trade survivors and resistance leaders.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 18 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2023
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 7 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-primary text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Mary Brennan</h3>
+                                <p class="text-accent-teal text-xs truncate">Irish Women's History</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Specialist in Celtic women in mythology and early Christian Ireland.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 14 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2024
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 8 -->
+                    <div class="bg-white rounded-xl p-5 border border-border-light hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-14 rounded-full bg-accent-teal/10 flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-accent-teal text-2xl">person</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif text-base font-bold text-text-main truncate">Dr. Grace Mwangi</h3>
+                                <p class="text-accent-teal text-xs truncate">East African History</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-xs leading-relaxed mb-3 line-clamp-3">
+                            Researching women traders and coastal kingdoms of the Indian Ocean.
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-text-secondary">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">auto_stories</span> 11 Entries
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">calendar_today</span> Joined 2024
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="contributor-guidelines.html"
+                        class="inline-flex items-center justify-center h-12 px-8 bg-primary text-text-main font-bold rounded-lg hover:bg-primary/80 transition-colors gap-2">
+                        <span class="material-symbols-outlined text-[20px]">group_add</span>
+                        View All Contributors
                     </a>
-                    <a href="contact.html"
-                        class="inline-flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10">
-                        <span class="material-symbols-outlined text-[18px]">handshake</span>
-                        Partner With Us
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-12 lg:py-16 bg-primary text-text-main">
+            <div class="mx-auto max-w-[1000px] px-4 sm:px-6 lg:px-12">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="font-serif text-4xl lg:text-5xl font-bold mb-2">47</div>
+                        <div class="text-sm uppercase tracking-wider text-text-main/70">Editorial Team</div>
+                    </div>
+                    <div>
+                        <div class="font-serif text-4xl lg:text-5xl font-bold mb-2">250+</div>
+                        <div class="text-sm uppercase tracking-wider text-text-main/70">Active Contributors</div>
+                    </div>
+                    <div>
+                        <div class="font-serif text-4xl lg:text-5xl font-bold mb-2">5,000+</div>
+                        <div class="text-sm uppercase tracking-wider text-text-main/70">Biographies Published</div>
+                    </div>
+                    <div>
+                        <div class="font-serif text-4xl lg:text-5xl font-bold mb-2">45</div>
+                        <div class="text-sm uppercase tracking-wider text-text-main/70">Countries Represented</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 lg:py-24 bg-gradient-to-br from-accent-teal to-accent-teal-dark">
+            <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12 text-center">
+                <span class="text-white/80 text-sm font-bold uppercase tracking-widest mb-3 block">Join Us</span>
+                <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">Become a Contributor
+                </h2>
+                <p class="text-white/90 text-lg max-w-2xl mx-auto mb-10">
+                    Share your expertise and help restore women's stories to their rightful place in history. We welcome
+                    scholars, researchers, and passionate storytellers.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contributor-guidelines.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-white text-accent-teal font-bold rounded-lg hover:bg-background-cream transition-colors gap-2">
+                        <span class="material-symbols-outlined text-[20px]">description</span>
+                        Contributor Guidelines
+                    </a>
+                    <a href="nominate.html"
+                        class="inline-flex items-center justify-center h-14 px-8 bg-transparent text-white font-bold rounded-lg border-2 border-white hover:bg-white/10 transition-colors gap-2">
+                        <span class="material-symbols-outlined text-[20px]">person_add</span>
+                        Apply to Contribute
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
-        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-                <div class="md:col-span-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-2xl">history_edu</span>
-                        <span class="font-serif text-lg font-bold">Womencypedia</span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed">The world's first interpretive encyclopedia of
+    <!-- Footer -->
+        <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+            </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-400 hover:text-primary" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary" aria-label="X (Twitter)">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
+
+                <!-- Explore -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Explore</h4>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Explore</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="index.html">Home</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="browse.html">Browse</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="featured.html">Featured</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="collections.html">Collections</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="browse.html">Browse
-                        Encyclopedia</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="featured.html">Featured
-                        Entries</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="resources.html">Resources</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="timelines.html">Timelines</a>
                 </div>
+
+                <!-- Learn -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Organization</h4>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="about.html">About Us</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="founders.html">Founders</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1"
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Learn</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="education.html">Education</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="enterprises.html">Enterprises</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="research.html">Research</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="publications.html">Publications</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="resources.html">Resources</a>
+                </div>
+
+                <!-- Participate -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Participate</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="nominate.html">Nominate a Woman</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="share-story.html">Share Your Story</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contributor-guidelines.html">Contributor Guidelines</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="donate.html">Donate</a>
+                </div>
+
+                <!-- About -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="about.html">About Us</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="founders.html">Founders</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributors.html">Contributors</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="research.html">Methodology</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="contact.html">Contact</a>
-                </div>
-                <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4">Support</h4>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="donate.html">Donate</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="nominate.html">Nominate a
-                        Woman</a>
-                    <a class="block text-gray-400 hover:text-primary text-sm py-1" href="share-story.html">Share Your
-                        Story</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="methodology.html">Methodology</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="editorial-standards.html">Editorial Standards</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contact.html">Contact</a>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center">
-                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved.</p>
+
+            <!-- Quick Links Row -->
+            <div class="border-t border-gray-800 pt-8 mt-8">
+                    <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
+                        Profile</a>
+                        Biography</a>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white">Privacy Policy</a> | <a
+                            href="terms-of-use.html" class="text-gray-400 hover:text-white">Terms of Use</a></p>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
+            <button onclick="document.getElementById('login-modal').classList.add('hidden')"
+                class="absolute top-4 right-4 size-8 flex items-center justify-center rounded-full hover:bg-border-light transition-colors">
+                <span class="material-symbols-outlined text-text-secondary">close</span>
+            </button>
+            <div class="text-center mb-6">
+                <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-primary text-3xl">login</span>
+                </div>
+                <h2 class="font-serif text-2xl font-bold text-text-main">Welcome Back</h2>
+                <p class="text-text-secondary text-sm mt-2">Sign in to access your account</p>
+            </div>
+            <form id="login-form" class="space-y-4">
+                <div id="login-error" class="hidden bg-red-100 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
+                <div>
+                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-email">Email</label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">mail</span>
+                        <input type="email" id="login-email" name="email" required placeholder="you@example.com"
+                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-password">Password</label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">lock</span>
+                        <input type="password" id="login-password" name="password" required placeholder="••••••••"
+                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="remember"
+                            class="size-4 rounded border-border-light text-primary focus:ring-primary">
+                        <span class="text-sm text-text-secondary">Remember me</span>
+                    </label>
+                    <a href="forgot-password.html" class="text-sm text-primary hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit"
+                    class="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">login</span>
+                    Sign In
+                </button>
+            </form>
+            <div class="flex items-center gap-4 my-6">
+                <div class="flex-1 h-px bg-border-light"></div>
+                <span class="text-xs text-text-secondary uppercase tracking-wider">New here?</span>
+                <div class="flex-1 h-px bg-border-light"></div>
+            </div>
+            <a href="signup.html"
+                class="w-full h-12 flex items-center justify-center gap-2 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary/10 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">person_add</span>
+                Create an Account
+            </a>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/navigation.js"></script>
+
+    <!-- Global Search -->
+    <script>
+        // Enhanced global search across all pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>
+

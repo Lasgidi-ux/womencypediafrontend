@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Leader Profile — Womencypedia Registry</title>
+    <meta name="description"
+        content="View the verified profile of a women-led organization in the Womencypedia Institutional Registry.">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/leader-profile.html">
+    <meta property="og:title" content="Leader Profile — Womencypedia Registry">
+    <meta property="og:description" content="View the verified profile of a women-led organization.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display min-h-screen">
+
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search leaders, organizations..."
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Home</a>
+            <a href="browse.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Browse</a>
+            <a href="browse-leaders.html"
+                class="block py-3 text-base font-medium text-primary hover:text-primary">Browse Leaders</a>
+        </div>
+        <div class="px-6 pb-8">
+            <a href="apply-verification.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center">
+                Apply for Verification
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="navbar" class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSearch()" aria-label="Search" class="p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button onclick="toggleMenu()" aria-label="Menu"
+                        class="lg:hidden p-2 hover:bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-border-light">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 py-3">
+            <nav class="flex items-center gap-2 text-sm">
+                <a href="index.html" class="text-text-secondary hover:text-primary">Home</a>
+                <span class="material-symbols-outlined text-text-secondary text-[16px]">chevron_right</span>
+                <a href="browse-leaders.html" class="text-text-secondary hover:text-primary">Registry</a>
+                <span class="material-symbols-outlined text-text-secondary text-[16px]">chevron_right</span>
+                <span class="text-text-main font-medium" id="breadcrumb-org">Organization</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen pb-16">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-accent-teal/10 py-12 lg:py-16">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    <!-- Organization Info -->
+                    <div class="lg:col-span-2">
+                        <!-- Verification Badge -->
+                        <div class="flex items-center gap-3 mb-4">
+                            <span
+                                class="inline-flex items-center gap-1 bg-accent-teal/10 text-accent-teal text-sm font-bold px-3 py-1.5 rounded-full">
+                                <span class="material-symbols-outlined text-[18px]">verified</span>
+                                Verified Organization
+                            </span>
+                            <span class="text-sm text-text-secondary">
+                                Verified on <span id="verified-date">January 15, 2024</span>
+                            </span>
+                        </div>
+
+                        <h1 class="font-heading text-3xl lg:text-4xl font-bold text-text-main mb-3" id="org-name">
+                            Organization Name
+                        </h1>
+
+                        <p class="text-lg text-text-secondary mb-6" id="org-summary">
+                            Organization description will appear here.
+                        </p>
+
+                        <!-- Quick Stats -->
+                        <div class="flex flex-wrap gap-4 mb-6">
+                            <div
+                                class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-border-light">
+                                <span class="material-symbols-outlined text-text-secondary">location_on</span>
+                                <span class="font-medium" id="org-country">Country</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-border-light">
+                                <span class="material-symbols-outlined text-text-secondary">category</span>
+                                <span class="font-medium" id="org-sector">Sector</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-border-light">
+                                <span class="material-symbols-outlined text-text-secondary">business</span>
+                                <span class="font-medium" id="org-type">Type</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex flex-wrap gap-3">
+                            <a href="#" id="org-website" target="_blank"
+                                class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-colors">
+                                <span class="material-symbols-outlined">language</span>
+                                Visit Website
+                            </a>
+                            <button
+                                class="inline-flex items-center gap-2 px-5 py-2.5 border border-border-light text-text-main font-bold rounded-lg hover:bg-background-cream transition-colors">
+                                <span class="material-symbols-outlined">bookmark_border</span>
+                                Save
+                            </button>
+                            <button
+                                class="inline-flex items-center gap-2 px-5 py-2.5 border border-border-light text-text-main font-bold rounded-lg hover:bg-background-cream transition-colors">
+                                <span class="material-symbols-outlined">share</span>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Logo/Image -->
+                    <div class="lg:text-right">
+                        <div
+                            class="inline-block w-32 h-32 lg:w-40 lg:h-40 bg-white rounded-2xl border border-border-light flex items-center justify-center shadow-sm">
+                            <span class="material-symbols-outlined text-6xl lg:text-7xl text-primary/30">business</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Tabs -->
+        <section class="bg-white border-b border-border-light sticky top-16 lg:top-20 z-30">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <nav class="flex gap-8 overflow-x-auto" id="profile-tabs">
+                    <button onclick="switchTab('overview')"
+                        class="tab-btn py-4 border-b-2 border-primary text-primary font-medium whitespace-nowrap"
+                        data-tab="overview">
+                        Overview
+                    </button>
+                    <button onclick="switchTab('governance')"
+                        class="tab-btn py-4 border-b-2 border-transparent text-text-secondary hover:text-text-main whitespace-nowrap"
+                        data-tab="governance">
+                        Governance & Structure
+                    </button>
+                    <button onclick="switchTab('impact')"
+                        class="tab-btn py-4 border-b-2 border-transparent text-text-secondary hover:text-text-main whitespace-nowrap"
+                        data-tab="impact">
+                        Impact Metrics
+                    </button>
+                    <button onclick="switchTab('contributions')"
+                        class="tab-btn py-4 border-b-2 border-transparent text-text-secondary hover:text-text-main whitespace-nowrap"
+                        data-tab="contributions">
+                        Contributions
+                    </button>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Tab Content -->
+        <section class="py-12">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2">
+                        <!-- Overview Tab -->
+                        <div id="tab-overview" class="tab-content">
+                            <div class="bg-white rounded-2xl p-6 lg:p-8 border border-border-light mb-8">
+                                <h2 class="font-heading text-xl font-bold text-text-main mb-4">Institutional Overview
+                                </h2 class="prose prose-lg max-w-none text>
+                                <div-text-secondary" id="org-overview">
+                                <p>Detailed overview of the organization will appear here. This section provides
+                                    comprehensive information about the organization's mission, history, programs, and
+                                    approach to women-led leadership.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 lg:p-8 border border-border-light">
+                            <h2 class="font-heading text-xl font-bold text-text-main mb-4">Mission & Vision</h2>
+                            <div class="space-y-4">
+                                <div class="bg-accent-teal/10 rounded-xl p-5">
+                                    <h3 class="font-medium text-accent-teal mb-2 flex items-center gap-2">
+                                        <span class="material-symbols-outlined">flag</span>
+                                        Mission
+                                    </h3>
+                                    <p class="text-text-secondary" id="org-mission">Mission statement will appear here.
+                                    </p>
+                                </div>
+                                <div class="bg-primary/10 rounded-xl p-5">
+                                    <h3 class="font-medium text-primary mb-2 flex items-center gap-2">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                        Vision
+                                    </h3>
+                                    <p class="text-text-secondary" id="org-vision">Vision statement will appear here.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Governance Tab -->
+                    <div id="tab-governance" class="tab-content hidden">
+                        <div class="bg-white rounded-2xl p-6 lg:p-8 border border-border-light">
+                            <h2 class="font-heading text-xl font-bold text-text-main mb-4">Leadership Structure</h2>
+                            <div class="prose max-w-none text-text-secondary" id="org-governance">
+                                <p>Information about the organization's governance structure, leadership positions, and
+                                    decision-making processes will appear here.</p>
+                            </div>
+
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-background-cream rounded-xl p-5">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div
+                                            class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-primary">groups</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-text-secondary">Leadership Team</p>
+                                            <p class="font-bold text-text-main" id="leadership-count">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-background-cream rounded-xl p-5">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div
+                                            class="w-10 h-10 bg-accent-teal/10 rounded-lg flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-accent-teal">pie_chart</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-text-secondary">Women in Leadership</p>
+                                            <p class="font-bold text-text-main" id="women-percent">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Impact Tab -->
+                    <div id="tab-impact" class="tab-content hidden">
+                        <div class="bg-white rounded-2xl p-6 lg:p-8 border border-border-light">
+                            <h2 class="font-heading text-xl font-bold text-text-main mb-4">Impact Metrics</h2>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" id="impact-metrics">
+                                <div class="text-center p-4 bg-background-cream rounded-xl">
+                                    <p class="text-3xl font-bold text-primary" id="metric-employees">-</p>
+                                    <p class="text-sm text-text-secondary">Employees</p>
+                                </div>
+                                <div class="text-center p-4 bg-background-cream rounded-xl">
+                                    <p class="text-3xl font-bold text-primary" id="metric-beneficiaries">-</p>
+                                    <p class="text-sm text-text-secondary">Beneficiaries</p>
+                                </div>
+                                <div class="text-center p-4 bg-background-cream rounded-xl">
+                                    <p class="text-3xl font-bold text-primary" id="metric-budget">-</p>
+                                    <p class="text-sm text-text-secondary">Annual Budget</p>
+                                </div>
+                                <div class="text-center p-4 bg-background-cream rounded-xl">
+                                    <p class="text-3xl font-bold text-primary" id="metric-year">-</p>
+                                    <p class="text-sm text-text-secondary">Founded</p>
+                                </div>
+                            </div>
+                            <div class="prose max-w-none text-text-secondary" id="org-impact">
+                                <p>Additional details about the organization's impact and achievements will appear here.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contributions Tab -->
+                    <div id="tab-contributions" class="tab-content hidden">
+                        <div class="bg-white rounded-2xl p-6 lg:p-8 border border-border-light">
+                            <h2 class="font-heading text-xl font-bold text-text-main mb-4">Related Contributions</h2>
+                            <p class="text-text-secondary mb-4">Articles, case studies, and reports related to this
+                                organization.</p>
+                            <div id="contributions-list" class="space-y-4">
+                                <p class="text-text-secondary italic">No contributions yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <!-- Contact Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light mb-6">
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-4">Contact Information</h3>
+                        <div class="space-y-3">
+                            <a href="#" id="contact-website"
+                                class="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">language</span>
+                                <span>Website</span>
+                            </a>
+                            <a href="#" id="contact-email"
+                                class="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">email</span>
+                                <span>Email</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Similar Organizations -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light">
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-4">Similar Organizations</h3>
+                        <div class="space-y-4" id="similar-orgs">
+                            <p class="text-text-secondary text-sm">Loading similar organizations...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                    <span class="text-white/70 text-sm">&copy; 2024 Womencypedia. All rights reserved.</span>
+                </div>
+                <div class="flex gap-6 text-sm">
+                    <a href="privacy-policy.html" class="text-white/50 hover:text-white">Privacy</a>
+                    <a href="terms-of-use.html" class="text-white/50 hover:text-white">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Mock leader data
+        const mockLeader = {
+            id: 1,
+            name: "Dr. Amina Mohammed",
+            organizationName: "African Women in Agriculture",
+            country: "Nigeria",
+            continent: "Africa",
+            sector: "Non-Profit",
+            organizationType: "NGO",
+            foundingYear: 2015,
+            verified: true,
+            verifiedDate: "2024-01-15",
+            executiveSummary: "Empowering women farmers across Africa through sustainable agriculture programs and policy advocacy.",
+            institutionalOverview: "African Women in Agriculture (AWA) is a pan-African non-profit organization dedicated to empowering women farmers across the continent. Founded in 2015, we work with local communities to implement sustainable agriculture programs, provide training and resources, and advocate for policies that support women in agriculture.",
+            missionStatement: "To empower women farmers in Africa through sustainable agriculture, economic independence, and policy advocacy.",
+            visionStatement: "A Africa where women farmers are recognized as key drivers of food security and economic development.",
+            leadershipStructure: "AWA is governed by a Board of Directors composed of 9 members, 7 of whom are women. The organization has a leadership team of 5 senior managers, all women, who oversee programs across 15 African countries. Decision-making is decentralized to regional hubs, empowering local women leaders.",
+            impactMetrics: {
+                employees: 245,
+                womenInLeadership: 85,
+                beneficiaries: 125000,
+                annualBudget: 2500000
+            },
+            website: "https://example.org",
+            email: "info@awa-africa.org"
+        };
+
+        let currentLeader = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            loadLeader();
+        });
+
+        async function loadLeader() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const leaderId = urlParams.get('id');
+
+            try {
+                // Try to fetch from API
+                if (typeof CONFIG !== 'undefined' && CONFIG.USE_STRAPI) {
+                    const response = await fetch(`${CONFIG.API_BASE_URL}/api/leaders/${leaderId}?populate=*`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        currentLeader = data.data;
+                    } else {
+                        throw new Error('API not available');
+                    }
+                } else {
+                    // Use mock data
+                    currentLeader = mockLeader;
+                }
+            } catch (error) {
+                console.log('Using mock data');
+                currentLeader = mockLeader;
+            }
+
+            renderLeader();
+        }
+
+        function renderLeader() {
+            if (!currentLeader) return;
+
+            // Update page title
+            document.title = `${currentLeader.organizationName} — Womencypedia Registry`;
+
+            // Breadcrumb
+            document.getElementById('breadcrumb-org').textContent = currentLeader.organizationName;
+
+            // Hero section
+            document.getElementById('org-name').textContent = currentLeader.organizationName;
+            document.getElementById('org-summary').textContent = currentLeader.executiveSummary;
+            document.getElementById('org-country').textContent = currentLeader.country;
+            document.getElementById('org-sector').textContent = currentLeader.sector;
+            document.getElementById('org-type').textContent = currentLeader.organizationType;
+
+            // Verified date
+            if (currentLeader.verifiedDate) {
+                const date = new Date(currentLeader.verifiedDate);
+                document.getElementById('verified-date').textContent = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            // Website link
+            if (currentLeader.website) {
+                document.getElementById('org-website').href = currentLeader.website;
+                document.getElementById('contact-website').href = currentLeader.website;
+                document.getElementById('contact-website').querySelector('span:last-child').textContent = new URL(currentLeader.website).hostname;
+            }
+
+            // Contact
+            if (currentLeader.email) {
+                document.getElementById('contact-email').href = `mailto:${currentLeader.email}`;
+                document.getElementById('contact-email').querySelector('span:last-child').textContent = currentLeader.email;
+            }
+
+            // Overview tab
+            document.getElementById('org-overview').innerHTML = `<p>${currentLeader.institutionalOverview}</p>`;
+            document.getElementById('org-mission').textContent = currentLeader.missionStatement || 'Mission statement pending.';
+            document.getElementById('org-vision').textContent = currentLeader.visionStatement || 'Vision statement pending.';
+
+            // Governance tab
+            document.getElementById('org-governance').innerHTML = `<p>${currentLeader.leadershipStructure}</p>`;
+            document.getElementById('leadership-count').textContent = currentLeader.impactMetrics?.employees || 'N/A';
+            document.getElementById('women-percent').textContent = (currentLeader.impactMetrics?.womenInLeadership || 0) + '%';
+
+            // Impact tab
+            const metrics = currentLeader.impactMetrics || {};
+            document.getElementById('metric-employees').textContent = metrics.employees || 'N/A';
+            document.getElementById('metric-beneficiaries').textContent = metrics.beneficiaries ?
+                (metrics.beneficiaries >= 1000 ? (metrics.beneficiaries / 1000).toFixed(0) + 'K' : metrics.beneficiaries) : 'N/A';
+            document.getElementById('metric-budget').textContent = metrics.annualBudget ?
+                ('$' + (metrics.annualBudget >= 1000000 ? (metrics.annualBudget / 1000000).toFixed(1) + 'M' : (metrics.annualBudget / 1000).toFixed(0) + 'K')) : 'N/A';
+            document.getElementById('metric-year').textContent = currentLeader.foundingYear || 'N/A';
+
+            // Render similar orgs
+            renderSimilarOrgs();
+        }
+
+        function renderSimilarOrgs() {
+            const container = document.getElementById('similar-orgs');
+            const similarOrgs = [
+                { name: "Women in Tech Africa", country: "Ghana", sector: "Technology" },
+                { name: "Female Farmers Network", country: "Kenya", sector: "Agriculture" },
+                { name: "Women Entrepreneurs Hub", country: "South Africa", sector: "Private Sector" }
+            ];
+
+            container.innerHTML = similarOrgs.map(org => `
+                <a href="leader-profile.html?id=${org.id || 1}" class="block p-3 bg-background-cream rounded-lg hover:bg-primary/10 transition-colors">
+                    <p class="font-medium text-text-main text-sm">${org.name}</p>
+                    <p class="text-xs text-text-secondary">${org.country} • ${org.sector}</p>
+                </a>
+            `).join('');
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const isActive = btn.dataset.tab === tabName;
+                btn.classList.toggle('border-primary', isActive);
+                btn.classList.toggle('text-primary', isActive);
+                btn.classList.toggle('border-transparent', !isActive);
+                btn.classList.toggle('text-text-secondary', !isActive);
+            });
+
+            // Show/hide content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

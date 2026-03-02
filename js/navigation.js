@@ -53,6 +53,9 @@ function createMobileNavigation() {
     menuOverlay.onclick = toggleMenu;
     document.body.insertBefore(menuOverlay, document.body.firstChild);
 
+    // Determine if we're in a subdirectory (like collections/)
+    const pathPrefix = window.location.pathname.includes('/collections/') ? '../' : '';
+
     // Create mobile bottom sheet menu
     const mobileMenu = document.createElement('nav');
     mobileMenu.id = 'mobileMenu';
@@ -60,65 +63,117 @@ function createMobileNavigation() {
     mobileMenu.innerHTML = `
         <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
 
-        <!-- Primary Navigation -->
+        <!-- Explore -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
-                Primary Navigation</h3>
-            <a href="index.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Home</a>
-            <a href="about.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">About
-                Womencypedia</a>
-            <a href="collections.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Featured
-                Collections</a>
-            <a href="browse.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Browse
-                Stories</a>
-            <a href="featured.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Featured</a>
-            <a href="resources.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Resources</a>
-            <a href="research.html"
-                class="block py-3 text-base font-medium text-text-main hover:text-primary transition-colors">Research
-                & Method</a>
+                Explore</h3>
+            <a href="${pathPrefix}index.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="${pathPrefix}browse.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="${pathPrefix}featured.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="${pathPrefix}collections.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="${pathPrefix}timelines.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Registry -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Registry</h3>
+            <a href="${pathPrefix}browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse Leaders</a>
+            <a href="${pathPrefix}apply-verification.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Apply for Verification</a>
+            <a href="${pathPrefix}controlled-contributions.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Submit Content</a>
+            <a href="${pathPrefix}partners.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Partners</a>
+            <a href="${pathPrefix}fellowship.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Fellowships</a>
+            <a href="${pathPrefix}reports.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Reports</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Learn</h3>
+            <a href="${pathPrefix}education.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="${pathPrefix}enterprises.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="${pathPrefix}research.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="${pathPrefix}publications.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="${pathPrefix}resources.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
         </div>
 
         <!-- Participate -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
                 Participate</h3>
-            <a href="nominate.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Nominate
+            <a href="${pathPrefix}nominate.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
                 a Woman</a>
-            <a href="share-story.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Share
+            <a href="${pathPrefix}share-story.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Share
                 Your Story</a>
-            <a href="contributors.html"
-                class="block py-3 text-base font-medium text-text-main hover:text-primary transition-colors">Become a Contributor</a>
+            <a href="${pathPrefix}contributor-guidelines.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
+                Guidelines</a>
+            <a href="${pathPrefix}donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Donate</a>
         </div>
 
-        <!-- Organization -->
+        <!-- About -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
-                Organization</h3>
-            <a href="founders.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Founders</a>
-            <a href="editorial-standards.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Editorial Standards</a>
-            <a href="contact.html"
-                class="block py-3 text-base font-medium text-text-main hover:text-primary transition-colors">Contact Us</a>
+                About</h3>
+            <a href="${pathPrefix}about.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
+                Us</a>
+            <a href="${pathPrefix}founders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
+            <a href="${pathPrefix}contributors.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="${pathPrefix}methodology.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="${pathPrefix}editorial-standards.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial
+                Standards</a>
+            <a href="${pathPrefix}contact.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+
+        <!-- My Profile -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                My Profile</h3>
+            <a href="${pathPrefix}profile.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
+                Profile</a>
+            <a href="${pathPrefix}analytics.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Analytics</a>
+            <a href="${pathPrefix}admin.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Admin</a>
+            <a href="${pathPrefix}biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
+                Biography</a>
+            <!-- Sign Out - shown when authenticated -->
+            <button onclick="handleMobileLogout()"
+                class="block w-full text-left py-3 text-base font-medium text-red-600 hover:text-red-700 border-t border-border-light mt-2"
+                id="mobile-signout-btn" style="display: none;">
+                Sign Out
+            </button>
         </div>
 
         <!-- CTA -->
-        <div class="px-6 pb-8 pt-2 space-y-3">
-            <a href="donate.html"
-                class="block w-full h-12 bg-accent-gold text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-accent-gold/90 transition-colors">
-                <span class="material-symbols-outlined mr-2">favorite</span>
-                Donate
-            </a>
-            <a href="share-story.html"
-                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary/90 transition-colors">
+        <div class="px-6 pb-8">
+            <a href="${pathPrefix}share-story.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors">
                 Share Your Story
             </a>
         </div>
@@ -365,3 +420,64 @@ function initKeyboardNavigation() {
 // Make functions globally available
 window.toggleMenu = toggleMenu;
 window.toggleSearch = toggleSearch;
+
+/**
+ * Handle mobile menu logout
+ */
+function handleMobileLogout() {
+    // Close menu first
+    toggleMenu();
+
+    // Use Auth.logout() if available, otherwise do basic logout
+    if (typeof Auth !== 'undefined' && typeof Auth.logout === 'function') {
+        Auth.logout().then(() => {
+            window.location.href = 'index.html';
+        });
+    } else {
+        // Fallback: clear storage and redirect
+        localStorage.removeItem('womencypedia_access_token');
+        localStorage.removeItem('womencypedia_refresh_token');
+        localStorage.removeItem('womencypedia_user');
+        window.location.href = 'index.html';
+    }
+}
+
+window.handleMobileLogout = handleMobileLogout;
+
+/**
+ * Update mobile menu auth state
+ */
+function updateMobileMenuAuthState() {
+    const signOutBtn = document.getElementById('mobile-signout-btn');
+    if (!signOutBtn) return;
+
+    // Check for token
+    const token = localStorage.getItem('womencypedia_access_token');
+    if (token) {
+        signOutBtn.style.display = 'block';
+    } else {
+        signOutBtn.style.display = 'none';
+    }
+}
+
+/**
+ * Initialize auth state listeners
+ */
+function initAuthStateListener() {
+    // Run on DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateMobileMenuAuthState);
+    } else {
+        updateMobileMenuAuthState();
+    }
+
+    // Also run when storage changes (in case of logout in another tab)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'womencypedia_access_token') {
+            updateMobileMenuAuthState();
+        }
+    });
+}
+
+// Initialize auth state listener
+initAuthStateListener();

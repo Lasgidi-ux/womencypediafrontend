@@ -3,7 +3,7 @@
  * Enterprise-grade Editorial Knowledge Platform
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
     initNavigation();
     initSearch();
@@ -23,7 +23,7 @@ function initScrollBehavior() {
     let lastScrollTop = 0;
     const scrollThreshold = 10;
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         if (Math.abs(currentScrollTop - lastScrollTop) < scrollThreshold) {
@@ -69,11 +69,11 @@ function initSearch() {
     if (!searchBtn || !searchSheet) return;
 
     // Open search sheet
-    searchBtn.addEventListener('click', function(e) {
+    searchBtn.addEventListener('click', function (e) {
         e.preventDefault();
         searchSheet.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
+
         // Focus search input after animation
         setTimeout(() => {
             if (searchInput) searchInput.focus();
@@ -82,13 +82,13 @@ function initSearch() {
 
     // Close search sheet
     if (searchClose) {
-        searchClose.addEventListener('click', function() {
+        searchClose.addEventListener('click', function () {
             closeSearchSheet();
         });
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && searchSheet.classList.contains('active')) {
             closeSearchSheet();
         }
@@ -102,44 +102,55 @@ function initSearch() {
     // Search form submission
     const searchForm = document.querySelector('.search-sheet__form');
     if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
+        searchForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const query = searchInput?.value.trim();
             if (query) {
-                // Handle search - in real app would send to API
-                console.log('Searching for:', query);
-                // window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                window.location.href = 'browse.html?search=' + encodeURIComponent(query);
             }
         });
     }
+
+    // Also handle Enter key on any search input across the site
+    document.querySelectorAll('input[type="search"]').forEach(input => {
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = this.value.trim();
+                if (query) {
+                    window.location.href = 'browse.html?search=' + encodeURIComponent(query);
+                }
+            }
+        });
+    });
 }
 
 /**
- * Mobile Bottom Sheet Menu
+ * Mobile Bottom Sheet Menu with Accordion Categories
  */
 function initMobileMenu() {
     const menuBtn = document.querySelector('.navbar__menu-btn');
-    const bottomSheet = document.querySelector('.bottom-sheet');
-    const menuOverlay = document.querySelector('.menu-overlay');
+    const mobileMenu = document.querySelector('#mobileMenu');
+    const menuOverlay = document.querySelector('#menuOverlay');
 
-    if (!menuBtn || !bottomSheet) return;
+    if (!menuBtn || !mobileMenu) return;
 
     // Open menu
-    menuBtn.addEventListener('click', function(e) {
+    menuBtn.addEventListener('click', function (e) {
         e.preventDefault();
         openMenu();
     });
 
     // Close on overlay click
     if (menuOverlay) {
-        menuOverlay.addEventListener('click', function() {
+        menuOverlay.addEventListener('click', function () {
             closeMenu();
         });
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && bottomSheet.classList.contains('active')) {
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
             closeMenu();
         }
     });
@@ -148,11 +159,11 @@ function initMobileMenu() {
     let touchStartY = 0;
     let touchEndY = 0;
 
-    bottomSheet.addEventListener('touchstart', function(e) {
+    mobileMenu.addEventListener('touchstart', function (e) {
         touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
-    bottomSheet.addEventListener('touchend', function(e) {
+    mobileMenu.addEventListener('touchend', function (e) {
         touchEndY = e.changedTouches[0].screenY;
         handleSwipe();
     }, { passive: true });
@@ -165,21 +176,85 @@ function initMobileMenu() {
     }
 
     function openMenu() {
-        bottomSheet.classList.add('active');
+        mobileMenu.classList.add('active');
         if (menuOverlay) menuOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
+
         // Focus first menu item
-        const firstLink = bottomSheet.querySelector('.bottom-sheet__link');
+        const firstLink = mobileMenu.querySelector('a');
         if (firstLink) {
             setTimeout(() => firstLink.focus(), 300);
         }
     }
 
     function closeMenu() {
-        bottomSheet.classList.remove('active');
+        mobileMenu.classList.remove('active');
         if (menuOverlay) menuOverlay.classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    // Accordion functionality for mobile categories
+    initMobileAccordion();
+}
+
+/**
+ * Mobile Accordion Categories
+ */
+function initMobileAccordion() {
+    const mobileMenu = document.querySelector('#mobileMenu');
+    if (!mobileMenu) return;
+
+    // Add click handlers to section headers
+    const sectionHeaders = mobileMenu.querySelectorAll('h3');
+
+    sectionHeaders.forEach((header, index) => {
+        // Create clickable wrapper for section
+        const section = header.parentElement;
+        section.style.cursor = 'pointer';
+
+        // Add expand icon to header
+        header.innerHTML = `${header.textContent} <span class="material-symbols-outlined accordion-icon" style="float:right;font-size:18px;transition:transform 0.3s ease;">expand_more</span>`;
+
+        // Initially collapse all sections except first
+        if (index > 0) {
+            const links = section.querySelectorAll('a');
+            links.forEach(link => {
+                link.style.display = 'none';
+            });
+        }
+
+        header.addEventListener('click', function (e) {
+            e.preventDefault();
+            toggleSection(section, header);
+        });
+
+        // Also make section container clickable
+        section.addEventListener('click', function (e) {
+            if (e.target === header || header.contains(e.target)) return;
+            const links = section.querySelectorAll('a');
+            if (links.length > 0 && links[0].style.display === 'none') {
+                toggleSection(section, header);
+            }
+        });
+    });
+}
+
+function toggleSection(section, header) {
+    const links = section.querySelectorAll('a');
+    const icon = header.querySelector('.accordion-icon');
+    const isExpanded = links.length > 0 && links[0].style.display !== 'none';
+
+    links.forEach(link => {
+        link.style.display = isExpanded ? 'none' : 'block';
+        link.style.opacity = '0';
+        link.style.transition = 'opacity 0.2s ease';
+        setTimeout(() => {
+            link.style.opacity = '1';
+        }, 50);
+    });
+
+    if (icon) {
+        icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
     }
 }
 
@@ -192,7 +267,7 @@ function initAccessibility() {
     const mainContent = document.querySelector('main');
 
     if (skipLink && mainContent) {
-        skipLink.addEventListener('click', function(e) {
+        skipLink.addEventListener('click', function (e) {
             e.preventDefault();
             mainContent.focus();
             mainContent.scrollIntoView();
@@ -201,21 +276,21 @@ function initAccessibility() {
 
     // Add keyboard navigation for interactive elements
     const interactiveElements = document.querySelectorAll('button, a, input, textarea, select');
-    
+
     interactiveElements.forEach(element => {
         // Ensure visible focus states
-        element.addEventListener('focus', function() {
+        element.addEventListener('focus', function () {
             this.classList.add('focus-visible');
         });
 
-        element.addEventListener('blur', function() {
+        element.addEventListener('blur', function () {
             this.classList.remove('focus-visible');
         });
     });
 
     // Handle reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
+
     if (prefersReducedMotion.matches) {
         document.documentElement.style.setProperty('--transition-duration', '0s');
     }
@@ -232,7 +307,7 @@ function validateForm(formElement) {
         if (!field.value.trim()) {
             isValid = false;
             field.classList.add('error');
-            
+
             // Show error message
             let errorMsg = field.parentElement.querySelector('.error-message');
             if (!errorMsg) {
@@ -269,7 +344,7 @@ function isValidEmail(email) {
  * Smooth scroll for anchor links
  */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
         if (targetId === '#') return;
 
@@ -282,6 +357,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+
+/**
+ * Global Error Handler for Uncaught Promise Rejections
+ * Catches unhandled API errors and shows user-friendly notifications
+ */
+window.addEventListener('unhandledrejection', function (event) {
+    // Prevent default browser error logging
+    event.preventDefault();
+
+    // Log error for debugging
+    console.error('Unhandled Promise Rejection:', event.reason);
+
+    // Show user-friendly notification
+    const errorMessage = event.reason?.message || event.reason || 'An unexpected error occurred';
+
+    // Only show toast if UI is available and loaded
+    if (typeof UI !== 'undefined' && UI.showToast) {
+        UI.showToast('Something went wrong. Please try again.', 'error');
+    } else {
+        // Fallback: log to console if UI not available
+        console.warn('UI not available for toast notification');
+    }
+});
+
+/**
+ * Global Error Handler for Uncaught Errors
+ */
+window.addEventListener('error', function (event) {
+    // Log error for debugging
+    console.error('Global Error:', event.error);
+
+    // Don't prevent default - let the error propagate for debugging
+    // But we can show a notification for unexpected errors
+    if (event.error && typeof event.error.message !== 'undefined') {
+        // Only notify for non-critical errors
+        if (typeof UI !== 'undefined' && UI.showToast) {
+            // Only show if not a resource loading error (images, scripts, etc.)
+            if (event.target.tagName !== 'IMG' && event.target.tagName !== 'SCRIPT' && event.target.tagName !== 'LINK') {
+                UI.showToast('An error occurred. Please refresh the page.', 'error');
+            }
+        }
+    }
 });
 
 /**
@@ -331,3 +449,82 @@ window.WomencypediaApp = {
     validateForm,
     isValidEmail
 };
+
+// NOTE: toggleMenu and toggleSearch are defined in navigation.js
+// Do NOT redefine them here to avoid conflicts.
+
+/**
+ * Wire up desktop Sign In / Sign Out buttons
+ * Sign In buttons redirect to login page.
+ * Sign Out buttons call Auth.logout().
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    // Sign In buttons
+    document.querySelectorAll('[data-auth="signin"]').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.location.href = 'login.html';
+        });
+    });
+
+    // Sign Out buttons (inside [data-auth="signout"] containers)
+    document.querySelectorAll('[data-auth="signout"] button').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (typeof Auth !== 'undefined' && typeof Auth.logout === 'function') {
+                Auth.logout().then(() => {
+                    window.location.href = 'index.html';
+                });
+            } else {
+                // Fallback: clear storage and redirect
+                localStorage.removeItem('womencypedia_access_token');
+                localStorage.removeItem('womencypedia_refresh_token');
+                localStorage.removeItem('womencypedia_user');
+                window.location.href = 'index.html';
+            }
+        });
+    });
+
+    // Update auth UI state on load
+    updateDesktopAuthUI();
+});
+
+/**
+ * Update desktop auth UI based on current login state
+ */
+function updateDesktopAuthUI() {
+    const token = localStorage.getItem('womencypedia_access_token');
+    const isLoggedIn = !!token;
+
+    // Show/hide sign-in vs sign-out buttons
+    document.querySelectorAll('[data-auth="signin"]').forEach(el => {
+        el.style.display = isLoggedIn ? 'none' : '';
+    });
+    document.querySelectorAll('[data-auth="signout"]').forEach(el => {
+        el.style.display = isLoggedIn ? 'flex' : 'none';
+    });
+
+    // Show admin link only for admin users
+    const userData = localStorage.getItem('womencypedia_user');
+    let isAdmin = false;
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            isAdmin = user.role === 'admin' || user.role?.type === 'admin';
+        } catch (e) { /* ignore parse errors */ }
+    }
+    document.querySelectorAll('[data-auth="admin-only"]').forEach(el => {
+        el.style.display = isAdmin ? '' : 'none';
+    });
+
+    // Show user info (name or email)
+    if (isLoggedIn && userData) {
+        try {
+            const user = JSON.parse(userData);
+            const displayName = user.username || user.email || '';
+            document.querySelectorAll('[data-auth="user-info"]').forEach(el => {
+                el.textContent = displayName;
+            });
+        } catch (e) { /* ignore parse errors */ }
+    }
+}

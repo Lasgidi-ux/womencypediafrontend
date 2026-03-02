@@ -1,63 +1,179 @@
-// Browse functionality for Womencypedia
-// Implements search, filtering, and dynamic biography display
+/**
+ * Browse functionality for Womencypedia
+ * Implements search, filtering, and dynamic biography display with API integration.
+ */
 
+// Current state
 let currentFilters = {
     search: '',
     regions: [],
     eras: [],
     domains: [],
-    tags: []
+    tags: [],
+    page: 1
 };
 
 let currentBiographies = [];
+let pagination = {
+    page: 1,
+    totalPages: 1,
+    total: 0
+};
+
+// Flag to check if API is available
+let useAPI = true;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     initializeBrowse();
 });
 
-function initializeBrowse() {
-    // Load data
-    loadBiographies();
-
-    // Set up event listeners
+/**
+ * Initialize browse page
+ */
+async function initializeBrowse() {
+    // Set up event listeners first
     setupSearch();
     setupFilters();
     setupFilterTabs();
 
-    // Initial display
-    displayBiographies();
+    // Load biographies
+    await loadBiographies();
 }
 
-function loadBiographies() {
-    // In a real headless setup, this would fetch from API
-    // For now, using the static data
-    currentBiographies = biographies;
-}
+/**
+ * Load biographies from API or fallback to static data
+ */
+async function loadBiographies() {
+    const container = document.querySelector('#entries-grid') ||
+        document.querySelector('section:last-of-type .grid');
 
-function setupSearch() {
-    const searchInput = document.querySelector('#main-content input[type="search"]');
-    if (searchInput) {
-        searchInput.addEventListener('input', function (e) {
-            currentFilters.search = e.target.value.toLowerCase();
+    if (!container) return;
+
+    // Show loading state
+    UI.showLoading(container, 'Loading biographies...');
+
+    try {
+        // Try to fetch from API first
+        if (useAPI) {
+            const params = buildQueryParams();
+            const response = await API.entries.getAll(params);
+
+            currentBiographies = response.entries || response.data || response;
+            pagination = {
+                page: response.page || 1,
+                totalPages: response.total_pages || Math.ceil((response.total || currentBiographies.length) / CONFIG.PAGINATION.DEFAULT_PAGE_SIZE),
+                total: response.total || currentBiographies.length
+            };
+
             displayBiographies();
-        });
+        }
+    } catch (error) {
+        console.warn('API not available, falling back to static data:', error.message);
+        useAPI = false;
+
+        // Fallback to static data
+        if (typeof biographies !== 'undefined') {
+            currentBiographies = biographies;
+            pagination = {
+                page: 1,
+                totalPages: 1,
+                total: biographies.length
+            };
+            displayBiographies();
+        } else {
+            UI.showError(container, 'Unable to load biographies. Please try again later.', loadBiographies);
+        }
     }
 }
 
+/**
+ * Build query parameters from current filters
+ */
+function buildQueryParams() {
+    const params = {
+        page: currentFilters.page,
+        limit: CONFIG.PAGINATION.DEFAULT_PAGE_SIZE
+    };
+
+    if (currentFilters.search) {
+        params.search = currentFilters.search;
+    }
+
+    if (currentFilters.regions.length > 0) {
+        params.region = currentFilters.regions.join(',');
+    }
+
+    if (currentFilters.eras.length > 0) {
+        params.era = currentFilters.eras.join(',');
+    }
+
+    if (currentFilters.domains.length > 0) {
+        params.domain = currentFilters.domains.join(',');
+    }
+
+    if (currentFilters.tags.length > 0) {
+        params.tags = currentFilters.tags.join(',');
+    }
+
+    return params;
+}
+
+/**
+ * Set up search functionality
+ */
+function setupSearch() {
+    // Main search input in hero section
+    const searchInputs = document.querySelectorAll('input[type="search"]');
+
+    searchInputs.forEach(input => {
+        input.addEventListener('input', UI.debounce(async function (e) {
+            currentFilters.search = e.target.value.toLowerCase();
+            currentFilters.page = 1;
+
+            if (useAPI) {
+                await loadBiographies();
+            } else {
+                displayBiographies();
+            }
+        }, 300));
+
+        // Handle Enter key
+        input.addEventListener('keypress', async function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                currentFilters.search = e.target.value.toLowerCase();
+                currentFilters.page = 1;
+
+                if (useAPI) {
+                    await loadBiographies();
+                } else {
+                    displayBiographies();
+                }
+            }
+        });
+    });
+}
+
+/**
+ * Set up filter modal and controls
+ */
 function setupFilters() {
     // Modal toggle
-    const filtersBtn = document.querySelector('button:has(.material-symbols-outlined:contains("tune"))');
+    const filtersBtn = document.querySelector('button:has(.material-symbols-outlined)');
     const modal = document.getElementById('filters-modal');
     const closeBtn = document.getElementById('close-filters');
     const applyBtn = document.getElementById('apply-filters');
     const clearBtn = document.getElementById('clear-filters');
 
-    if (filtersBtn) {
-        filtersBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-        });
-    }
+    // Find the filters button by text content
+    document.querySelectorAll('button').forEach(btn => {
+        if (btn.textContent.includes('Filters')) {
+            btn.addEventListener('click', () => {
+                if (modal) modal.classList.remove('hidden');
+            });
+        }
+    });
 
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
@@ -66,37 +182,70 @@ function setupFilters() {
     }
 
     if (applyBtn) {
-        applyBtn.addEventListener('click', () => {
+        applyBtn.addEventListener('click', async () => {
             collectFilters();
-            displayBiographies();
+            currentFilters.page = 1;
+
+            if (useAPI) {
+                await loadBiographies();
+            } else {
+                displayBiographies();
+            }
+
             modal.classList.add('hidden');
         });
     }
 
     if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
+        clearBtn.addEventListener('click', async () => {
             clearAllFilters();
-            displayBiographies();
+
+            if (useAPI) {
+                await loadBiographies();
+            } else {
+                displayBiographies();
+            }
+        });
+    }
+
+    // Close modal on outside click
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
         });
     }
 }
 
+/**
+ * Set up filter tabs (All Entries, By Region, etc.)
+ */
 function setupFilterTabs() {
     const tabs = document.querySelectorAll('.filter-tab');
     tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
+        tab.addEventListener('click', async function () {
             // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'));
             // Add active class to clicked tab
             this.classList.add('active');
 
-            // For now, just visual feedback - could implement tab-specific filtering
-            const filterType = this.textContent.trim().toLowerCase().replace(' ', '-');
+            const filterType = this.textContent.trim().toLowerCase();
+
+            // Clear existing filters based on tab
+            if (filterType === 'all entries') {
+                await clearAllFilters();
+            }
+
+            // Could implement specific filtering based on tab
             console.log('Switched to filter:', filterType);
         });
     });
 }
 
+/**
+ * Collect filter values from checkboxes
+ */
 function collectFilters() {
     currentFilters.regions = [];
     currentFilters.eras = [];
@@ -125,32 +274,43 @@ function collectFilters() {
     });
 }
 
-function clearAllFilters() {
+/**
+ * Clear all filters
+ */
+async function clearAllFilters() {
     currentFilters = {
         search: '',
         regions: [],
         eras: [],
         domains: [],
-        tags: []
+        tags: [],
+        page: 1
     };
 
     // Uncheck all checkboxes
     const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
     checkboxes.forEach(checkbox => checkbox.checked = false);
 
-    // Clear search
-    const searchInput = document.querySelector('#main-content input[type="search"]');
-    if (searchInput) {
-        searchInput.value = '';
+    // Clear search inputs
+    const searchInputs = document.querySelectorAll('input[type="search"]');
+    searchInputs.forEach(input => input.value = '');
+
+    if (useAPI) {
+        await loadBiographies();
+    } else {
+        displayBiographies();
     }
 }
 
+/**
+ * Filter biographies locally (for static data fallback)
+ */
 function filterBiographies() {
     return currentBiographies.filter(bio => {
         // Search filter
         if (currentFilters.search) {
             const searchTerm = currentFilters.search;
-            const searchableText = `${bio.name} ${bio.introduction} ${bio.contributions} ${bio.tags.join(' ')}`.toLowerCase();
+            const searchableText = `${bio.name} ${bio.introduction || ''} ${bio.contributions || ''} ${(bio.tags || []).join(' ')}`.toLowerCase();
             if (!searchableText.includes(searchTerm)) {
                 return false;
             }
@@ -181,7 +341,7 @@ function filterBiographies() {
         // Tags filter
         if (currentFilters.tags.length > 0) {
             const hasMatchingTag = currentFilters.tags.some(tag =>
-                bio.tags.some(bioTag => bioTag.toLowerCase().includes(tag))
+                (bio.tags || []).some(bioTag => bioTag.toLowerCase().includes(tag))
             );
             if (!hasMatchingTag) {
                 return false;
@@ -192,63 +352,89 @@ function filterBiographies() {
     });
 }
 
+/**
+ * Display biographies in the grid
+ */
 function displayBiographies() {
-    const filteredBios = filterBiographies();
-    const container = document.querySelector('#main-content section:has(h2:contains("Recent Entries")) .grid');
+    const container = document.querySelector('#entries-grid') ||
+        document.querySelector('section:last-of-type .grid');
 
     if (!container) return;
+
+    // Filter if using static data
+    const bios = useAPI ? currentBiographies : filterBiographies();
 
     // Clear existing content
     container.innerHTML = '';
 
-    if (filteredBios.length === 0) {
-        container.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <span class="material-symbols-outlined text-6xl text-text-secondary/50 mb-4">search_off</span>
-                <h3 class="font-serif text-xl font-bold text-text-main mb-2">No biographies found</h3>
-                <p class="text-text-secondary">Try adjusting your search terms or filters.</p>
-            </div>
-        `;
+    if (bios.length === 0) {
+        UI.showEmpty(container, {
+            icon: 'search_off',
+            title: 'No biographies found',
+            message: 'Try adjusting your search terms or filters.',
+            actionText: 'Clear Filters',
+            actionUrl: '#'
+        });
+
+        // Add event listener to clear filters link
+        const clearLink = container.querySelector('a');
+        if (clearLink) {
+            clearLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                clearAllFilters();
+            });
+        }
         return;
     }
 
-    // Display filtered biographies
-    filteredBios.forEach(bio => {
-        const card = createBiographyCard(bio);
-        container.appendChild(card);
+    // Check if user is admin for showing edit/delete buttons
+    const isAdmin = typeof Auth !== 'undefined' && Auth.isAdmin();
+
+    // Display biographies
+    bios.forEach(bio => {
+        const cardHtml = UI.createBiographyCard(bio, isAdmin);
+        container.insertAdjacentHTML('beforeend', cardHtml);
     });
+
+    // Add pagination if using API
+    if (useAPI && pagination.totalPages > 1) {
+        const paginationContainer = document.querySelector('#pagination-container');
+        if (paginationContainer) {
+            paginationContainer.innerHTML = UI.createPagination(pagination, 'changePage');
+        } else {
+            container.insertAdjacentHTML('afterend', `
+                <div id="pagination-container">
+                    ${UI.createPagination(pagination, 'changePage')}
+                </div>
+            `);
+        }
+    }
 }
 
-function createBiographyCard(bio) {
-    const card = document.createElement('a');
-    card.href = `biography.html?id=${bio.id}`;
-    card.className = 'group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all';
+/**
+ * Change page (called from pagination)
+ * @param {number} page - Page number
+ */
+async function changePage(page) {
+    if (page < 1 || page > pagination.totalPages) return;
 
-    const eraColor = getEraColor(bio.era);
-    const categoryColor = getCategoryColor(bio.category);
+    currentFilters.page = page;
 
-    card.innerHTML = `
-        <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-${categoryColor}/20 to-${eraColor}/20 flex items-center justify-center">
-                <span class="material-symbols-outlined text-${categoryColor}/40 text-6xl">person</span>
-            </div>
-            ${bio.id <= 2 ? '<span class="absolute top-3 left-3 bg-accent-gold text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>' : ''}
-        </div>
-        <div class="p-5">
-            <span class="text-xs font-bold text-${eraColor} uppercase tracking-wider">${bio.era} • ${bio.region}</span>
-            <h3 class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
-                ${bio.name}
-            </h3>
-            <p class="text-sm text-text-secondary line-clamp-2">${bio.introduction}</p>
-            <div class="flex flex-wrap gap-1 mt-3">
-                ${bio.tags.slice(0, 3).map(tag => `<span class="text-xs bg-lavender-soft px-2 py-1 rounded">${tag}</span>`).join('')}
-            </div>
-        </div>
-    `;
+    // Scroll to top of entries
+    const container = document.querySelector('#entries-grid') ||
+        document.querySelector('section:last-of-type');
+    if (container) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-    return card;
+    await loadBiographies();
 }
 
+/**
+ * Get era color class
+ * @param {string} era - Era name
+ * @returns {string} - Color class
+ */
 function getEraColor(era) {
     const colors = {
         'Ancient': 'accent-gold',
@@ -260,6 +446,11 @@ function getEraColor(era) {
     return colors[era] || 'text-secondary';
 }
 
+/**
+ * Get category color class
+ * @param {string} category - Category name
+ * @returns {string} - Color class
+ */
 function getCategoryColor(category) {
     const colors = {
         'Leadership': 'primary',
@@ -275,10 +466,14 @@ function getCategoryColor(category) {
     return colors[category] || 'text-secondary';
 }
 
-// Make functions globally available for inline event handlers
+// Make functions globally available
 window.toggleFilters = function () {
     const modal = document.getElementById('filters-modal');
     if (modal) {
         modal.classList.toggle('hidden');
     }
 };
+
+window.changePage = changePage;
+window.clearAllFilters = clearAllFilters;
+window.loadBiographies = loadBiographies;

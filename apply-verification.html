@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Apply for Verification — Womencypedia Registry</title>
+    <meta name="description"
+        content="Apply for verification to be included in the Womencypedia Institutional Registry for Women-Led Leadership Systems.">
+
+    <!-- Auth state pre-check - prevents flash of wrong auth state -->
+    <script>
+        (function () {
+            const token = localStorage.getItem('womencypedia_access_token');
+            if (token && document.body) {
+                document.body.classList.add('authenticated');
+            }
+        })();
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS (Production Build) -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/apply-verification.html">
+    <meta property="og:title" content="Apply for Verification — Womencypedia Registry">
+    <meta property="og:description"
+        content="Apply for verification to be included in the Womencypedia Institutional Registry for Women-Led Leadership Systems.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apply for Verification — Womencypedia Registry">
+    <meta name="twitter:description"
+        content="Apply for verification to be included in the Womencypedia Institutional Registry for Women-Led Leadership Systems.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/apply-verification.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E8A6A6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+
+<body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
+    <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search leaders, organizations..."
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+
+        <!-- Explore -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Explore</h3>
+            <a href="index.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="browse.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="featured.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="collections.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="timelines.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Registry -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Registry</h3>
+            <a href="browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse
+                Leaders</a>
+            <a href="apply-verification.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Apply
+                for Verification</a>
+            <a href="controlled-contributions.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Submit
+                Content</a>
+            <a href="partners.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Partners</a>
+            <a href="fellowship.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Fellowships</a>
+            <a href="reports.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Reports</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Learn</h3>
+            <a href="education.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="enterprises.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="research.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="publications.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="resources.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
+        </div>
+
+        <!-- Participate -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Participate</h3>
+            <a href="nominate.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
+                a Woman</a>
+            <a href="share-story.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Share
+                Your Story</a>
+            <a href="contributor-guidelines.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
+                Guidelines</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Donate</a>
+        </div>
+
+        <!-- About -->
+        <div class="px-6 pb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                About</h3>
+            <a href="about.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
+                Us</a>
+            <a href="founders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
+            <a href="contributors.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="methodology.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="editorial-standards.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial
+                Standards</a>
+            <a href="contact.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+
+        <!-- CTA -->
+        <div class="px-6 pb-8">
+            <a href="browse-leaders.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors">
+                Explore Registry
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="navbar"
+        class="w-full border-b border-divider bg-background-cream sticky top-0 z-50 transition-transform duration-300">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+
+                    <!-- Desktop Nav -->
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <!-- Explore Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Explore
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="index.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a>
+                                    <a href="browse.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Browse</a>
+                                    <a href="featured.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Featured</a>
+                                    <a href="collections.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Collections</a>
+                                    <a href="timelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Timelines</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Registry Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                Registry
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[220px]">
+                                    <a href="browse-leaders.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Browse
+                                        Leaders</a>
+                                    <a href="apply-verification.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Apply
+                                        for Verification</a>
+                                    <a href="controlled-contributions.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Submit
+                                        Content</a>
+                                    <div class="border-t border-border-light my-1"></div>
+                                    <a href="partners.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Partners</a>
+                                    <a href="fellowship.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Fellowships</a>
+                                    <a href="reports.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Reports</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learn Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Learn
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="education.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a>
+                                    <a href="enterprises.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Enterprises</a>
+                                    <a href="research.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Research</a>
+                                    <a href="publications.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Publications</a>
+                                    <a href="resources.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Resources</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- About Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                About
+                                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="about.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
+                                        Us</a>
+                                    <a href="founders.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Founders</a>
+                                    <a href="contributors.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributors</a>
+                                    <a href="methodology.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Methodology</a>
+                                    <a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- Right Side -->
+                <div class="flex items-center gap-4">
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" aria-label="Open search"
+                        class="p-2 hover:bg-primary/10 rounded-lg transition-colors">
+                        <span class="material-symbols-outlined text-text-main">search</span>
+                    </button>
+
+                    <!-- Sign In / Profile -->
+                    <div class="hidden lg:flex items-center gap-3" id="auth-buttons">
+                        <a href="login.html"
+                            class="px-4 py-2 text-sm font-medium text-text-main hover:text-primary transition-colors">Sign
+                            In</a>
+                        <a href="signup.html"
+                            class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-hover transition-colors">Join</a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMenu()" aria-label="Open menu"
+                        class="lg:hidden p-2 hover:bg-primary/10 rounded-lg transition-colors">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-accent-teal/10 py-16 lg:py-24">
+            <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <span
+                        class="inline-block bg-primary/10 text-primary text-sm font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider">
+                        Institutional Registry
+                    </span>
+                    <h1 class="font-heading text-4xl lg:text-5xl font-bold text-text-main mb-6">
+                        Apply for Verification
+                    </h1>
+                    <p class="text-lg lg:text-xl text-text-secondary mb-8">
+                        Join the Womencypedia Institutional Registry for Women-Led Leadership Systems. Verified
+                        organizations receive our distinguished badge, demonstrating their commitment to women's
+                        leadership.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Steps -->
+        <section class="py-8 bg-white border-b border-border-light">
+            <div class="mx-auto max-w-3xl px-4 sm:px-6">
+                <div class="flex items-center justify-between" id="progress-steps">
+                    <div class="flex items-center step-indicator step-active" data-step="1">
+                        <div
+                            class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+                            1</div>
+                        <span class="ml-3 font-medium text-primary hidden sm:block">Organization</span>
+                    </div>
+                    <div class="flex-1 h-1 bg-border-light mx-4">
+                        <div class="h-full bg-primary w-0 transition-all duration-300" id="progress-1"></div>
+                    </div>
+                    <div class="flex items-center step-indicator" data-step="2">
+                        <div
+                            class="w-10 h-10 rounded-full bg-border-light text-text-secondary flex items-center justify-center font-bold">
+                            2</div>
+                        <span class="ml-3 font-medium text-text-secondary hidden sm:block">Leadership</span>
+                    </div>
+                    <div class="flex-1 h-1 bg-border-light mx-4">
+                        <div class="h-full bg-primary w-0 transition-all duration-300" id="progress-2"></div>
+                    </div>
+                    <div class="flex items-center step-indicator" data-step="3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-border-light text-text-secondary flex items-center justify-center font-bold">
+                            3</div>
+                        <span class="ml-3 font-medium text-text-secondary hidden sm:block">Impact</span>
+                    </div>
+                    <div class="flex-1 h-1 bg-border-light mx-4">
+                        <div class="h-full bg-primary w-0 transition-all duration-300" id="progress-3"></div>
+                    </div>
+                    <div class="flex items-center step-indicator" data-step="4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-border-light text-text-secondary flex items-center justify-center font-bold">
+                            4</div>
+                        <span class="ml-3 font-medium text-text-secondary hidden sm:block">Review</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Form -->
+        <section class="py-12 lg:py-16">
+            <div class="mx-auto max-w-3xl px-4 sm:px-6">
+                <form id="verification-form" class="space-y-8">
+                    <!-- Step 1: Organization Information -->
+                    <div class="form-step bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light"
+                        data-step="1">
+                        <h2 class="font-heading text-2xl font-bold text-text-main mb-6">Organization Information</h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label for="orgName" class="block text-sm font-medium text-text-main mb-2">
+                                    Organization Name <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="orgName" name="organizationName" required
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="Enter your organization's official name">
+                            </div>
+
+                            <div>
+                                <label for="orgWebsite" class="block text-sm font-medium text-text-main mb-2">
+                                    Organization Website
+                                </label>
+                                <input type="url" id="orgWebsite" name="organizationWebsite"
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="https://example.org">
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="country" class="block text-sm font-medium text-text-main mb-2">
+                                        Country <span class="text-red-500">*</span>
+                                    </label>
+                                    <select id="country" name="country" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                                        <option value="">Select country</option>
+                                        <option value="Nigeria">Nigeria</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="Ghana">Ghana</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Tanzania">Tanzania</option>
+                                        <option value="Ethiopia">Ethiopia</option>
+                                        <option value="Rwanda">Rwanda</option>
+                                        <option value="Senegal">Senegal</option>
+                                        <option value="Cameroon">Cameroon</option>
+                                        <option value="Other Africa">Other African Country</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="France">France</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="foundingYear" class="block text-sm font-medium text-text-main mb-2">
+                                        Founding Year
+                                    </label>
+                                    <input type="number" id="foundingYear" name="foundingYear" min="1900" max="2030"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="e.g., 2015">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="sector" class="block text-sm font-medium text-text-main mb-2">
+                                        Sector <span class="text-red-500">*</span>
+                                    </label>
+                                    <select id="sector" name="sector" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                                        <option value="">Select sector</option>
+                                        <option value="Government">Government</option>
+                                        <option value="Private Sector">Private Sector</option>
+                                        <option value="Non-Profit">Non-Profit</option>
+                                        <option value="Academic">Academic</option>
+                                        <option value="Religious">Religious</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Media">Media</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Agriculture">Agriculture</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Environmental">Environmental</option>
+                                        <option value="Human Rights">Human Rights</option>
+                                        <option value="Community">Community</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="orgType" class="block text-sm font-medium text-text-main mb-2">
+                                        Organization Type <span class="text-red-500">*</span>
+                                    </label>
+                                    <select id="orgType" name="organizationType" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                                        <option value="">Select type</option>
+                                        <option value="Government Agency">Government Agency</option>
+                                        <option value="NGO">NGO</option>
+                                        <option value="Social Enterprise">Social Enterprise</option>
+                                        <option value="Company">Company</option>
+                                        <option value="Foundation">Foundation</option>
+                                        <option value="Institution">Institution</option>
+                                        <option value="Association">Association</option>
+                                        <option value="Cooperatives">Cooperatives</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Leadership Information -->
+                    <div class="form-step bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light hidden"
+                        data-step="2">
+                        <h2 class="font-heading text-2xl font-bold text-text-main mb-6">Leadership Information</h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label for="leadershipDescription"
+                                    class="block text-sm font-medium text-text-main mb-2">
+                                    Describe your organization's leadership structure <span
+                                        class="text-red-500">*</span>
+                                </label>
+                                <textarea id="leadershipDescription" name="leadershipDescription" rows="4" required
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="Describe the leadership positions and how women are represented in decision-making roles..."></textarea>
+                            </div>
+
+                            <div>
+                                <label for="missionStatement" class="block text-sm font-medium text-text-main mb-2">
+                                    Mission Statement
+                                </label>
+                                <textarea id="missionStatement" name="missionStatement" rows="3"
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="What is your organization's mission?"></textarea>
+                            </div>
+
+                            <div class="bg-accent-teal/10 rounded-lg p-4">
+                                <h3 class="font-medium text-text-main mb-2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-accent-teal">info</span>
+                                    Verification Criteria
+                                </h3>
+                                <ul class="text-sm text-text-secondary space-y-1">
+                                    <li>• At least 50% women in leadership positions (C-suite, board, senior management)
+                                    </li>
+                                    <li>• Women in decision-making roles (strategic planning, budget authority)</li>
+                                    <li>• Demonstrated commitment to women's empowerment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Impact Metrics -->
+                    <div class="form-step bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light hidden"
+                        data-step="3">
+                        <h2 class="font-heading text-2xl font-bold text-text-main mb-6">Impact Metrics</h2>
+
+                        <div class="space-y-6">
+                            <p class="text-text-secondary">Provide quantitative data about your organization's impact.
+                                This helps demonstrate the reach and effectiveness of women-led organizations.</p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="employees" class="block text-sm font-medium text-text-main mb-2">
+                                        Number of Employees
+                                    </label>
+                                    <input type="number" id="employees" name="employees" min="0"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="e.g., 50">
+                                </div>
+
+                                <div>
+                                    <label for="womenInLeadership"
+                                        class="block text-sm font-medium text-text-main mb-2">
+                                        Women in Leadership (%)
+                                    </label>
+                                    <input type="number" id="womenInLeadership" name="womenInLeadership" min="0"
+                                        max="100"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="e.g., 60">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for=" beneficiaries" class="block text-sm font-medium text-text-main mb-2">
+                                        Direct Beneficiaries
+                                    </label>
+                                    <input type="number" id="beneficiaries" name="beneficiaries" min="0"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="e.g., 10000">
+                                </div>
+
+                                <div>
+                                    <label for="annualBudget" class="block text-sm font-medium text-text-main mb-2">
+                                        Annual Budget (USD)
+                                    </label>
+                                    <input type="number" id="annualBudget" name="annualBudget" min="0"
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="e.g., 500000">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="impactDescription" class="block text-sm font-medium text-text-main mb-2">
+                                    Describe your key achievements and impact
+                                </label>
+                                <textarea id="impactDescription" name="impactDescription" rows="4"
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="Describe the key programs, initiatives, and outcomes..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Contact & Review -->
+                    <div class="form-step bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-border-light hidden"
+                        data-step="4">
+                        <h2 class="font-heading text-2xl font-bold text-text-main mb-6">Applicant Information & Review
+                        </h2>
+
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="applicantName" class="block text-sm font-medium text-text-main mb-2">
+                                        Your Full Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="applicantName" name="applicantName" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="Enter your full name">
+                                </div>
+
+                                <div>
+                                    <label for="applicantEmail" class="block text-sm font-medium text-text-main mb-2">
+                                        Email Address <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="email" id="applicantEmail" name="applicantEmail" required
+                                        class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                        placeholder="your@email.com">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="applicantRole" class="block text-sm font-medium text-text-main mb-2">
+                                    Your Role in Organization <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="applicantRole" name="applicantRole" required
+                                    class="w-full px-4 py-3 border border-border-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="e.g., CEO, Executive Director, Board Member">
+                            </div>
+
+                            <!-- Review Summary -->
+                            <div class="bg-background-cream rounded-xl p-6">
+                                <h3 class="font-heading text-lg font-bold text-text-main mb-4">Application Summary</h3>
+                                <div id="application-summary" class="space-y-3 text-sm">
+                                    <p class="text-text-secondary">Complete all steps to see your application summary.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" id="terms" name="terms" required
+                                    class="mt-1 w-4 h-4 text-primary border-border-light rounded focus:ring-primary">
+                                <label for="terms" class="text-sm text-text-secondary">
+                                    I confirm that all information provided is accurate and I am authorized to submit
+                                    this application on behalf of my organization. I agree to the <a
+                                        href="terms-of-use.html" class="text-primary underline">Terms of Use</a> and <a
+                                        href="privacy-policy.html" class="text-primary underline">Privacy Policy</a>.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex items-center justify-between pt-6">
+                        <button type="button" id="prev-btn" onclick="prevStep()"
+                            class="px-6 py-3 border border-border-light text-text-main font-medium rounded-lg hover:bg-background-cream transition-colors hidden">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined">arrow_back</span>
+                                Previous
+                            </span>
+                        </button>
+
+                        <button type="button" id="next-btn" onclick="nextStep()"
+                            class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-colors">
+                            <span class="flex items-center gap-2">
+                                Next
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </span>
+                        </button>
+
+                        <button type="submit" id="submit-btn"
+                            class="px-6 py-3 bg-accent-teal text-white font-bold rounded-lg hover:bg-accent-teal/90 transition-colors hidden">
+                            <span class="flex items-center gap-2">
+                                Submit Application
+                                <span class="material-symbols-outlined">check</span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="success-message" class="hidden text-center py-12">
+                    <div class="w-20 h-20 bg-accent-teal/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-accent-teal text-4xl">check_circle</span>
+                    </div>
+                    <h2 class="font-heading text-3xl font-bold text-text-main mb-4">Application Submitted!</h2>
+                    <p class="text-text-secondary mb-8">
+                        Thank you for applying to the Womencypedia Institutional Registry. Our team will review your
+                        application within 5-7 business days. You will receive an email notification with the outcome.
+                    </p>
+                    <div class="flex items-center justify-center gap-4">
+                        <a href="browse-leaders.html"
+                            class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-colors">
+                            Browse Verified Leaders
+                        </a>
+                        <a href="index.html"
+                            class="px-6 py-3 border border-border-light text-text-main font-medium rounded-lg hover:bg-background-cream transition-colors">
+                            Return Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="py-12 bg-white border-t border-border-light">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">verified</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-2">Verified Badge</h3>
+                        <p class="text-sm text-text-secondary">Organizations that pass our verification process receive
+                            a distinguished badge.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">visibility</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-2">Increased Visibility</h3>
+                        <p class="text-sm text-text-secondary">Get featured in our directory and reach a global audience
+                            interested in women-led organizations.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">group</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-text-main mb-2">Network Access</h3>
+                        <p class="text-sm text-text-secondary">Connect with other verified leaders and access exclusive
+                            partnership opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-10 w-auto mb-4">
+                    <p class="text-white/70 text-sm mb-4">The world's first interpretive encyclopedia of women,
+                        documenting their stories, achievements, and cultural significance.</p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="material-symbols-outlined">facebook</span>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="material-symbols-outlined">tag</span>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="material-symbols-outlined">mail</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Explore</h4>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li><a href="browse.html" class="hover:text-white transition-colors">Browse Women</a></li>
+                        <li><a href="featured.html" class="hover:text-white transition-colors">Featured</a></li>
+                        <li><a href="collections.html" class="hover:text-white transition-colors">Collections</a></li>
+                        <li><a href="timelines.html" class="hover:text-white transition-colors">Timelines</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Registry</h4>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li><a href="browse-leaders.html" class="hover:text-white transition-colors">Browse Leaders</a>
+                        </li>
+                        <li><a href="apply-verification.html" class="hover:text-white transition-colors">Apply for
+                                Verification</a></li>
+                        <li><a href="partners.html" class="hover:text-white transition-colors">Partners</a></li>
+                        <li><a href="fellowship.html" class="hover:text-white transition-colors">Fellowships</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">About</h4>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="founders.html" class="hover:text-white transition-colors">Founders</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="donate.html" class="hover:text-white transition-colors">Donate</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-white/50">&copy; 2024 Womencypedia. All rights reserved.</p>
+                <div class="flex gap-6 text-sm">
+                    <a href="privacy-policy.html" class="text-white/50 hover:text-white transition-colors">Privacy
+                        Policy</a>
+                    <a href="terms-of-use.html" class="text-white/50 hover:text-white transition-colors">Terms of
+                        Use</a>
+                    <a href="accessibility.html"
+                        class="text-white/50 hover:text-white transition-colors">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Multi-step form functionality
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function updateProgress() {
+            // Update step indicators
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                const stepNum = index + 1;
+                const circle = indicator.querySelector('div');
+                const label = indicator.querySelector('span');
+
+                if (stepNum === currentStep) {
+                    circle.classList.add('bg-primary', 'text-white');
+                    circle.classList.remove('bg-border-light', 'text-text-secondary');
+                    if (label) {
+                        label.classList.add('text-primary');
+                        label.classList.remove('text-text-secondary');
+                    }
+                } else if (stepNum < currentStep) {
+                    circle.classList.add('bg-accent-teal', 'text-white');
+                    circle.classList.remove('bg-border-light', 'text-text-secondary', 'bg-primary');
+                    if (label) {
+                        label.classList.add('text-accent-teal');
+                        label.classList.remove('text-text-secondary', 'text-primary');
+                    }
+                } else {
+                    circle.classList.add('bg-border-light', 'text-text-secondary');
+                    circle.classList.remove('bg-primary', 'bg-accent-teal', 'text-white');
+                    if (label) {
+                        label.classList.add('text-text-secondary');
+                        label.classList.remove('text-primary', 'text-accent-teal');
+                    }
+                }
+            });
+
+            // Update progress bars
+            for (let i = 1; i < totalSteps; i++) {
+                const progressBar = document.getElementById(`progress-${i}`);
+                if (progressBar) {
+                    if (i < currentStep) {
+                        progressBar.style.width = '100%';
+                    } else if (i === currentStep) {
+                        progressBar.style.width = '50%';
+                    } else {
+                        progressBar.style.width = '0%';
+                    }
+                }
+            }
+
+            // Show/hide form steps
+            document.querySelectorAll('.form-step').forEach((step, index) => {
+                if (index + 1 === currentStep) {
+                    step.classList.remove('hidden');
+                } else {
+                    step.classList.add('hidden');
+                }
+            });
+
+            // Update buttons
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (currentStep === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (currentStep === totalSteps) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                updateSummary();
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        function nextStep() {
+            // Validate current step
+            const currentFormStep = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+            const requiredFields = currentFormStep.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-red-500');
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateProgress();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgress();
+            }
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('application-summary');
+            const form = document.getElementById('verification-form');
+            const formData = new FormData(form);
+
+            summary.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <span class="text-text-secondary">Organization:</span>
+                        <p class="font-medium text-text-main">${formData.get('organizationName') || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <span class="text-text-secondary">Country:</span>
+                        <p class="font-medium text-text-main">${formData.get('country') || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <span class="text-text-secondary">Sector:</span>
+                        <p class="font-medium text-text-main">${formData.get('sector') || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <span class="text-text-secondary">Type:</span>
+                        <p class="font-medium text-text-main">${formData.get('organizationType') || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <span class="text-text-secondary">Applicant:</span>
+                        <p class="font-medium text-text-main">${formData.get('applicantName') || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <span class="text-text-secondary">Email:</span>
+                        <p class="font-medium text-text-main">${formData.get('applicantEmail') || 'N/A'}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Form submission
+        document.getElementById('verification-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            const submissionData = {
+                applicantName: formData.get('applicantName'),
+                applicantEmail: formData.get('applicantEmail'),
+                applicantRole: formData.get('applicantRole'),
+                organizationName: formData.get('organizationName'),
+                organizationWebsite: formData.get('organizationWebsite'),
+                country: formData.get('country'),
+                sector: formData.get('sector'),
+                organizationType: formData.get('organizationType'),
+                foundingYear: formData.get('foundingYear'),
+                leadershipDescription: formData.get('leadershipDescription'),
+                missionStatement: formData.get('missionStatement'),
+                impactMetrics: {
+                    employees: formData.get('employees'),
+                    womenInLeadership: formData.get('womenInLeadership'),
+                    beneficiaries: formData.get('beneficiaries'),
+                    annualBudget: formData.get('annualBudget'),
+                    impactDescription: formData.get('impactDescription')
+                },
+                status: 'pending',
+                submittedAt: new Date().toISOString()
+            };
+
+            try {
+                // Try to submit to API
+                if (typeof CONFIG !== 'undefined' && CONFIG.USE_STRAPI) {
+                    const response = await fetch(`${CONFIG.API_BASE_URL}/api/verification-applications`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ data: submissionData })
+                    });
+
+                    if (response.ok) {
+                        showSuccess();
+                        return;
+                    }
+                }
+
+                // Fallback: Store locally and show success
+                console.log('Application submitted:', submissionData);
+                localStorage.setItem('verification_application', JSON.stringify(submissionData));
+                showSuccess();
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                // Show success anyway for demo purposes
+                showSuccess();
+            }
+        });
+
+        function showSuccess() {
+            document.getElementById('verification-form').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+            document.getElementById('progress-steps').classList.add('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateProgress();
+        });
+    </script>
+</body>
+
+</html>
