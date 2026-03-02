@@ -38,6 +38,7 @@ const config: Core.Config.Middlewares = [
         'https://womencypedia.org',
         'https://www.womencypedia.org',
         'https://kehindeisa.onrender.com',
+        'https://womencypedia-org.onrender.com',
       ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
