@@ -9,10 +9,10 @@
         content="Womencypedia is a global interpretive encyclopedia restoring women's stories that history overlooked. Discover the depth, power, and cultural meaning behind every woman.">
 
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="css/styles.css" />
 
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -412,7 +413,7 @@
                             class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
                             Sign In
                         </button>
-                        <div data-auth="signout" class="hidden flex items-center gap-3">
+                        <div data-auth="signout" class="flex items-center gap-3" style="display: none;">
                             <span data-auth="user-info" class="text-sm text-text-secondary"></span>
                             <button
                                 class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
@@ -503,7 +504,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
                         <img alt="Portrait of diverse women in a montage style representing history"
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter sepia-[0.2]"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWkqbAkyJh3BJuloRv2EtKsEnr5gK9qPhXnfZkNVnNvGUjt6ti5BnkAtipbhLI_2OU84W3EwRbb9CH2USbRMWfYorXVgG34bkxYW77pnTtuTRrIiF_KYfmP6C7aiUJwxr09VZH3n35D6ZTEs3f9KVzMmbR3tnoP4_zZ948xuoguRV2CWVBbMvRDFxnfTbb-3i34Oedg3Dw-B-Ic1VEKQAURg8iEMAQ0WLCEDK-YpD8VwgXoyBlimzM9ZqGy0aSFVWVbPsuc8X6bfaG" />
+                            src="images/african-queens.png" />
                         <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-20">
                             <span
                                 class="bg-background-cream/90 backdrop-blur-sm px-3 py-1 text-xs font-bold uppercase tracking-widest rounded text-text-main">
@@ -762,8 +763,7 @@
                         <div
                             class="absolute inset-0 bg-primary/10 group-hover:bg-primary/0 transition-colors duration-500 z-10">
                         </div>
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo6tmUvMKvGeOewFP85bQ5EGwcVe4-Gf1jkNZHvWmhyxECjVn3Ysw-4Rp1_LfU6L_19Grt4dfVaPsQY2LuX0L35LLCEpWUl27c4JRlrj_yY1P9ZHtmn-Y_wlbBmRtRuQDDw3K10NKGqg3S3LpVb3T44Yz2_H2APmrKfVQ1q5b0qOuojuInju0YufdMoflRmFTpbKyRa63v9EPDJ5RXE_zkt6oflgazlH3jlWqWq9Mq22zyjcbQHesgO5pbJu_Po9TrPeLlVoWdinnp"
-                            alt="Open antique book representing historical archives"
+                        <img src="images/foremothers.png" alt="Open antique book representing historical archives"
                             class="w-full h-full object-cover" />
                     </div>
 
@@ -1588,7 +1588,9 @@
     <div class="h-20 lg:hidden"></div>
 
     <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
+    <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4"
+        aria-hidden="true">
+        <!-- Kept 'hidden flex' because frontend scripts depend on toggling the 'hidden' class to toggle flex layout visibility. -->
         <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
             <button onclick="document.getElementById('login-modal').classList.add('hidden')"
                 class="absolute top-4 right-4 size-8 flex items-center justify-center rounded-full hover:bg-border-light transition-colors">
@@ -1658,7 +1660,8 @@
 
     <!-- JavaScript -->
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script src="js/config.js"></script>
     <script src="js/i18n.js"></script>
@@ -1677,6 +1680,20 @@
         function initializeGlobalMap() {
             const mapContainer = document.getElementById('global-map');
             if (!mapContainer) return;
+
+            // Security: helper function to escape HTML inside popups
+            function escapeHTML(str) {
+                if (!str) return '';
+                return String(str).replace(/[&<>'"]/g,
+                    tag => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        "'": '&#39;',
+                        '"': '&quot;'
+                    }[tag] || tag)
+                );
+            }
 
             // Guard: check if Leaflet loaded
             if (typeof L === 'undefined') {
@@ -1710,12 +1727,13 @@
             Object.entries(regions).forEach(([region, data]) => {
                 const marker = L.marker([data.lat, data.lng]).addTo(map);
 
+                const escapedRegion = escapeHTML(region.replace('-', ' '));
                 marker.bindPopup(`
                     <div class="text-center">
-                        <h4 class="font-serif font-bold text-text-main mb-2 capitalize">${region.replace('-', ' ')}</h4>
-                        <p class="text-sm text-text-secondary mb-3">${data.count} biographies</p>
-                        <a href="browse.html?region=${region}" class="inline-block px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-colors">
-                            Explore ${region.replace('-', ' ')}
+                        <h4 class="font-serif font-bold text-text-main mb-2 capitalize">${escapedRegion}</h4>
+                        <p class="text-sm text-text-secondary mb-3">${escapeHTML(data.count)} biographies</p>
+                        <a href="browse.html?region=${encodeURIComponent(region)}" class="inline-block px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-colors">
+                            Explore ${escapedRegion}
                         </a>
                     </div>
                 `);
@@ -1738,28 +1756,30 @@
                 map.setView([20, 0], 2);
             });
 
-            // Add some sample biography markers
-            biographies.forEach(bio => {
-                if (bio.region === 'Africa') {
-                    const marker = L.circleMarker([1.5 + (Math.random() - 0.5) * 10, 20 + (Math.random() - 0.5) * 20], {
-                        color: '#e8a6a6',
-                        fillColor: '#e8a6a6',
-                        fillOpacity: 0.6,
-                        radius: 6
-                    }).addTo(map);
+            // Add some sample biography markers (only if biographies data is available)
+            if (typeof biographies !== 'undefined' && Array.isArray(biographies)) {
+                biographies.forEach(bio => {
+                    if (bio.region === 'Africa') {
+                        const marker = L.circleMarker([1.5 + (Math.random() - 0.5) * 10, 20 + (Math.random() - 0.5) * 20], {
+                            color: '#e8a6a6',
+                            fillColor: '#e8a6a6',
+                            fillOpacity: 0.6,
+                            radius: 6
+                        }).addTo(map);
 
-                    marker.bindPopup(`
+                        marker.bindPopup(`
                         <div class="max-w-xs">
-                            <h4 class="font-serif font-bold text-text-main mb-1">${bio.name}</h4>
-                            <p class="text-xs text-text-secondary mb-2">${bio.era} • ${bio.region}</p>
-                            <p class="text-sm text-text-secondary mb-3">${bio.introduction.substring(0, 100)}...</p>
-                            <a href="biography.html?id=${bio.id}" class="inline-block px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-colors">
+                            <h4 class="font-serif font-bold text-text-main mb-1">${escapeHTML(bio.name)}</h4>
+                            <p class="text-xs text-text-secondary mb-2">${escapeHTML(bio.era)} • ${escapeHTML(bio.region)}</p>
+                            <p class="text-sm text-text-secondary mb-3">${escapeHTML(bio.introduction.substring(0, 100))}...</p>
+                            <a href="biography.html?id=${escapeHTML(bio.id)}" class="inline-block px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-colors">
                                 Read Biography
                             </a>
                         </div>
                     `);
-                }
-            });
+                    }
+                });
+            }
         }
     </script>
 
