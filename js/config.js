@@ -18,7 +18,6 @@
 // Priority: 1. window.API_STRAPI_URL (JavaScript environment variable)
 //           2. window.API_BASE_URL (alternative variable name)
 //           3. Production URL fallback
-//           4. Development fallback (localhost)
 const API_BASE_URL = window.API_STRAPI_URL ||
     window.API_BASE_URL ||
     'https://womencypedia-cms.onrender.com';  // production (Render)
@@ -26,7 +25,6 @@ const API_BASE_URL = window.API_STRAPI_URL ||
 const CONFIG = {
     // API Base URL - Environment configurable via window.API_STRAPI_URL or window.API_BASE_URL
     // Production: https://womencypedia-cms.onrender.com
-    // Development: http://localhost:1337
     API_BASE_URL: API_BASE_URL,
 
     // Use Strapi CMS
