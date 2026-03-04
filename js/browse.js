@@ -50,14 +50,23 @@ async function loadBiographies() {
 
     if (!container) return;
 
-    // Show loading state
-    UI.showLoading(container, 'Loading biographies...');
+    // Show loading state (guard in case UI module isn't loaded)
+    if (typeof UI !== 'undefined' && UI.showLoading) {
+        UI.showLoading(container, 'Loading biographies...');
+    }
 
     try {
         // Try to fetch from API first
-        if (useAPI) {
+        if (useAPI && typeof API !== 'undefined' && API.entries) {
             const params = buildQueryParams();
-            const response = await API.entries.getAll(params);
+            // Add timeout to avoid long hangs
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('API timeout')), 5000)
+            );
+            const response = await Promise.race([
+                API.entries.getAll(params),
+                timeoutPromise
+            ]);
 
             currentBiographies = response.entries || response.data || response;
             pagination = {
@@ -67,23 +76,31 @@ async function loadBiographies() {
             };
 
             displayBiographies();
-        }
-    } catch (error) {
-        console.warn('API not available, falling back to static data:', error.message);
-        useAPI = false;
-
-        // Fallback to static data
-        if (typeof biographies !== 'undefined') {
-            currentBiographies = biographies;
-            pagination = {
-                page: 1,
-                totalPages: 1,
-                total: biographies.length
-            };
-            displayBiographies();
         } else {
-            UI.showError(container, 'Unable to load biographies. Please try again later.', loadBiographies);
+            // API not loaded — fall through to static fallback
+            useAPI = false;
+            loadStaticFallback(container);
         }
+    } catch {
+        useAPI = false;
+        loadStaticFallback(container);
+    }
+}
+
+/**
+ * Fallback to static biography data when API is unavailable
+ */
+function loadStaticFallback(container) {
+    if (typeof biographies !== 'undefined') {
+        currentBiographies = biographies;
+        pagination = {
+            page: 1,
+            totalPages: 1,
+            total: biographies.length
+        };
+        displayBiographies();
+    } else if (container && typeof UI !== 'undefined' && UI.showError) {
+        UI.showError(container, 'Unable to load biographies. Please try again later.', loadBiographies);
     }
 }
 

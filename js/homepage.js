@@ -15,10 +15,42 @@
  */
 
 const Homepage = {
+    /** Whether the CMS API is reachable (cached after first check) */
+    _cmsAvailable: null,
+
+    /**
+     * Quick CMS availability check (HEAD request with short timeout).
+     * Result is cached so we only check once per page load.
+     */
+    async _isCmsAvailable() {
+        if (this._cmsAvailable !== null) return this._cmsAvailable;
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 3000);
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/homepage`, {
+                method: 'HEAD',
+                signal: controller.signal,
+                cache: 'no-store'
+            });
+            clearTimeout(timeout);
+            this._cmsAvailable = res.ok;
+        } catch {
+            this._cmsAvailable = false;
+        }
+        return this._cmsAvailable;
+    },
+
     /**
      * Initialize homepage dynamic content
      */
     async init() {
+        // Quick check — skip all API calls if CMS is unreachable
+        const cmsReady = await this._isCmsAvailable();
+        if (!cmsReady) {
+            // Static HTML is already rendered; nothing to do
+            return;
+        }
+
         try {
             await Promise.allSettled([
                 this.loadHomepageContent(),
@@ -26,8 +58,7 @@ const Homepage = {
                 this.loadFeaturedCollections(),
                 this.loadRecentBiographies()
             ]);
-        } catch (error) {
-            console.warn('Homepage: some content could not be loaded from CMS', error);
+        } catch {
             // Static HTML fallback remains visible
         }
     },
@@ -38,14 +69,15 @@ const Homepage = {
     async loadHomepageContent() {
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(`${CONFIG.API_BASE_URL}/api/homepage?locale=${locale}&populate=*`, {
-                cache: 'no-store'
+                cache: 'no-store',
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
-            if (!response.ok) {
-                console.warn('Homepage API not available, using static content');
-                return;
-            }
+            if (!response.ok) return;
 
             const result = await response.json();
             const data = result.data;
@@ -108,9 +140,13 @@ const Homepage = {
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
             const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured]=true&populate=image,tags&pagination[pageSize]=6&sort=createdAt:desc`;
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(url, {
-                cache: 'no-store'
+                cache: 'no-store',
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
             if (!response.ok) return;
 
@@ -120,8 +156,8 @@ const Homepage = {
             if (entries.length === 0) return;
 
             container.innerHTML = entries.map(entry => this.biographyCard(entry)).join('');
-        } catch (error) {
-            console.warn('Failed to load featured biographies:', error);
+        } catch {
+            // CMS unavailable — static content remains
         }
     },
 
@@ -135,9 +171,13 @@ const Homepage = {
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
             const url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured]=true&populate=coverImage,biographies&sort=createdAt:desc`;
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(url, {
-                cache: 'no-store'
+                cache: 'no-store',
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
             if (!response.ok) return;
 
@@ -147,8 +187,8 @@ const Homepage = {
             if (collections.length === 0) return;
 
             container.innerHTML = collections.map(col => this.collectionCard(col)).join('');
-        } catch (error) {
-            console.warn('Failed to load featured collections:', error);
+        } catch {
+            // CMS unavailable — static content remains
         }
     },
 
@@ -162,9 +202,13 @@ const Homepage = {
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
             const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort=publishedAt:desc`;
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(url, {
-                cache: 'no-store'
+                cache: 'no-store',
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
             if (!response.ok) return;
 
@@ -174,8 +218,8 @@ const Homepage = {
             if (entries.length === 0) return;
 
             container.innerHTML = entries.map(entry => this.biographyCard(entry)).join('');
-        } catch (error) {
-            console.warn('Failed to load recent biographies:', error);
+        } catch {
+            // CMS unavailable — static content remains
         }
     },
 

@@ -14,10 +14,11 @@ const PRECACHE_ASSETS = [
     '/js/config.js',
     '/js/ui.js',
     '/js/auth.js',
-    '/js/mockApi.js',
     '/js/api.js',
-    '/js/main.js',
+    '/js/i18n.js',
     '/js/navigation.js',
+    '/js/darkmode.js',
+    '/js/performance.js',
     '/images/womencypedia-logo.png',
     '/manifest.json'
 ];
@@ -27,12 +28,9 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                // Use addAll with individual error handling
                 return Promise.allSettled(
                     PRECACHE_ASSETS.map(url =>
-                        cache.add(url).catch(err => {
-                            console.warn(`SW: Failed to cache ${url}:`, err.message);
-                        })
+                        cache.add(url).catch(() => { /* skip unavailable assets */ })
                     )
                 );
             })
@@ -67,7 +65,7 @@ self.addEventListener('fetch', (event) => {
     if (requestUrl.includes('/api/') || requestUrl.includes('womencypedia-api')) return;
 
     // Skip analytics, tracking, and third-party SDK requests
-    if (requestUrl.includes('launchdarkly') || requestUrl.includes('analytics')) return;
+    if (requestUrl.includes('plausible.io') || requestUrl.includes('launchdarkly') || requestUrl.includes('analytics')) return;
 
     event.respondWith(
         caches.match(event.request)
