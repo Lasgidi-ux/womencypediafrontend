@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="en">
 
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://womencypedia-cms.onrender.com https://plausible.io; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com https://unpkg.com https://app.launchdarkly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://app.launchdarkly.com https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com; worker-src 'self' blob:;">
     <meta charset="utf-8" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Support Our Mission — Womencypedia</title>
@@ -61,7 +61,8 @@
             <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
                 <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
                 <input type="search" placeholder="Search women, cultures, eras…"
-                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" / data-i18n-placeholder="search">
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2"
+                    data-i18n-placeholder="search" />
             </div>
             <button onclick="toggleSearch()"
                 class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
@@ -80,8 +81,8 @@
 
         <!-- Explore -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="donate.explore">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="donate.explore">
                 Explore</h3>
             <a href="index.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
@@ -97,8 +98,8 @@
 
         <!-- Learn -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="donate.learn">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="donate.learn">
                 Learn</h3>
             <a href="education.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
@@ -114,8 +115,8 @@
 
         <!-- Participate -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="donate.participate">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="donate.participate">
                 Participate</h3>
             <a href="nominate.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
@@ -126,13 +127,14 @@
             <a href="contributor-guidelines.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
                 Guidelines</a>
-            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary" data-i18n="donate">Donate</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary"
+                data-i18n="donate">Donate</a>
         </div>
 
         <!-- About -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="donate.about">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="donate.about">
                 About</h3>
             <a href="about.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
@@ -149,10 +151,11 @@
             <a href="contact.html"
                 class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
         </div>
-<!-- CTA -->
+        <!-- CTA -->
         <div class="px-6 pb-8">
             <a href="share-story.html"
-                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors"><span data-i18n="shareYourStory">Share Your Story</span></a>
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors"><span
+                    data-i18n="shareYourStory">Share Your Story</span></a>
         </div>
     </nav>
 
@@ -168,7 +171,7 @@
                             class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-6">
-                        
+
                     </nav>
                 </div>
                 <div class="flex items-center gap-3 lg:gap-6">
@@ -184,7 +187,8 @@
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html" data-i18n="donate">Donate</a>
                         <button data-auth="signin"
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold" data-i18n="signIn">
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold"
+                            data-i18n="signIn">
                             Sign In
                         </button>
                         <div data-auth="signout" class="hidden flex items-center gap-3">
@@ -216,7 +220,8 @@
             <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
                 <span class="text-accent-gold text-sm font-bold uppercase tracking-widest mb-2 block">Support Our
                     Mission</span>
-                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4" data-i18n="donate.helpPreserveWomensHistory">Help Preserve
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4"
+                    data-i18n="donate.helpPreserveWomensHistory">Help Preserve
                     Women's History</h1>
                 <p class="text-text-secondary text-lg max-w-2xl mx-auto">Your contribution helps us research, document,
                     and share the stories of remarkable women who shaped our world.</p>
@@ -236,11 +241,83 @@
             </div>
         </section>
 
+        <!-- Trust Signals Section -->
+        <section class="py-16 bg-gradient-to-b from-white to-lavender-soft/20">
+            <div class="mx-auto max-w-[1200px] px-4">
+                <!-- Trust Badges -->
+                <div class="flex flex-wrap justify-center gap-8 mb-12">
+                    <div
+                        class="flex items-center gap-3 bg-white px-6 py-4 rounded-xl shadow-sm border border-border-light">
+                        <span class="material-symbols-outlined text-[#B8962F] text-3xl">lock</span>
+                        <div>
+                            <p class="font-bold text-text-main text-sm">Secure Payment</p>
+                            <p class="text-text-secondary text-xs">256-bit SSL encryption</p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 bg-white px-6 py-4 rounded-xl shadow-sm border border-border-light">
+                        <span class="material-symbols-outlined text-[#B8962F] text-3xl">verified</span>
+                        <div>
+                            <p class="font-bold text-text-main text-sm">501(c)(3) Nonprofit</p>
+                            <p class="text-text-secondary text-xs">Tax-deductible in US</p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 bg-white px-6 py-4 rounded-xl shadow-sm border border-border-light">
+                        <span class="material-symbols-outlined text-[#B8962F] text-3xl">group</span>
+                        <div>
+                            <p class="font-bold text-text-main text-sm">2,500+ Donors</p>
+                            <p class="text-text-secondary text-xs">Join our community</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Calculator -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-border-light max-w-2xl mx-auto">
+                    <h3 class="font-serif text-xl font-bold text-center mb-6">Your Impact</h3>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="p-4 bg-lavender-soft/30 rounded-xl">
+                            <p class="text-3xl font-bold text-primary">$25</p>
+                            <p class="text-sm text-text-secondary">Research hours</p>
+                        </div>
+                        <div class="p-4 bg-lavender-soft/30 rounded-xl">
+                            <p class="text-3xl font-bold text-primary">$50</p>
+                            <p class="text-sm text-text-secondary">Biography creation</p>
+                        </div>
+                        <div class="p-4 bg-lavender-soft/30 rounded-xl">
+                            <p class="text-3xl font-bold text-primary">$100</p>
+                            <p class="text-sm text-text-secondary">Translation coverage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Proof -->
+                <div class="mt-12 text-center">
+                    <p class="text-text-secondary italic mb-4">"Supporting Womencypedia means ensuring no woman's story
+                        is ever forgotten again."</p>
+                    <div class="flex justify-center items-center gap-2">
+                        <div class="flex -space-x-2">
+                            <img src="images/placeholders/hyper_realistic_portrait_1.png" alt="Donor"
+                                class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <img src="images/placeholders/hyper_realistic_portrait_2.png" alt="Donor"
+                                class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <img src="images/placeholders/hyper_realistic_portrait_3.png" alt="Donor"
+                                class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <img src="images/placeholders/hyper_realistic_portrait_4.png" alt="Donor"
+                                class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                        </div>
+                        <span class="text-sm text-text-secondary ml-3">+2,497 supporters</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Donation Options -->
         <section class="py-16 lg:py-24 bg-background-cream">
             <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12">
                 <div class="text-center mb-12">
-                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-text-main mb-4" data-i18n="donate.chooseYourImpact">Choose Your Impact</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-text-main mb-4"
+                        data-i18n="donate.chooseYourImpact">Choose Your Impact</h2>
                     <p class="text-text-secondary">Every contribution helps restore women's stories to history.</p>
                 </div>
 
@@ -252,7 +329,8 @@
                             class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
                             <span class="material-symbols-outlined text-accent-gold text-3xl">favorite</span>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="donate.onetimeGift">One-Time Gift</h3>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="donate.onetimeGift">
+                            One-Time Gift</h3>
                         <p class="text-text-secondary text-sm mb-6">Make an immediate impact with a single donation.</p>
                         <div class="grid grid-cols-2 gap-2 mb-4">
                             <button data-amount="25"
@@ -281,7 +359,8 @@
                             class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
                             <span class="material-symbols-outlined text-accent-gold text-3xl">autorenew</span>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="donate.monthlySupporter">Monthly Supporter</h3>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2"
+                            data-i18n="donate.monthlySupporter">Monthly Supporter</h3>
                         <p class="text-text-secondary text-sm mb-6">Sustain our work with recurring support.</p>
                         <div class="grid grid-cols-2 gap-2 mb-4">
                             <button data-amount="10"
@@ -307,7 +386,8 @@
                             class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-4">
                             <span class="material-symbols-outlined text-accent-gold text-3xl">workspace_premium</span>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="donate.legacyCircle">Legacy Circle</h3>
+                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="donate.legacyCircle">
+                            Legacy Circle</h3>
                         <p class="text-text-secondary text-sm mb-6">Make a transformative gift of $1,000 or more.</p>
                         <ul class="text-left text-sm text-text-secondary space-y-2 mb-6">
                             <li class="flex items-center gap-2"><span
@@ -335,7 +415,8 @@
         <section class="py-16 lg:py-24 bg-lavender-soft/40">
             <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-12">
                 <div class="text-center mb-12">
-                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-text-main mb-4" data-i18n="donate.yourImpact">Your Impact</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-text-main mb-4"
+                        data-i18n="donate.yourImpact">Your Impact</h2>
                     <p class="text-text-secondary">Every dollar directly supports our mission.</p>
                 </div>
 
@@ -363,7 +444,8 @@
         <!-- Other Ways -->
         <section class="py-16 bg-background-cream">
             <div class="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-12 text-center">
-                <h2 class="font-serif text-2xl md:text-3xl font-bold text-text-main mb-8" data-i18n="donate.otherWaysToSupport">Other Ways to Support</h2>
+                <h2 class="font-serif text-2xl md:text-3xl font-bold text-text-main mb-8"
+                    data-i18n="donate.otherWaysToSupport">Other Ways to Support</h2>
                 <div class="grid sm:grid-cols-3 gap-6">
                     <div class="p-6">
                         <span class="material-symbols-outlined text-accent-teal text-3xl mb-4">share</span>
@@ -379,7 +461,8 @@
                     </div>
                     <div class="p-6">
                         <span class="material-symbols-outlined text-accent-teal text-3xl mb-4">apartment</span>
-                        <h3 class="font-bold text-text-main mb-2" data-i18n="donate.corporatePartnership">Corporate Partnership</h3>
+                        <h3 class="font-bold text-text-main mb-2" data-i18n="donate.corporatePartnership">Corporate
+                            Partnership</h3>
                         <p class="text-text-secondary text-sm">Partner with us to amplify women's stories globally.</p>
                     </div>
                 </div>
@@ -463,8 +546,8 @@
                         href="share-story.html"><span data-i18n="shareYourStory">Share Your Story</span></a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributor-guidelines.html">Contributor Guidelines</a>
-                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
-                        href="donate.html" data-i18n="donate">Donate</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors" href="donate.html"
+                        data-i18n="donate">Donate</a>
                 </div>
 
                 <!-- About -->
@@ -494,8 +577,10 @@
                 </div>
                 <div class="text-center">
                     <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
-                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span data-i18n="privacyPolicy">Privacy Policy</span></a> | <a
-                            href="terms-of-use.html" class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a></p>
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span
+                                data-i18n="privacyPolicy">Privacy Policy</span></a> | <a href="terms-of-use.html"
+                            class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -511,7 +596,8 @@
                 <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <span class="material-symbols-outlined text-primary text-3xl">login</span>
                 </div>
-                <h2 class="font-serif text-2xl font-bold text-text-main" data-i18n="donate.welcomeBack">Welcome Back</h2>
+                <h2 class="font-serif text-2xl font-bold text-text-main" data-i18n="donate.welcomeBack">Welcome Back
+                </h2>
                 <p class="text-text-secondary text-sm mt-2">Sign in to access your account</p>
             </div>
             <form id="login-form" class="space-y-4">

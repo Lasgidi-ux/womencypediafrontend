@@ -27,8 +27,9 @@ const Homepage = {
         try {
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 3000);
-            const res = await fetch(`${CONFIG.API_BASE_URL}/api/homepage`, {
-                method: 'HEAD',
+            // Strapi APIs return 404 for HEAD by default, use minimal GET instead
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/homepage?fields[0]=id`, {
+                method: 'GET',
                 signal: controller.signal,
                 cache: 'no-store'
             });

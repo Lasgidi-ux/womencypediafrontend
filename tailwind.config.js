@@ -5,18 +5,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#e8a6a6",
-        "primary-hover": "#D98F8F",
-        "accent-gold": "#D4AF37",
-        "accent-gold-dark": "#B8962F",
-        "accent-teal": "#4DB6AC",
-        "accent-teal-dark": "#2F8F86",
+        "primary": "#D67D7D",
+        "primary-hover": "#C46868",
+        "accent-gold": "#B8962F",
+        "accent-gold-dark": "#9A7D25",
+        "accent-teal": "#2F8F86",
+        "accent-teal-dark": "#1F6B66",
         "divider": "#B48CB8",
         "lavender": "#C8A2C8",
         "lavender-soft": "#EDE3F1",
-        "background-cream": "#F5F5F0",
-        "text-main": "#191010",
-        "text-secondary": "#6B6B6B",
+        "background-cream": "#FAF8F3",
+        "text-main": "#1A1414",
+        "text-secondary": "#5A5454",
         "border-light": "#DDD8CF",
       },
       fontFamily: {
