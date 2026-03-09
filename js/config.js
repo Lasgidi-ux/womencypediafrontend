@@ -95,6 +95,19 @@ const CONFIG = {
             VERIFICATION_APPLICATION_BY_ID: (id) => `/api/verification-applications/${id}`,
             VERIFICATION_APPLICATIONS_PENDING: '/api/verification-applications?filters[status][$eq]=pending',
 
+            // Comments
+            COMMENTS: '/api/comments',
+            COMMENTS_BY_BIOGRAPHY: (biographyId) => `/api/comments?filters[biography][id][$eq]=${biographyId}`,
+            COMMENT_BY_ID: (id) => `/api/comments/${id}`,
+
+            // Notifications
+            NOTIFICATIONS: '/api/notifications',
+            NOTIFICATION_BY_ID: (id) => `/api/notifications/${id}`,
+
+            // Saved Entries (Bookmarks)
+            SAVED_ENTRIES: '/api/saved-entries',
+            SAVED_ENTRY_BY_ID: (id) => `/api/saved-entries/${id}`,
+
             // Contributions (Articles, Case Studies, Reports)
             CONTRIBUTIONS: '/api/contributions',
             CONTRIBUTION_BY_SLUG: (slug) => `/api/contributions?filters[slug][$eq]=${slug}`,
@@ -191,13 +204,21 @@ const CONFIG = {
 
         // Contact
         CONTACT: {
-            SUBMIT: '/api/contact-messages'
+            SUBMIT: '/api/contact-submissions'
         },
 
         // Statistics
         STATS: {
             DASHBOARD: '/api/stats/dashboard',
             PUBLIC: '/api/stats/public'
+        },
+
+        // Saved Entries (Bookmarks)
+        SAVED_ENTRIES: {
+            LIST: '/api/saved-entries',
+            SAVE: '/api/saved-entries',
+            REMOVE: (biographyId) => `/api/saved-entries/${biographyId}`,
+            CLEAR: '/api/saved-entries'
         }
     },
 

@@ -2,9 +2,9 @@
 <html class="light" lang="en">
 
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
     <meta charset="utf-8" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Share Your Story — Womencypedia</title>
@@ -55,6 +55,20 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <script defer data-domain="womencypedia.org" src="https://plausible.io/js/script.js"></script>
+    <script>
+        function updateFileName(input) {
+            const display = document.getElementById('file-name-display');
+            if (input.files && input.files.length > 0) {
+                if (input.files.length === 1) {
+                    display.textContent = 'Selected: ' + input.files[0].name;
+                } else {
+                    display.textContent = input.files.length + ' files selected';
+                }
+            } else {
+                display.textContent = '';
+            }
+        }
+    </script>
 </head>
 
 <body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
@@ -70,7 +84,8 @@
             <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
                 <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
                 <input type="search" placeholder="Search women, cultures, eras…"
-                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" / data-i18n-placeholder="search">
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2"
+                    data-i18n-placeholder="search" />
             </div>
             <button onclick="toggleSearch()"
                 class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
@@ -89,8 +104,8 @@
 
         <!-- Explore -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="share_story.explore">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="share_story.explore">
                 Explore</h3>
             <a href="index.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
@@ -106,8 +121,8 @@
 
         <!-- Learn -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="share_story.learn">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="share_story.learn">
                 Learn</h3>
             <a href="education.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
@@ -123,8 +138,8 @@
 
         <!-- Participate -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="share_story.participate">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="share_story.participate">
                 Participate</h3>
             <a href="nominate.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
@@ -135,13 +150,14 @@
             <a href="contributor-guidelines.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
                 Guidelines</a>
-            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary" data-i18n="donate">Donate</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary"
+                data-i18n="donate">Donate</a>
         </div>
 
         <!-- About -->
         <div class="px-6 pb-4">
-            <h3
-                class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light" data-i18n="share_story.about">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="share_story.about">
                 About</h3>
             <a href="about.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
@@ -158,16 +174,18 @@
             <a href="contact.html"
                 class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
         </div>
-<!-- CTA -->
+        <!-- CTA -->
         <div class="px-6 pb-8">
             <a href="share-story.html"
-                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors"><span data-i18n="shareYourStory">Share Your Story</span></a>
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors"><span
+                    data-i18n="shareYourStory">Share Your Story</span></a>
         </div>
     </nav>
 
     <!-- Header -->
     <!-- Header -->
-    <header class="w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+    <header id="navbar"
+        class="w-full border-b border-divider bg-background-cream dark:bg-background-dark sticky top-0 z-50 transition-transform duration-300">
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
@@ -176,24 +194,39 @@
                         <span
                             class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
-                    <nav class="hidden lg:flex items-center gap-6">
-                        
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="index.html">Home</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="browse.html">Browse</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="featured.html">Featured</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="about.html">About</a>
+                        <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
+                            href="resources.html">Resources</a>
                     </nav>
                 </div>
                 <div class="flex items-center gap-3 lg:gap-6">
                     <div
-                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64">
+                        class="hidden md:flex items-center bg-white/50 dark:bg-white/5 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
                         <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
                         <input
                             class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
                             placeholder="Search the archive..." type="search" />
                     </div>
+                    <button onclick="toggleSearch()"
+                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                        aria-label="Open search">
+                        <span class="material-symbols-outlined text-accent-teal">search</span>
+                    </button>
                     <div class="hidden sm:flex items-center gap-4">
                         <div id="language-switcher"></div>
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html" data-i18n="donate">Donate</a>
                         <button data-auth="signin"
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold" data-i18n="signIn">
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity"
+                            data-i18n="signIn">
                             Sign In
                         </button>
                         <div data-auth="signout" class="hidden flex items-center gap-3">
@@ -202,15 +235,14 @@
                                 <span class="material-symbols-outlined text-[18px]">account_circle</span>
                                 <span data-auth="user-info"></span>
                             </a>
-                            <button
-                                onclick="handleLogout()"
-                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold">
+                            <button onclick="handleLogout()"
+                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
                                 Sign Out
                             </button>
                         </div>
                     </div>
-
-                    <button class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5"
+                    <button onclick="toggleMenu()"
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
                         aria-label="Menu">
                         <span class="material-symbols-outlined text-text-main">menu</span>
                     </button>
@@ -219,25 +251,28 @@
         </div>
     </header>
 
-    <main id="main-content" role="main">
+    <main id="main-content">
         <!-- Hero -->
-        <section class="bg-gradient-to-br from-primary/10 via-background-cream to-primary/5 py-16 lg:py-20 text-center">
+        <div class="bg-gradient-to-br from-primary/10 via-background-cream to-primary/5 py-16 lg:py-20 text-center">
             <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
                 <span class="text-accent-teal text-sm font-bold uppercase tracking-widest mb-2 block">Participate</span>
-                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4" data-i18n="share_story.shareYourStory">Share Your Story
+                <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-text-main mb-4"
+                    data-i18n="share_story.shareYourStory">Share Your Story
                 </h1>
                 <p class="text-text-secondary text-lg max-w-2xl mx-auto">Do you have a story of resilience, lament,
                     challenge, or victory? Tell it now — before the world tells it its own way.</p>
                 <div class="w-24 h-1 bg-primary rounded-full mx-auto mt-6"></div>
             </div>
-        </section>
+        </div>
 
         <!-- Quote -->
         <section class="py-12 bg-lavender-soft/40">
             <div class="mx-auto max-w-[800px] px-4 text-center">
+                <h3 class="sr-only">Featured Quote</h3>
                 <span class="material-symbols-outlined text-accent-gold text-4xl mb-4">format_quote</span>
                 <blockquote class="font-serif text-xl lg:text-2xl italic text-text-main leading-relaxed">
-                    "For every woman whose story was ever overlooked, minimized, or forgotten — we are coming for you."
+                    "For every woman whose story was ever overlooked, minimized, or forgotten — we are coming for
+                    you."
                 </blockquote>
                 <p class="text-text-secondary mt-4">— Atim Utuk, Founder</p>
             </div>
@@ -252,13 +287,15 @@
                             <span class="material-symbols-outlined text-primary text-2xl">auto_stories</span>
                         </div>
                         <div>
-                            <h2 class="font-serif text-2xl font-bold text-text-main" data-i18n="share_story.yourStoryMatters">Your Story Matters</h2>
-                            <p class="text-text-secondary text-sm">Share your story or the story of a woman in your life
+                            <h2 class="font-serif text-2xl font-bold text-text-main"
+                                data-i18n="share_story.yourStoryMatters">Your Story Matters</h2>
+                            <p class="text-text-secondary text-sm">Share your story or the story of a woman in your
+                                life
                             </p>
                         </div>
                     </div>
 
-                    <form id="story-form" class="space-y-6">
+                    <form id="story-form" class="space-y-6" enctype="multipart/form-data">
                         <!-- Story Type -->
                         <div>
                             <label class="block text-sm font-semibold text-text-main mb-2">This story is about:
@@ -279,7 +316,8 @@
 
                         <!-- Subject Name -->
                         <div>
-                            <label class="block text-sm font-semibold text-text-main mb-2" for="subjectName">Name of the
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="subjectName">Name of
+                                the
                                 Woman *</label>
                             <input type="text" id="subjectName" name="subjectName" required
                                 class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal"
@@ -297,7 +335,8 @@
 
                         <!-- Region -->
                         <div>
-                            <label class="block text-sm font-semibold text-text-main mb-2" for="storyRegion">Region /
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="storyRegion">Region
+                                /
                                 Country</label>
                             <input type="text" id="storyRegion" name="storyRegion"
                                 class="w-full h-12 px-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal"
@@ -326,22 +365,50 @@
 
                         <!-- The Story -->
                         <div>
-                            <label class="block text-sm font-semibold text-text-main mb-2" for="story">Tell the Story
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="story">Tell the
+                                Story
                                 *</label>
                             <textarea id="story" name="story" rows="8" required
                                 class="w-full px-4 py-3 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal resize-none"
                                 placeholder="Share the story in your own words. Include details that made this woman unique: her challenges, her victories, her impact on those around her..."></textarea>
-                            <p class="text-xs text-text-secondary mt-2">Minimum 200 words recommended for a complete
+                            <p class="text-xs text-text-secondary mt-2">Minimum 5000 words recommended for a
+                                complete
                                 story.</p>
                         </div>
 
                         <!-- Lessons -->
                         <div>
-                            <label class="block text-sm font-semibold text-text-main mb-2" for="lessons">What lessons
+                            <label class="block text-sm font-semibold text-text-main mb-2" for="lessons">What
+                                lessons
                                 does this story teach?</label>
                             <textarea id="lessons" name="lessons" rows="3"
                                 class="w-full px-4 py-3 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal resize-none"
                                 placeholder="What wisdom or lessons can others learn from this story?"></textarea>
+                        </div>
+
+                        <!-- Media Upload -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main mb-2">Upload Media
+                                (Optional)</label>
+                            <div
+                                class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-border-light border-dashed rounded-lg bg-white hover:bg-background-cream transition-colors">
+                                <div class="space-y-1 text-center w-full">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-text-secondary mb-2 block">cloud_upload</span>
+                                    <div class="flex flex-col sm:flex-row text-sm justify-center items-center gap-2">
+                                        <label for="mediaUpload"
+                                            class="cursor-pointer rounded-md font-bold text-primary hover:text-primary-hover focus-within:outline-none">
+                                            <span>Upload a file</span>
+                                            <input id="mediaUpload" name="mediaUpload" type="file" class="sr-only"
+                                                accept="image/*,video/*,application/pdf" multiple
+                                                onchange="updateFileName(this)">
+                                        </label>
+                                        <span class="text-text-secondary">or drag and drop</span>
+                                    </div>
+                                    <p class="text-xs text-text-secondary mt-2">PNG, JPG, PDF, or MP4 up to 10MB</p>
+                                    <p id="file-name-display" class="text-sm text-primary mt-2 font-medium"></p>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Contact -->
@@ -365,8 +432,10 @@
                             <label class="flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" name="permission" required
                                     class="w-5 h-5 mt-0.5 text-primary border-border-light rounded focus:ring-primary" />
-                                <span class="text-sm text-text-secondary">I confirm that this story is true to the best
-                                    of my knowledge and I give permission for Womencypedia to publish, edit, and archive
+                                <span class="text-sm text-text-secondary">I confirm that this story is true to the
+                                    best
+                                    of my knowledge and I give permission for Womencypedia to publish, edit, and
+                                    archive
                                     this story for educational purposes.</span>
                             </label>
                         </div>
@@ -424,7 +493,7 @@
 
                 <!-- Explore -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Explore</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Explore</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="index.html">Home</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
@@ -439,7 +508,7 @@
 
                 <!-- Learn -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Learn</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Learn</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="education.html">Education</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
@@ -454,20 +523,20 @@
 
                 <!-- Participate -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Participate</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Participate</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="nominate.html"><span data-i18n="nominateWoman">Nominate a Woman</span></a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="share-story.html"><span data-i18n="shareYourStory">Share Your Story</span></a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributor-guidelines.html">Contributor Guidelines</a>
-                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
-                        href="donate.html" data-i18n="donate">Donate</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors" href="donate.html"
+                        data-i18n="donate">Donate</a>
                 </div>
 
                 <!-- About -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="about.html">About Us</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
@@ -485,15 +554,12 @@
 
             <!-- Quick Links Row -->
             <div class="border-t border-gray-800 pt-8 mt-8">
-                    <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
-                        Profile</a>
-                        data-auth="admin-only">Admin</a>
-                        Biography</a>
-                </div>
                 <div class="text-center">
                     <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
-                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span data-i18n="privacyPolicy">Privacy Policy</span></a> | <a
-                            href="terms-of-use.html" class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a></p>
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span
+                                data-i18n="privacyPolicy">Privacy Policy</span></a> | <a href="terms-of-use.html"
+                            class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -502,8 +568,14 @@
     <script src="js/i18n.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/page-protection.js"></script>
     <script src="js/strapi-api.js"></script>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            PageProtection.protect();
+        });
+    </script>
+
     <script src="js/forms.js"></script>
     <!-- Login Modal -->
     <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
@@ -516,7 +588,8 @@
                 <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <span class="material-symbols-outlined text-primary text-3xl">login</span>
                 </div>
-                <h2 class="font-serif text-2xl font-bold text-text-main" data-i18n="share_story.welcomeBack">Welcome Back</h2>
+                <h2 class="font-serif text-2xl font-bold text-text-main" data-i18n="share_story.welcomeBack">Welcome
+                    Back</h2>
                 <p class="text-text-secondary text-sm mt-2">Sign in to access your account</p>
             </div>
             <form id="login-form" class="space-y-4">

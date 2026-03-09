@@ -140,7 +140,7 @@ const Homepage = {
 
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured]=true&populate=image,tags&pagination[pageSize]=6&sort=createdAt:desc`;
+            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort[0]=createdAt:desc`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(url, {
@@ -171,7 +171,7 @@ const Homepage = {
 
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured]=true&populate=coverImage,biographies&sort=createdAt:desc`;
+            const url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort[0]=createdAt:desc`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(url, {
@@ -202,7 +202,7 @@ const Homepage = {
 
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort=publishedAt:desc`;
+            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort[0]=publishedAt:desc`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000);
             const response = await fetch(url, {

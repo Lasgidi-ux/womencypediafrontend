@@ -2,9 +2,9 @@
 <html class="light" lang="en">
 
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
     <meta charset="utf-8" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Founders — Womencypedia</title>
@@ -193,13 +193,10 @@
         <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex items-center gap-8 lg:gap-12">
-                    <a class="flex items-center gap-2 lg:gap-3 group" href="index.html">
-                        <div
-                            class="flex items-center justify-center size-9 lg:size-10 rounded-full bg-primary/20 text-text-main group-hover:bg-primary/40 transition-colors">
-                            <span class="material-symbols-outlined text-[20px] lg:text-[24px]">history_edu</span>
-                        </div>
-                        <h2 class="text-text-main text-xl lg:text-2xl font-bold font-serif tracking-tight">Womencypedia
-                        </h2>
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
                     <nav class="hidden lg:flex items-center gap-8">
                         <a class="text-text-main text-sm font-medium hover:text-primary uppercase tracking-wider"
@@ -231,10 +228,22 @@
                         <div id="language-switcher"></div>
                         <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
                             href="donate.html">Donate</a>
-                        <button
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                        <button data-auth="signin"
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity"
+                            data-i18n="signIn">
                             Sign In
                         </button>
+                        <div data-auth="signout" class="hidden items-center gap-3">
+                            <a href="profile.html"
+                                class="flex items-center gap-2 text-sm text-text-secondary hover:text-primary">
+                                <span class="material-symbols-outlined text-[18px]">account_circle</span>
+                                <span data-auth="user-info"></span>
+                            </a>
+                            <button onclick="handleLogout()"
+                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                                Sign Out
+                            </button>
+                        </div>
                     </div>
                     <button onclick="toggleMenu()"
                         class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
@@ -351,6 +360,7 @@
                         </div>
 
                         <article class="text-lg leading-relaxed text-text-main space-y-6">
+                            <h2 class="text-2xl font-serif font-semibold mb-4">Founder's Welcome</h2>
                             <p class="drop-cap">
                                 Welcome to Womencypedia. This institution was created from a simple but profound
                                 conviction: The world cannot understand itself without understanding the women who
@@ -611,7 +621,7 @@
 
                 <!-- Explore -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Explore</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Explore</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="index.html">Home</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
@@ -626,7 +636,7 @@
 
                 <!-- Learn -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Learn</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Learn</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="education.html">Education</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
@@ -641,20 +651,20 @@
 
                 <!-- Participate -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Participate</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">Participate</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="nominate.html"><span data-i18n="nominateWoman">Nominate a Woman</span></a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="share-story.html"><span data-i18n="shareYourStory">Share Your Story</span></a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributor-guidelines.html">Contributor Guidelines</a>
-                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
-                        href="donate.html" data-i18n="donate">Donate</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors" href="donate.html"
+                        data-i18n="donate">Donate</a>
                 </div>
 
                 <!-- About -->
                 <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h4>
+                    <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h3>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="about.html">About Us</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
@@ -674,8 +684,10 @@
             <div class="border-t border-gray-800 pt-8 mt-8">
                 <div class="text-center">
                     <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
-                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span data-i18n="privacyPolicy">Privacy Policy</span></a> | <a
-                            href="terms-of-use.html" class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a></p>
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span
+                                data-i18n="privacyPolicy">Privacy Policy</span></a> | <a href="terms-of-use.html"
+                            class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a>
+                    </p>
                 </div>
             </div>
         </div>

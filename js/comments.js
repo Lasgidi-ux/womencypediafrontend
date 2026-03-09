@@ -94,13 +94,54 @@ const Comments = {
 
     async toggleLike(commentId) {
         if (!Auth.isAuthenticated()) return;
-        for (const entryId in this._comments) {
-            const comment = this._comments[entryId].find(c => c.id === commentId);
+
+        // Find the comment to determine current state
+        let comment = null;
+        let entryId = null;
+        for (const id in this._comments) {
+            comment = this._comments[id].find(c => c.id === commentId);
             if (comment) {
-                comment.isLiked = !comment.isLiked;
-                comment.likes += comment.isLiked ? 1 : -1;
+                entryId = id;
                 break;
             }
+        }
+
+        if (!comment) return;
+
+        // Optimistic UI update - toggle locally first
+        const isLiked = !comment.isLiked;
+        comment.isLiked = isLiked;
+        comment.likes += isLiked ? 1 : -1;
+
+        // Call the atomic API endpoint
+        try {
+            const result = await StrapiAPI.comments.like(commentId);
+
+            // Handle error case
+            if (result && result.error) {
+                console.error('Failed to like comment:', result.error);
+                // Revert optimistic update on error
+                comment.isLiked = !isLiked;
+                comment.likes += isLiked ? -1 : 1;
+                if (typeof UI !== 'undefined' && UI.showToast) {
+                    UI.showToast(result.error, 'error');
+                }
+                return;
+            }
+
+            // Update with server response if available
+            if (result && result.data) {
+                comment.likes = result.data.attributes?.likes ?? result.data.likes ?? comment.likes;
+                comment.isLiked = result.data.attributes?.isLiked ?? result.data.isLiked ?? comment.isLiked;
+            } else if (result && result.attributes) {
+                comment.likes = result.attributes.likes ?? comment.likes;
+                comment.isLiked = result.attributes.isLiked ?? comment.isLiked;
+            }
+        } catch (error) {
+            console.error('Failed to like comment:', error);
+            // Revert optimistic update on error
+            comment.isLiked = !isLiked;
+            comment.likes += isLiked ? -1 : 1;
         }
     },
 

@@ -15,6 +15,8 @@ function initNavigation() {
     initNavActiveState();
     initNavScrollBehavior();
     initKeyboardNavigation();
+    initAuthStateListener();
+    updateAuthUI();
 }
 
 /**
@@ -482,23 +484,174 @@ function updateMobileMenuAuthState() {
 }
 
 /**
- * Initialize auth state listeners
+ * Initialize auth state listeners for real-time updates
  */
 function initAuthStateListener() {
     // Run on DOMContentLoaded
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', updateMobileMenuAuthState);
+        document.addEventListener('DOMContentLoaded', updateAuthUI);
     } else {
-        updateMobileMenuAuthState();
+        updateAuthUI();
     }
 
-    // Also run when storage changes (in case of logout in another tab)
+    // Listen for storage changes (cross-tab sync)
     window.addEventListener('storage', (e) => {
-        if (e.key === 'womencypedia_access_token') {
-            updateMobileMenuAuthState();
+        if (e.key === 'womencypedia_access_token' || e.key === 'womencypedia_user') {
+            updateAuthUI();
         }
+    });
+
+    // Listen for custom auth update event (from login/signup)
+    window.addEventListener('authStateChanged', () => {
+        updateAuthUI();
     });
 }
 
-// Initialize auth state listener
-initAuthStateListener();
+/**
+ * Update all auth-related UI elements in real-time
+ * Updates desktop header, mobile menu, and profile displays
+ */
+function updateAuthUI() {
+    const token = localStorage.getItem('womencypedia_access_token');
+    const userStr = localStorage.getItem('womencypedia_user');
+    let user = null;
+
+    if (userStr) {
+        try {
+            user = JSON.parse(userStr);
+        } catch (e) {
+            console.warn('Could not parse user data');
+        }
+    }
+
+    // Update desktop header sign in/out buttons
+    updateDesktopAuthButtons(token, user);
+
+    // Update mobile menu auth section
+    updateMobileMenuAuthState();
+
+    // Update profile display in mobile menu
+    updateMobileMenuProfileDisplay(user);
+}
+
+/**
+ * Update desktop header auth buttons (Sign In/Sign Out)
+ */
+function updateDesktopAuthButtons(token, user) {
+    const signInBtn = document.querySelector('[data-auth="signin"]');
+    const signOutDiv = document.querySelector('[data-auth="signout"]');
+    const userInfoSpan = document.querySelector('[data-auth="user-info"]');
+
+    if (token && user) {
+        // User is authenticated - show sign out and user info
+        if (signInBtn) {
+            signInBtn.style.display = 'none';
+        }
+        if (signOutDiv) {
+            signOutDiv.style.display = 'flex';
+            if (userInfoSpan) {
+                userInfoSpan.textContent = user.name || user.email || 'My Profile';
+            }
+        }
+    } else {
+        // User is not authenticated - show sign in button
+        if (signInBtn) {
+            signInBtn.style.display = 'flex';
+        }
+        if (signOutDiv) {
+            signOutDiv.style.display = 'none';
+        }
+    }
+}
+
+/**
+ * Update mobile menu profile display with user info
+ */
+function updateMobileMenuProfileDisplay(user) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!mobileMenu) return;
+
+    // Check if profile section exists
+    let profileSection = mobileMenu.querySelector('[data-section="profile"]');
+
+    if (!profileSection) {
+        // Create profile section if it doesn't exist
+        profileSection = document.createElement('div');
+        profileSection.setAttribute('data-section', 'profile');
+        profileSection.className = 'px-6 pb-4';
+
+        // Insert at the beginning after the header handle
+        const firstSection = mobileMenu.querySelector('.w-10');
+        if (firstSection && firstSection.nextSibling) {
+            mobileMenu.insertBefore(profileSection, firstSection.nextSibling);
+        } else {
+            mobileMenu.appendChild(profileSection);
+        }
+    }
+
+    const token = localStorage.getItem('womencypedia_access_token');
+
+    if (token && user) {
+        // User is authenticated - show profile info
+        const userName = user.name || user.username || user.email || 'User';
+        const userEmail = user.email || '';
+        const userInitials = getInitials(userName);
+
+        profileSection.innerHTML = `
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                My Profile</h3>
+            <div class="flex items-center gap-3 py-3 border-b border-border-light/50">
+                <div class="size-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                    ${user.avatar
+                ? `<img src="${escapeHtml(user.avatar)}" alt="${escapeHtml(userName)}" class="size-12 rounded-full object-cover">`
+                : `<span class="text-lg font-bold text-white">${escapeHtml(userInitials)}</span>`
+            }
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="font-medium text-text-main truncate">${escapeHtml(userName)}</p>
+                    <p class="text-sm text-text-secondary truncate">${escapeHtml(userEmail)}</p>
+                </div>
+            </div>
+            <a href="profile.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My Profile</a>
+            <a href="settings.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Settings</a>
+            <button onclick="handleMobileLogout()"
+                class="block w-full text-left py-3 text-base font-medium text-red-600 hover:text-red-700 border-t border-border-light mt-2">
+                Sign Out
+            </button>
+        `;
+    } else {
+        // User is not authenticated - show login/signup options
+        profileSection.innerHTML = `
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Account</h3>
+            <a href="login.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Sign In</a>
+            <a href="signup.html"
+                class="block py-3 text-base font-medium text-primary border-b border-border-light/50 hover:text-primary/80">Create Account</a>
+        `;
+    }
+}
+
+/**
+ * Get user initials from name
+ */
+function getInitials(name) {
+    if (!name) return '?';
+    const parts = name.split(' ').filter(p => p.length > 0);
+    if (parts.length >= 2) {
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+}
+
+/**
+ * Emit auth state changed event (call after login/signup)
+ */
+function emitAuthStateChanged() {
+    window.dispatchEvent(new Event('authStateChanged'));
+}
+
+// Make functions globally available
+window.emitAuthStateChanged = emitAuthStateChanged;

@@ -163,7 +163,7 @@ async function loadUserStats(token) {
 async function loadUserContributions(token) {
     try {
         const response = await fetch(
-            `${CONFIG.API_BASE_URL}/api/contributions?filters[author][id][$eq]=${profileData.id}&sort=createdAt:desc&pagination[pageSize]=5&populate=*`,
+            `${CONFIG.API_BASE_URL}/api/contributions?filters[author][id][$eq]=${profileData.id}&sort[0]=createdAt:desc&pagination[pageSize]=5&populate=*`,
             {
                 headers: { 'Authorization': `Bearer ${token}` },
                 cache: 'no-store'

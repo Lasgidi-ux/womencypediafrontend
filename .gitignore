@@ -1,7 +1,7 @@
 # ============================================
 # Womencypedia — .gitignore
-# SECURITY: Ensure secrets are never committed to version control# ============================================
-
+# SECURITY: Ensure secrets are never committed to version control
+# ============================================
 # ─── ENVIRONMENT & SECRETS (CRITICAL) ───────
 # NEVER commit secrets to version control
 .env
@@ -78,6 +78,10 @@ __pycache__/
 cms_setup.log
 strapi_install.log
 strapi_setup_log.txt
+
+# ─── Validation reports ────────────────────
+check*.txt
+vnu_output.txt
 
 # ─── AI agent files ─────────────────────────
 .gemini/

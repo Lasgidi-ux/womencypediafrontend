@@ -269,6 +269,81 @@ const API = {
             }
         }
 
+        // Comments endpoints
+        if (endpoint.startsWith('/api/comments')) {
+            if (endpoint === '/api/comments' && method === 'GET') {
+                // Extract biography slug from query params
+                const params = this._parseQueryParams(endpoint);
+                const biographySlug = params.biography || params['filters[biography][$eq]'] || null;
+                return StrapiAPI.comments.getByBiography(biographySlug);
+            }
+            if (endpoint === '/api/comments' && method === 'POST') {
+                let body = {};
+                if (options.body) {
+                    try {
+                        body = JSON.parse(options.body);
+                    } catch (e) {
+                        console.error('Failed to parse request body:', e);
+                        return Promise.reject(new Error('Invalid JSON in request body'));
+                    }
+                }
+                return StrapiAPI.comments.create(body.data || body);
+            }
+            const commentId = endpointParts[2];
+            if (commentId && method === 'DELETE') {
+                return StrapiAPI.comments.delete(commentId);
+            }
+            if (commentId && endpoint.includes('/like') && method === 'POST') {
+                return StrapiAPI.comments.like(commentId);
+            }
+        }
+
+        // Notifications endpoints
+        if (endpoint.startsWith('/api/notifications')) {
+            if (endpoint === '/api/notifications' && method === 'GET') {
+                return StrapiAPI.notifications.getAll();
+            }
+            if (endpoint === '/api/notifications' && method === 'PATCH') {
+                return StrapiAPI.notifications.markAllAsRead();
+            }
+            if (endpoint === '/api/notifications' && method === 'DELETE') {
+                return StrapiAPI.notifications.deleteAll();
+            }
+            const notifId = endpointParts[2];
+            if (notifId && method === 'PATCH') {
+                return StrapiAPI.notifications.markAsRead(notifId);
+            }
+            if (notifId && method === 'DELETE') {
+                return StrapiAPI.notifications.delete(notifId);
+            }
+        }
+
+        // Saved Entries (Bookmarks) endpoints
+        if (endpoint.startsWith('/api/saved-entries')) {
+            if (endpoint === '/api/saved-entries' && method === 'GET') {
+                return StrapiAPI.savedEntries.getAll();
+            }
+            if (endpoint === '/api/saved-entries' && method === 'POST') {
+                let body = {};
+                if (options.body) {
+                    try {
+                        body = JSON.parse(options.body);
+                    } catch (e) {
+                        console.error('Failed to parse request body:', e);
+                        return Promise.reject(new Error('Invalid JSON in request body'));
+                    }
+                }
+                return StrapiAPI.savedEntries.save(body.biography || body.data?.biography);
+            }
+            if (endpoint === '/api/saved-entries' && method === 'DELETE') {
+                return StrapiAPI.savedEntries.clearAll();
+            }
+            const bioId = endpointParts[2];
+            if (bioId && method === 'DELETE') {
+                return StrapiAPI.savedEntries.remove(bioId);
+            }
+        }
+
         // Use generic request for other endpoints
         return this._genericRequest(endpoint, options);
     },

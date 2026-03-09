@@ -2,7 +2,8 @@
 <html class="light" lang="en">
 
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src  'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com; frame-src https://js.paystack.co https://checkout.flutterwave.com;">
     <meta charset="utf-8" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -36,6 +37,80 @@
 </head>
 
 <body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu" class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+
+        <!-- Explore -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">Explore</h3>
+            <a href="index.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="browse.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="featured.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="collections.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="timelines.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Registry -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">Registry</h3>
+            <a href="browse-leaders.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse Leaders</a>
+            <a href="apply-verification.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Apply for Verification</a>
+            <a href="controlled-contributions.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Submit Content</a>
+            <a href="partners.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Partners</a>
+            <a href="fellowship.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Fellowships</a>
+            <a href="reports.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Reports</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">Learn</h3>
+            <a href="education.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="enterprises.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="research.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="publications.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="resources.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
+        </div>
+
+        <!-- Participate -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">Participate</h3>
+            <a href="nominate.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate a Woman</a>
+            <a href="share-story.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Share Your Story</a>
+            <a href="contributor-guidelines.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor Guidelines</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Donate</a>
+        </div>
+
+        <!-- About -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">About</h3>
+            <a href="about.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About Us</a>
+            <a href="founders.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
+            <a href="contributors.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="methodology.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="editorial-standards.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial Standards</a>
+            <a href="contact.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+
+        <!-- CTA -->
+        <div class="px-6 pb-8">
+            <a href="share-story.html" class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors">Share Your Story</a>
+        </div>
+    </nav>
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search women, cultures, eras…" class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
+            </div>
+            <button onclick="toggleSearch()" class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
     <!-- Skip Link -->
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
@@ -51,7 +126,8 @@
                 <div class="flex items-center gap-8 lg:gap-12">
                     <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
                         <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
-                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
                     </a>
 
                     <!-- Desktop Nav -->
@@ -130,7 +206,8 @@
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributor
                                         Guidelines</a>
                                     <a href="donate.html"
-                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors" data-i18n="donate">Donate</a>
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        data-i18n="donate">Donate</a>
                                 </div>
                             </div>
                         </div>
@@ -166,51 +243,52 @@
                         </div>
 
 
-                <!-- Actions -->
-                <div class="flex items-center gap-3 lg:gap-6">
-                    <!-- Desktop Search -->
-                    <div
-                        class="hidden md:flex items-center bg-white/50  border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
-                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
-                        <input
-                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
-                            placeholder="Search the archive..." type="search" />
-                    </div>
+                        <!-- Actions -->
+                        <div class="flex items-center gap-3 lg:gap-6">
+                            <!-- Desktop Search -->
+                            <div
+                                class="hidden md:flex items-center bg-white/50  border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                                <input
+                                    class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                                    placeholder="Search the archive..." type="search" />
+                            </div>
 
-                    <!-- Mobile Search Button -->
-                    <button onclick="toggleSearch()"
-                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
-                        aria-label="Open search">
-                        <span class="material-symbols-outlined text-accent-teal">search</span>
-                    </button>
+                            <!-- Mobile Search Button -->
+                            <button onclick="toggleSearch()"
+                                class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                                aria-label="Open search">
+                                <span class="material-symbols-outlined text-accent-teal">search</span>
+                            </button>
 
-                    <!-- Desktop Actions -->
-                    <div class="hidden sm:flex items-center gap-4">
-                        <div id="language-switcher"></div>
-                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
-                            href="donate.html" data-i18n="donate">Donate</a>
-                        <button data-auth="signin"
-                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity" data-i18n="signIn">
-                            Sign In
-                        </button>
-                        <div data-auth="signout" class="hidden flex items-center gap-3">
-                            <span data-auth="user-info" class="text-sm text-text-secondary"></span>
-                            <button
-                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
-                                Sign Out
+                            <!-- Desktop Actions -->
+                            <div class="hidden sm:flex items-center gap-4">
+                                <div id="language-switcher"></div>
+                                <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                                    href="donate.html" data-i18n="donate">Donate</a>
+                                <button data-auth="signin"
+                                    class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity"
+                                    data-i18n="signIn">
+                                    Sign In
+                                </button>
+                                <div data-auth="signout" class="hidden flex items-center gap-3">
+                                    <span data-auth="user-info" class="text-sm text-text-secondary"></span>
+                                    <button
+                                        class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity">
+                                        Sign Out
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Mobile Menu Button -->
+                            <button onclick="toggleMenu()"
+                                class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                                aria-label="Open menu">
+                                <span class="material-symbols-outlined text-text-main">menu</span>
                             </button>
                         </div>
-                    </div>
-
-                    <!-- Mobile Menu Button -->
-                    <button onclick="toggleMenu()"
-                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
-                        aria-label="Open menu">
-                        <span class="material-symbols-outlined text-text-main">menu</span>
-                    </button>
                 </div>
             </div>
-        </div>
     </header>
 
     <!-- Main Content -->
@@ -219,7 +297,8 @@
             <!-- Header -->
             <div class="text-center mb-12">
                 <span class="material-symbols-outlined text-5xl text-primary mb-4">accessibility_new</span>
-                <h1 class="font-heading text-4xl md:text-5xl font-semibold text-text-main mb-4" data-i18n="accessibility.accessibilityStatement">Accessibility Statement
+                <h1 class="font-heading text-4xl md:text-5xl font-semibold text-text-main mb-4"
+                    data-i18n="accessibility.accessibilityStatement">Accessibility Statement
                 </h1>
                 <p class="text-text-secondary">Last updated: February 15, 2026</p>
             </div>
@@ -227,7 +306,8 @@
             <!-- Content -->
             <div class="prose prose-lg max-w-none">
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.ourCommitment">Our Commitment</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.ourCommitment">Our Commitment</h2>
                     <p class="text-text-secondary mb-4">
                         Womencypedia is committed to ensuring digital accessibility for people with disabilities. We are
                         continually improving the user experience for everyone and applying the relevant accessibility
@@ -241,7 +321,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.conformanceStatus">Conformance Status</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.conformanceStatus">Conformance Status</h2>
                     <p class="text-text-secondary mb-4">
                         The Web Content Accessibility Guidelines (WCAG) defines requirements for designers and
                         developers to improve accessibility for people with disabilities. It defines three levels of
@@ -258,14 +339,16 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.accessibilityFeatures">Accessibility Features</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.accessibilityFeatures">Accessibility Features</h2>
                     <p class="text-text-secondary mb-4">We have implemented the following accessibility features:</p>
 
                     <div class="space-y-4">
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.keyboardNavigation">Keyboard Navigation</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.keyboardNavigation">
+                                    Keyboard Navigation</h3>
                                 <p class="text-text-secondary text-sm">All interactive elements are accessible via
                                     keyboard. Users can navigate using Tab, Enter, and arrow keys.</p>
                             </div>
@@ -274,7 +357,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.screenReaderSupport">Screen Reader Support</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.screenReaderSupport">
+                                    Screen Reader Support</h3>
                                 <p class="text-text-secondary text-sm">Our content is compatible with popular screen
                                     readers including JAWS, NVDA, and VoiceOver. We use semantic HTML and ARIA labels
                                     where appropriate.</p>
@@ -284,7 +368,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.skipNavigation">Skip Navigation</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.skipNavigation">Skip
+                                    Navigation</h3>
                                 <p class="text-text-secondary text-sm">A "Skip to main content" link is available at the
                                     top of each page, allowing keyboard users to bypass navigation menus.</p>
                             </div>
@@ -293,7 +378,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.colorContrast">Color Contrast</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.colorContrast">Color
+                                    Contrast</h3>
                                 <p class="text-text-secondary text-sm">We maintain a minimum color contrast ratio of
                                     4.5:1 for normal text and 3:1 for large text, meeting WCAG AA standards.</p>
                             </div>
@@ -302,7 +388,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.darkMode">Dark Mode</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.darkMode">Dark Mode
+                                </h3>
                                 <p class="text-text-secondary text-sm">A dark mode option is available for users who
                                     prefer reduced brightness or have light sensitivity.</p>
                             </div>
@@ -311,7 +398,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.responsiveDesign">Responsive Design</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.responsiveDesign">
+                                    Responsive Design</h3>
                                 <p class="text-text-secondary text-sm">Our website adapts to various screen sizes and
                                     zoom levels up to 200% without loss of content or functionality.</p>
                             </div>
@@ -320,7 +408,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.alternativeText">Alternative Text</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.alternativeText">
+                                    Alternative Text</h3>
                                 <p class="text-text-secondary text-sm">Images throughout the site include descriptive
                                     alt text. Decorative images are marked appropriately for screen readers.</p>
                             </div>
@@ -329,7 +418,8 @@
                         <div class="flex gap-4">
                             <span class="material-symbols-outlined text-primary flex-shrink-0">check_circle</span>
                             <div>
-                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.formAccessibility">Form Accessibility</h3>
+                                <h3 class="font-semibold text-text-main" data-i18n="accessibility.formAccessibility">
+                                    Form Accessibility</h3>
                                 <p class="text-text-secondary text-sm">All form fields have associated labels, and error
                                     messages are clearly announced to screen reader users.</p>
                             </div>
@@ -338,7 +428,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.knownIssues">Known Issues</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.knownIssues">Known Issues</h2>
                     <p class="text-text-secondary mb-4">We are actively working to address the following known
                         accessibility issues:</p>
                     <ul class="list-disc list-inside text-text-secondary space-y-2">
@@ -350,7 +441,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.assistiveTechnologyCompatibility">Assistive Technology
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.assistiveTechnologyCompatibility">Assistive Technology
                         Compatibility</h2>
                     <p class="text-text-secondary mb-4">Womencypedia is designed to be compatible with the following
                         assistive technologies:</p>
@@ -365,7 +457,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.feedback">Feedback</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.feedback">Feedback</h2>
                     <p class="text-text-secondary mb-4">
                         We welcome your feedback on the accessibility of Womencypedia. Please let us know if you
                         encounter accessibility barriers:
@@ -391,7 +484,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.technicalSpecifications">Technical Specifications</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.technicalSpecifications">Technical Specifications</h2>
                     <p class="text-text-secondary mb-4">
                         Accessibility of Womencypedia relies on the following technologies to work with the particular
                         combination of web browser and any assistive technologies or plugins installed on your computer:
@@ -408,7 +502,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.assessmentApproach">Assessment Approach</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.assessmentApproach">Assessment Approach</h2>
                     <p class="text-text-secondary mb-4">
                         Womencypedia assessed the accessibility of this website by the following approaches:
                     </p>
@@ -421,7 +516,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.formalComplaints">Formal Complaints</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.formalComplaints">Formal Complaints</h2>
                     <p class="text-text-secondary">
                         If you are not satisfied with our response to your accessibility complaint, you may file a
                         formal complaint through your local disability rights organization or relevant government agency
@@ -430,7 +526,8 @@
                 </section>
 
                 <section class="mb-8">
-                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4" data-i18n="accessibility.thisStatement">This Statement</h2>
+                    <h2 class="font-heading text-2xl font-semibold text-text-main mb-4"
+                        data-i18n="accessibility.thisStatement">This Statement</h2>
                     <p class="text-text-secondary">
                         This accessibility statement was created on February 15, 2026, and was last reviewed on February
                         15, 2026. We review and update this statement annually or when significant changes are made to
@@ -441,12 +538,14 @@
 
             <!-- CTA -->
             <div class="mt-12 p-6 bg-white rounded-xl border border-border-light text-center">
-                <h3 class="font-heading text-xl font-semibold text-text-main mb-2" data-i18n="accessibility.needHelp">Need Help?</h3>
+                <h3 class="font-heading text-xl font-semibold text-text-main mb-2" data-i18n="accessibility.needHelp">
+                    Need Help?</h3>
                 <p class="text-text-secondary mb-4">If you're having trouble accessing any part of our website, please
                     contact us.</p>
                 <a href="contact.html"
                     class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-colors">
-                    <span class="material-symbols-outlined text-[20px]">mail</span><span data-i18n="contactUs">Contact Us</span></a>
+                    <span class="material-symbols-outlined text-[20px]">mail</span><span data-i18n="contactUs">Contact
+                        Us</span></a>
             </div>
         </div>
     </main>
@@ -459,9 +558,10 @@
                 <div class="col-span-2 md:col-span-1">
                     <div class="flex items-center justify-center gap-3 mb-4">
                         <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
-                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
-                        <span class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
-                    </a>
+                            <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                            <span
+                                class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        </a>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
                         women.</p>
@@ -526,8 +626,8 @@
                         href="share-story.html"><span data-i18n="shareYourStory">Share Your Story</span></a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributor-guidelines.html">Contributor Guidelines</a>
-                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
-                        href="donate.html" data-i18n="donate">Donate</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors" href="donate.html"
+                        data-i18n="donate">Donate</a>
                 </div>
 
                 <!-- About -->
@@ -550,22 +650,21 @@
 
             <!-- Quick Links Row -->
             <div class="border-t border-gray-800 pt-8 mt-8">
-                    <a href="profile.html" class="text-gray-400 hover:text-white text-sm transition-colors">My
-                        Profile</a>
-                        Biography</a>
-                </div>
-                <div class="text-center">
-                    <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
-                            href="privacy-policy.html" class="text-gray-400 hover:text-white"><span data-i18n="privacyPolicy">Privacy Policy</span></a> | <a
-                            href="terms-of-use.html" class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a></p>
-                </div>
             </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
+                        href="privacy-policy.html" class="text-gray-400 hover:text-white"><span
+                            data-i18n="privacyPolicy">Privacy Policy</span></a> | <a href="terms-of-use.html"
+                        class="text-gray-400 hover:text-white"><span data-i18n="termsOfUse">Terms of Use</span></a></p>
+            </div>
+        </div>
         </div>
     </footer>
 
     <script src="js/darkmode.js"></script>
     <script src="js/performance.js"></script>
     <script src="js/i18n.js"></script>
+<script src="js/navigation.js"></script>
 </body>
 
 </html>

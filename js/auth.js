@@ -169,6 +169,11 @@ const Auth = {
             // Update UI
             this.updateUIForAuthState();
 
+            // Emit auth state changed event for real-time updates across tabs
+            if (typeof window.emitAuthStateChanged === 'function') {
+                window.emitAuthStateChanged();
+            }
+
             return user;
         } catch (error) {
             console.error('Login error:', error);
@@ -251,6 +256,11 @@ const Auth = {
                 this._currentUser = user;
                 localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
                 this.updateUIForAuthState();
+
+                // Emit auth state changed event for real-time updates across tabs
+                if (typeof window.emitAuthStateChanged === 'function') {
+                    window.emitAuthStateChanged();
+                }
             }
 
             return data;
@@ -354,6 +364,11 @@ const Auth = {
             this.clearStorage();
             this._currentUser = null;
             this.updateUIForAuthState();
+
+            // Emit auth state changed event for real-time updates across tabs
+            if (typeof window.emitAuthStateChanged === 'function') {
+                window.emitAuthStateChanged();
+            }
 
             // Redirect to home if on admin page
             if (window.location.pathname.includes('admin')) {
@@ -575,11 +590,23 @@ const Auth = {
         const adminFallback = document.querySelectorAll('[data-auth="require-admin-fallback"]');
 
         signInButtons.forEach(btn => {
-            btn.style.display = isAuth ? 'none' : '';
+            if (isAuth) {
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            } else {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            }
         });
 
         signOutButtons.forEach(btn => {
-            btn.style.display = isAuth ? '' : 'none';
+            if (isAuth) {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            } else {
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            }
         });
 
         userInfo.forEach(el => {

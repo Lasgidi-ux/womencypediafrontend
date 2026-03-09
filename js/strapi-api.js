@@ -744,6 +744,307 @@ if (typeof StrapiAPI === 'undefined') {
                     body: JSON.stringify({ data: applicationData })
                 });
             }
+        },
+
+        // ============================================
+        // COMMENTS
+        // ============================================
+
+        comments: {
+            async getByBiography(biographyId, params = {}) {
+                return StrapiAPI.request(`/api/comments?filters[biography][id][$eq]=${biographyId}&populate=author,parent`, {
+                    method: 'GET',
+                    contentType: 'comments',
+                    queryParams: params
+                });
+            },
+
+            async create(commentData) {
+                return StrapiAPI.request('/api/comments', {
+                    method: 'POST',
+                    contentType: 'comments',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: commentData })
+                });
+            },
+
+            async delete(commentId) {
+                return StrapiAPI.request(`/api/comments/${commentId}`, {
+                    method: 'DELETE',
+                    contentType: 'comments'
+                });
+            },
+
+            async like(commentId) {
+                // Use atomic increment endpoint to avoid race conditions
+                // The backend handles the increment atomically
+                try {
+                    const result = await StrapiAPI.request(`/api/comments/${commentId}/like`, {
+                        method: 'POST',
+                        contentType: 'comments',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    // Return the updated comment or clear error
+                    if (result && result.data) {
+                        return result.data;
+                    }
+                    // If result exists but no data, return it anyway (some backends return updated comment directly)
+                    return result;
+                } catch (error) {
+                    // Return a clear error object instead of implicitly undefined
+                    console.error('Failed to like comment:', error);
+                    return { error: error.message || 'Failed to like comment', success: false };
+                }
+            }
+        },
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+
+        notifications: {
+            async getAll(params = {}) {
+                return StrapiAPI.request('/api/notifications', {
+                    method: 'GET',
+                    contentType: 'notifications',
+                    queryParams: params
+                });
+            },
+
+            async markAsRead(notificationId) {
+                return StrapiAPI.request(`/api/notifications/${notificationId}`, {
+                    method: 'PUT',
+                    contentType: 'notifications',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: { read: true } })
+                });
+            },
+
+            async markAllAsRead() {
+                const pageSize = 100;
+                let page = 1;
+                let totalPages = 1;
+                const results = {
+                    success: [],
+                    failed: []
+                };
+
+                do {
+                    // Fetch current page of unread notifications
+                    const response = await StrapiAPI.request(
+                        `/api/notifications?filters[read][$eq]=false&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+                        { method: 'GET', contentType: 'notifications' }
+                    );
+
+                    const entries = response.entries || [];
+                    totalPages = response.total_pages || 1;
+
+                    if (entries.length > 0) {
+                        // Update all notifications in parallel for this page
+                        const updatePromises = entries.map(notification =>
+                            StrapiAPI.request(`/api/notifications/${notification.id}`, {
+                                method: 'PUT',
+                                contentType: 'notifications',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ data: { read: true } })
+                            })
+                                .then(() => ({ id: notification.id, success: true }))
+                                .catch(error => {
+                                    console.error(`Failed to mark notification ${notification.id} as read:`, error);
+                                    return { id: notification.id, success: false, error: error.message };
+                                })
+                        );
+
+                        const updateResults = await Promise.all(updatePromises);
+
+                        // Collect results
+                        updateResults.forEach(result => {
+                            if (result.success) {
+                                results.success.push(result.id);
+                            } else {
+                                results.failed.push(result);
+                            }
+                        });
+                    }
+
+                    page++;
+                } while (page <= totalPages);
+
+                return results;
+            },
+
+            async delete(notificationId) {
+                return StrapiAPI.request(`/api/notifications/${notificationId}`, {
+                    method: 'DELETE',
+                    contentType: 'notifications'
+                });
+            },
+
+            async deleteAll() {
+                const pageSize = 100;
+                let page = 1;
+                let totalPages = 1;
+                const results = {
+                    success: [],
+                    failed: []
+                };
+
+                do {
+                    // Fetch current page of notifications
+                    const response = await StrapiAPI.request(
+                        `/api/notifications?pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+                        { method: 'GET', contentType: 'notifications' }
+                    );
+
+                    const entries = response.entries || [];
+                    totalPages = response.total_pages || 1;
+
+                    if (entries.length > 0) {
+                        // Delete all notifications in parallel for this page
+                        const deletePromises = entries.map(notification =>
+                            StrapiAPI.request(`/api/notifications/${notification.id}`, {
+                                method: 'DELETE',
+                                contentType: 'notifications'
+                            })
+                                .then(() => ({ id: notification.id, success: true }))
+                                .catch(error => {
+                                    console.error(`Failed to delete notification ${notification.id}:`, error);
+                                    return { id: notification.id, success: false, error: error.message };
+                                })
+                        );
+
+                        const deleteResults = await Promise.all(deletePromises);
+
+                        // Collect results
+                        deleteResults.forEach(result => {
+                            if (result.success) {
+                                results.success.push(result.id);
+                            } else {
+                                results.failed.push(result);
+                            }
+                        });
+                    }
+
+                    page++;
+                } while (page <= totalPages);
+
+                return results;
+            }
+        },
+
+        // ============================================
+        // DONATIONS
+        // ============================================
+
+        donations: {
+            /**
+             * Submit a donation
+             * @param {Object} donationData - Donation details
+             * @returns {Promise<Object>} Donation response
+             */
+            async submit(donationData) {
+                return StrapiAPI.request('/api/donations', {
+                    method: 'POST',
+                    contentType: 'donations',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: donationData })
+                });
+            },
+
+            /**
+             * Get donation by ID
+             * @param {string|number} id - Donation ID
+             * @returns {Promise<Object>} Donation data
+             */
+            async get(id) {
+                return StrapiAPI.request(`/api/donations/${id}`, {
+                    method: 'GET',
+                    contentType: 'donations'
+                });
+            }
+        },
+
+        // ============================================
+        // SAVED ENTRIES (BOOKMARKS)
+        // ============================================
+
+        savedEntries: {
+            async getAll(params = {}) {
+                return StrapiAPI.request('/api/saved-entries?populate=biography', {
+                    method: 'GET',
+                    contentType: 'saved-entries',
+                    queryParams: params
+                });
+            },
+
+            async save(biographyId) {
+                return StrapiAPI.request('/api/saved-entries', {
+                    method: 'POST',
+                    contentType: 'saved-entries',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: { biography: biographyId } })
+                });
+            },
+
+            async remove(biographyId) {
+                // Fetch all saved entries matching the biography ID
+                const response = await StrapiAPI.request(
+                    `/api/saved-entries?filters[biography][id][$eq]=${biographyId}`,
+                    { method: 'GET', contentType: 'saved-entries' }
+                );
+
+                if (!response.entries || response.entries.length === 0) {
+                    return { success: true, deleted: 0 };
+                }
+
+                // Delete all matching entries concurrently
+                const deletePromises = response.entries.map(async (entry) => {
+                    try {
+                        await StrapiAPI.request(`/api/saved-entries/${entry.id}`, {
+                            method: 'DELETE',
+                            contentType: 'saved-entries'
+                        });
+                        return { id: entry.id, success: true };
+                    } catch (error) {
+                        // Ignore 404 errors - entry may have already been deleted by concurrent call
+                        if (error.message && (error.message.includes('404') || error.message.includes('Not Found') || error.message.toLowerCase().includes('not found'))) {
+                            console.warn(`Saved entry ${entry.id} already deleted or not found`);
+                            return { id: entry.id, success: true, alreadyDeleted: true };
+                        }
+                        // Log and re-throw other errors
+                        console.error(`Failed to delete saved entry ${entry.id}:`, error);
+                        throw error;
+                    }
+                });
+
+                const results = await Promise.all(deletePromises);
+                const deletedCount = results.filter(r => r.success).length;
+                return { success: true, deleted: deletedCount };
+            },
+
+            async clearAll() {
+                const response = await StrapiAPI.request('/api/saved-entries', {
+                    method: 'GET',
+                    contentType: 'saved-entries'
+                });
+                if (response.entries) {
+                    for (const entry of response.entries) {
+                        await StrapiAPI.request(`/api/saved-entries/${entry.id}`, {
+                            method: 'DELETE',
+                            contentType: 'saved-entries'
+                        });
+                    }
+                }
+                return { success: true };
+            },
+
+            async checkSaved(biographyId) {
+                const response = await StrapiAPI.request(
+                    `/api/saved-entries?filters[biography][id][$eq]=${biographyId}`,
+                    { method: 'GET', contentType: 'saved-entries' }
+                );
+                return response.entries && response.entries.length > 0;
+            }
         }
     };
 
