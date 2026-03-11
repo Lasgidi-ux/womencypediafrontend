@@ -1,6 +1,9 @@
 /**
  * Form Handler for Womencypedia Contribution Forms
- * Handles submission of nominations and stories with validation and API integration.
+ * Handles submission of nominations and stories with validation, media upload, and API integration.
+ *
+ * Dependencies: config.js (CONFIG), auth.js (Auth), ui.js (UI)
+ * Optional: strapi-api.js (StrapiAPI), api.js (API)
  */
 
 const FormHandler = {
@@ -39,8 +42,61 @@ const FormHandler = {
     },
 
     /**
+     * Upload media files to Strapi media library
+     * @param {FileList} files - Files to upload
+     * @param {string} token - Auth token (optional)
+     * @returns {Promise<number[]>} - Array of uploaded file IDs
+     */
+    async uploadMediaFiles(files, token) {
+        if (!files || files.length === 0) return [];
+
+        const uploadedIds = [];
+
+        for (const file of files) {
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                console.warn(`File "${file.name}" exceeds 10MB limit, skipping`);
+                if (typeof UI !== 'undefined' && UI.showToast) {
+                    UI.showToast(`File "${file.name}" exceeds 10MB limit`, 'warning');
+                }
+                continue;
+            }
+
+            const formData = new FormData();
+            formData.append('files', file);
+
+            const headers = {};
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            try {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/upload`, {
+                    method: 'POST',
+                    headers,
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const uploadedFiles = await response.json();
+                    if (uploadedFiles && uploadedFiles.length > 0) {
+                        uploadedIds.push(uploadedFiles[0].id);
+                    }
+                } else {
+                    console.warn(`Failed to upload "${file.name}":`, response.status);
+                }
+            } catch (error) {
+                console.warn(`Error uploading "${file.name}":`, error);
+            }
+        }
+
+        return uploadedIds;
+    },
+
+    /**
      * Handle nomination form submission
-     * @param {HTMLFormElement} form 
+     * Submits to /api/nominations (separate content type)
+     * @param {HTMLFormElement} form
      */
     async handleNominationSubmit(form) {
         const submitBtn = form.querySelector('[type="submit"]');
@@ -51,18 +107,17 @@ const FormHandler = {
             return;
         }
 
-        // Collect form data
+        // Collect form data — map to Strapi nomination schema fields
         const formData = {
-            nomineeName: form.querySelector('#nomineeName').value,
-            era: form.querySelector('#era').value,
-            region: form.querySelector('#region').value,
-            collection: form.querySelector('#collection').value,
-            bio: form.querySelector('#bio').value,
-            sources: form.querySelector('#sources').value,
-            submitterName: form.querySelector('#yourName').value,
-            submitterEmail: form.querySelector('#yourEmail').value,
-            type: 'nomination',
-            status: Auth.isAdmin() ? 'approved' : 'pending'
+            nomineeName: form.querySelector('#nomineeName')?.value || '',
+            nomineeEra: form.querySelector('#era')?.value || '',
+            nomineeRegion: form.querySelector('#region')?.value || '',
+            nomineeCategory: form.querySelector('#collection')?.value || '',
+            reason: form.querySelector('#bio')?.value || '',
+            sources: form.querySelector('#sources')?.value ? [form.querySelector('#sources').value] : [],
+            nominatorName: form.querySelector('#yourName')?.value || '',
+            nominatorEmail: form.querySelector('#yourEmail')?.value || '',
+            status: 'pending'
         };
 
         // Show loading state
@@ -73,14 +128,28 @@ const FormHandler = {
         `;
 
         try {
-            await API.contributions.submitNomination(formData);
+            const token = (typeof Auth !== 'undefined' && Auth.isAuthenticated()) ? Auth.getAccessToken() : null;
+
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/nominations`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ data: formData })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `Server error (${response.status})`);
+            }
 
             // Show success message
             this.showSuccessMessage(form, {
                 title: 'Nomination Submitted!',
-                message: Auth.isAdmin()
-                    ? 'The nomination has been added to the database.'
-                    : 'Thank you for your nomination. Our editorial team will review it and contact you if we need additional information.',
+                message: 'Thank you for your nomination. Our editorial team will review it and contact you if we need additional information.',
                 icon: 'person_add'
             });
 
@@ -88,8 +157,10 @@ const FormHandler = {
             form.reset();
 
         } catch (error) {
-            // Show error message
-            UI.showToast('Failed to submit nomination: ' + error.message, 'error');
+            console.error('Nomination submission error:', error);
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Failed to submit nomination: ' + error.message, 'error');
+            }
 
             // Restore button
             submitBtn.disabled = false;
@@ -99,7 +170,9 @@ const FormHandler = {
 
     /**
      * Handle story form submission
-     * @param {HTMLFormElement} form 
+     * Submits to /api/contributions with type: 'story'
+     * Handles media upload (images + videos)
+     * @param {HTMLFormElement} form
      */
     async handleStorySubmit(form) {
         const submitBtn = form.querySelector('[type="submit"]');
@@ -113,7 +186,9 @@ const FormHandler = {
         // Validate story length
         const story = form.querySelector('#story').value;
         if (story.split(/\s+/).length < 50) {
-            UI.showToast('Please write at least 50 words for your story.', 'warning');
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Please write at least 50 words for your story.', 'warning');
+            }
             form.querySelector('#story').focus();
             return;
         }
@@ -121,27 +196,12 @@ const FormHandler = {
         // Check permission checkbox
         const permission = form.querySelector('[name="permission"]');
         if (!permission.checked) {
-            UI.showToast('Please confirm the permission checkbox to submit your story.', 'warning');
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Please confirm the permission checkbox to submit your story.', 'warning');
+            }
             permission.focus();
             return;
         }
-
-        // Collect form data
-        const storyType = form.querySelector('[name="storyType"]:checked');
-        const formData = {
-            storyType: storyType ? storyType.value : 'other',
-            subjectName: form.querySelector('#subjectName').value,
-            relationship: form.querySelector('#relationship').value,
-            region: form.querySelector('#storyRegion').value,
-            theme: form.querySelector('#theme').value,
-            story: story,
-            lessons: form.querySelector('#lessons').value,
-            contactName: form.querySelector('#contactName').value,
-            contactEmail: form.querySelector('#contactEmail').value,
-            permissionGranted: true,
-            type: 'story',
-            status: Auth.isAdmin() ? 'approved' : 'pending'
-        };
 
         // Show loading state
         submitBtn.disabled = true;
@@ -151,23 +211,82 @@ const FormHandler = {
         `;
 
         try {
-            await API.contributions.submitStory(formData);
+            const token = (typeof Auth !== 'undefined' && Auth.isAuthenticated()) ? Auth.getAccessToken() : null;
+
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            // Upload media files first (if any)
+            let mediaFileIds = [];
+            const mediaInput = form.querySelector('#mediaUpload');
+            if (mediaInput && mediaInput.files && mediaInput.files.length > 0) {
+                submitBtn.innerHTML = `
+                    <span class="material-symbols-outlined animate-spin">refresh</span>
+                    Uploading media...
+                `;
+                mediaFileIds = await this.uploadMediaFiles(mediaInput.files, token);
+            }
+
+            // Collect form data — map to Strapi contribution schema
+            const storyType = form.querySelector('[name="storyType"]:checked');
+            const subjectName = form.querySelector('#subjectName')?.value || '';
+            const formData = {
+                title: subjectName ? `Story: ${subjectName}` : 'Untitled Story',
+                type: 'story',
+                content: story,
+                storyType: storyType ? storyType.value : 'other',
+                subjectName: subjectName,
+                relationship: form.querySelector('#relationship')?.value || '',
+                region: form.querySelector('#storyRegion')?.value || '',
+                theme: form.querySelector('#theme')?.value || '',
+                lessons: form.querySelector('#lessons')?.value || '',
+                contactName: form.querySelector('#contactName')?.value || '',
+                contactEmail: form.querySelector('#contactEmail')?.value || '',
+                permissionGranted: true,
+                status: 'draft'
+            };
+
+            // Attach media file IDs if any were uploaded
+            if (mediaFileIds.length > 0) {
+                formData.media = mediaFileIds;
+            }
+
+            submitBtn.innerHTML = `
+                <span class="material-symbols-outlined animate-spin">refresh</span>
+                Saving story...
+            `;
+
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/contributions`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ data: formData })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `Server error (${response.status})`);
+            }
 
             // Show success message
             this.showSuccessMessage(form, {
                 title: 'Story Submitted!',
-                message: Auth.isAdmin()
-                    ? 'The story has been added to the database.'
-                    : 'Thank you for sharing this story. Our editorial team will review it and may reach out for additional details or verification.',
+                message: 'Thank you for sharing this story. Our editorial team will review it and may reach out for additional details or verification.',
                 icon: 'auto_stories'
             });
 
             // Reset form
             form.reset();
+            // Clear file name display
+            const fileDisplay = document.getElementById('file-name-display');
+            if (fileDisplay) fileDisplay.textContent = '';
 
         } catch (error) {
-            // Show error message
-            UI.showToast('Failed to submit story: ' + error.message, 'error');
+            console.error('Story submission error:', error);
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Failed to submit story: ' + error.message, 'error');
+            }
 
             // Restore button
             submitBtn.disabled = false;
@@ -177,7 +296,7 @@ const FormHandler = {
 
     /**
      * Validate form fields
-     * @param {HTMLFormElement} form 
+     * @param {HTMLFormElement} form
      * @returns {boolean}
      */
     validateForm(form) {
@@ -204,7 +323,9 @@ const FormHandler = {
         });
 
         if (!isValid) {
-            UI.showToast('Please fill in all required fields.', 'warning');
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Please fill in all required fields.', 'warning');
+            }
 
             // Focus first invalid field
             const firstInvalid = form.querySelector('.border-red-500');
@@ -219,8 +340,8 @@ const FormHandler = {
 
     /**
      * Show success message after form submission
-     * @param {HTMLFormElement} form 
-     * @param {Object} options 
+     * @param {HTMLFormElement} form
+     * @param {Object} options
      */
     showSuccessMessage(form, options) {
         const formContainer = form.closest('.bg-white');
@@ -264,3 +385,4 @@ if (document.getElementById('nomination-form') || document.getElementById('story
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = FormHandler;
 }
+

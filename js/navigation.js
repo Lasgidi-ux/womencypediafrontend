@@ -146,9 +146,7 @@ function createMobileNavigation() {
             <a href="${pathPrefix}about.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
                 Us</a>
-            <a href="${pathPrefix}founders.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
-            <a href="${pathPrefix}contributors.html"
+<a href="${pathPrefix}contributors.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
             <a href="${pathPrefix}methodology.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>

@@ -39,7 +39,9 @@
                 "report",
                 "research_paper",
                 "opinion",
-                "news"
+                "news",
+                "story",
+                "nomination"
             ],
             "required": true,
             "pluginOptions": {
@@ -244,6 +246,97 @@
             "type": "relation",
             "relation": "manyToOne",
             "target": "api::leader.leader"
+        },
+        "subjectName": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "relationship": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            }
+        },
+        "theme": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "lessons": {
+            "type": "text",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            }
+        },
+        "contactName": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "contactEmail": {
+            "type": "email",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "storyType": {
+            "type": "enumeration",
+            "enum": [
+                "myself",
+                "other"
+            ],
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "permissionGranted": {
+            "type": "boolean",
+            "default": false,
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "media": {
+            "type": "media",
+            "multiple": true,
+            "allowedTypes": [
+                "images",
+                "videos",
+                "files"
+            ],
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
+        },
+        "region": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            }
         }
     }
 }

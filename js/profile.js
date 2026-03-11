@@ -63,7 +63,7 @@ async function loadUserProfile() {
         }
 
         // Fetch authenticated user from Strapi with populated relations
-        const response = await fetch(`${CONFIG.API_BASE_URL}/api/users/me?populate=role,avatar`, {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/users/me?populate=*`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -94,9 +94,13 @@ async function loadUserProfile() {
             joinDate: user.createdAt
                 ? (typeof I18N !== 'undefined' ? I18N.formatDate(user.createdAt) : new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }))
                 : profileData.joinDate,
-            avatar: user.avatar?.url
-                ? (user.avatar.url.startsWith('http') ? user.avatar.url : `${CONFIG.API_BASE_URL}${user.avatar.url}`)
-                : null,
+            avatar: (() => {
+                // Strapi v5 with Cloudinary: avatar may be a direct object or nested in data
+                const avatarData = user.avatar?.data?.attributes || user.avatar?.data || user.avatar;
+                const avatarUrl = avatarData?.url;
+                if (!avatarUrl) return null;
+                return avatarUrl.startsWith('http') ? avatarUrl : `${CONFIG.API_BASE_URL}${avatarUrl}`;
+            })(),
             bio: user.bio || user.about || 'Member of the Womencypedia community.',
         };
 
@@ -520,7 +524,7 @@ function setupAvatarUpload() {
 }
 
 /**
- * Upload avatar to Strapi Media Library and update user
+ * Upload avatar to Strapi Media Library and link to user
  */
 async function uploadAvatar(file) {
     // Guard: Check Auth exists before calling getAccessToken
@@ -539,12 +543,9 @@ async function uploadAvatar(file) {
             avatarContainer.innerHTML = `<div class="flex items-center justify-center"><span class="material-symbols-outlined animate-spin text-white text-3xl">refresh</span></div>`;
         }
 
-        // Upload file to Strapi
+        // Step 1: Upload file to Strapi Media Library (no ref params — we link manually)
         const formData = new FormData();
         formData.append('files', file);
-        formData.append('ref', 'plugin::users-permissions.user');
-        formData.append('refId', profileData.id);
-        formData.append('field', 'avatar');
 
         const uploadResponse = await fetch(`${CONFIG.API_BASE_URL}/api/upload`, {
             method: 'POST',
@@ -552,19 +553,39 @@ async function uploadAvatar(file) {
             body: formData
         });
 
-        if (uploadResponse.ok) {
-            const uploadedFiles = await uploadResponse.json();
-            if (uploadedFiles.length > 0) {
-                const newUrl = uploadedFiles[0].url;
-                profileData.avatar = newUrl.startsWith('http') ? newUrl : `${CONFIG.API_BASE_URL}${newUrl}`;
-                updateProfileUI();
-
-                if (typeof UI !== 'undefined' && UI.showToast) {
-                    UI.showToast('Avatar updated!', 'success');
-                }
-            }
-        } else {
+        if (!uploadResponse.ok) {
             throw new Error('Upload failed');
+        }
+
+        const uploadedFiles = await uploadResponse.json();
+        if (!uploadedFiles || uploadedFiles.length === 0) {
+            throw new Error('No file returned from upload');
+        }
+
+        const uploadedFile = uploadedFiles[0];
+
+        // Step 2: Link the uploaded file to the user's avatar field via PUT
+        const linkResponse = await fetch(`${CONFIG.API_BASE_URL}/api/users/${profileData.id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ avatar: uploadedFile.id })
+        });
+
+        if (!linkResponse.ok) {
+            console.warn('Failed to link avatar to user, status:', linkResponse.status);
+            // Avatar uploaded but not linked — still show it locally
+        }
+
+        // Update local profile data
+        const newUrl = uploadedFile.url;
+        profileData.avatar = newUrl.startsWith('http') ? newUrl : `${CONFIG.API_BASE_URL}${newUrl}`;
+        updateProfileUI();
+
+        if (typeof UI !== 'undefined' && UI.showToast) {
+            UI.showToast('Avatar updated!', 'success');
         }
     } catch (error) {
         console.error('Avatar upload error:', error);

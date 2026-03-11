@@ -104,8 +104,8 @@ function getMobileMenu(pathPrefix) {
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">About</h3>
             <a href="${pathPrefix}about.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About Us</a>
-            <a href="${pathPrefix}founders.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Founders</a>
             <a href="${pathPrefix}contributors.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+
             <a href="${pathPrefix}methodology.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
             <a href="${pathPrefix}editorial-standards.html" class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial Standards</a>
             <a href="${pathPrefix}contact.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
