@@ -1,10 +1,13 @@
+Blueprint ID:
+exs-d6gijrea2pns73fv2oh0
+
 services:
   # ─── Strapi CMS Backend ────────────────────────────────
-  - type: web
+  - type: web 
     name: womencypedia-cms
     runtime: node
     region: oregon
-    plan: starter
+    plan: starter                     # ← Web services can still use starter
     rootDir: womencypedia-cms
     buildCommand: npm install && npm run build
     startCommand: npm run start
@@ -35,9 +38,6 @@ services:
           property: password
       - key: DATABASE_SSL
         value: "true"
-      # Render managed Postgres uses self-signed SSL certs — Node.js rejects them
-      # by default. Connection is still encrypted (DATABASE_SSL=true). This is
-      # Render's standard recommendation, not a workaround.
       - key: DATABASE_SSL_REJECT_UNAUTHORIZED
         value: "false"
       - key: APP_KEYS
@@ -96,8 +96,7 @@ services:
 
 databases:
   - name: womencypedia-db
-    plan: starter
+    plan: free                    # ←←← THIS IS THE ONLY CHANGE NEEDED
     region: oregon
     databaseName: womencypedia
     user: womencypedia
-
