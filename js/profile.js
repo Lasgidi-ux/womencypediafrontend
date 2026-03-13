@@ -212,6 +212,7 @@ async function loadUserSaved(token) {
 
 /**
  * Load demo profile from localStorage
+ * FIXED: Now loads avatar from localStorage for persistence
  */
 function loadDemoProfile() {
     const demoProfile = localStorage.getItem('womencypedia_demo_profile');
@@ -219,6 +220,14 @@ function loadDemoProfile() {
         try {
             const parsed = JSON.parse(demoProfile);
             profileData = { ...profileData, ...parsed };
+
+            // Check for avatar in localStorage (persisted from upload)
+            if (!profileData.avatar) {
+                const savedAvatar = localStorage.getItem('womencypedia_user_avatar');
+                if (savedAvatar) {
+                    profileData.avatar = savedAvatar;
+                }
+            }
         } catch (e) {
             console.warn('Could not parse demo profile');
         }
@@ -495,13 +504,7 @@ function setupAvatarUpload() {
     avatarContainer.title = 'Click to change avatar';
 
     avatarContainer.addEventListener('click', () => {
-        if (typeof Auth === 'undefined' || !Auth.isAuthenticated()) {
-            if (typeof UI !== 'undefined' && UI.showToast) {
-                UI.showToast('Sign in to change your avatar', 'info');
-            }
-            return;
-        }
-
+        // Allow both authenticated and demo users to upload avatars
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/jpeg,image/png,image/webp';
@@ -525,6 +528,7 @@ function setupAvatarUpload() {
 
 /**
  * Upload avatar to Strapi Media Library and link to user
+ * FIXED: Now supports demo users with localStorage persistence
  */
 async function uploadAvatar(file) {
     // Guard: Check Auth exists before calling getAccessToken
@@ -534,7 +538,9 @@ async function uploadAvatar(file) {
     }
 
     const token = Auth.getAccessToken();
-    if (!token || !profileData.id) return;
+
+    // For demo users (not authenticated), use localStorage fallback
+    const isDemoUser = !token;
 
     try {
         // Show uploading state
@@ -543,7 +549,38 @@ async function uploadAvatar(file) {
             avatarContainer.innerHTML = `<div class="flex items-center justify-center"><span class="material-symbols-outlined animate-spin text-white text-3xl">refresh</span></div>`;
         }
 
-        // Step 1: Upload file to Strapi Media Library (no ref params — we link manually)
+        // For demo users, just preview locally without uploading to Strapi
+        if (isDemoUser) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const dataUrl = e.target.result;
+
+                // Save to localStorage for persistence across page refreshes
+                const demoProfile = JSON.parse(localStorage.getItem('womencypedia_demo_profile') || '{}');
+                demoProfile.avatar = dataUrl;
+                localStorage.setItem('womencypedia_demo_profile', JSON.stringify(demoProfile));
+
+                // Update profile data
+                profileData.avatar = dataUrl;
+                updateProfileUI();
+
+                if (typeof UI !== 'undefined' && UI.showToast) {
+                    UI.showToast('Avatar updated! (Demo mode)', 'success');
+                }
+            };
+            reader.onerror = function () {
+                console.error('Failed to read file');
+                if (typeof UI !== 'undefined' && UI.showToast) {
+                    UI.showToast('Failed to read image file', 'error');
+                }
+                updateProfileUI();
+            };
+            reader.readAsDataURL(file);
+            return;
+        }
+
+        // Authenticated user: upload to Strapi
+        // Step 1: Upload file to Strapi Media Library
         const formData = new FormData();
         formData.append('files', file);
 
@@ -582,6 +619,10 @@ async function uploadAvatar(file) {
         // Update local profile data
         const newUrl = uploadedFile.url;
         profileData.avatar = newUrl.startsWith('http') ? newUrl : `${CONFIG.API_BASE_URL}${newUrl}`;
+
+        // Also save to localStorage as backup
+        localStorage.setItem('womencypedia_user_avatar', profileData.avatar);
+
         updateProfileUI();
 
         if (typeof UI !== 'undefined' && UI.showToast) {

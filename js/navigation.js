@@ -349,24 +349,147 @@ function toggleSearch() {
 
 /**
  * Initialize active state for navigation links based on current page
+ * Handles both desktop and mobile navigation, including subdirectory pages
  */
 function initNavActiveState() {
     const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop() || 'index.html';
+
+    // Get the current page filename and normalize for subdirectory detection
+    const pathParts = currentPath.split('/').filter(p => p.length > 0);
+    const currentPage = pathParts.pop() || 'index.html';
+    const currentDir = pathParts.pop() || '';
+
+    // Determine if we're in a subdirectory
+    const isInSubdirectory = currentDir !== '' && currentDir !== 'index.html';
+
+    // Active state classes
+    const activeClasses = ['text-primary', 'border-b-2', 'border-primary'];
+    const inactiveClasses = ['text-text-main', 'hover:text-primary'];
 
     // Desktop navigation links
-    const navLinks = document.querySelectorAll('header nav a');
-    navLinks.forEach(link => {
+    const desktopNavLinks = document.querySelectorAll('header nav a, header .nav-link');
+    desktopNavLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-            link.classList.add('text-primary', 'border-b-2', 'border-primary');
-            link.classList.remove('text-text-main', 'hover:text-primary');
+        if (!href) return;
+
+        // Remove any trailing slashes and normalize
+        const normalizedHref = href.replace(/^\/?(.+?)\/$/, '$1');
+
+        // Check if this link matches current page
+        const isActive = isNavLinkActive(href, currentPage, currentDir);
+
+        if (isActive) {
+            link.classList.add(...activeClasses);
+            link.classList.remove(...inactiveClasses);
+            link.setAttribute('aria-current', 'page');
         } else {
-            link.classList.remove('text-primary', 'border-b-2', 'border-primary');
+            link.classList.remove(...activeClasses);
             link.classList.add('text-text-main');
+            link.removeAttribute('aria-current');
         }
     });
+
+    // Mobile navigation links
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            const isActive = isNavLinkActive(href, currentPage, currentDir);
+
+            if (isActive) {
+                link.classList.add('text-primary', 'font-semibold');
+                link.classList.remove('text-text-main');
+            } else {
+                link.classList.remove('text-primary', 'font-semibold');
+                link.classList.add('text-text-main');
+            }
+        });
+    }
 }
+
+/**
+ * Check if a navigation link should be active for the current page
+ * @param {string} href - The href attribute of the link
+ * @param {string} currentPage - Current page filename
+ * @param {string} currentDir - Current directory (if any)
+ * @returns {boolean} True if the link should be active
+ */
+function isNavLinkActive(href, currentPage, currentDir) {
+    if (!href) return false;
+
+    // Normalize href
+    const normalizedHref = href.replace(/^\/?(.+?)\/$/, '$1').replace(/^\.\.\//, '');
+    const hrefPage = normalizedHref.split('/').pop();
+    const hrefDir = normalizedHref.split('/').slice(0, -1).pop() || '';
+
+    // Handle root-level index.html
+    if (currentPage === '' || currentPage === 'index.html') {
+        return hrefPage === 'index.html' || hrefPage === '';
+    }
+
+    // Direct page match
+    if (hrefPage === currentPage) {
+        // If both in same directory or href is root-level
+        return hrefDir === currentDir || hrefDir === '';
+    }
+
+    // Handle collections subdirectory
+    if (currentDir === 'collections') {
+        // For collections pages, check if href points to collections.html
+        return hrefPage === 'collections.html';
+    }
+
+    // Handle biography pages
+    if (currentPage.startsWith('biography') || currentPage === 'leader-profile.html') {
+        return hrefPage === 'browse.html';
+    }
+
+    // Handle education module pages
+    if (currentPage.startsWith('education-module')) {
+        return hrefPage === 'education.html';
+    }
+
+    return false;
+}
+
+/**
+ * Set active navigation item programmatically
+ * Can be called from any page to override automatic detection
+ * @param {string} navItemId - The nav item identifier or href to set as active
+ */
+function setActiveNavItem(navItemId) {
+    const activeClasses = ['text-primary', 'border-b-2', 'border-primary'];
+    const inactiveClasses = ['text-text-main', 'hover:text-primary'];
+
+    // Try to find by ID first
+    let targetLink = document.getElementById(navItemId);
+
+    // If not found by ID, try to find by href
+    if (!targetLink) {
+        targetLink = document.querySelector(`header nav a[href*="${navItemId}"]`);
+    }
+
+    if (!targetLink) return;
+
+    // Remove active state from all links
+    const allLinks = document.querySelectorAll('header nav a');
+    allLinks.forEach(link => {
+        link.classList.remove(...activeClasses);
+        link.classList.add('text-text-main');
+        link.removeAttribute('aria-current');
+    });
+
+    // Add active state to target link
+    targetLink.classList.add(...activeClasses);
+    targetLink.classList.remove(...inactiveClasses);
+    targetLink.setAttribute('aria-current', 'page');
+}
+
+// Make setActiveNavItem globally available
+window.setActiveNavItem = setActiveNavItem;
 
 /**
  * Navbar hide/show on scroll

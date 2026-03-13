@@ -493,6 +493,60 @@ const API = {
         return this.request(CONFIG.ENDPOINTS.ENTRIES.FEATURED, {
             method: 'GET'
         });
+    },
+
+    /**
+     * Enhanced API Error Handling
+     * Provides comprehensive error handling for different error scenarios
+     * @param {Error|Object} error - The error object or response
+     * @param {string} context - Context description for logging
+     * @returns {Object} Formatted error object with user-friendly message
+     */
+    async handleApiError(error, context = 'API request') {
+        console.error(`[API Error] ${context}:`, error);
+
+        // Network error - when the server is unreachable
+        if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+            return {
+                error: true,
+                message: 'Unable to connect to server. Please check your internet connection.',
+                status: 0,
+                recoverable: true
+            };
+        }
+
+        // Server error (5xx) - when server returns 500+ status
+        if (error.status >= 500) {
+            return {
+                error: true,
+                message: 'Server temporarily unavailable. Please try again later.',
+                status: error.status,
+                recoverable: true
+            };
+        }
+
+        // Auth error (401) - when authentication fails or tokens expire
+        if (error.status === 401) {
+            // Clear invalid tokens
+            localStorage.removeItem('womencypedia_access_token');
+            localStorage.removeItem('womencypedia_refresh_token');
+
+            return {
+                error: true,
+                message: 'Your session has expired. Please sign in again.',
+                status: 401,
+                recoverable: false,
+                action: 'redirect_to_login'
+            };
+        }
+
+        // Default error - catch-all for unexpected errors
+        return {
+            error: true,
+            message: error.message || 'An unexpected error occurred.',
+            status: error.status || 500,
+            recoverable: true
+        };
     }
 };
 

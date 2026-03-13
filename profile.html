@@ -2,7 +2,7 @@
 <html class="light" lang="en">
 
 <head>
-<meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -53,7 +53,7 @@
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#E8A6A6">
+    <meta name="theme-color" content="#D67D7D">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <script defer data-domain="womencypedia.org" src="https://plausible.io/js/script.js"></script>
@@ -150,7 +150,7 @@
             <a href="about.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
                 Us</a>
-<a href="contributors.html"
+            <a href="contributors.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
             <a href="methodology.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
@@ -273,7 +273,7 @@
                                     <a href="about.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
                                         Us</a>
-<a href="contributors.html"
+                                    <a href="contributors.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributors</a>
                                     <a href="methodology.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Methodology</a>
@@ -530,6 +530,63 @@
                                     class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
                                     <span class="material-symbols-outlined text-[18px]">add</span> Nominate
                                 </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab (consolidated from settings.html) -->
+                    <div id="settings-tab" data-tab-content="settings" style="display:none">
+                        <div class="max-w-2xl mx-auto">
+                            <h3 class="font-serif text-xl font-bold text-text-main mb-6">Account Settings</h3>
+
+                            <!-- Privacy Settings -->
+                            <div class="bg-white rounded-xl border border-border-light p-6 mb-6">
+                                <h4 class="font-bold text-text-main mb-4">Privacy</h4>
+                                <div class="space-y-4">
+                                    <label class="flex items-center justify-between">
+                                        <span class="text-text-main">Profile Visibility</span>
+                                        <select class="border border-border-light rounded-lg px-3 py-2"
+                                            id="profile-visibility">
+                                            <option value="public">Public</option>
+                                            <option value="contributors">Contributors Only</option>
+                                            <option value="private">Private</option>
+                                        </select>
+                                    </label>
+                                    <label class="flex items-center justify-between cursor-pointer">
+                                        <span class="text-text-main">Show contributions on profile</span>
+                                        <input type="checkbox" checked class="toggle-switch" id="show-contributions">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Notification Settings -->
+                            <div class="bg-white rounded-xl border border-border-light p-6 mb-6">
+                                <h4 class="font-bold text-text-main mb-4">Notifications</h4>
+                                <div class="space-y-4">
+                                    <label class="flex items-center justify-between cursor-pointer">
+                                        <span class="text-text-main">Email notifications</span>
+                                        <input type="checkbox" checked class="toggle-switch" id="email-notifications">
+                                    </label>
+                                    <label class="flex items-center justify-between cursor-pointer">
+                                        <span class="text-text-main">Contribution updates</span>
+                                        <input type="checkbox" checked class="toggle-switch" id="contribution-updates">
+                                    </label>
+                                    <label class="flex items-center justify-between cursor-pointer">
+                                        <span class="text-text-main">Weekly digest</span>
+                                        <input type="checkbox" class="toggle-switch" id="weekly-digest">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Danger Zone -->
+                            <div class="bg-white rounded-xl border border-red-200 p-6">
+                                <h4 class="font-bold text-red-600 mb-4">Danger Zone</h4>
+                                <p class="text-text-secondary text-sm mb-4">Once you delete your account, there is no
+                                    going back. Please be certain.</p>
+                                <button onclick="confirmDeleteAccount()"
+                                    class="px-6 py-2.5 bg-red-50 text-red-600 border border-red-200 font-medium rounded-lg hover:bg-red-100 transition-colors">
+                                    Delete Account
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -903,7 +960,7 @@
                     <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h4>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="about.html">About Us</a>
-<a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributors.html">Contributors</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="methodology.html">Methodology</a>
@@ -1012,6 +1069,21 @@
     </script>
     <script src="js/navigation.js"></script>
     <script src="js/profile.js"></script>
+    <script>
+        // Handle hash-based navigation (e.g., profile.html#settings)
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check for hash in URL and switch to that tab
+            const hash = window.location.hash.replace('#', '');
+            if (hash && hash === 'settings') {
+                // Use setTimeout to ensure DOM is fully loaded
+                setTimeout(function () {
+                    if (typeof showTab === 'function') {
+                        showTab('settings');
+                    }
+                }, 100);
+            }
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             // ALWAYS require authentication - security critical
@@ -1250,7 +1322,7 @@
         });
     </script>
 
-        <script src="js/inline-common.js"></script>
+    <script src="js/inline-common.js"></script>
     <script src="js/darkmode.js"></script>
     <script src="js/performance.js"></script>
 </body>

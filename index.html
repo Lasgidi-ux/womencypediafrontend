@@ -2,7 +2,7 @@
 <html class="light" lang="en">
 
 <head>
-<meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -55,14 +55,12 @@
     <link rel="alternate" hreflang="ar" href="https://womencypedia.org/?locale=ar" />
     <link rel="alternate" hreflang="sw" href="https://womencypedia.org/?locale=sw" />
     <link rel="alternate" hreflang="ha" href="https://womencypedia.org/?locale=ha" />
-    <link rel="alternate" hreflang="am" href="https://womencypedia.org/?locale=am" />
     <link rel="alternate" hreflang="yo" href="https://womencypedia.org/?locale=yo" />
-    <link rel="alternate" hreflang="zu" href="https://womencypedia.org/?locale=zu" />
     <link rel="alternate" hreflang="x-default" href="https://womencypedia.org/" />
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#E8A6A6">
+    <meta name="theme-color" content="#D67D7D">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
@@ -179,7 +177,7 @@
             <a href="about.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
                 Us</a>
-<a href="contributors.html"
+            <a href="contributors.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
             <a href="methodology.html"
                 class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
@@ -339,7 +337,7 @@
                                     <a href="about.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
                                         Us</a>
-<a href="contributors.html"
+                                    <a href="contributors.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributors</a>
                                     <a href="methodology.html"
                                         class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Methodology</a>
@@ -1432,7 +1430,7 @@
                 <div class="w-24 h-[1px] bg-accent-gold/50 mx-auto mb-6"></div>
                 <p class="font-bold text-text-main mb-1">Atim Utuk</p>
                 <p class="text-text-secondary italic">Founder, Womencypedia</p>
-</div>
+            </div>
         </section>
 
     </main>
@@ -1522,7 +1520,7 @@
                     <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary">About</h4>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="about.html">About Us</a>
-<a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="contributors.html">Contributors</a>
                     <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
                         href="methodology.html">Methodology</a>
@@ -1667,7 +1665,7 @@
             // Guard: check if Leaflet loaded
             if (typeof L === 'undefined') {
                 console.warn('Leaflet not loaded — map disabled (check network)');
-                mapContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#888;font-size:14px;">Map unavailable offline</div>';
+                mapContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#5A5454;font-size:14px;">Map unavailable offline</div>';
                 return;
             }
 
@@ -1730,8 +1728,8 @@
                 biographies.forEach(bio => {
                     if (bio.region === 'Africa') {
                         const marker = L.circleMarker([1.5 + (Math.random() - 0.5) * 10, 20 + (Math.random() - 0.5) * 20], {
-                            color: '#e8a6a6',
-                            fillColor: '#e8a6a6',
+                            color: '#D67D7D',
+                            fillColor: '#D67D7D',
                             fillOpacity: 0.6,
                             radius: 6
                         }).addTo(map);
