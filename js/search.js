@@ -195,24 +195,24 @@ const Search = {
         try {
             let results = [];
 
-            // Try API search first
-            if (typeof API !== 'undefined' && API.entries) {
+            // Try StrapiAPI search first
+            if (typeof StrapiAPI !== 'undefined') {
                 try {
-                    const response = await API.entries.search(this._state.query, {
+                    const response = await StrapiAPI.biographies.search(this._state.query, {
                         era: this._state.filters.era,
                         region: this._state.filters.region,
                         category: this._state.filters.category,
                         page: this._state.page,
-                        perPage: this._state.perPage
+                        pageSize: this._state.perPage
                     });
-                    results = response.results || response.entries || [];
+                    results = response.entries || response.data || [];
                     this._state.totalResults = response.total || results.length;
                 } catch (apiError) {
-                    console.log('API search failed, using local data');
+                    console.log('StrapiAPI search failed, using direct fetch');
                 }
             }
 
-            // Fallback to Strapi full search if API.entries failed
+            // Fallback to direct Strapi fetch if StrapiAPI failed
             if (results.length === 0) {
                 try {
                     let url = `${CONFIG.API_BASE_URL}/api/biographies?populate=image,tags&pagination[page]=${this._state.page}&pagination[pageSize]=${this._state.perPage}`;
@@ -235,6 +235,7 @@ const Search = {
                 }
             }
 
+            // Update results
             this._state.results = results;
             this.renderResults();
 

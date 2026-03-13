@@ -746,7 +746,90 @@
     <script src="js/i18n.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/strapi-api.js"></script>
     <script src="js/navigation.js"></script>
+
+    <!-- Featured Page Dynamic Data Loading -->
+    <script>
+        // Strapi API Base URL
+        const STRAPI_API_BASE = 'https://womencypedia-cms.onrender.com/api';
+
+        // Helper function to get full image URL
+        function getImageUrl(imageData) {
+            if (!imageData) return null;
+            if (typeof imageData === 'string') return imageData;
+            if (imageData.url) {
+                if (imageData.url.startsWith('http')) return imageData.url;
+                return 'https://womencypedia-cms.onrender.com' + imageData.url;
+            }
+            return null;
+        }
+
+        // Fetch featured biographies from Strapi
+        async function fetchFeaturedBiographies() {
+            try {
+                const response = await fetch(
+                    `${STRAPI_API_BASE}/biographies?filters[featured][$eq]=true&populate=*&pagination[pageSize]=8`,
+                    { cache: 'no-store' }
+                );
+                if (!response.ok) throw new Error('API request failed');
+                const data = await response.json();
+                return data.data || [];
+            } catch (error) {
+                console.warn('Failed to fetch featured biographies:', error.message);
+                return [];
+            }
+        }
+
+        // Render featured biography card
+        function renderFeaturedCard(bio) {
+            const attrs = bio.attributes || bio;
+            const imageUrl = getImageUrl(attrs.image);
+            const name = attrs.name || 'Unknown';
+            const region = attrs.region || '';
+            const era = attrs.era || '';
+            const introduction = attrs.introduction || '';
+            const slug = attrs.slug || '';
+
+            return `
+            <a href="biography.html?slug=${slug}" class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-all">
+                <div class="aspect-[4/3] ${imageUrl ? '' : 'bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center'}">
+                    ${imageUrl
+                    ? `<img src="${imageUrl}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`
+                    : `<span class="material-symbols-outlined text-primary/30 text-5xl">person</span>`
+                }
+                </div>
+                <div class="p-4">
+                    <span class="text-xs font-bold text-accent-teal uppercase">${era} • ${region}</span>
+                    <h3 class="font-serif text-lg font-bold text-text-main mt-1 group-hover:text-primary">${name}</h3>
+                    <p class="text-sm text-text-secondary mt-1 line-clamp-2">${introduction.substring(0, 100)}...</p>
+                </div>
+            </a>
+        `;
+        }
+
+        // Initialize featured page
+        async function initFeatured() {
+            // Find the grid container
+            const gridContainer = document.querySelector('.grid.sm\:grid-cols-2.lg\:grid-cols-4');
+            if (!gridContainer) return;
+
+            // Show loading state
+            gridContainer.innerHTML = '<div class="col-span-full text-center py-8 text-text-secondary">Loading featured biographies...</div>';
+
+            // Fetch featured bios
+            const featuredBios = await fetchFeaturedBiographies();
+
+            if (featuredBios.length > 0) {
+                gridContainer.innerHTML = featuredBios.map(renderFeaturedCard).join('');
+            } else {
+                gridContainer.innerHTML = '<div class="col-span-full text-center py-8 text-text-secondary">No featured biographies available.</div>';
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', initFeatured);
+    </script>
 
     <script src="js/inline-common.js"></script>
     <script src="js/darkmode.js"></script>

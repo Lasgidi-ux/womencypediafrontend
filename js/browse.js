@@ -56,15 +56,15 @@ async function loadBiographies() {
     }
 
     try {
-        // Try to fetch from API first
-        if (useAPI && typeof API !== 'undefined' && API.entries) {
+        // Try to fetch from Strapi API first using direct StrapiAPI calls
+        if (useAPI && typeof StrapiAPI !== 'undefined') {
             const params = buildQueryParams();
             // Add timeout to avoid long hangs
             const timeoutPromise = new Promise((_, reject) =>
                 setTimeout(() => reject(new Error('API timeout')), 5000)
             );
             const response = await Promise.race([
-                API.entries.getAll(params),
+                StrapiAPI.biographies.getAll(params),
                 timeoutPromise
             ]);
 
@@ -81,7 +81,8 @@ async function loadBiographies() {
             useAPI = false;
             loadStaticFallback(container);
         }
-    } catch {
+    } catch (error) {
+        console.warn('StrapiAPI not available, using static data:', error.message);
         useAPI = false;
         loadStaticFallback(container);
     }
