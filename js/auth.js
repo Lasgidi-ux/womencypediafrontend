@@ -650,6 +650,10 @@ const Auth = {
             btn.addEventListener('click', () => {
                 if (loginModal) {
                     loginModal.classList.remove('hidden');
+                    loginModal.setAttribute('aria-hidden', 'false');
+                    // Focus first input for accessibility
+                    const firstInput = loginModal.querySelector('input');
+                    if (firstInput) firstInput.focus();
                 }
             });
         });
@@ -675,6 +679,7 @@ const Auth = {
                     await this.login(email, password);
                     if (loginModal) {
                         loginModal.classList.add('hidden');
+                        loginModal.setAttribute('aria-hidden', 'true');
                     }
                     loginForm.reset();
                     if (loginError) {
@@ -703,6 +708,15 @@ const Auth = {
             loginModal.addEventListener('click', (e) => {
                 if (e.target === loginModal) {
                     loginModal.classList.add('hidden');
+                    loginModal.setAttribute('aria-hidden', 'true');
+                }
+            });
+
+            // Close modal on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && loginModal && !loginModal.classList.contains('hidden')) {
+                    loginModal.classList.add('hidden');
+                    loginModal.setAttribute('aria-hidden', 'true');
                 }
             });
         }
@@ -751,6 +765,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const loginModal = document.getElementById('login-modal');
         if (loginModal) {
             loginModal.classList.remove('hidden');
+            loginModal.setAttribute('aria-hidden', 'false');
+            // Focus first input for accessibility
+            const firstInput = loginModal.querySelector('input');
+            if (firstInput) firstInput.focus();
         }
         // Show toast message if UI is available
         if (typeof UI !== 'undefined' && UI.showToast) {

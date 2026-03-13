@@ -268,16 +268,21 @@ if (typeof StrapiAPI === 'undefined') {
                 ...options.queryParams
             });
 
-            const url = `${CONFIG.API_BASE_URL}${endpoint}${queryString}`;
+            // Fix double ? bug: check if endpoint already has query params
+            const separator = endpoint.includes('?') ? '&' : '?';
+            const url = `${CONFIG.API_BASE_URL}${endpoint}${queryString ? separator + queryString.substring(1) : ''}`;
 
             const defaultHeaders = {
                 'Content-Type': 'application/json',
             };
 
-            // Add authorization header
-            const token = Auth.getAccessToken();
+            // Add authorization header - prioritize user token, then fall back to API token
+            var token = Auth.getAccessToken();
+            if (!token && CONFIG.API_TOKEN) {
+                token = CONFIG.API_TOKEN;
+            }
             if (token) {
-                defaultHeaders['Authorization'] = `Bearer ${token}`;
+                defaultHeaders['Authorization'] = 'Bearer ' + token;
             }
 
             const config = {

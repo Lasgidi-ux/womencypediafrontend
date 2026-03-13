@@ -228,7 +228,7 @@ const Search = {
                     if (resp.ok) {
                         const data = await resp.json();
                         results = (data.data || []).map(item => ({ id: item.id, ...(item.attributes || item) }));
-                        this._state.totalResults = data.meta?.pagination?.total || results.length;
+                        this._state.totalResults = (data.meta && data.meta.pagination && data.meta.pagination.total) || results.length;
                     }
                 } catch (strapiErr) {
                     console.warn('Strapi search fallback failed:', strapiErr);

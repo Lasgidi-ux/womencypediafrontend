@@ -678,6 +678,113 @@ export interface ApiCollectionCollection extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCommentComment extends Struct.CollectionTypeSchema {
+  collectionName: 'comments';
+  info: {
+    description: 'Comments on biographies';
+    displayName: 'Comment';
+    pluralName: 'comments';
+    singularName: 'comment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    author: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    > &
+      Schema.Attribute.Required;
+    biography: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::biography.biography'
+    > &
+      Schema.Attribute.Required;
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    likedBy: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    likes: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comment.comment'
+    > &
+      Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::comment.comment'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiContactSubmissionContactSubmission
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_submissions';
+  info: {
+    description: 'Contact form submissions, legacy circle applications, and partnership inquiries';
+    displayName: 'Contact Submission';
+    pluralName: 'contact-submissions';
+    singularName: 'contact-submission';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    assignedTo: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    internalNotes: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-submission.contact-submission'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    organization: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['new', 'in_progress', 'resolved', 'archived']
+    > &
+      Schema.Attribute.DefaultTo<'new'>;
+    subject: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<
+      [
+        'contact',
+        'legacy_circle',
+        'partnership',
+        'press',
+        'fellowship_inquiry',
+        'general',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'contact'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiContributionContribution
   extends Struct.CollectionTypeSchema {
   collectionName: 'contributions';
@@ -717,6 +824,18 @@ export interface ApiContributionContribution
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
+        };
+      }>;
+    contactEmail: Schema.Attribute.Email &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    contactName: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
         };
       }>;
     content: Schema.Attribute.RichText &
@@ -770,11 +889,23 @@ export interface ApiContributionContribution
           localized: false;
         };
       }>;
+    lessons: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::contribution.contribution'
     >;
+    media: Schema.Attribute.Media<'images' | 'videos' | 'files', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     order: Schema.Attribute.Integer &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -782,8 +913,27 @@ export interface ApiContributionContribution
         };
       }> &
       Schema.Attribute.DefaultTo<0>;
+    permissionGranted: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     relatedLeader: Schema.Attribute.Relation<'manyToOne', 'api::leader.leader'>;
+    relationship: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     reviewedAt: Schema.Attribute.DateTime &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -840,6 +990,18 @@ export interface ApiContributionContribution
         };
       }> &
       Schema.Attribute.DefaultTo<'draft'>;
+    storyType: Schema.Attribute.Enumeration<['myself', 'other']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    subjectName: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     submittedAt: Schema.Attribute.DateTime &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -847,6 +1009,12 @@ export interface ApiContributionContribution
         };
       }>;
     tags: Schema.Attribute.JSON &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    theme: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
@@ -860,7 +1028,16 @@ export interface ApiContributionContribution
         };
       }>;
     type: Schema.Attribute.Enumeration<
-      ['article', 'case_study', 'report', 'research_paper', 'opinion', 'news']
+      [
+        'article',
+        'case_study',
+        'report',
+        'research_paper',
+        'opinion',
+        'news',
+        'story',
+        'nomination',
+      ]
     > &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
@@ -868,6 +1045,57 @@ export interface ApiContributionContribution
           localized: false;
         };
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
+  collectionName: 'donations';
+  info: {
+    description: 'Donation records and payment intents';
+    displayName: 'Donation';
+    pluralName: 'donations';
+    singularName: 'donation';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currency: Schema.Attribute.Enumeration<
+      ['USD', 'NGN', 'EUR', 'GBP', 'KES', 'ZAR', 'GHS']
+    > &
+      Schema.Attribute.DefaultTo<'USD'>;
+    donor: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    donorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    donorName: Schema.Attribute.String & Schema.Attribute.Required;
+    gateway: Schema.Attribute.Enumeration<
+      ['paystack', 'flutterwave', 'manual', 'bank_transfer']
+    >;
+    isAnonymous: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation.donation'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    reference: Schema.Attribute.String;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'completed', 'failed', 'refunded']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    type: Schema.Attribute.Enumeration<['one-time', 'monthly', 'legacy']> &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1487,6 +1715,124 @@ export interface ApiLeaderLeader extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiNominationNomination extends Struct.CollectionTypeSchema {
+  collectionName: 'nominations';
+  info: {
+    description: 'Nominations for women to be featured on Womencypedia';
+    displayName: 'Nomination';
+    pluralName: 'nominations';
+    singularName: 'nomination';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    additionalInfo: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::nomination.nomination'
+    > &
+      Schema.Attribute.Private;
+    nominator: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    nominatorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    nominatorName: Schema.Attribute.String & Schema.Attribute.Required;
+    nominatorOrganization: Schema.Attribute.String;
+    nomineeCategory: Schema.Attribute.Enumeration<
+      [
+        'Leadership',
+        'Culture & Arts',
+        'Spirituality & Faith',
+        'Politics & Governance',
+        'Science & Innovation',
+        'Community Builders',
+        'Activism & Justice',
+        'Education',
+        'Diaspora Stories',
+      ]
+    >;
+    nomineeEra: Schema.Attribute.Enumeration<
+      ['Ancient', 'Pre-colonial', 'Colonial', 'Post-colonial', 'Contemporary']
+    >;
+    nomineeName: Schema.Attribute.String & Schema.Attribute.Required;
+    nomineeRegion: Schema.Attribute.Enumeration<
+      [
+        'Africa',
+        'Europe',
+        'Asia',
+        'Middle East',
+        'North America',
+        'South America',
+        'Oceania',
+        'Global',
+      ]
+    > &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.Text & Schema.Attribute.Required;
+    resultingBiography: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::biography.biography'
+    >;
+    reviewNotes: Schema.Attribute.Text;
+    sources: Schema.Attribute.JSON;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'under_review', 'approved', 'rejected', 'converted']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNotificationNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'notifications';
+  info: {
+    description: 'User notifications';
+    displayName: 'Notification';
+    pluralName: 'notifications';
+    singularName: 'notification';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    link: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::notification.notification'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    read: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<
+      ['comment', 'like', 'follow', 'system', 'contribution', 'verification']
+    > &
+      Schema.Attribute.DefaultTo<'system'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiPartnerPartner extends Struct.CollectionTypeSchema {
   collectionName: 'partners';
   info: {
@@ -1630,6 +1976,42 @@ export interface ApiPartnerPartner extends Struct.CollectionTypeSchema {
           localized: false;
         };
       }>;
+  };
+}
+
+export interface ApiSavedEntrySavedEntry extends Struct.CollectionTypeSchema {
+  collectionName: 'saved_entries';
+  info: {
+    description: 'User saved/bookmarked entries';
+    displayName: 'Saved Entry';
+    pluralName: 'saved-entries';
+    singularName: 'saved-entry';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    biography: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::biography.biography'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::saved-entry.saved-entry'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -2337,15 +2719,17 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
+    bio: Schema.Attribute.Text;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    displayName: Schema.Attribute.String;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -2357,6 +2741,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.String;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -2394,12 +2779,18 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::biography.biography': ApiBiographyBiography;
       'api::collection.collection': ApiCollectionCollection;
+      'api::comment.comment': ApiCommentComment;
+      'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::contribution.contribution': ApiContributionContribution;
+      'api::donation.donation': ApiDonationDonation;
       'api::education-module.education-module': ApiEducationModuleEducationModule;
       'api::fellowship.fellowship': ApiFellowshipFellowship;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::leader.leader': ApiLeaderLeader;
+      'api::nomination.nomination': ApiNominationNomination;
+      'api::notification.notification': ApiNotificationNotification;
       'api::partner.partner': ApiPartnerPartner;
+      'api::saved-entry.saved-entry': ApiSavedEntrySavedEntry;
       'api::tag.tag': ApiTagTag;
       'api::verification-application.verification-application': ApiVerificationApplicationVerificationApplication;
       'plugin::content-releases.release': PluginContentReleasesRelease;

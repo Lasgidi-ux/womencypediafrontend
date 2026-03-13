@@ -274,7 +274,7 @@ const UI = {
                         </button>
                     </div>
                 ` : ''}
-                <a href="biography.html?id=${bio.id}" class="block">
+                <a href="biography.html?slug=${bio.slug || bio.id}" class="block">
                     <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
                         ${safeImage ? `
                             <img src="${safeImage}" alt="${safeName}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />

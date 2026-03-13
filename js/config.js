@@ -17,16 +17,42 @@
 // Environment-based API URL configuration
 // Priority: 1. window.API_STRAPI_URL (JavaScript environment variable)
 //           2. window.API_BASE_URL (alternative variable name)
-//           3. Production URL fallback
+//           3. Automatic detection based on current hostname
+//           4. Production URL fallback
 // Note: Added window check for SSR environment compatibility
-const API_BASE_URL = (typeof window !== 'undefined' ? window.API_STRAPI_URL : undefined) ||
-    (typeof window !== 'undefined' ? window.API_BASE_URL : undefined) ||
-    'https://womencypedia-cms.onrender.com';  // production (Render)
+const getApiBaseUrl = () => {
+    // Check for explicit overrides first
+    if (typeof window !== 'undefined') {
+        if (window.API_STRAPI_URL) return window.API_STRAPI_URL;
+        if (window.API_BASE_URL) return window.API_BASE_URL;
+
+        // Auto-detect: if running on localhost, use local CMS
+        const hostname = window.location.hostname;
+        if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.local')) {
+            return 'http://localhost:1337'; // Local development CMS
+        }
+    }
+    return 'https://www.womencypedia.org'; // Production CMS
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
+// API Token for authentication
+// Priority: 1. window.API_TOKEN (JavaScript environment variable)
+//           2. Hardcoded token (replace with your actual token)
+// NOTE: For production, use environment variables or window.API_TOKEN
+const API_TOKEN = (typeof window !== 'undefined' ? window.API_TOKEN : undefined) ||
+    '';  // Add your token here: 'your-strapi-api-token-here'
 
 const CONFIG = {
     // API Base URL - Environment configurable via window.API_STRAPI_URL or window.API_BASE_URL
     // Production: https://womencypedia-cms.onrender.com
     API_BASE_URL: API_BASE_URL,
+
+    // API Token for authenticated requests
+    // Leave empty string if Public role is enabled in Strapi
+    // For production, set via window.API_TOKEN or use environment variables
+    API_TOKEN: API_TOKEN,
 
     // Use Strapi CMS
     // Set to true to enable Strapi mode (transforms responses, uses Strapi endpoints)

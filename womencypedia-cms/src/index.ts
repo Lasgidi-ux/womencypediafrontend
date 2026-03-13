@@ -1,16 +1,208 @@
 import type { Core } from '@strapi/strapi';
 
+// Global reference to strapi instance
+let strapiInstance: any = null;
+
+// Custom API routes - manually registered to bypass Strapi's broken route loading
+const customRoutes = [
+  // Contribution routes
+  {
+    method: 'POST',
+    path: '/api/contributions',
+    handler: async (ctx: any, next: any) => {
+      try {
+        const body = ctx.request.body;
+
+        const title = body.subjectName || body.title || 'Untitled Story';
+        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now();
+        const type = body.type || 'story';
+        const content = body.story || body.content || '';
+
+        const entryData = {
+          title: title,
+          slug: slug,
+          type: type,
+          content: content,
+          subjectName: body.subjectName || null,
+          relationship: body.relationship || null,
+          theme: body.theme || null,
+          lessons: body.lessons || null,
+          contactName: body.contactName || null,
+          contactEmail: body.contactEmail || null,
+          storyType: body.storyType || null,
+          region: body.storyRegion || body.region || null,
+          status: 'pending_review',
+          submittedAt: new Date().toISOString(),
+          permissionGranted: body.permission === true || body.permissionGranted === true,
+        };
+
+        const entry = await strapiInstance.entityService.create('api::contribution.contribution', {
+          data: entryData,
+        });
+        ctx.body = { data: entry };
+      } catch (err: any) {
+        ctx.status = 400;
+        ctx.body = { error: { message: err.message, details: err.details } };
+      }
+    },
+    config: {
+      auth: false,
+      policies: [],
+    },
+  },
+  {
+    method: 'GET',
+    path: '/api/contributions',
+    handler: async (ctx: any, next: any) => {
+      try {
+        const entries = await strapiInstance.entityService.findMany('api::contribution.contribution', {});
+        ctx.body = { data: entries };
+      } catch (err: any) {
+        ctx.status = 400;
+        ctx.body = { error: { message: err.message } };
+      }
+    },
+    config: {
+      auth: false,
+      policies: [],
+    },
+  },
+  // Biography routes - list all with pagination
+  {
+    method: 'GET',
+    path: '/api/biographies',
+    handler: async (ctx: any, next: any) => {
+      try {
+        const page = parseInt(ctx.query.pagination?.page || '1');
+        const pageSize = parseInt(ctx.query.pagination?.pageSize || '10');
+        const locale = ctx.query.locale || 'en';
+
+        const entries = await strapiInstance.entityService.findMany('api::biography.biography', {
+          populate: '*',
+          locale: locale,
+          pagination: { page, pageSize },
+        });
+
+        const total = await strapiInstance.entityService.count('api::biography.biography', { locale });
+
+        ctx.body = {
+          data: entries,
+          meta: {
+            pagination: {
+              page,
+              pageSize,
+              pageCount: Math.ceil(total / pageSize),
+              total
+            }
+          }
+        };
+      } catch (err: any) {
+        ctx.status = 400;
+        ctx.body = { error: { message: err.message } };
+      }
+    },
+    config: {
+      auth: false,
+      policies: [],
+    },
+  },
+  // Get single biography by ID or slug
+  {
+    method: 'GET',
+    path: '/api/biographies/:idOrSlug',
+    handler: async (ctx: any, next: any) => {
+      try {
+        const { idOrSlug } = ctx.params;
+        const locale = ctx.query.locale || 'en';
+
+        let entry;
+        // Check if it's a numeric ID
+        if (/^\d+$/.test(idOrSlug)) {
+          entry = await strapiInstance.entityService.findOne('api::biography.biography', parseInt(idOrSlug), {
+            populate: '*',
+            locale: locale,
+          });
+        } else {
+          // It's a slug - search by slug field
+          const entries = await strapiInstance.entityService.findMany('api::biography.biography', {
+            filters: { slug: idOrSlug },
+            populate: '*',
+            locale: locale,
+            limit: 1
+          });
+          entry = entries && entries.length > 0 ? entries[0] : null;
+        }
+
+        if (!entry) {
+          ctx.status = 404;
+          ctx.body = { error: { message: 'Biography not found' } };
+          return;
+        }
+
+        ctx.body = { data: entry };
+      } catch (err: any) {
+        ctx.status = 400;
+        ctx.body = { error: { message: err.message } };
+      }
+    },
+    config: {
+      auth: false,
+      policies: [],
+    },
+  },
+  // Nominations route
+  {
+    method: 'POST',
+    path: '/api/nominations',
+    handler: async (ctx: any, next: any) => {
+      try {
+        const body = ctx.request.body;
+
+        const entryData = {
+          name: body.name || body.nomineeName,
+          email: body.email || body.nomineeEmail,
+          phone: body.phone,
+          country: body.country,
+          category: body.category,
+          reason: body.reason || body.nominationReason,
+          status: 'pending_review',
+          submittedAt: new Date().toISOString(),
+        };
+
+        const entry = await strapiInstance.entityService.create('api::nomination.nomination', {
+          data: entryData,
+        });
+        ctx.body = { data: entry };
+      } catch (err: any) {
+        ctx.status = 400;
+        ctx.body = { error: { message: err.message, details: err.details } };
+      }
+    },
+    config: {
+      auth: false,
+      policies: [],
+    },
+  },
+];
+
 export default {
   /**
    * An asynchronous register function that runs before
    * your application is initialized.
    */
-  register(/* { strapi }: { strapi: Core.Strapi } */) { },
+  register({ strapi }: { strapi: any }) {
+    // Register custom routes
+    strapi.server.routes(customRoutes);
+    strapi.log.info('[Custom Routes] Registered manual API routes');
+  },
 
   /**
    * Bootstrap: auto-create locales and seed initial data
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    // Store strapi instance globally for use in routes
+    strapiInstance = strapi;
+    strapi.log.info('[Custom Routes] Strapi instance stored globally');
     // ── Auto-create locales matching the frontend locale files ──
     const localesToCreate = [
       { name: 'French', code: 'fr' },
@@ -46,9 +238,7 @@ export default {
     }
 
     // ── Set up public API permissions ──
-    // This ensures the frontend can read content without authentication
     try {
-      // Get the public role
       const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
         where: { type: 'public' },
       });
@@ -56,7 +246,8 @@ export default {
       if (!publicRole) {
         strapi.log.warn('[Bootstrap] Public role not found, skipping permissions setup');
       } else {
-        // Content types that should be publicly readable
+        strapi.log.info(`[Bootstrap] Found public role: ${publicRole.id}`);
+
         const publicContentTypes = [
           'api::biography.biography',
           'api::collection.collection',
@@ -68,16 +259,21 @@ export default {
           'api::homepage.homepage',
         ];
 
-        // Get existing permissions for public role
+        const publicSubmitContentTypes = [
+          'api::contribution.contribution',
+          'api::nomination.nomination',
+          'api::contact-submission.contact-submission',
+        ];
+
         const publicPermissions = await strapi.query('plugin::users-permissions.permission').findMany({
           where: { role: publicRole.id },
         });
 
-        // Add READ permissions for public content types
+        strapi.log.info(`[Bootstrap] Current public permissions: ${publicPermissions.length}`);
+
         for (const contentType of publicContentTypes) {
-          // Check if find permission exists
           const existingFindPermission = publicPermissions.find(
-            (p: any) => p.type === contentType && p.action === 'find'
+            (p: any) => p.type === contentType && (p.action === 'find' || p.action === `${contentType}.find`)
           );
 
           if (!existingFindPermission) {
@@ -92,11 +288,9 @@ export default {
             strapi.log.info(`[Bootstrap] Added find permission for ${contentType}`);
           }
 
-          // Check if findOne permission exists
           const existingFindOnePermission = publicPermissions.find(
-            (p: any) => p.type === contentType && p.action === 'findOne'
+            (p: any) => p.action === 'findOne' || p.action === `${contentType}.findOne`
           );
-
           if (!existingFindOnePermission) {
             await strapi.query('plugin::users-permissions.permission').create({
               data: {
@@ -110,7 +304,57 @@ export default {
           }
         }
 
-        // Set up authenticated role for creating content (nominations, stories, etc.)
+        for (const contentType of publicSubmitContentTypes) {
+          const existingPerms = publicPermissions.filter(
+            (p: any) => p.type === contentType
+          );
+
+          const shortAction = 'create';
+          const fullAction = `${contentType}.create`;
+
+          const hasShort = existingPerms.some((p: any) => p.action === shortAction);
+          const hasFull = existingPerms.some((p: any) => p.action === fullAction);
+
+          if (!hasShort) {
+            await strapi.query('plugin::users-permissions.permission').create({
+              data: {
+                action: shortAction,
+                subject: contentType,
+                role: publicRole.id,
+                enabled: true,
+              },
+            });
+            strapi.log.info(`[Bootstrap] Added ${shortAction} permission for ${contentType} (public)`);
+          }
+
+          if (!hasFull) {
+            await strapi.query('plugin::users-permissions.permission').create({
+              data: {
+                action: fullAction,
+                subject: contentType,
+                role: publicRole.id,
+                enabled: true,
+              },
+            });
+            strapi.log.info(`[Bootstrap] Added ${fullAction} permission for public`);
+          }
+        }
+
+        const existingUploadPermission = publicPermissions.find(
+          (p: any) => p.action === 'upload' || p.action === 'plugin::upload.content-api.upload'
+        );
+        if (!existingUploadPermission) {
+          await strapi.query('plugin::users-permissions.permission').create({
+            data: {
+              action: 'upload',
+              subject: null,
+              role: publicRole.id,
+              enabled: true,
+            },
+          });
+          strapi.log.info('[Bootstrap] Added upload permission for public');
+        }
+
         const authenticatedRole = await strapi.query('plugin::users-permissions.role').findOne({
           where: { type: 'authenticated' },
         });
@@ -130,7 +374,7 @@ export default {
 
           for (const contentType of authContentTypes) {
             const existingCreatePermission = authPermissions.find(
-              (p: any) => p.type === contentType && p.action === 'create'
+              (p: any) => p.type === contentType && (p.action === 'create' || p.action === `${contentType}.create`)
             );
 
             if (!existingCreatePermission) {

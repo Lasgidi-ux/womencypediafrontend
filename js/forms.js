@@ -128,7 +128,13 @@ const FormHandler = {
         `;
 
         try {
+            console.log('[NominationForm] Starting submission...');
+            console.log('[NominationForm] CONFIG available:', typeof CONFIG !== 'undefined');
+            console.log('[NominationForm] CONFIG.API_BASE_URL:', CONFIG?.API_BASE_URL);
+
             const token = (typeof Auth !== 'undefined' && Auth.isAuthenticated()) ? Auth.getAccessToken() : null;
+            console.log('[NominationForm] Auth available:', typeof Auth !== 'undefined');
+            console.log('[NominationForm] Token available:', !!token);
 
             const headers = { 'Content-Type': 'application/json' };
             if (token) {
@@ -140,22 +146,31 @@ const FormHandler = {
                 throw new Error('Configuration not loaded. Please refresh the page and try again.');
             }
 
+            console.log('[NominationForm] Submitting to:', `${CONFIG.API_BASE_URL}/api/nominations`);
+
             const response = await fetch(`${CONFIG.API_BASE_URL}/api/nominations`, {
                 method: 'POST',
                 headers,
                 body: JSON.stringify({ data: formData })
             });
 
+            console.log('[NominationForm] Response status:', response.status);
+            console.log('[NominationForm] Response ok:', response.ok);
+
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
+                console.log('[NominationForm] Error data:', errorData);
                 // Provide more helpful error messages for common issues
                 if (response.status === 404) {
-                    throw new Error('Unable to submit nomination. The submission endpoint was not found. Please contact support.');
+                    throw new Error('Unable to submit nomination. The server endpoint /api/nominations was not found. This may indicate the CMS needs to be rebuilt.');
                 } if (response.status === 401) {
                     throw new Error('Please sign in to submit a nomination.');
                 }
                 if (response.status === 403) {
-                    throw new Error('You do not have permission to submit nominations. Please contact support.');
+                    throw new Error('You do not have permission to submit nominations. This may indicate the Public role needs to be granted POST permission for nominations in Strapi admin panel.');
+                }
+                if (response.status === 500) {
+                    throw new Error('Server error. Please try again later or contact support.');
                 }
                 throw new Error(errorData.error?.message || errorData.message || `Server error (${response.status})`);
             }
@@ -238,11 +253,17 @@ const FormHandler = {
 
         try {
             // Validate CONFIG first - fail fast before any API calls
+            console.log('[StoryForm] Starting submission...');
+            console.log('[StoryForm] CONFIG available:', typeof CONFIG !== 'undefined');
+            console.log('[StoryForm] CONFIG.API_BASE_URL:', CONFIG?.API_BASE_URL);
+
             if (typeof CONFIG === 'undefined' || !CONFIG.API_BASE_URL) {
                 throw new Error('Configuration not loaded. Please refresh the page and try again.');
             }
 
             const token = (typeof Auth !== 'undefined' && Auth.isAuthenticated()) ? Auth.getAccessToken() : null;
+            console.log('[StoryForm] Auth available:', typeof Auth !== 'undefined');
+            console.log('[StoryForm] Token available:', !!token);
 
             const headers = { 'Content-Type': 'application/json' };
             if (token) {
@@ -257,7 +278,15 @@ const FormHandler = {
                     <span class="material-symbols-outlined animate-spin">refresh</span>
                     Uploading media...
                 `;
-                mediaFileIds = await this.uploadMediaFiles(mediaInput.files, token);
+                try {
+                    mediaFileIds = await this.uploadMediaFiles(mediaInput.files, token);
+                    if (mediaFileIds.length === 0 && mediaInput.files.length > 0) {
+                        console.warn('[StoryForm] Media upload skipped - files may be too large or upload endpoint requires auth');
+                    }
+                } catch (uploadError) {
+                    console.warn('[StoryForm] Media upload failed, continuing without attachments:', uploadError);
+                    // Continue without media - the story can still be submitted
+                }
             }
 
             // Collect form data — map to Strapi contribution schema
@@ -284,6 +313,14 @@ const FormHandler = {
                 formData.media = mediaFileIds;
             }
 
+            let successMessage = 'Thank you for sharing this story. Our editorial team will review it and may reach out for additional details or verification.';
+            if (mediaFileIds.length === 0 && mediaInput && mediaInput.files && mediaInput.files.length > 0) {
+                successMessage += ' Note: Media upload failed, but your story text was submitted successfully.';
+            }
+
+            console.log('[StoryForm] Submitting to:', `${CONFIG.API_BASE_URL}/api/contributions`);
+            console.log('[StoryForm] Form data:', JSON.stringify({ data: formData }));
+
             submitBtn.innerHTML = `
                 <span class="material-symbols-outlined animate-spin">refresh</span>
                 Saving story...
@@ -295,17 +332,24 @@ const FormHandler = {
                 body: JSON.stringify({ data: formData })
             });
 
+            console.log('[StoryForm] Response status:', response.status);
+            console.log('[StoryForm] Response ok:', response.ok);
+
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
+                console.log('[StoryForm] Error data:', errorData);
                 // Provide more helpful error messages for common issues
                 if (response.status === 404) {
-                    throw new Error('Unable to submit story. The server appears to be unavailable. Please try again later or contact support.');
+                    throw new Error('Unable to submit story. The server endpoint /api/contributions was not found. This may indicate the CMS needs to be rebuilt or the content type needs to be created.');
                 }
                 if (response.status === 401) {
                     throw new Error('Please sign in to submit your story.');
                 }
                 if (response.status === 403) {
-                    throw new Error('You do not have permission to submit stories. Please contact support.');
+                    throw new Error('You do not have permission to submit stories. This may indicate the Public role needs to be granted POST permission for contributions in Strapi admin panel.');
+                }
+                if (response.status === 500) {
+                    throw new Error('Server error. Please try again later or contact support.');
                 }
                 throw new Error(errorData.error?.message || errorData.message || `Server error (${response.status})`);
             }
@@ -313,7 +357,7 @@ const FormHandler = {
             // Show success message
             this.showSuccessMessage(form, {
                 title: 'Story Submitted!',
-                message: 'Thank you for sharing this story. Our editorial team will review it and may reach out for additional details or verification.',
+                message: successMessage,
                 icon: 'auto_stories'
             });
 
@@ -324,7 +368,7 @@ const FormHandler = {
             if (fileDisplay) fileDisplay.textContent = '';
 
         } catch (error) {
-            console.error('Story submission error:', error);
+            console.error('[StoryForm] Submission error:', error);
 
             // Show user-friendly error message
             let errorMessage = error.message || 'Failed to submit story. Please try again.';

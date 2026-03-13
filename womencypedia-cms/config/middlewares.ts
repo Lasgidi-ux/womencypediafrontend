@@ -9,14 +9,15 @@ const config: Core.Config.Middlewares = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'connect-src': ["'self'", 'https:', 'http:'],
-          'img-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'res.cloudinary.com',
-          ],
+          'connect-src': process.env.NODE_ENV === 'production'
+            ? ["'self'", 'https:']
+            : ["'self'", 'https:', 'http:'], 'img-src': [
+              "'self'",
+              'data:',
+              'blob:',
+              'market-assets.strapi.io',
+              'res.cloudinary.com',
+            ],
           'media-src': [
             "'self'",
             'data:',

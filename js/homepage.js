@@ -28,10 +28,15 @@ const Homepage = {
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 3000);
             // Strapi APIs return 404 for HEAD by default, use minimal GET instead
-            const res = await fetch(`${CONFIG.API_BASE_URL}/api/homepage?fields[0]=id`, {
+            var headers = {};
+            if (CONFIG.API_TOKEN) {
+                headers['Authorization'] = 'Bearer ' + CONFIG.API_TOKEN;
+            }
+            const res = await fetch(CONFIG.API_BASE_URL + '/api/homepage?fields[0]=id', {
                 method: 'GET',
                 signal: controller.signal,
-                cache: 'no-store'
+                cache: 'no-store',
+                headers: headers
             });
             clearTimeout(timeout);
             if (res.status === 404) {
@@ -74,12 +79,22 @@ const Homepage = {
      */
     async loadHomepageContent() {
         try {
-            const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 5000);
-            const response = await fetch(`${CONFIG.API_BASE_URL}/api/homepage?locale=${locale}&populate=*`, {
+            var locale = 'en';
+            if (typeof I18N !== 'undefined') {
+                locale = I18N.currentLocale;
+            }
+            var controller = new AbortController();
+            var timeout = setTimeout(function () { controller.abort(); }, 5000);
+            var headers = {
+                'Content-Type': 'application/json'
+            };
+            if (CONFIG.API_TOKEN) {
+                headers['Authorization'] = 'Bearer ' + CONFIG.API_TOKEN;
+            }
+            var response = await fetch(CONFIG.API_BASE_URL + '/api/homepage?locale=' + locale + '&populate=*', {
                 cache: 'no-store',
-                signal: controller.signal
+                signal: controller.signal,
+                headers: headers
             });
             clearTimeout(timeout);
 

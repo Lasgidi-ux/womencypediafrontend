@@ -16,9 +16,20 @@
  */
 
 (function () {
+    // Determine if we're in development mode
+    // Check for common development indicators
+    const isDevelopment =
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1' ||
+        window.location.port === '5500' ||
+        window.location.port === '3000' ||
+        window.location.port === '8080';
+
     // Strapi CMS URL
-    // Change this if your Strapi instance runs at a different URL
-    window.API_STRAPI_URL = 'https://womencypedia-cms.onrender.com';
+    // Use local Strapi for development, remote for production
+    window.API_STRAPI_URL = isDevelopment
+        ? 'http://localhost:1337'
+        : 'https://www.womencypedia.org';
 
     // Payment Gateway Keys
     // Replace with your LIVE/TEST public keys
