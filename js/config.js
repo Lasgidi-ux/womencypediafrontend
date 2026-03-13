@@ -34,9 +34,10 @@ const CONFIG = {
     // Strapi is the recommended CMS for this project
     USE_STRAPI: true,
 
-    // Mock API is disabled — Strapi CMS is the primary data source
-    // All content is fetched at runtime from Strapi REST API
-    USE_MOCK_API: false,
+    // Mock API is disabled by default — Strapi CMS is the primary data source
+    // Set to true to use mock API when CMS is unavailable (auto-detected)
+    // When CMS returns 404 or is unreachable, the frontend will automatically use mock data
+    USE_MOCK_API: undefined, // undefined = auto-detect based on CMS availability
 
     // API Endpoints
     // Use STRAPI_ENDPOINTS when USE_STRAPI is true

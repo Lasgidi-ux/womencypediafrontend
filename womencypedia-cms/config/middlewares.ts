@@ -9,7 +9,7 @@ const config: Core.Config.Middlewares = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'connect-src': ["'self'", 'https:'],
+          'connect-src': ["'self'", 'https:', 'http:'],
           'img-src': [
             "'self'",
             'data:',
@@ -23,6 +23,7 @@ const config: Core.Config.Middlewares = [
             'blob:',
             'res.cloudinary.com',
           ],
+          'script-src': ["'self'", "'unsafe-eval'", 'https:'],
           upgradeInsecureRequests: null,
         },
       },
