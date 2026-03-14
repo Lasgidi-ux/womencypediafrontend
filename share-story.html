@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-<meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Share Your Story — Womencypedia</title>
 
@@ -605,12 +605,6 @@
             }
         })();
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            PageProtection.protect();
-        });
-    </script>
-
     <script src="js/forms.js"></script>
     <!-- Login Modal -->
     <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
@@ -675,15 +669,6 @@
     </div>
 
     <script src="js/navigation.js"></script>
-    <script>
-        // Protect this page - ALWAYS require contributor or admin authentication
-        document.addEventListener('DOMContentLoaded', function () {
-            // Use Auth.protectPage() for consistent security
-            if (!Auth.protectPage('user')) {
-                return; // protectPage handles redirect
-            }
-        });
-    </script>
 
     <script src="js/inline-common.js"></script>
     <script src="js/darkmode.js"></script>
