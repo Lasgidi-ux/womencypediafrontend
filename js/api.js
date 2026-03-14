@@ -7,6 +7,18 @@
  * Uses Strapi CMS as the primary data source.
  */
 
+/**
+ * API Error class for custom error handling
+ */
+class APIError extends Error {
+    constructor(message, status, data = null) {
+        super(message);
+        this.name = 'APIError';
+        this.status = status;
+        this.data = data;
+    }
+}
+
 const API = {
     // Track if using Strapi CMS
     _useStrapi: true,
@@ -515,17 +527,7 @@ const API = {
             };
         }
 
-        // Server error (5xx) - when server returns 500+ status
-        if (error && typeof error.status === 'number' && error.status >= 500) {
-            return {
-                error: true,
-                message: 'Server temporarily unavailable. Please try again later.',
-                status: error.status,
-                recoverable: true
-            };
-        }
-
-        // Auth error (401) - when authentication fails or tokens expire
+        // Auth error (401)
         if (error && error.status === 401) {
             // Clear invalid tokens using Auth module for consistency
             if (typeof Auth !== 'undefined' && Auth.logout) {
@@ -540,27 +542,28 @@ const API = {
                 action: 'redirect_to_login'
             };
         }
-        
+
+        // Server error (5xx)
+        if (error && typeof error.status === 'number' && error.status >= 500) {
+            return {
+                error: true,
+                message: 'Server temporarily unavailable. Please try again later.',
+                status: error.status,
+                recoverable: true
+            };
+        }
+
+        // Default error
         return {
             error: true,
             message: (error && error.message) || 'An unexpected error occurred.',
-            status: (error && error.status) || 500,
+            status: (error && error.status) || (error && error.code) || 500,
             recoverable: true
         };
     }
 };
 
-/**
- * API Error class
- */
-class APIError extends Error {
-    constructor(message, status, data = null) {
-        super(message);
-        this.name = 'APIError';
-        this.status = status;
-        this.data = data;
-    }
-}
+
 
 // Export
 if (typeof module !== 'undefined' && module.exports) {
