@@ -39,6 +39,7 @@ const config: Core.Config.Middlewares = [
         'https://kehindeisa.onrender.com',
         'https://womencypedia-org.onrender.com',
         'https://womencypedia-cms.onrender.com',
+        'https://womencypedia-frontend.onrender.com',
         'http://localhost:5500',
         'http://127.0.0.1:5500',
         'http://localhost:3000',
