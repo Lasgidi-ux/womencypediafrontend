@@ -15,6 +15,8 @@ function initNavigation() {
     initNavActiveState();
     initNavScrollBehavior();
     initKeyboardNavigation();
+    initAuthStateListener();
+    updateAuthUI();
 }
 
 /**
@@ -38,13 +40,21 @@ function createMobileNavigation() {
                 <input type="search" placeholder="Search women, cultures, eras…"
                     class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" />
             </div>
-            <button onclick="toggleSearch()"
-                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg hover:bg-primary/10 transition-colors">
+            <button class="search-close-btn size-12 flex items-center justify-center bg-white border border-border-light rounded-lg hover:bg-primary/10 transition-colors" aria-label="Close search">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
     `;
     document.body.insertBefore(searchSheet, document.body.firstChild);
+
+    // Add event listener for close search button (using consistent event listener pattern)
+    const closeSearchBtn = searchSheet.querySelector('.search-close-btn');
+    if (closeSearchBtn) {
+        closeSearchBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            toggleSearch();
+        });
+    }
 
     // Create menu overlay
     const menuOverlay = document.createElement('div');
@@ -53,6 +63,9 @@ function createMobileNavigation() {
     menuOverlay.onclick = toggleMenu;
     document.body.insertBefore(menuOverlay, document.body.firstChild);
 
+    // Determine if we're in a subdirectory (like collections/)
+    const pathPrefix = window.location.pathname.includes('/collections/') ? '../' : '';
+
     // Create mobile bottom sheet menu
     const mobileMenu = document.createElement('nav');
     mobileMenu.id = 'mobileMenu';
@@ -60,65 +73,111 @@ function createMobileNavigation() {
     mobileMenu.innerHTML = `
         <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
 
-        <!-- Primary Navigation -->
+        <!-- Explore -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
-                Primary Navigation</h3>
-            <a href="index.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Home</a>
-            <a href="about.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">About
-                Womencypedia</a>
-            <a href="collections.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Featured
-                Collections</a>
-            <a href="browse.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Browse
-                Stories</a>
-            <a href="featured.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Featured</a>
-            <a href="resources.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Resources</a>
-            <a href="research.html"
-                class="block py-3 text-base font-medium text-text-main hover:text-primary transition-colors">Research
-                & Method</a>
+                Explore</h3>
+            <a href="${pathPrefix}index.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="${pathPrefix}browse.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="${pathPrefix}featured.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="${pathPrefix}collections.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="${pathPrefix}timelines.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Registry -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Registry</h3>
+            <a href="${pathPrefix}browse-leaders.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse Leaders</a>
+            <a href="${pathPrefix}apply-verification.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Apply for Verification</a>
+            <a href="${pathPrefix}controlled-contributions.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Submit Content</a>
+            <a href="${pathPrefix}partners.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Partners</a>
+            <a href="${pathPrefix}fellowship.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Fellowships</a>
+            <a href="${pathPrefix}reports.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Reports</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Learn</h3>
+            <a href="${pathPrefix}education.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="${pathPrefix}enterprises.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="${pathPrefix}research.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="${pathPrefix}publications.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="${pathPrefix}resources.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
         </div>
 
         <!-- Participate -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
                 Participate</h3>
-            <a href="nominate.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Nominate
+            <a href="${pathPrefix}nominate.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
                 a Woman</a>
-            <a href="share-story.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Share
+            <a href="${pathPrefix}share-story.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Share
                 Your Story</a>
-            <a href="contributors.html"
-                class="block py-3 text-base font-medium text-text-main hover:text-primary transition-colors">Become a Contributor</a>
+            <a href="${pathPrefix}contributor-guidelines.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
+                Guidelines</a>
+            <a href="${pathPrefix}donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Donate</a>
         </div>
 
-        <!-- Organization -->
+        <!-- About -->
         <div class="px-6 pb-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
-                Organization</h3>
-            <a href="founders.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Founders</a>
-            <a href="editorial-standards.html"
-                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary transition-colors">Editorial Standards</a>
-            <a href="contact.html"
-                class="block py-3 text-base font-medium text-text-main hover:text-primary transition-colors">Contact Us</a>
+                About</h3>
+            <a href="${pathPrefix}about.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
+                Us</a>
+<a href="${pathPrefix}contributors.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="${pathPrefix}methodology.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="${pathPrefix}editorial-standards.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial
+                Standards</a>
+            <a href="${pathPrefix}contact.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+
+        <!-- My Profile -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                My Profile</h3>
+            <a href="${pathPrefix}profile.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My
+                Profile</a>
+            <a href="${pathPrefix}biography.html" class="block py-3 text-base font-medium text-text-main hover:text-primary">Sample
+                Biography</a>
+            <!-- Sign Out - shown when authenticated -->
+            <button onclick="handleMobileLogout()"
+                class="block w-full text-left py-3 text-base font-medium text-red-600 hover:text-red-700 border-t border-border-light mt-2"
+                id="mobile-signout-btn" style="display: none;">
+                Sign Out
+            </button>
         </div>
 
         <!-- CTA -->
-        <div class="px-6 pb-8 pt-2 space-y-3">
-            <a href="donate.html"
-                class="block w-full h-12 bg-accent-gold text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-accent-gold/90 transition-colors">
-                <span class="material-symbols-outlined mr-2">favorite</span>
-                Donate
-            </a>
-            <a href="share-story.html"
-                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary/90 transition-colors">
+        <div class="px-6 pb-8">
+            <a href="${pathPrefix}share-story.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors">
                 Share Your Story
             </a>
         </div>
@@ -290,24 +349,147 @@ function toggleSearch() {
 
 /**
  * Initialize active state for navigation links based on current page
+ * Handles both desktop and mobile navigation, including subdirectory pages
  */
 function initNavActiveState() {
     const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop() || 'index.html';
+
+    // Get the current page filename and normalize for subdirectory detection
+    const pathParts = currentPath.split('/').filter(p => p.length > 0);
+    const currentPage = pathParts.pop() || 'index.html';
+    const currentDir = pathParts.pop() || '';
+
+    // Determine if we're in a subdirectory
+    const isInSubdirectory = currentDir !== '' && currentDir !== 'index.html';
+
+    // Active state classes
+    const activeClasses = ['text-primary', 'border-b-2', 'border-primary'];
+    const inactiveClasses = ['text-text-main', 'hover:text-primary'];
 
     // Desktop navigation links
-    const navLinks = document.querySelectorAll('header nav a');
-    navLinks.forEach(link => {
+    const desktopNavLinks = document.querySelectorAll('header nav a, header .nav-link');
+    desktopNavLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-            link.classList.add('text-primary', 'border-b-2', 'border-primary');
-            link.classList.remove('text-text-main', 'hover:text-primary');
+        if (!href) return;
+
+        // Remove any trailing slashes and normalize
+        const normalizedHref = href.replace(/^\/?(.+?)\/$/, '$1');
+
+        // Check if this link matches current page
+        const isActive = isNavLinkActive(href, currentPage, currentDir);
+
+        if (isActive) {
+            link.classList.add(...activeClasses);
+            link.classList.remove(...inactiveClasses);
+            link.setAttribute('aria-current', 'page');
         } else {
-            link.classList.remove('text-primary', 'border-b-2', 'border-primary');
+            link.classList.remove(...activeClasses);
             link.classList.add('text-text-main');
+            link.removeAttribute('aria-current');
         }
     });
+
+    // Mobile navigation links
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            const isActive = isNavLinkActive(href, currentPage, currentDir);
+
+            if (isActive) {
+                link.classList.add('text-primary', 'font-semibold');
+                link.classList.remove('text-text-main');
+            } else {
+                link.classList.remove('text-primary', 'font-semibold');
+                link.classList.add('text-text-main');
+            }
+        });
+    }
 }
+
+/**
+ * Check if a navigation link should be active for the current page
+ * @param {string} href - The href attribute of the link
+ * @param {string} currentPage - Current page filename
+ * @param {string} currentDir - Current directory (if any)
+ * @returns {boolean} True if the link should be active
+ */
+function isNavLinkActive(href, currentPage, currentDir) {
+    if (!href) return false;
+
+    // Normalize href
+    const normalizedHref = href.replace(/^\/?(.+?)\/$/, '$1').replace(/^\.\.\//, '');
+    const hrefPage = normalizedHref.split('/').pop();
+    const hrefDir = normalizedHref.split('/').slice(0, -1).pop() || '';
+
+    // Handle root-level index.html
+    if (currentPage === '' || currentPage === 'index.html') {
+        return hrefPage === 'index.html' || hrefPage === '';
+    }
+
+    // Direct page match
+    if (hrefPage === currentPage) {
+        // If both in same directory or href is root-level
+        return hrefDir === currentDir || hrefDir === '';
+    }
+
+    // Handle collections subdirectory
+    if (currentDir === 'collections') {
+        // For collections pages, check if href points to collections.html
+        return hrefPage === 'collections.html';
+    }
+
+    // Handle biography pages
+    if (currentPage.startsWith('biography') || currentPage === 'leader-profile.html') {
+        return hrefPage === 'browse.html';
+    }
+
+    // Handle education module pages
+    if (currentPage.startsWith('education-module')) {
+        return hrefPage === 'education.html';
+    }
+
+    return false;
+}
+
+/**
+ * Set active navigation item programmatically
+ * Can be called from any page to override automatic detection
+ * @param {string} navItemId - The nav item identifier or href to set as active
+ */
+function setActiveNavItem(navItemId) {
+    const activeClasses = ['text-primary', 'border-b-2', 'border-primary'];
+    const inactiveClasses = ['text-text-main', 'hover:text-primary'];
+
+    // Try to find by ID first
+    let targetLink = document.getElementById(navItemId);
+
+    // If not found by ID, try to find by href
+    if (!targetLink) {
+        targetLink = document.querySelector(`header nav a[href*="${navItemId}"]`);
+    }
+
+    if (!targetLink) return;
+
+    // Remove active state from all links
+    const allLinks = document.querySelectorAll('header nav a');
+    allLinks.forEach(link => {
+        link.classList.remove(...activeClasses);
+        link.classList.add('text-text-main');
+        link.removeAttribute('aria-current');
+    });
+
+    // Add active state to target link
+    targetLink.classList.add(...activeClasses);
+    targetLink.classList.remove(...inactiveClasses);
+    targetLink.setAttribute('aria-current', 'page');
+}
+
+// Make setActiveNavItem globally available
+window.setActiveNavItem = setActiveNavItem;
 
 /**
  * Navbar hide/show on scroll
@@ -362,6 +544,235 @@ function initKeyboardNavigation() {
     });
 }
 
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+}
+
 // Make functions globally available
 window.toggleMenu = toggleMenu;
 window.toggleSearch = toggleSearch;
+
+/**
+ * Handle mobile menu logout
+ */
+function handleMobileLogout() {
+    // Close menu first
+    toggleMenu();
+
+    // Use Auth.logout() if available, otherwise do basic logout
+    if (typeof Auth !== 'undefined' && typeof Auth.logout === 'function') {
+        Auth.logout()
+            .then(() => {
+                window.location.href = 'index.html';
+            })
+            .catch(() => {
+                // Fallback: clear storage and redirect even on error
+                localStorage.removeItem('womencypedia_access_token');
+                localStorage.removeItem('womencypedia_refresh_token');
+                localStorage.removeItem('womencypedia_user');
+                window.location.href = 'index.html';
+            });
+    } else {        // Fallback: clear storage and redirect
+        localStorage.removeItem('womencypedia_access_token');
+        localStorage.removeItem('womencypedia_refresh_token');
+        localStorage.removeItem('womencypedia_user');
+        window.location.href = 'index.html';
+    }
+}
+
+window.handleMobileLogout = handleMobileLogout;
+
+/**
+ * Update mobile menu auth state
+ */
+function updateMobileMenuAuthState() {
+    const signOutBtn = document.getElementById('mobile-signout-btn');
+    if (!signOutBtn) return;
+
+    // Check for token
+    const token = localStorage.getItem('womencypedia_access_token');
+    if (token) {
+        signOutBtn.style.display = 'block';
+    } else {
+        signOutBtn.style.display = 'none';
+    }
+}
+
+/**
+ * Initialize auth state listeners for real-time updates
+ */
+function initAuthStateListener() {
+    // Run on DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateAuthUI);
+    } else {
+        updateAuthUI();
+    }
+
+    // Listen for storage changes (cross-tab sync)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'womencypedia_access_token' || e.key === 'womencypedia_user') {
+            updateAuthUI();
+        }
+    });
+
+    // Listen for custom auth update event (from login/signup)
+    window.addEventListener('authStateChanged', () => {
+        updateAuthUI();
+    });
+}
+
+/**
+ * Update all auth-related UI elements in real-time
+ * Updates desktop header, mobile menu, and profile displays
+ */
+function updateAuthUI() {
+    const token = localStorage.getItem('womencypedia_access_token');
+    const userStr = localStorage.getItem('womencypedia_user');
+    let user = null;
+
+    if (userStr) {
+        try {
+            user = JSON.parse(userStr);
+        } catch (e) {
+            console.warn('Could not parse user data');
+        }
+    }
+
+    // Update desktop header sign in/out buttons
+    updateDesktopAuthButtons(token, user);
+
+    // Update mobile menu auth section
+    updateMobileMenuAuthState();
+
+    // Update profile display in mobile menu
+    updateMobileMenuProfileDisplay(user);
+}
+
+/**
+ * Update desktop header auth buttons (Sign In/Sign Out)
+ */
+function updateDesktopAuthButtons(token, user) {
+    const signInBtn = document.querySelector('[data-auth="signin"]');
+    const signOutDiv = document.querySelector('[data-auth="signout"]');
+    const userInfoSpan = document.querySelector('[data-auth="user-info"]');
+
+    if (token && user) {
+        // User is authenticated - show sign out and user info
+        if (signInBtn) {
+            signInBtn.style.display = 'none';
+        }
+        if (signOutDiv) {
+            signOutDiv.style.display = 'flex';
+            if (userInfoSpan) {
+                userInfoSpan.textContent = user.name || user.email || 'My Profile';
+            }
+        }
+    } else {
+        // User is not authenticated - show sign in button
+        if (signInBtn) {
+            signInBtn.style.display = 'flex';
+        }
+        if (signOutDiv) {
+            signOutDiv.style.display = 'none';
+        }
+    }
+}
+
+/**
+ * Update mobile menu profile display with user info
+ */
+function updateMobileMenuProfileDisplay(user) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!mobileMenu) return;
+
+    // Check if profile section exists
+    let profileSection = mobileMenu.querySelector('[data-section="profile"]');
+
+    if (!profileSection) {
+        // Create profile section if it doesn't exist
+        profileSection = document.createElement('div');
+        profileSection.setAttribute('data-section', 'profile');
+        profileSection.className = 'px-6 pb-4';
+
+        // Insert at the beginning after the header handle
+        const firstSection = mobileMenu.querySelector('.w-10');
+        if (firstSection && firstSection.nextSibling) {
+            mobileMenu.insertBefore(profileSection, firstSection.nextSibling);
+        } else {
+            mobileMenu.appendChild(profileSection);
+        }
+    }
+
+    const token = localStorage.getItem('womencypedia_access_token');
+
+    if (token && user) {
+        // User is authenticated - show profile info
+        const userName = user.name || user.username || user.email || 'User';
+        const userEmail = user.email || '';
+        const userInitials = getInitials(userName);
+
+        profileSection.innerHTML = `
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                My Profile</h3>
+            <div class="flex items-center gap-3 py-3 border-b border-border-light/50">
+                <div class="size-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                    ${user.avatar
+                ? `<img src="${escapeHtml(user.avatar)}" alt="${escapeHtml(userName)}" class="size-12 rounded-full object-cover">`
+                : `<span class="text-lg font-bold text-white">${escapeHtml(userInitials)}</span>`
+            }
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="font-medium text-text-main truncate">${escapeHtml(userName)}</p>
+                    <p class="text-sm text-text-secondary truncate">${escapeHtml(userEmail)}</p>
+                </div>
+            </div>
+            <a href="profile.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">My Profile</a>
+            <a href="settings.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Settings</a>
+            <button onclick="handleMobileLogout()"
+                class="block w-full text-left py-3 text-base font-medium text-red-600 hover:text-red-700 border-t border-border-light mt-2">
+                Sign Out
+            </button>
+        `;
+    } else {
+        // User is not authenticated - show login/signup options
+        profileSection.innerHTML = `
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light">
+                Account</h3>
+            <a href="login.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Sign In</a>
+            <a href="signup.html"
+                class="block py-3 text-base font-medium text-primary border-b border-border-light/50 hover:text-primary/80">Create Account</a>
+        `;
+    }
+}
+
+/**
+ * Get user initials from name
+ */
+function getInitials(name) {
+    if (!name) return '?';
+    const parts = name.split(' ').filter(p => p.length > 0);
+    if (parts.length >= 2) {
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+}
+
+/**
+ * Emit auth state changed event (call after login/signup)
+ */
+function emitAuthStateChanged() {
+    window.dispatchEvent(new Event('authStateChanged'));
+}
+
+// Make functions globally available
+window.emitAuthStateChanged = emitAuthStateChanged;
