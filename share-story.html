@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Share Your Story — Womencypedia</title>
 
-    <!-- Auth state pre-check - prevents flash of wrong auth state -->
+    <!-- Auth state pre-check -->
     <script>
         (function () {
             const token = localStorage.getItem('womencypedia_access_token');
@@ -16,14 +16,12 @@
             }
         })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet" />
-    <!-- Tailwind CSS (Production Build) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
     <link rel="stylesheet" href="css/tailwind.css" />
     <link rel="stylesheet" href="css/styles.css" />
 
@@ -36,23 +34,16 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://womencypedia.org/share-story.html">
     <meta property="og:title" content="Share Your Story — Womencypedia">
-    <meta property="og:description"
-        content="Share your story or the story of a woman in your life. Every story matters.">
+    <meta property="og:description" content="Share your story or the story of a woman in your life. Every story matters.">
     <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
     <meta property="og:site_name" content="Womencypedia">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Share Your Story — Womencypedia">
-    <meta name="twitter:description"
-        content="Share your story or the story of a woman in your life. Every story matters.">
-    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
-    <link rel="canonical" href="https://womencypedia.org/share-story.html">
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#D67D7D">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
     <script defer data-domain="womencypedia.org" src="https://plausible.io/js/script.js"></script>
+
     <script>
         function updateFileName(input) {
             const display = document.getElementById('file-name-display');
@@ -67,64 +58,12 @@
             }
         }
     </script>
-    <script src="js/env.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/page-protection.js"></script>
-    <script src="js/strapi-api.js"></script>
-    <script src="js/api.js"></script>
-
-    <script>
-        // ==================== STORY FORM SUBMISSION ====================
-        const storyForm = document.getElementById("story-form");
-
-        if (storyForm) {
-            storyForm.addEventListener("submit", async function (e) {
-                e.preventDefault();
-
-                const submitBtn = this.querySelector("button[type='submit']");
-                const originalText = submitBtn.innerHTML;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = "Submitting...";
-
-                try {
-                    const formData = {
-                        storyType: document.querySelector('input[name="storyType"]:checked')?.value || "other",
-                        subjectName: document.getElementById("subjectName").value.trim(),
-                        relationship: document.getElementById("relationship").value.trim(),
-                        storyRegion: document.getElementById("storyRegion").value.trim(),
-                        theme: document.getElementById("theme").value,
-                        story: document.getElementById("story").value.trim(),
-                        lessons: document.getElementById("lessons").value.trim(),
-                        contactName: document.getElementById("contactName").value.trim(),
-                        contactEmail: document.getElementById("contactEmail").value.trim(),
-                        permission: document.querySelector('input[name="permission"]').checked
-                    };
-
-                    await window.API.submitStory(formData);
-
-                    alert("✅ Your story has been submitted successfully! Thank you for sharing.");
-                    this.reset();
-                } catch (error) {
-                    console.error(error);
-                    alert("❌ Failed to submit story: " + (error.message || "Unknown error"));
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }
-            });
-        }
-    </script>
-
-    <script src="js/forms.js"></script>
 </head>
 
 <body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
+
     <!-- Skip Link -->
-    <a href="#main-content"
-        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
         Skip to main content
     </a>
 
@@ -133,12 +72,9 @@
         <div class="flex items-center gap-3">
             <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
                 <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
-                <input type="search" placeholder="Search women, cultures, eras…"
-                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2"
-                    data-i18n-placeholder="search" />
+                <input type="search" placeholder="Search women, cultures, eras…" class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2" data-i18n-placeholder="search" />
             </div>
-            <button onclick="toggleSearch()"
-                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+            <button onclick="toggleSearch()" class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
@@ -146,6 +82,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
 
     <!-- Mobile Bottom Sheet Menu -->
     <nav id="mobileMenu"
@@ -613,6 +550,7 @@
             </div>
         </div>
     </footer>
+    SCRIPTS - CLEAN & CORRECT ORDER ==================== -->
     <script src="js/env.js"></script>
     <script src="js/config.js"></script>
     <script src="js/i18n.js"></script>
@@ -620,116 +558,58 @@
     <script src="js/auth.js"></script>
     <script src="js/page-protection.js"></script>
     <script src="js/strapi-api.js"></script>
-    <script src="js/api.js"></script>
+    <script src="js/api.js"></script>   <!-- ← MUST BE BEFORE FORM HANDLER -->
+
     <script>
-        // CMS Health Check - Run on page load to diagnose connectivity issues
-        (async function () {
-            try {
-                const cmsUrl = window.API_STRAPI_URL || window.API_BASE_URL || 'https://womencypedia-cms.onrender.com';
-                console.log('[HealthCheck] Testing CMS connectivity:', cmsUrl);
+        // ==================== STORY FORM SUBMISSION ====================
+        const storyForm = document.getElementById("story-form");
 
-                const response = await fetch(`${cmsUrl}/api/contributions?pagination[limit]=1`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    signal: AbortSignal.timeout(10000)
-                });
+        if (storyForm) {
+            storyForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
 
-                if (response.ok) {
-                    console.log('[HealthCheck] CMS is accessible - Status:', response.status);
-                } else {
-                    console.warn('[HealthCheck] CMS returned error - Status:', response.status);
+                const submitBtn = this.querySelector("button[type='submit']");
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = "Submitting...";
+
+                try {
+                    const formData = {
+                        storyType: document.querySelector('input[name="storyType"]:checked')?.value || "other",
+                        subjectName: document.getElementById("subjectName").value.trim(),
+                        relationship: document.getElementById("relationship").value.trim(),
+                        storyRegion: document.getElementById("storyRegion").value.trim(),
+                        theme: document.getElementById("theme").value,
+                        story: document.getElementById("story").value.trim(),
+                        lessons: document.getElementById("lessons").value.trim(),
+                        contactName: document.getElementById("contactName").value.trim(),
+                        contactEmail: document.getElementById("contactEmail").value.trim(),
+                        permission: document.querySelector('input[name="permission"]').checked
+                    };
+
+                    await window.API.submitStory(formData);
+                    alert("✅ Your story has been submitted successfully! Thank you.");
+                    this.reset();
+                } catch (error) {
+                    console.error(error);
+                    alert("❌ Failed to submit story: " + (error.message || "Unknown error"));
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
                 }
-            } catch (error) {
-                console.error('[HealthCheck] CMS is not accessible:', error.message);
-                // Show warning to user
-                const warningDiv = document.createElement('div');
-                warningDiv.className = 'fixed top-4 right-4 z-50 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 max-w-md';
-                warningDiv.innerHTML = `
-                    <div class="flex items-start">
-                        <span class="material-symbols-outlined mr-2">warning</span>
-                        <div>
-                            <p class="font-bold">CMS Connection Issue</p>
-                            <p class="text-sm">Unable to connect to the content management system. Form submissions may fail. Please try again later or contact support.</p>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(warningDiv);
-            }
-        })();
+            });
+        }
     </script>
-    <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
-            <button onclick="document.getElementById('login-modal').classList.add('hidden')"
-                class="absolute top-4 right-4 size-8 flex items-center justify-center rounded-full hover:bg-border-light transition-colors">
-                <span class="material-symbols-outlined text-text-secondary">close</span>
-            </button>
-            <div class="text-center mb-6">
-                <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <span class="material-symbols-outlined text-primary text-3xl">login</span>
-                </div>
-                <h2 class="font-serif text-2xl font-bold text-text-main" data-i18n="share_story.welcomeBack">Welcome
-                    Back</h2>
-                <p class="text-text-secondary text-sm mt-2">Sign in to access your account</p>
-            </div>
-            <form id="login-form" class="space-y-4">
-                <div id="login-error" class="hidden bg-red-100 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
-                <div>
-                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-email">Email</label>
-                    <div class="relative">
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">mail</span>
-                        <input type="email" id="login-email" name="email" required placeholder="you@example.com"
-                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-text-main mb-2" for="login-password">Password</label>
-                    <div class="relative">
-                        <span
-                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-secondary text-[20px]">lock</span>
-                        <input type="password" id="login-password" name="password" required placeholder="••••••••"
-                            class="w-full h-12 pl-12 pr-4 border border-border-light rounded-lg focus:border-accent-teal focus:ring-1 focus:ring-accent-teal">
-                    </div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" name="remember"
-                            class="size-4 rounded border-border-light text-primary focus:ring-primary">
-                        <span class="text-sm text-text-secondary">Remember me</span>
-                    </label>
-                    <a href="forgot-password.html" class="text-sm text-primary hover:underline">Forgot password?</a>
-                </div>
-                <button type="submit"
-                    class="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-                    <span class="material-symbols-outlined text-[20px]">login</span>
-                    Sign In
-                </button>
-            </form>
-            <div class="flex items-center gap-4 my-6">
-                <div class="flex-1 h-px bg-border-light"></div>
-                <span class="text-xs text-text-secondary uppercase tracking-wider">New here?</span>
-                <div class="flex-1 h-px bg-border-light"></div>
-            </div>
-            <a href="signup.html"
-                class="w-full h-12 flex items-center justify-center gap-2 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary/10 transition-colors">
-                <span class="material-symbols-outlined text-[20px]">person_add</span>
-                Create an Account
-            </a>
-        </div>
-    </div>
 
-    <script src="js/env.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
     <script src="js/forms.js"></script>
-
     <script src="js/navigation.js"></script>
-
     <script src="js/inline-common.js"></script>
     <script src="js/darkmode.js"></script>
     <script src="js/main.js"></script>
     <script src="js/performance.js"></script>
 </body>
+    </html>
 
-</html>
+    
+                        
+    
