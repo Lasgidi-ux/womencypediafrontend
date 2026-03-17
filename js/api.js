@@ -104,7 +104,7 @@ const API = {
     },
 
     async _genericRequest(endpoint, options = {}) {
-        const url = `\( {CONFIG?.API_BASE_URL || this.baseURL} \){endpoint}`;
+        const url = `${CONFIG?.API_BASE_URL || this.baseURL}${endpoint}`;
 
         const defaultHeaders = { 'Content-Type': 'application/json' };
         const token = Auth?.getAccessToken?.() || localStorage.getItem("womencypedia_access_token");
