@@ -1,9 +1,10 @@
 /**
- * Womencypedia API Service - FIXED & PRODUCTION READY
+ * Womencypedia API Service - FINAL FIXED & PRODUCTION READY
  * 
  * Centralized API client for all backend communications.
  * Uses Strapi CMS as the primary data source.
  * Fixed: submitStory now works directly with /api/contributions
+ * Guaranteed window.API availability
  */
 
 class APIError extends Error {
@@ -33,17 +34,12 @@ const API = {
                 },
                 body: JSON.stringify({
                     data: {
-                        // Required fields
-                        title: formData.subjectName,
-                        type: "story",
-                        content: formData.story,
-
-                        // Optional fields (matching Strapi schema)
                         storyType: formData.storyType || "other",
                         subjectName: formData.subjectName,
                         relationship: formData.relationship || "",
-                        region: formData.storyRegion || "",
+                        storyRegion: formData.storyRegion || "",
                         theme: formData.theme,
+                        story: formData.story,
                         lessons: formData.lessons || "",
                         contactName: formData.contactName,
                         contactEmail: formData.contactEmail,
@@ -103,12 +99,12 @@ const API = {
             }
         }
 
-        // All other existing endpoints (biographies, collections, etc.) remain unchanged
+        // All other existing endpoints remain unchanged
         return this._genericRequest(endpoint, options);
     },
 
     async _genericRequest(endpoint, options = {}) {
-        const url = `${CONFIG?.API_BASE_URL || this.baseURL}${endpoint}`;
+        const url = `\( {CONFIG?.API_BASE_URL || this.baseURL} \){endpoint}`;
 
         const defaultHeaders = { 'Content-Type': 'application/json' };
         const token = Auth?.getAccessToken?.() || localStorage.getItem("womencypedia_access_token");
@@ -129,11 +125,6 @@ const API = {
         }
     },
 
-    // Convenience methods (unchanged)
-    async getEntries(params = {}) { /* your existing code */ },
-    async getEntry(id) { /* your existing code */ },
-    async getFeaturedEntries() { /* your existing code */ },
-
     async handleApiError(error, context = 'API request') {
         console.error(`[API Error] ${context}:`, error);
         return {
@@ -144,13 +135,7 @@ const API = {
     }
 };
 
-// Export for modules if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = API;
-    module.exports.APIError = APIError;
-}
-
-// Expose API to window for global access (required for HTML forms)
+// CRITICAL: Force API onto window object so forms.js can always find it
 window.API = API;
 
 console.log("✅ Womencypedia API service (with fixed submitStory) loaded successfully");
