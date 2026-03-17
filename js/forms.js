@@ -51,6 +51,12 @@ const FormHandler = {
             return;
         }
 
+        // If the page already has its own inline handler, skip forms.js handler
+        if (window.__storyFormHandledByPage) {
+            console.log('[Forms] story-form already handled by page inline script — skipping');
+            return;
+        }
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             await this.handleStorySubmit(form);
@@ -66,13 +72,30 @@ const FormHandler = {
     async uploadMediaFiles(files, token) {
         if (!files || files.length === 0) return [];
 
-        // Allowed MIME types for images
+        // Allowed MIME types for media uploads
         const allowedTypes = [
+            // Images
             'image/jpeg',
             'image/png',
             'image/gif',
             'image/webp',
-            'image/svg+xml'
+            'image/svg+xml',
+            // Videos
+            'video/mp4',
+            'video/webm',
+            'video/quicktime',
+            'video/x-msvideo',
+            // Audio
+            'audio/mpeg',
+            'audio/wav',
+            'audio/ogg',
+            'audio/mp4',
+            'audio/webm',
+            // Documents
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'text/plain'
         ];
 
         const uploadedIds = [];

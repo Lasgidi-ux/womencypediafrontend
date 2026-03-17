@@ -506,37 +506,17 @@
 
                     <form id="story-form" novalidate>
 
-                        <!-- Story Type -->
+                        <!-- Story Type (Strapi enum: myself, other) -->
                         <div class="mb-8">
                             <label class="form-label">What type of story are you sharing? <span class="required">*</span></label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <label class="radio-card">
-                                    <input type="radio" name="storyType" value="personal" checked>
+                                    <input type="radio" name="storyType" value="myself" checked>
                                     <div class="radio-label">
                                         <span class="radio-dot"></span>
                                         <div>
-                                            <span class="font-semibold text-sm">Personal Story</span>
-                                            <span class="block text-xs text-text-secondary mt-0.5">Your own experience</span>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label class="radio-card">
-                                    <input type="radio" name="storyType" value="biographical">
-                                    <div class="radio-label">
-                                        <span class="radio-dot"></span>
-                                        <div>
-                                            <span class="font-semibold text-sm">Biographical</span>
-                                            <span class="block text-xs text-text-secondary mt-0.5">About another woman</span>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label class="radio-card">
-                                    <input type="radio" name="storyType" value="historical">
-                                    <div class="radio-label">
-                                        <span class="radio-dot"></span>
-                                        <div>
-                                            <span class="font-semibold text-sm">Historical</span>
-                                            <span class="block text-xs text-text-secondary mt-0.5">A historical account</span>
+                                            <span class="font-semibold text-sm">My Own Story</span>
+                                            <span class="block text-xs text-text-secondary mt-0.5">A personal experience or testimony</span>
                                         </div>
                                     </div>
                                 </label>
@@ -545,8 +525,8 @@
                                     <div class="radio-label">
                                         <span class="radio-dot"></span>
                                         <div>
-                                            <span class="font-semibold text-sm">Other</span>
-                                            <span class="block text-xs text-text-secondary mt-0.5">Cultural, oral tradition, etc.</span>
+                                            <span class="font-semibold text-sm">About Another Woman</span>
+                                            <span class="block text-xs text-text-secondary mt-0.5">Biographical, historical, or cultural</span>
                                         </div>
                                     </div>
                                 </label>
@@ -617,6 +597,34 @@
                         <!-- Divider -->
                         <div class="border-t border-border-light my-8"></div>
 
+                        <!-- Media Upload Section -->
+                        <div class="mb-8">
+                            <h3 class="font-serif text-lg font-bold text-text-main mb-1">
+                                <span class="material-symbols-outlined text-primary text-xl align-middle mr-2">attach_file</span>
+                                Media Attachments
+                            </h3>
+                            <p class="text-text-secondary text-sm mb-4">Upload photos, videos, audio recordings, or documents that support your story. (Optional)</p>
+
+                            <!-- Drop Zone -->
+                            <div id="dropZone" class="relative border-2 border-dashed border-border-light rounded-xl p-8 text-center transition-all hover:border-primary/50 hover:bg-primary/3 cursor-pointer">
+                                <input type="file" id="mediaUpload" name="mediaUpload" multiple
+                                    accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                                <div class="pointer-events-none">
+                                    <span class="material-symbols-outlined text-primary/40 text-5xl mb-3 block">cloud_upload</span>
+                                    <p class="font-semibold text-text-main text-sm mb-1">Drag & drop files here or click to browse</p>
+                                    <p class="text-xs text-text-secondary">Supports: Images (JPG, PNG, WebP) • Videos (MP4, WebM) • Audio (MP3, WAV) • Documents (PDF, DOC)</p>
+                                    <p class="text-xs text-text-secondary mt-1">Maximum 10MB per file • Up to 5 files</p>
+                                </div>
+                            </div>
+
+                            <!-- File Preview List -->
+                            <div id="filePreviewList" class="mt-4 space-y-2 hidden"></div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="border-t border-border-light my-8"></div>
+
                         <!-- Contact Info -->
                         <div class="mb-6">
                             <h3 class="font-serif text-lg font-bold text-text-main mb-1">
@@ -662,6 +670,8 @@
                             You'll receive email updates on its status.
                         </p>
                     </form>
+                    <!-- Hidden flag: tells forms.js not to add its own handler -->
+                    <input type="hidden" id="story-form-handled" value="true" />
                 </div>
             </div>
         </section>
@@ -841,10 +851,171 @@
 
     <script>
         // ==================== SHARE STORY FORM LOGIC ====================
-        // Direct Strapi CMS submission — no dependency on window.API
+        // Always use production Strapi URL — never rely on CONFIG which may be localhost
         const STRAPI_URL = 'https://womencypedia-cms.onrender.com';
 
-        // Word counter
+        // Mark form as handled so forms.js won't add a second submit handler
+        window.__storyFormHandledByPage = true;
+
+        // ==================== MEDIA UPLOAD SYSTEM ====================
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+        const MAX_FILES = 5;
+        let selectedFiles = [];
+
+        const ALLOWED_TYPES = {
+            'image/jpeg': { icon: 'image', label: 'Image' },
+            'image/png': { icon: 'image', label: 'Image' },
+            'image/gif': { icon: 'gif_box', label: 'GIF' },
+            'image/webp': { icon: 'image', label: 'Image' },
+            'image/svg+xml': { icon: 'image', label: 'SVG' },
+            'video/mp4': { icon: 'videocam', label: 'Video' },
+            'video/webm': { icon: 'videocam', label: 'Video' },
+            'video/quicktime': { icon: 'videocam', label: 'Video' },
+            'video/x-msvideo': { icon: 'videocam', label: 'Video' },
+            'audio/mpeg': { icon: 'audio_file', label: 'Audio' },
+            'audio/wav': { icon: 'audio_file', label: 'Audio' },
+            'audio/ogg': { icon: 'audio_file', label: 'Audio' },
+            'audio/mp4': { icon: 'audio_file', label: 'Audio' },
+            'audio/webm': { icon: 'audio_file', label: 'Audio' },
+            'application/pdf': { icon: 'picture_as_pdf', label: 'PDF' },
+            'application/msword': { icon: 'description', label: 'Document' },
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { icon: 'description', label: 'Document' },
+            'text/plain': { icon: 'article', label: 'Text' }
+        };
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        function renderFilePreviews() {
+            const list = document.getElementById('filePreviewList');
+            if (!list) return;
+
+            if (selectedFiles.length === 0) {
+                list.classList.add('hidden');
+                list.innerHTML = '';
+                return;
+            }
+
+            list.classList.remove('hidden');
+            list.innerHTML = selectedFiles.map((file, idx) => {
+                const typeInfo = ALLOWED_TYPES[file.type] || { icon: 'insert_drive_file', label: 'File' };
+                const isImage = file.type.startsWith('image/');
+                const thumbHtml = isImage
+                    ? `<img src="${URL.createObjectURL(file)}" alt="${file.name}" class="w-10 h-10 rounded object-cover" />`
+                    : `<span class="material-symbols-outlined text-primary text-2xl">${typeInfo.icon}</span>`;
+
+                return `
+                    <div class="flex items-center justify-between p-3 bg-white border border-border-light rounded-lg">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="flex-shrink-0 w-10 h-10 rounded bg-primary/5 flex items-center justify-center overflow-hidden">
+                                ${thumbHtml}
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-medium text-text-main truncate">${file.name}</p>
+                                <p class="text-xs text-text-secondary">${typeInfo.label} • ${formatFileSize(file.size)}</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="removeFile(${idx})"
+                            class="flex-shrink-0 size-8 flex items-center justify-center rounded-full hover:bg-red-50 transition-colors text-text-secondary hover:text-red-500"
+                            aria-label="Remove file">
+                            <span class="material-symbols-outlined text-lg">close</span>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addFiles(newFiles) {
+            for (const file of newFiles) {
+                if (selectedFiles.length >= MAX_FILES) {
+                    showToast(`Maximum ${MAX_FILES} files allowed.`, 'error');
+                    break;
+                }
+                if (!ALLOWED_TYPES[file.type]) {
+                    showToast(`"${file.name}" — unsupported file type.`, 'error');
+                    continue;
+                }
+                if (file.size > MAX_FILE_SIZE) {
+                    showToast(`"${file.name}" exceeds 10MB limit.`, 'error');
+                    continue;
+                }
+                // Prevent duplicates
+                if (selectedFiles.some(f => f.name === file.name && f.size === file.size)) continue;
+                selectedFiles.push(file);
+            }
+            renderFilePreviews();
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            renderFilePreviews();
+        }
+
+        // File input handler
+        const mediaInput = document.getElementById('mediaUpload');
+        if (mediaInput) {
+            mediaInput.addEventListener('change', function () {
+                addFiles(Array.from(this.files));
+                this.value = ''; // clear so same file can be re-selected
+            });
+        }
+
+        // Drag & Drop
+        const dropZone = document.getElementById('dropZone');
+        if (dropZone) {
+            ['dragenter', 'dragover'].forEach(evt => {
+                dropZone.addEventListener(evt, function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.add('border-primary', 'bg-primary/5');
+                });
+            });
+            ['dragleave', 'drop'].forEach(evt => {
+                dropZone.addEventListener(evt, function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.remove('border-primary', 'bg-primary/5');
+                });
+            });
+            dropZone.addEventListener('drop', function (e) {
+                if (e.dataTransfer && e.dataTransfer.files) {
+                    addFiles(Array.from(e.dataTransfer.files));
+                }
+            });
+        }
+
+        // Upload files to Strapi media library
+        async function uploadMediaToStrapi(files, token) {
+            const uploadedIds = [];
+            for (const file of files) {
+                const fd = new FormData();
+                fd.append('files', file);
+                const headers = {};
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+
+                try {
+                    const res = await fetch(`${STRAPI_URL}/api/upload`, {
+                        method: 'POST',
+                        headers,
+                        body: fd
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && data.length > 0) uploadedIds.push(data[0].id);
+                    } else {
+                        console.warn(`[MediaUpload] Failed to upload "${file.name}": ${res.status}`);
+                    }
+                } catch (err) {
+                    console.warn(`[MediaUpload] Error uploading "${file.name}":`, err);
+                }
+            }
+            return uploadedIds;
+        }
+
+        // ==================== WORD COUNTER ====================
         const storyTextarea = document.getElementById('story');
         const wordCounter = document.getElementById('wordCounter');
 
@@ -865,7 +1036,7 @@
             });
         }
 
-        // Toast notification
+        // ==================== TOAST NOTIFICATION ====================
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             if (!toast) return;
@@ -874,12 +1045,13 @@
             setTimeout(() => { toast.classList.remove('show'); }, 5000);
         }
 
-        // Form submission
+        // ==================== FORM SUBMISSION ====================
         const storyForm = document.getElementById('story-form');
 
         if (storyForm) {
             storyForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
+                e.stopImmediatePropagation(); // prevent forms.js from also handling this
 
                 const submitBtn = document.getElementById('submitBtn');
                 const originalHTML = submitBtn.innerHTML;
@@ -889,7 +1061,7 @@
                 try {
                     // Collect form data
                     const formData = {
-                        storyType: document.querySelector('input[name="storyType"]:checked')?.value || 'other',
+                        storyType: document.querySelector('input[name="storyType"]:checked')?.value || 'myself',
                         subjectName: document.getElementById('subjectName').value.trim(),
                         relationship: document.getElementById('relationship').value.trim(),
                         storyRegion: document.getElementById('storyRegion').value.trim(),
@@ -910,54 +1082,79 @@
                         throw new Error('Please confirm the permission checkbox before submitting.');
                     }
 
-                    // Try window.API first, then direct fetch as fallback
-                    let result;
-
-                    if (typeof window.API !== 'undefined' && typeof window.API.submitStory === 'function') {
-                        console.log('[ShareStory] Using API.submitStory()');
-                        result = await window.API.submitStory(formData);
-                    } else {
-                        // Direct fetch to Strapi — no dependency on api.js
-                        console.log('[ShareStory] Using direct fetch to Strapi');
-                        const apiUrl = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE_URL) ? CONFIG.API_BASE_URL : STRAPI_URL;
+                    // Upload media files first (if any)
+                    let mediaFileIds = [];
+                    if (selectedFiles.length > 0) {
+                        submitBtn.innerHTML = '<span class="material-symbols-outlined text-[22px] animate-spin">progress_activity</span> Uploading media...';
                         const token = localStorage.getItem('womencypedia_access_token');
-
-                        const response = await fetch(`${apiUrl}/api/contributions`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                ...(token && { Authorization: `Bearer ${token}` })
-                            },
-                            body: JSON.stringify({
-                                data: {
-                                    storyType: formData.storyType,
-                                    subjectName: formData.subjectName,
-                                    relationship: formData.relationship,
-                                    storyRegion: formData.storyRegion,
-                                    theme: formData.theme,
-                                    story: formData.story,
-                                    lessons: formData.lessons,
-                                    contactName: formData.contactName,
-                                    contactEmail: formData.contactEmail,
-                                    permissionGranted: formData.permissionGranted
-                                }
-                            })
-                        });
-
-                        if (!response.ok) {
-                            const errText = await response.text();
-                            throw new Error(errText || `Server error: ${response.status}`);
+                        try {
+                            mediaFileIds = await uploadMediaToStrapi(selectedFiles, token);
+                            console.log('[ShareStory] Uploaded media IDs:', mediaFileIds);
+                        } catch (uploadErr) {
+                            console.warn('[ShareStory] Media upload failed, continuing without:', uploadErr);
                         }
-
-                        result = await response.json();
+                        submitBtn.innerHTML = '<span class="material-symbols-outlined text-[22px] animate-spin">progress_activity</span> Saving story...';
                     }
 
+                    // Build Strapi payload
+                    const payload = {
+                        data: {
+                            title: formData.subjectName ? `Story: ${formData.subjectName}` : 'Untitled Story',
+                            type: 'story',
+                            content: formData.story,
+                            storyType: formData.storyType,
+                            subjectName: formData.subjectName,
+                            relationship: formData.relationship,
+                            region: formData.storyRegion,
+                            theme: formData.theme,
+                            lessons: formData.lessons,
+                            contactName: formData.contactName,
+                            contactEmail: formData.contactEmail,
+                            permissionGranted: formData.permissionGranted,
+                            status: 'draft'
+                        }
+                    };
+
+                    // Attach media if uploaded
+                    if (mediaFileIds.length > 0) {
+                        payload.data.media = mediaFileIds;
+                    }
+
+                    // Always use STRAPI_URL — never CONFIG.API_BASE_URL (may be localhost)
+                    console.log('[ShareStory] Submitting to:', `${STRAPI_URL}/api/contributions`);
+                    const token = localStorage.getItem('womencypedia_access_token');
+
+                    const response = await fetch(`${STRAPI_URL}/api/contributions`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(token && { Authorization: `Bearer ${token}` })
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errData = await response.json().catch(() => ({}));
+                        const msg = errData?.error?.message || errData?.message || `Server error: ${response.status}`;
+                        throw new Error(msg);
+                    }
+
+                    const result = await response.json();
                     console.log('✅ Story submitted successfully:', result);
-                    showToast('✅ Your story has been submitted successfully! Thank you.', 'success');
+
+                    // Build success message
+                    let successMsg = '✅ Your story has been submitted successfully! Thank you.';
+                    if (selectedFiles.length > 0 && mediaFileIds.length === 0) {
+                        successMsg += ' (Media upload was skipped — your story text was saved.)';
+                    } else if (mediaFileIds.length > 0) {
+                        successMsg += ` (${mediaFileIds.length} file${mediaFileIds.length > 1 ? 's' : ''} attached.)`;
+                    }
+                    showToast(successMsg, 'success');
+
                     storyForm.reset();
 
                     // Re-check the default radio
-                    const defaultRadio = document.querySelector('input[name="storyType"][value="personal"]');
+                    const defaultRadio = document.querySelector('input[name="storyType"][value="myself"]');
                     if (defaultRadio) defaultRadio.checked = true;
 
                     // Reset word counter
@@ -965,6 +1162,10 @@
                         wordCounter.textContent = '0 words';
                         wordCounter.className = 'word-counter';
                     }
+
+                    // Reset file list
+                    selectedFiles = [];
+                    renderFilePreviews();
 
                 } catch (error) {
                     console.error('❌ Story submission failed:', error);
