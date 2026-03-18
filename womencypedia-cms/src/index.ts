@@ -3,6 +3,29 @@ import type { Core } from '@strapi/strapi';
 // Global reference to strapi instance
 let strapiInstance: any = null;
 
+// ── Security: Strip sensitive admin fields from API responses ──
+const SENSITIVE_FIELDS = ['createdBy', 'updatedBy', 'password', 'resetPasswordToken', 'registrationToken', 'preferedLanguage'];
+
+function sanitizeEntry(entry: any): any {
+  if (!entry) return entry;
+  if (Array.isArray(entry)) return entry.map(sanitizeEntry);
+  if (typeof entry !== 'object') return entry;
+
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(entry)) {
+    if (SENSITIVE_FIELDS.includes(key)) continue;
+    if (typeof value === 'object' && value !== null) {
+      cleaned[key] = sanitizeEntry(value);
+    } else {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+}
+
+// Safe populate for biographies — only content relations, never admin users
+const BIOGRAPHY_POPULATE = ['image', 'gallery', 'tags', 'relatedWomen', 'sources', 'relatedMovements', 'relatedDynasties'];
+
 // Custom API routes - manually registered to bypass Strapi's broken route loading
 const customRoutes = [
   // Contribution routes
@@ -40,7 +63,7 @@ const customRoutes = [
         const entry = await strapiInstance.entityService.create('api::contribution.contribution', {
           data: entryData,
         });
-        ctx.body = { data: entry };
+        ctx.body = { data: sanitizeEntry(entry) };
       } catch (err: any) {
         ctx.status = 400;
         ctx.body = { error: { message: err.message, details: err.details } };
@@ -57,7 +80,7 @@ const customRoutes = [
     handler: async (ctx: any, next: any) => {
       try {
         const entries = await strapiInstance.entityService.findMany('api::contribution.contribution', {});
-        ctx.body = { data: entries };
+        ctx.body = { data: sanitizeEntry(entries) };
       } catch (err: any) {
         ctx.status = 400;
         ctx.body = { error: { message: err.message } };
@@ -78,16 +101,24 @@ const customRoutes = [
         const pageSize = parseInt(ctx.query.pagination?.pageSize || '10');
         const locale = ctx.query.locale || 'en';
 
+        // Handle slug filter from frontend: ?filters[slug][$eq]=xxx
+        const slugFilter = ctx.query.filters?.slug?.['$eq'];
+        const filters: any = {};
+        if (slugFilter) {
+          filters.slug = slugFilter;
+        }
+
         const entries = await strapiInstance.entityService.findMany('api::biography.biography', {
-          populate: '*',
+          populate: BIOGRAPHY_POPULATE,
           locale: locale,
+          filters: filters,
           pagination: { page, pageSize },
         });
 
-        const total = await strapiInstance.entityService.count('api::biography.biography', { locale });
+        const total = await strapiInstance.entityService.count('api::biography.biography', { locale, filters });
 
         ctx.body = {
-          data: entries,
+          data: sanitizeEntry(entries),
           meta: {
             pagination: {
               page,
@@ -120,14 +151,14 @@ const customRoutes = [
         // Check if it's a numeric ID
         if (/^\d+$/.test(idOrSlug)) {
           entry = await strapiInstance.entityService.findOne('api::biography.biography', parseInt(idOrSlug), {
-            populate: '*',
+            populate: BIOGRAPHY_POPULATE,
             locale: locale,
           });
         } else {
           // It's a slug - search by slug field
           const entries = await strapiInstance.entityService.findMany('api::biography.biography', {
             filters: { slug: idOrSlug },
-            populate: '*',
+            populate: BIOGRAPHY_POPULATE,
             locale: locale,
             limit: 1
           });
@@ -140,7 +171,7 @@ const customRoutes = [
           return;
         }
 
-        ctx.body = { data: entry };
+        ctx.body = { data: sanitizeEntry(entry) };
       } catch (err: any) {
         ctx.status = 400;
         ctx.body = { error: { message: err.message } };
@@ -178,7 +209,7 @@ const customRoutes = [
         const entry = await strapiInstance.entityService.create('api::nomination.nomination', {
           data: entryData,
         });
-        ctx.body = { data: entry };
+        ctx.body = { data: sanitizeEntry(entry) };
       } catch (err: any) {
         ctx.status = 400;
         ctx.body = { error: { message: err.message, details: err.details } };
