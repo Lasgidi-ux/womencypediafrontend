@@ -1,36 +1,20 @@
+# Womencypedia .htaccess - GoDaddy Compatible Version
+# Use Unix line endings (LF)
+
 <IfModule mod_headers.c>
-    # Content Security Policy for Womencypedia
-    #
-    # IMPORTANT SECURITY NOTES:
-    # - This is the AUTHORITATIVE CSP for GoDaddy cPanel deployments.
-    # - HTML meta CSP tags have been removed; this server header is the single source.
-    #
-    # Third-party scripts and their purposes:
-    # - https://plausible.io - Privacy-friendly analytics
-    # - https://js.paystack.co - Payment processing (Nigeria)
-    # - https://checkout.flutterwave.com - Payment processing (Africa)
-    # - https://fonts.googleapis.com - Google Fonts
-    # - https://d3js.org - Data visualization
-    # - https://img1.wsimg.com - GoDaddy platform scripts (required on GoDaddy hosting)
-    #
+    # Content Security Policy - Updated for GoDaddy
     Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://plausible.io https://cdn.jsdelivr.net https://js.paystack.co https://checkout.flutterwave.com https://unpkg.com https://app.launchdarkly.com https://img1.wsimg.com https://d3js.org; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://womencypedia-cms.onrender.com https://plausible.io https://unpkg.com https://img1.wsimg.com https://d3js.org https://*.onrender.com https://fonts.googleapis.com https://fonts.gstatic.com https://app.launchdarkly.com https://events.launchdarkly.com https://analytics.strapi.io https://*.tile.openstreetmap.org https://csp.secureserver.net; frame-src https://js.paystack.co https://checkout.flutterwave.com; worker-src 'self' blob:;"
     
-    # Prevent MIME-type sniffing
+    # Basic Security Headers
     Header set X-Content-Type-Options "nosniff"
-    
-    # Prevent clickjacking
     Header set X-Frame-Options "DENY"
-    
-    # Control referrer information
     Header set Referrer-Policy "strict-origin-when-cross-origin"
-    
-    # Legacy XSS protection (still useful for older browsers)
     Header set X-XSS-Protection "1; mode=block"
-
-    # HSTS - Force HTTPS for 1 year (includeSubDomains for full coverage)
+    
+    # HSTS - Force HTTPS
     Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-
-    # Permissions Policy - Block invasive browser APIs you don't use
+    
+    # Permissions Policy
     Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
 </IfModule>
 
@@ -38,8 +22,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Block .git directory and files
-    RewriteRule ^\.git(/|$) - [F,L]
+    # Block .git directory
+    RewriteRule ^\.git - [F,L]
 
     # Block .env files
     RewriteRule ^\.env - [F,L]
@@ -47,16 +31,13 @@
     # Block .cpanel.yml
     RewriteRule ^\.cpanel\.yml$ - [F,L]
 
-    # Block scripts directory from direct access
+    # Block scripts directory
     RewriteRule ^scripts/ - [F,L]
 
-    # Block node_modules if accidentally deployed
+    # Block node_modules
     RewriteRule ^node_modules/ - [F,L]
 
-    # Block docs directory (internal documentation)
-    RewriteRule ^docs/ - [F,L]
-
-    # Block womencypedia-cms directory on frontend
+    # Block womencypedia-cms directory
     RewriteRule ^womencypedia-cms/ - [F,L]
 
     # Redirect HTTP to HTTPS
@@ -64,7 +45,6 @@
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # ─── HOTLINK PROTECTION ─────────────────────────────────
-    # Prevent other sites from embedding your images (bandwidth theft)
     RewriteCond %{HTTP_REFERER} !^$
     RewriteCond %{HTTP_REFERER} !^https?://(www\.)?womencypedia\.org [NC]
     RewriteCond %{HTTP_REFERER} !^https?://(www\.)?google\. [NC]
@@ -72,16 +52,10 @@
     RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F,NC,L]
 </IfModule>
 
-# Block sensitive file types by name (NOT by extension broadly)
-# This avoids blocking manifest.json and locale .json files
-# Using Apache 2.2/2.4 dual-compatible syntax for GoDaddy shared hosting
+# Block sensitive file types
 <FilesMatch "^\.env">
     <IfModule mod_authz_core.c>
         Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order deny,allow
-        Deny from all
     </IfModule>
 </FilesMatch>
 
@@ -89,40 +63,17 @@
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order deny,allow
-        Deny from all
-    </IfModule>
 </FilesMatch>
 
 <FilesMatch "^(package\.json|package-lock\.json)$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order deny,allow
-        Deny from all
-    </IfModule>
 </FilesMatch>
 
-<FilesMatch "^(tailwind\.config\.js|\.gitignore)$">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order deny,allow
-        Deny from all
-    </IfModule>
-</FilesMatch>
-
-# Block sensitive extensions that have no legitimate web use
 <FilesMatch "\.(sql|bak|orig|tmp|log)$">
     <IfModule mod_authz_core.c>
         Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order deny,allow
-        Deny from all
     </IfModule>
 </FilesMatch>
 
@@ -131,7 +82,7 @@
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>
 
-# Cache static assets (reduced to 1 month for JS/CSS to allow updates)
+# Cache static assets
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/png "access plus 1 year"
