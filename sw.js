@@ -3,7 +3,7 @@
  * Provides offline caching and PWA support
  */
 
-const CACHE_NAME = 'womencypedia-v3';
+const CACHE_NAME = 'womencypedia-v4';
 const OFFLINE_URL = '404.html';
 
 const PRECACHE_ASSETS = [
@@ -88,6 +88,48 @@ self.addEventListener('fetch', (event) => {
     // Skip analytics, tracking, and third-party SDK requests
     if (requestUrl.includes('plausible.io') || requestUrl.includes('launchdarkly') || requestUrl.includes('analytics')) return;
 
+    // Special handling for font requests - use network-first strategy
+    const isFontRequest = requestUrl.includes('fonts.gstatic.com') ||
+        requestUrl.includes('fonts.googleapis.com') ||
+        requestUrl.match(/\.(woff2?|ttf|otf|eot)$/i);
+
+    if (isFontRequest) {
+        event.respondWith(
+            // Network-first for fonts: try network first, fallback to cache
+            fetch(event.request)
+                .then(response => {
+                    // Clone the response for caching
+                    if (response && response.ok) {
+                        const responseClone = response.clone();
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+                                // Cache both same-origin (basic) and cross-origin (cors) font responses
+                                if (response.type === 'basic' || response.type === 'cors' || response.type === 'opaque') {
+                                    cache.put(event.request, responseClone);
+                                }
+                            })
+                            .catch(() => { /* ignore cache errors */ });
+                    }
+                    return response;
+                })
+                .catch(() => {
+                    // Fallback to cache if network fails
+                    return caches.match(event.request)
+                        .then(cachedResponse => {
+                            if (cachedResponse) {
+                                return cachedResponse;
+                            }
+                            // Return empty response for fonts if nothing in cache
+                            return new Response('', {
+                                status: 408,
+                                statusText: 'Offline'
+                            });
+                        });
+                })
+        );
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then(cachedResponse => {
@@ -116,8 +158,8 @@ self.addEventListener('fetch', (event) => {
                 // Not in cache - fetch from network
                 return fetch(event.request)
                     .then(response => {
-                        // Only cache valid, same-origin responses
-                        if (response && response.ok && response.type === 'basic') {
+                        // Cache both same-origin and cross-origin (CORS) responses
+                        if (response && response.ok && (response.type === 'basic' || response.type === 'cors')) {
                             const responseClone = response.clone();
                             caches.open(CACHE_NAME)
                                 .then(cache => cache.put(event.request, responseClone))
