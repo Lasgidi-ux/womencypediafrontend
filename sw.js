@@ -88,6 +88,12 @@ self.addEventListener('fetch', (event) => {
     // Skip analytics, tracking, and third-party SDK requests
     if (requestUrl.includes('plausible.io') || requestUrl.includes('launchdarkly') || requestUrl.includes('analytics')) return;
 
+    // Skip GoDaddy security and external CDN requests that may violate CSP
+    if (requestUrl.includes('secureserver.net') || requestUrl.includes('csp.')) return;
+
+    // Skip external font and tile requests - let browser handle them directly
+    if (requestUrl.includes('fonts.gstatic.com') || requestUrl.includes('tile.openstreetmap.org')) return;
+
     // Special handling for font requests - use network-first strategy
     const isFontRequest = requestUrl.includes('fonts.gstatic.com') ||
         requestUrl.includes('fonts.googleapis.com') ||
