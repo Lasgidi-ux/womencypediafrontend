@@ -1,9 +1,11 @@
 /**
- * Womencypedia Service Worker
+ * Womencypedia Service Worker v4.1
  * Provides offline caching and PWA support
+ * FIXED: External resource handling for fonts and tiles
+ * FIXED: CSP violation prevention for service worker fetches
  */
 
-const CACHE_NAME = 'womencypedia-v4';
+const CACHE_NAME = 'womencypedia-v4.1';
 const OFFLINE_URL = '404.html';
 
 const PRECACHE_ASSETS = [
@@ -91,16 +93,37 @@ self.addEventListener('fetch', (event) => {
     // Skip GoDaddy security and external CDN requests that may violate CSP
     if (requestUrl.includes('secureserver.net') || requestUrl.includes('csp.')) return;
 
-    // Skip external font, tile, and Google fonts requests - let browser handle them directly
+    // CRITICAL FIX: Skip ALL external resources that could cause CSP violations
+    // This includes fonts, map tiles, and any cross-origin resources
+    // Return undefined to let the browser handle the request natively
+    // This prevents CSP violations from service worker fetch requests
     const isExternalResource =
         requestUrl.includes('fonts.gstatic.com') ||
         requestUrl.includes('fonts.googleapis.com') ||
         requestUrl.includes('tile.openstreetmap.org') ||
+        requestUrl.includes('a.tile.openstreetmap.org') ||
+        requestUrl.includes('b.tile.openstreetmap.org') ||
+        requestUrl.includes('c.tile.openstreetmap.org') ||
+        requestUrl.includes('unpkg.com') ||
+        requestUrl.includes('cdn.jsdelivr.net') ||
+        requestUrl.includes('cdn.tailwindcss.com') ||
+        requestUrl.includes('js.paystack.co') ||
+        requestUrl.includes('checkout.flutterwave.com') ||
         /\.(?:woff2?|ttf|otf|eot)(?:[?#]|$)/i.test(requestUrl);
 
     if (isExternalResource) {
-        // Let browser handle these directly without service worker interference
+        // CRITICAL: Let browser handle these directly without service worker interference
+        // Return undefined to let the browser handle the request natively
         // This prevents CSP violations from service worker fetch requests
+        return;
+    }
+
+    // Only handle same-origin requests
+    const requestOrigin = new URL(requestUrl).origin;
+    const currentOrigin = self.location.origin;
+
+    if (requestOrigin !== currentOrigin) {
+        // Skip all cross-origin requests - let browser handle them
         return;
     }
 
