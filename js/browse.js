@@ -162,7 +162,9 @@ function loadStaticFallback(container) {
 function buildQueryParams() {
     const params = {
         page: currentFilters.page,
-        pageSize: CONFIG.PAGINATION.DEFAULT_PAGE_SIZE
+        pageSize: CONFIG.PAGINATION.DEFAULT_PAGE_SIZE,
+        // Deep populate for list view
+        populate: 'image,tags,relatedWomen.image'
     };
 
     if (currentFilters.search) {

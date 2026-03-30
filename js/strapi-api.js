@@ -8,6 +8,8 @@ class StrapiAPIClient {
     this.baseURL = baseURL;
     this.apiToken = apiToken;
     this.getAccessToken = getAccessToken;
+    this.cache = new Map();
+    this.cacheTTL = 5 * 60 * 1000; // 5 minutes
   }
 
   // =========================
@@ -16,6 +18,17 @@ class StrapiAPIClient {
   async request(endpoint, options = {}) {
     const queryString = this.buildQueryString(options.query || {});
     const url = `${this.baseURL}${endpoint}${queryString}`;
+    const cacheKey = `${options.method || 'GET'}:${url}`;
+
+    // Check cache for GET requests
+    if ((options.method || 'GET') === 'GET' && this.cache.has(cacheKey)) {
+      const cached = this.cache.get(cacheKey);
+      if (Date.now() - cached.timestamp < this.cacheTTL) {
+        return cached.data;
+      } else {
+        this.cache.delete(cacheKey);
+      }
+    }
 
     const token =
       (this.getAccessToken && this.getAccessToken()) || this.apiToken;
@@ -26,23 +39,47 @@ class StrapiAPIClient {
       ...options.headers,
     };
 
-    const res = await fetch(url, {
-      method: options.method || "GET",
-      headers,
-      body: options.body,
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-    const data = await res.json();
+    try {
+      const res = await fetch(url, {
+        method: options.method || "GET",
+        headers,
+        body: options.body,
+        signal: controller.signal,
+      });
 
-    if (!res.ok) {
-      throw {
-        message: data?.error?.message || "API request failed",
-        status: res.status,
-        raw: data,
-      };
+      clearTimeout(timeoutId);
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw {
+          message: data?.error?.message || "API request failed",
+          status: res.status,
+          raw: data,
+        };
+      }
+
+      const transformed = this.transformResponse(data);
+
+      // Cache successful GET responses
+      if ((options.method || 'GET') === 'GET') {
+        this.cache.set(cacheKey, {
+          data: transformed,
+          timestamp: Date.now()
+        });
+      }
+
+      return transformed;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw { message: 'Request timeout', status: 408 };
+      }
+      throw error;
     }
-
-    return this.transformResponse(data);
   }
 
   // =========================
@@ -192,19 +229,30 @@ class StrapiAPIClient {
 
   biographies = {
     getAll: (params = {}) => {
-      // Don't send populate by default - API rejects populate=* with "Invalid key sources"
+      // Deep populate for list view: images, tags, and related women with images
       const { populate, ...rest } = params;
-      return this.request("/api/biographies", { query: rest });
+      const defaultPopulate = {
+        populate: 'image,tags,relatedWomen.image'
+      };
+      return this.request("/api/biographies", {
+        query: { ...defaultPopulate, ...rest }
+      });
     },
 
     get: async (idOrSlug) => {
+      // Validate input
+      if (!idOrSlug || typeof idOrSlug !== 'string') {
+        throw new Error('Invalid biography identifier');
+      }
+
       if (this.isSlug(idOrSlug)) {
+        // Deep populate for single biography by slug
         const res = await this.request(
-          `/api/biographies?filters[slug][$eq]=${idOrSlug}`
+          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=image,tags,relatedWomen.image,sources`
         );
         return res.entries?.[0] || null;
       }
-      return this.request(`/api/biographies/${idOrSlug}`);
+      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=image,tags,relatedWomen.image,sources`);
     },
 
     search: (query, params = {}) =>
@@ -332,6 +380,38 @@ class StrapiAPIClient {
       this.request("/api/contact-submissions", {
         method: "POST",
         body: JSON.stringify({ data }),
+      }),
+  };
+
+  userBookmarks = {
+    getAll: () =>
+      this.request("/api/user-bookmarks"),
+
+    create: (data) =>
+      this.request("/api/user-bookmarks", {
+        method: "POST",
+        body: JSON.stringify({ data }),
+      }),
+
+    delete: (id) =>
+      this.request(`/api/user-bookmarks/${id}`, {
+        method: "DELETE",
+      }),
+
+    clearAll: () =>
+      this.request("/api/user-bookmarks", {
+        method: "DELETE",
+      }),
+  };
+
+  userHistory = {
+    getAll: () =>
+      this.request("/api/user-history"),
+
+    sync: (data) =>
+      this.request("/api/user-history/sync", {
+        method: "POST",
+        body: JSON.stringify(data),
       }),
   };
 }

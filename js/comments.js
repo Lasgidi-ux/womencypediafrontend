@@ -34,19 +34,20 @@ const Comments = {
         this._isLoading = true;
 
         try {
-            const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.COMMENTS.LIST(entryId)}`);
-            if (response.ok) {
-                const data = await response.json();
-                this._comments[entryId] = data.comments || [];
-                return this._comments[entryId];
+            if (!window.StrapiAPI) {
+                throw new Error('API client not available');
             }
-        } catch (error) {
-            console.log('Using mock comments');
-        }
 
-        this._comments[entryId] = this.getMockComments();
-        this._isLoading = false;
-        return this._comments[entryId];
+            const response = await window.StrapiAPI.comments.getByBiography(entryId);
+            this._comments[entryId] = response.entries || response.data || [];
+            this._isLoading = false;
+            return this._comments[entryId];
+        } catch (error) {
+            console.error('Failed to load comments:', error.message);
+            this._comments[entryId] = [];
+            this._isLoading = false;
+            return this._comments[entryId];
+        }
     },
 
     getMockComments() {
@@ -69,27 +70,53 @@ const Comments = {
             return null;
         }
 
-        const user = Auth.getUser();
-        const newComment = {
-            id: Date.now().toString(),
-            user: { name: user.name || user.email, initials: (user.name || user.email).substring(0, 2).toUpperCase() },
-            content: content,
-            likes: 0,
-            isLiked: false,
-            createdAt: new Date().toISOString(),
-            replies: []
-        };
+        try {
+            if (!window.StrapiAPI) {
+                throw new Error('API client not available');
+            }
 
-        if (!this._comments[entryId]) this._comments[entryId] = [];
-        if (parentId) {
-            const parent = this._comments[entryId].find(c => c.id === parentId);
-            if (parent) parent.replies.push(newComment);
-        } else {
-            this._comments[entryId].unshift(newComment);
+            const commentData = {
+                biography: entryId,
+                content: content.trim(),
+                ...(parentId && { parent: parentId })
+            };
+
+            const response = await window.StrapiAPI.comments.create(commentData);
+
+            // Optimistically update local state
+            const newComment = {
+                id: response.id || Date.now().toString(),
+                user: { name: Auth.getUser().name || Auth.getUser().email },
+                content: content.trim(),
+                likes: 0,
+                isLiked: false,
+                createdAt: new Date().toISOString(),
+                replies: []
+            };
+
+            if (!this._comments[entryId]) this._comments[entryId] = [];
+            if (parentId) {
+                const parent = this._comments[entryId].find(c => c.id === parentId);
+                if (parent) parent.replies.push(newComment);
+            } else {
+                this._comments[entryId].unshift(newComment);
+            }
+
+            if (typeof UI !== 'undefined' && UI.showToast) UI.showToast('Comment posted!', 'success');
+
+            // Notify real-time system of new comment
+            if (typeof Realtime !== 'undefined') {
+                Realtime.forceUpdateCheck();
+            }
+
+            return newComment;
+        } catch (error) {
+            console.error('Failed to post comment:', error);
+            if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast('Failed to post comment. Please try again.', 'error');
+            }
+            return null;
         }
-
-        if (typeof UI !== 'undefined' && UI.showToast) UI.showToast('Comment posted!', 'success');
-        return newComment;
     },
 
     async toggleLike(commentId) {

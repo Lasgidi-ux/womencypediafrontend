@@ -21,25 +21,23 @@ const Bookmarks = {
      */
     async loadBookmarks() {
         try {
-            // Try to load from API first
-            if (Auth.isAuthenticated()) {
-                const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.COLLECTIONS.SAVED}`, {
-                    headers: {
-                        'Authorization': `Bearer ${Auth.getAccessToken()}`
+            // Try to load from API first if authenticated
+            if (Auth.isAuthenticated() && window.StrapiAPI) {
+                try {
+                    const response = await window.StrapiAPI.userBookmarks.getAll();
+                    if (response && response.entries) {
+                        this._bookmarks = response.entries;
+                        this._isLoaded = true;
+                        this.saveToLocalStorage(); // Cache locally
+                        this.updateAllBookmarkButtons();
+                        return;
                     }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    this._bookmarks = data.items || data.bookmarks || [];
-                    this._isLoaded = true;
-                    this.saveToLocalStorage();
-                    this.updateAllBookmarkButtons();
-                    return;
+                } catch (error) {
+                    console.log('API bookmark load failed:', error.message);
                 }
             }
         } catch (error) {
-            console.log('Loading bookmarks from localStorage');
+            console.log('API bookmark load failed, using localStorage:', error.message);
         }
 
         // Fallback to localStorage
@@ -130,20 +128,11 @@ const Bookmarks = {
 
         try {
             // Sync with API
-            const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.COLLECTIONS.SAVED}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${Auth.getAccessToken()}`
-                },
-                body: JSON.stringify({ entry_id: entry.id })
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to save bookmark');
+            if (window.StrapiAPI) {
+                await window.StrapiAPI.userBookmarks.create(data);
             }
         } catch (error) {
-            console.log('Saving bookmark locally');
+            console.log('API bookmark save failed, saved locally:', error.message);
         }
 
         this._bookmarks.push(bookmark);
@@ -171,16 +160,11 @@ const Bookmarks = {
 
         try {
             // Sync with API
-            if (Auth.isAuthenticated()) {
-                await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.COLLECTIONS.SAVED}/${entryId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${Auth.getAccessToken()}`
-                    }
-                });
+            if (window.StrapiAPI) {
+                await window.StrapiAPI.userBookmarks.delete(entryId);
             }
         } catch (error) {
-            console.log('Removing bookmark locally');
+            console.log('API bookmark remove failed, removed locally:', error.message);
         }
 
         this._bookmarks.splice(index, 1);
@@ -216,16 +200,11 @@ const Bookmarks = {
      */
     async clearAll() {
         try {
-            if (Auth.isAuthenticated()) {
-                await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.COLLECTIONS.SAVED}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${Auth.getAccessToken()}`
-                    }
-                });
+            if (window.StrapiAPI) {
+                await window.StrapiAPI.userBookmarks.clearAll();
             }
         } catch (error) {
-            console.log('Clearing bookmarks locally');
+            console.log('API bookmark clear failed, cleared locally:', error.message);
         }
 
         this._bookmarks = [];

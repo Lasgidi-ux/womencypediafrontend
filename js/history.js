@@ -16,9 +16,10 @@ const History = {
     },
 
     /**
-     * Load history from localStorage
+     * Load history from localStorage and sync with backend if available
      */
-    loadHistory() {
+    async loadHistory() {
+        // Load from localStorage first
         try {
             const stored = localStorage.getItem('womencypedia_history');
             if (stored) {
@@ -28,17 +29,69 @@ const History = {
             console.error('Failed to load history:', error);
             this._history = [];
         }
+
+        // Try to sync with backend if authenticated
+        if (typeof Auth !== 'undefined' && Auth.isAuthenticated() && window.StrapiAPI) {
+            try {
+                const response = await window.StrapiAPI.userHistory.getAll();
+                if (response && response.entries) {
+                    // Merge server history with local, preferring server for conflicts
+                    const serverHistory = response.entries;
+                    const merged = this.mergeHistory(this._history, serverHistory);
+                    this._history = merged;
+                    this.saveHistory();
+                }
+            } catch (error) {
+                console.log('History sync failed, using local data:', error.message);
+            }
+        }
     },
 
     /**
-     * Save history to localStorage
+     * Save history to localStorage and sync with backend
      */
-    saveHistory() {
+    async saveHistory() {
         try {
             localStorage.setItem('womencypedia_history', JSON.stringify(this._history));
         } catch (error) {
-            console.error('Failed to save history:', error);
+            console.error('Failed to save history locally:', error);
         }
+
+        // Sync with backend if authenticated
+        if (typeof Auth !== 'undefined' && Auth.isAuthenticated() && window.StrapiAPI) {
+            try {
+                await window.StrapiAPI.userHistory.sync({ history: this._history });
+            } catch (error) {
+                console.log('History sync failed:', error.message);
+            }
+        }
+    },
+
+    /**
+     * Merge local and server history
+     */
+    mergeHistory(localHistory, serverHistory) {
+        const merged = [...serverHistory]; // Start with server data
+        const serverIds = new Set(serverHistory.map(h => h.id));
+
+        // Add local items that don't exist on server
+        localHistory.forEach(localItem => {
+            if (!serverIds.has(localItem.id)) {
+                merged.push(localItem);
+            } else {
+                // For existing items, use the one with higher progress
+                const serverItem = merged.find(s => s.id === localItem.id);
+                if (localItem.readProgress > serverItem.readProgress) {
+                    serverItem.readProgress = localItem.readProgress;
+                    serverItem.lastReadAt = localItem.lastReadAt;
+                }
+            }
+        });
+
+        // Sort by readAt descending and limit
+        return merged
+            .sort((a, b) => new Date(b.readAt) - new Date(a.readAt))
+            .slice(0, this._maxItems);
     },
 
     /**
