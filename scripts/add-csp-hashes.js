@@ -76,10 +76,10 @@ function addCspMetaTag(filePath, hashes) {
 }
 
 // Main execution
-console.log('Adding CSP hashes for inline scripts...\n');
+
 
 const htmlFiles = getHtmlFiles('.');
-console.log(`Found ${htmlFiles.length} HTML files\n`);
+
 
 let processed = 0;
 let skipped = 0;
@@ -91,18 +91,18 @@ for (const file of htmlFiles) {
     const inlineScripts = extractInlineScripts(content);
 
     if (inlineScripts.length > 0) {
-        console.log(`${relativePath}: ${inlineScripts.length} inline script(s) found`);
+         found`);
 
         if (addCspMetaTag(file, inlineScripts)) {
             processed++;
-            console.log(`  ✓ Added CSP meta tag with ${inlineScripts.length} hash(es)`);
+            `);
         } else {
             skipped++;
-            console.log(`  - Already has CSP or no scripts`);
+            
         }
     } else {
         skipped++;
     }
 }
 
-console.log(`\n✓ Done! Processed: ${processed}, Skipped: ${skipped}`);
+

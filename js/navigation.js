@@ -641,7 +641,7 @@ function updateAuthUI() {
         try {
             user = JSON.parse(userStr);
         } catch (e) {
-            console.warn('Could not parse user data');
+            
         }
     }
 

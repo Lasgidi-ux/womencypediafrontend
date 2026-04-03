@@ -320,5 +320,5 @@ function refreshData() {
 document.querySelector('select').addEventListener('change', function (e) {
     const range = e.target.value;
     // In a real implementation, this would update the charts with data for the selected range
-    console.log('Selected time range:', range);
+    
 });

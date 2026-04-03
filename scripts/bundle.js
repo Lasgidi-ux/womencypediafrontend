@@ -50,7 +50,7 @@ async function bundle(modules, outputName) {
     for (const mod of modules) {
         const filePath = path.join(ROOT, mod);
         if (!fs.existsSync(filePath)) {
-            console.warn(`⚠ Skipping missing file: ${mod}`);
+            
             continue;
         }
         const content = fs.readFileSync(filePath, 'utf-8');
@@ -60,7 +60,6 @@ async function bundle(modules, outputName) {
     // Minify
     const result = await minify(combined, {
         compress: {
-            drop_console: false,  // Keep console.warn for debugging
             passes: 2
         },
         mangle: {
@@ -78,7 +77,7 @@ async function bundle(modules, outputName) {
     });
 
     if (result.error) {
-        console.error(`✗ Error minifying ${outputName}:`, result.error);
+        
         return;
     }
 
@@ -89,22 +88,20 @@ async function bundle(modules, outputName) {
     const minifiedSize = Buffer.byteLength(result.code, 'utf-8');
     const savings = ((1 - minifiedSize / originalSize) * 100).toFixed(1);
 
-    console.log(`✓ ${outputName} — ${(minifiedSize / 1024).toFixed(1)}KB (${savings}% smaller)`);
 }
 
 async function main() {
-    console.log('📦 Bundling Womencypedia JS...\n');
+    
 
     await bundle(CORE_MODULES, 'core.min.js');
     await bundle(API_MODULES, 'api.min.js');
     await bundle([...CORE_MODULES, ...API_MODULES], 'app.min.js');
 
-    console.log('\n✅ Build complete! Output in dist/');
-    console.log('\nUsage in HTML:');
-    console.log('  Core pages:  <script src="dist/core.min.js"></script>');
-    console.log('  API pages:   <script src="dist/core.min.js"></script>');
-    console.log('               <script src="dist/api.min.js"></script>');
-    console.log('  Full bundle: <script src="dist/app.min.js"></script>');
+    
+    
+    
+    
+    
+    
 }
 
-main().catch(console.error);

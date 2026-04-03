@@ -100,7 +100,7 @@ function removeMyProfileDropdown(html, filename) {
 
     if (fixes.length > 0) {
         totalFixes += fixes.length;
-        console.log(`  ✓ ${filename} — ${fixes.join(', ')}`);
+        }`);
         return newLines.join('\n');
     }
 
@@ -123,7 +123,7 @@ function processFile(filePath) {
 }
 
 function main() {
-    console.log('🧹 Final cleanup — removing all My Profile dropdowns...\n');
+    
 
     const htmlFiles = fs.readdirSync(ROOT)
         .filter(f => f.endsWith('.html'))
@@ -134,7 +134,7 @@ function main() {
         processFile(file);
     }
 
-    console.log(`\n✅ Done! ${totalFixes} fixes applied`);
+    
 }
 
 main();

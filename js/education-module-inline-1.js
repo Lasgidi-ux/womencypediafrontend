@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderModule(module);
         await loadModuleNavigation(module);
     } catch (error) {
-        console.error('Failed to load education module:', error);
+        
         showError();
     }
 });
@@ -191,7 +191,7 @@ async function loadModuleNavigation(currentModule) {
             }
         }
     } catch (error) {
-        console.warn('Could not load module navigation:', error);
+        
     }
 }
 

@@ -75,7 +75,7 @@
 
         // Log update (only in debug mode)
         if (typeof window !== 'undefined' && window.DEBUG_MODE) {
-            console.log('[UPDATE-EMAILS] Email addresses updated to:', contactEmail);
+            
         }
     });
 })();

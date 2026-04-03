@@ -24,22 +24,22 @@ const DynamicContentLoader = {
      * Initialize the dynamic content loader
      */
     async init() {
-        console.log('[DynamicContentLoader] Initializing...');
+        
 
         // Determine which page we're on
         const page = this.detectPage();
         if (!page) {
-            console.log('[DynamicContentLoader] No dynamic page detected');
+            
             return;
         }
 
-        console.log(`[DynamicContentLoader] Detected page: ${page}`);
+        
 
         // Load content based on page type
         try {
             await this.loadPageContent(page);
         } catch (error) {
-            console.error(`[DynamicContentLoader] Error loading ${page}:`, error);
+            
             this.showErrorFallback(page);
         }
     },
@@ -102,7 +102,7 @@ const DynamicContentLoader = {
                 await this.loadHomepage();
                 break;
             default:
-                console.log(`[DynamicContentLoader] No handler for page: ${page}`);
+                
         }
     },
 
@@ -138,10 +138,10 @@ const DynamicContentLoader = {
                     recentGrid.innerHTML = typeof Security !== 'undefined' ? Security.sanitize(safeContent) : safeContent;
                 }
 
-                console.log(`[DynamicContentLoader] Loaded ${biographies.length} biographies`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for biographies:', error.message);
+            
             this.loadStaticFallback('biographies');
         }
     },
@@ -167,10 +167,10 @@ const DynamicContentLoader = {
                 // Sanitize to prevent XSS
                 const safeContent = collections.map(col => this.renderCollectionCard(col)).join('');
                 grid.innerHTML = typeof Security !== 'undefined' ? Security.sanitize(safeContent) : safeContent;
-                console.log(`[DynamicContentLoader] Loaded ${collections.length} collections`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for collections:', error.message);
+            
             this.loadStaticFallback('collections');
         }
     },
@@ -195,10 +195,10 @@ const DynamicContentLoader = {
 
             if (featured && storyContainer) {
                 storyContainer.innerHTML = this.renderFeaturedStory(featured);
-                console.log('[DynamicContentLoader] Loaded featured story');
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for featured:', error.message);
+            
         }
 
         // Load featured collections
@@ -217,10 +217,10 @@ const DynamicContentLoader = {
 
             if (collections.length > 0 && collectionsGrid) {
                 collectionsGrid.innerHTML = collections.map(col => this.renderCollectionCard(col)).join('');
-                console.log(`[DynamicContentLoader] Loaded ${collections.length} featured collections`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for featured collections:', error.message);
+            
         }
     },
 
@@ -243,10 +243,10 @@ const DynamicContentLoader = {
 
             if (modules.length > 0 && grid) {
                 grid.innerHTML = modules.map(mod => this.renderEducationModule(mod)).join('');
-                console.log(`[DynamicContentLoader] Loaded ${modules.length} education modules`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for education modules:', error.message);
+            
         }
     },
 
@@ -270,10 +270,10 @@ const DynamicContentLoader = {
 
             if (readingLists.length > 0 && readingListContainer) {
                 readingListContainer.innerHTML = readingLists.map(item => this.renderReadingList(item)).join('');
-                console.log(`[DynamicContentLoader] Loaded ${readingLists.length} reading lists`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for resources:', error.message);
+            
         }
     },
 
@@ -298,10 +298,10 @@ const DynamicContentLoader = {
                 // Group by era for timeline
                 const timelineData = this.groupByEra(biographies);
                 timelineContainer.innerHTML = this.renderTimelineEvents(timelineData);
-                console.log(`[DynamicContentLoader] Loaded ${biographies.length} timeline events`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for timelines:', error.message);
+            
         }
     },
 
@@ -325,10 +325,10 @@ const DynamicContentLoader = {
 
             if (biographies.length > 0 && featuredGrid) {
                 featuredGrid.innerHTML = biographies.map(bio => this.renderBiographyCard(bio)).join('');
-                console.log(`[DynamicContentLoader] Loaded ${biographies.length} featured biographies`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for homepage:', error.message);
+            
         }
 
         // Load featured collections
@@ -347,10 +347,10 @@ const DynamicContentLoader = {
 
             if (collections.length > 0 && collectionsGrid) {
                 collectionsGrid.innerHTML = collections.map(col => this.renderCollectionCard(col)).join('');
-                console.log(`[DynamicContentLoader] Loaded ${collections.length} featured collections`);
+                
             }
         } catch (error) {
-            console.warn('[DynamicContentLoader] Using fallback for homepage collections:', error.message);
+            
         }
     },
 
@@ -638,7 +638,7 @@ const DynamicContentLoader = {
      * Load static fallback data
      */
     loadStaticFallback(type) {
-        console.log(`[DynamicContentLoader] Static fallback for ${type} - data remains empty until API is available`);
+        
         // The static fallback is handled by the page-specific JavaScript (browse.js, etc.)
     },
 
@@ -646,7 +646,7 @@ const DynamicContentLoader = {
      * Show error fallback UI
      */
     showErrorFallback(page) {
-        console.error(`[DynamicContentLoader] Failed to load ${page} content`);
+        
     }
 };
 

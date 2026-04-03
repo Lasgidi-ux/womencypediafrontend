@@ -53,9 +53,9 @@ for (const file of htmlFiles) {
         content = content.replace(/(\r?\n){3,}/g, '\r\n\r\n');
         fs.writeFileSync(file, content, 'utf8');
         modifiedCount++;
-        console.log(`  Removed CSP meta tag from: ${path.relative(ROOT, file)}`);
+        }`);
     }
 }
 
-console.log(`\nModified ${modifiedCount} of ${htmlFiles.length} HTML files`);
-console.log('CSP is now managed solely via the Render server header in render.yaml');
+
+

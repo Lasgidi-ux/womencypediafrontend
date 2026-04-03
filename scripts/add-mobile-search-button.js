@@ -23,7 +23,7 @@ const mobileSearchButton = `<!-- Mobile Search Button -->
 const mobileSearchButtonReplacement = `<!-- Mobile Menu Button -->`;
 
 if (!fs.existsSync(COLLECTIONS_DIR)) {
-    console.log('Collections directory not found');
+    
     process.exit(0);
 }
 
@@ -35,7 +35,7 @@ for (const file of files) {
 
     // Check if it already has Mobile Search Button
     if (html.includes('aria-label="Open search"')) {
-        console.log(`  · ${file} — Already has Mobile Search Button`);
+        
         continue;
     }
 
@@ -43,10 +43,10 @@ for (const file of files) {
     if (html.includes('<!-- Mobile Menu Button -->')) {
         html = html.replace(mobileSearchButtonReplacement, mobileSearchButton);
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${file} — Added Mobile Search Button`);
+        
     } else {
-        console.log(`  · ${file} — No Mobile Menu Button found`);
+        
     }
 }
 
-console.log('\n✅ Done!');
+

@@ -32,7 +32,7 @@ function processFile(filePath) {
     if (pattern1.test(html)) {
         html = html.replace(pattern1, '$1\n            <div id="language-switcher"></div>');
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${filename} — added (pattern: gap-3 container)`);
+        `);
         return true;
     }
 
@@ -42,7 +42,7 @@ function processFile(filePath) {
     if (pattern2.test(html)) {
         html = html.replace(pattern2, '$1$2\n                <div id="language-switcher"></div>');
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${filename} — added (pattern: header actions)`);
+        `);
         return true;
     }
 
@@ -50,16 +50,16 @@ function processFile(filePath) {
     if (html.includes('</header>')) {
         html = html.replace('</header>', '    <div id="language-switcher" class="hidden lg:block"></div>\n        </header>');
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${filename} — added (pattern: before </header>)`);
+        `);
         return true;
     }
 
-    console.log(`  · ${filename} — skipped (no suitable container)`);
+    `);
     return false;
 }
 
 function main() {
-    console.log('🌐 Adding language switcher to remaining pages...\n');
+    
 
     const htmlFiles = fs.readdirSync(ROOT)
         .filter(f => f.endsWith('.html'))
@@ -71,7 +71,7 @@ function main() {
         if (processFile(file)) added++;
     }
 
-    console.log(`\n✅ Done! Language switcher added to ${added} more pages`);
+    
 }
 
 main();

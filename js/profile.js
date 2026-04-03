@@ -24,7 +24,7 @@ const API = {
 
             return await res.json();
         } catch (err) {
-            console.error("API Error:", err.message);
+            
             throw err;
         }
     },
@@ -107,7 +107,7 @@ async function loadProfile() {
         ]);
 
     } catch (err) {
-        console.warn("Falling back to demo:", err.message);
+        
         loadDemo();
     }
 
@@ -357,7 +357,7 @@ async function checkAndAwardBadges() {
             }
         }
     } catch (error) {
-        console.error('Error checking badges:', error);
+        
     }
 }
 

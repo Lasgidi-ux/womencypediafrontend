@@ -86,10 +86,10 @@ function removeFoundersReferences(content, filePath) {
 }
 
 // Main execution
-console.log('🧹 Removing founders.html references from Womencypedia frontend...\n');
+
 
 const files = getTargetFiles();
-console.log(`Found ${files.length} files to process.\n`);
+
 
 for (const filePath of files) {
     const content = fs.readFileSync(filePath, 'utf-8');
@@ -103,7 +103,7 @@ for (const filePath of files) {
     if (count > 0) {
         fs.writeFileSync(filePath, modified, 'utf-8');
         const relativePath = path.relative(ROOT, filePath);
-        console.log(`  ✅ ${relativePath} — removed ${count} reference(s)`);
+        `);
         RESULTS.filesModified++;
         RESULTS.referencesRemoved += count;
     } else {
@@ -111,12 +111,12 @@ for (const filePath of files) {
         const remaining = (modified.match(/founders\.html/gi) || []).length;
         if (remaining > 0) {
             const relativePath = path.relative(ROOT, filePath);
-            console.log(`  ⚠️  ${relativePath} — ${remaining} reference(s) remain (complex pattern)`);
+             remain (complex pattern)`);
         }
     }
 }
 
-console.log(`\n📊 Summary:`);
-console.log(`   Files modified: ${RESULTS.filesModified}`);
-console.log(`   References removed: ${RESULTS.referencesRemoved}`);
-console.log('\nDone! ✨');
+
+
+
+

@@ -53,11 +53,11 @@
 
             if (!response.ok) {
                 if (response.status === 404) {
-                    console.error('Strapi API 404: Endpoint not found. Check if Public role has permissions.');
+                    
                     throw new Error('Data not found. Please ensure Strapi Public role has find/findOne permissions.');
                 }
                 if (response.status === 401) {
-                    console.error('Strapi API 401: Unauthorized. Check API token.');
+                    
                     throw new Error('Unauthorized. Please check your API token.');
                 }
                 throw new Error(`API error: ${response.status}`);
@@ -66,7 +66,7 @@
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error('fetchStrapi error:', error);
+            
             throw error;
         }
     };
@@ -122,8 +122,8 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW registered:', reg.scope))
-                    .catch(err => console.log('SW registration failed:', err));
+                    .then(reg => )
+                    .catch(err => );
             });
         }
     }

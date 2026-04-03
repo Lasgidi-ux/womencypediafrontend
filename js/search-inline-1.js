@@ -142,7 +142,7 @@
                         searchState.totalResults = results.length;
                     }
                 } catch (e) {
-                    console.warn('Strapi search failed, using sample data');
+                    
                     results = filterResults(getSampleData());
                     searchState.totalResults = results.length;
                 }
@@ -177,7 +177,7 @@
                 }
 
             } catch (error) {
-                console.error('Search error:', error);
+                
                 loadingState.classList.add('hidden');
                 emptyState.classList.remove('hidden');
             }
@@ -225,26 +225,26 @@
                 <a href="biography.html?id=${entry.id}" class="search-result-card block bg-white rounded-xl border border-border-light overflow-hidden">
                     <div class="aspect-[4/3] bg-primary/10 relative overflow-hidden">
                         ${entry.image
-                    ? `<img src="${entry.image}" alt="${entry.name}" class="w-full h-full object-cover">`
+                    ? `<img src="${Security.escapeHtml(entry.image)}" alt="${Security.escapeHtml(entry.name)}" class="w-full h-full object-cover">`
                     : `<div class="w-full h-full flex items-center justify-center">
                                 <span class="material-symbols-outlined text-4xl text-primary/40">person</span>
                                </div>`
                 }
                         ${entry.category ? `
                             <span class="absolute top-3 left-3 px-2 py-1 bg-white/90 rounded text-xs font-medium text-text-main">
-                                ${entry.category}
+                                ${Security.escapeHtml(entry.category)}
                             </span>
                         ` : ''}
                     </div>
                     <div class="p-4">
-                        <h3 class="font-heading text-lg font-semibold text-text-main mb-1" data-i18n="search.entrynameEntrytitle">${entry.name || entry.title}</h3>
+                        <h3 class="font-heading text-lg font-semibold text-text-main mb-1" data-i18n="search.entrynameEntrytitle">${Security.escapeHtml(entry.name || entry.title)}</h3>
                         ${entry.region || entry.era ? `
                             <p class="text-sm text-text-secondary mb-2">
-                                ${entry.region || ''}${entry.region && entry.era ? ' • ' : ''}${entry.era || ''}
+                                ${Security.escapeHtml(entry.region || '')}${entry.region && entry.era ? ' • ' : ''}${Security.escapeHtml(entry.era || '')}
                             </p>
                         ` : ''}
                         ${entry.introduction ? `
-                            <p class="text-sm text-text-secondary line-clamp-2">${entry.introduction.substring(0, 120)}...</p>
+                            <p class="text-sm text-text-secondary line-clamp-2">${Security.escapeHtml(entry.introduction.substring(0, 120))}...</p>
                         ` : ''}
                     </div>
                 </a>

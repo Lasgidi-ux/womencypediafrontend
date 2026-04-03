@@ -115,32 +115,32 @@ function processFile(filePath) {
         fs.writeFileSync(filePath, html);
         report[filename] = fixes;
         totalFixes += fixes.length;
-        console.log(`  ✓ ${filename} — ${fixes.length} fixes: ${fixes.join(', ')}`);
+        }`);
     } else {
-        console.log(`  · ${filename} — OK`);
+        
     }
 }
 
 function main() {
-    console.log('🔧 Womencypedia — Comprehensive Page Fixer\n');
+    
 
     const htmlFiles = fs.readdirSync(ROOT)
         .filter(f => f.endsWith('.html'))
         .map(f => path.join(ROOT, f))
         .sort();
 
-    console.log(`Scanning ${htmlFiles.length} pages...\n`);
+    
 
     for (const file of htmlFiles) {
         processFile(file);
     }
 
-    console.log(`\n✅ Done! ${totalFixes} total fixes applied across ${Object.keys(report).length} files`);
+    .length} files`);
 
     // Write report
     const reportPath = path.join(ROOT, 'scripts', 'fix-report.json');
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-    console.log(`   Report: scripts/fix-report.json`);
+    
 }
 
 main();

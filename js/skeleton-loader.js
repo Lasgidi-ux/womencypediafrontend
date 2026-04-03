@@ -56,7 +56,7 @@ const SkeletonLoader = {
         // Set up intersection observer
         this.setupIntersectionObserver();
 
-        console.log('[SkeletonLoader] Initialized');
+        
     },
 
     // Generate skeleton HTML based on type and count
@@ -64,7 +64,7 @@ const SkeletonLoader = {
         const template = SKELETON_TEMPLATES[type];
 
         if (!template) {
-            console.warn('[SkeletonLoader] Unknown skeleton type: ' + type);
+            
             return SKELETON_TEMPLATES['text-content'];
         }
 

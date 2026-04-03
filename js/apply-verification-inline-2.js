@@ -193,12 +193,12 @@
                 }
 
                 // Fallback: Store locally and show success
-                console.log('Application submitted:', submissionData);
+                
                 localStorage.setItem('verification_application', JSON.stringify(submissionData));
                 showSuccess();
 
             } catch (error) {
-                console.error('Submission error:', error);
+                
                 // Show success anyway for demo purposes
                 showSuccess();
             }

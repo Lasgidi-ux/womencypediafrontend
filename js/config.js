@@ -53,7 +53,7 @@ const CONTACT_EMAIL = (typeof window !== 'undefined' ? window.CONTACT_EMAIL : un
 
 // Warn if API token is not set (helps with debugging)
 if (typeof window !== 'undefined' && !window.API_TOKEN) {
-    console.warn('[CONFIG] API_TOKEN is not set. If Strapi requires authentication, API requests will fail. Set window.API_TOKEN or enable Public role in Strapi.');
+    
 }
 
 const CONFIG = {

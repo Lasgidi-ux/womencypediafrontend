@@ -24,7 +24,7 @@ const languageSwitcherReplacement = `<a href="../collections.html"
                     <!-- Mobile Search Button -->`;
 
 if (!fs.existsSync(COLLECTIONS_DIR)) {
-    console.log('Collections directory not found');
+    
     process.exit(0);
 }
 
@@ -36,7 +36,7 @@ for (const file of files) {
 
     // Check if it already has Language Switcher
     if (html.includes('id="language-switcher"')) {
-        console.log(`  · ${file} — Already has Language Switcher`);
+        
         continue;
     }
 
@@ -44,10 +44,10 @@ for (const file of files) {
     if (html.includes('<!-- Mobile Search Button -->')) {
         html = html.replace('<!-- Mobile Search Button -->', languageSwitcher);
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${file} — Added Language Switcher`);
+        
     } else {
-        console.log(`  · ${file} — No Mobile Search Button found`);
+        
     }
 }
 
-console.log('\n✅ Done!');
+

@@ -56,11 +56,11 @@
 
             async function loadBiography() {
                 if (!slug) {
-                    console.log('No slug provided, using default static content');
+                    
                     return;
                 }
 
-                console.log('Loading biography:', slug);
+                
 
                 try {
                     // Show loading state
@@ -72,7 +72,7 @@
                     const data = await fetchStrapi('/api/biographies?filters[slug][$eq]=' + encodeURIComponent(slug));
 
                     if (!data.data || (Array.isArray(data.data) && data.data.length === 0)) {
-                        console.log('Biography not found, using static content');
+                        
                         if (elements.content) {
                             elements.content.innerHTML = '<div class="text-center py-12"><p class="text-text-secondary mb-4">Biography not found for "' + escapeHtml(slug) + '".</p><a href="browse.html" class="text-primary hover:underline">Browse All Biographies</a></div>';
                         }
@@ -82,7 +82,7 @@
                     // Handle both array and single object responses
                     const rawBio = Array.isArray(data.data) ? data.data[0] : data.data;
                     const bio = unwrapAttributes(rawBio);
-                    console.log('Biography loaded:', bio);
+                    
 
                     // Update page title
                     if (bio.name) {
@@ -220,7 +220,7 @@
                     }
 
                 } catch (error) {
-                    console.error('Error loading biography:', error);
+                    
                     if (elements.content) {
                         elements.content.innerHTML = errorHTML;
                     }

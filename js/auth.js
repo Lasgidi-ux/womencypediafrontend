@@ -89,7 +89,7 @@ const Auth = {
             this._lockoutUntil = Date.now() + this.LOCKOUT_DURATION;
             sessionStorage.setItem('womencypedia_login_lockout', this._lockoutUntil.toString());
             this._loginAttempts = 0;
-            console.warn('[Auth] Too many failed login attempts. Locked out for 5 minutes.');
+            
         }
     },
 
@@ -176,7 +176,7 @@ const Auth = {
 
             return user;
         } catch (error) {
-            console.error('Login error:', error);
+            
             throw error;
         }
     },
@@ -201,7 +201,7 @@ const Auth = {
             this._handleLoginSuccess(data);
             return data;
         } catch (error) {
-            console.error('Login error:', error);
+            
             throw error;
         }
     },
@@ -265,7 +265,7 @@ const Auth = {
 
             return data;
         } catch (error) {
-            console.error('Registration error:', error);
+            
             throw error;
         }
     },
@@ -290,7 +290,7 @@ const Auth = {
             this._handleLoginSuccess(data);
             return data;
         } catch (error) {
-            console.error('Registration error:', error);
+            
             throw error;
         }
     },
@@ -316,7 +316,7 @@ const Auth = {
 
             return await response.json();
         } catch (error) {
-            console.error('Forgot password error:', error);
+            
             throw error;
         }
     },
@@ -342,7 +342,7 @@ const Auth = {
 
             return await response.json();
         } catch (error) {
-            console.error('Reset password error:', error);
+            
             throw error;
         }
     },
@@ -359,7 +359,7 @@ const Auth = {
 
             }
         } catch (error) {
-            console.error('Logout error:', error);
+            
         } finally {
             this.clearStorage();
             this._currentUser = null;
@@ -435,7 +435,7 @@ const Auth = {
             localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(data));
             return data;
         } catch (error) {
-            console.error('Get current user error:', error);
+            
             return null;
         }
     },
@@ -492,7 +492,7 @@ const Auth = {
 
             return data;
         } catch (error) {
-            console.error('Update profile error:', error);
+            
             throw error;
         }
     },

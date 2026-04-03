@@ -39,14 +39,14 @@ function addEmailUpdateScript(htmlFilePath) {
 
         // Check if update-emails.js is already included
         if (content.includes('js/update-emails.js')) {
-            console.log(`✓ Already has update-emails.js: ${htmlFilePath}`);
+            
             return false;
         }
 
         // Find the closing </body> tag
         const bodyCloseIndex = content.lastIndexOf('</body>');
         if (bodyCloseIndex === -1) {
-            console.log(`⚠ No </body> tag found: ${htmlFilePath}`);
+            
             return false;
         }
 
@@ -74,19 +74,19 @@ function addEmailUpdateScript(htmlFilePath) {
 
         // Write updated content
         fs.writeFileSync(htmlFilePath, newContent, 'utf8');
-        console.log(`✓ Added update-emails.js: ${htmlFilePath}`);
+        
         return true;
     } catch (error) {
-        console.error(`✗ Error processing ${htmlFilePath}:`, error.message);
+        
         return false;
     }
 }
 
 // Main execution
-console.log('=== Adding update-emails.js to all HTML pages ===\n');
+
 
 const htmlFiles = getHtmlFiles('.');
-console.log(`Found ${htmlFiles.length} HTML files\n`);
+
 
 let updatedCount = 0;
 let skippedCount = 0;
@@ -100,8 +100,8 @@ htmlFiles.forEach(file => {
     }
 });
 
-console.log('\n=== Summary ===');
-console.log(`Total HTML files: ${htmlFiles.length}`);
-console.log(`Updated: ${updatedCount}`);
-console.log(`Skipped: ${skippedCount}`);
-console.log('\nDone!');
+
+
+
+
+

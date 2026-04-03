@@ -20,7 +20,7 @@ const PageProtection = {
     protect(requiredRole = null) {
         // Idempotent check - prevent double protection
         if (this.isProtected()) {
-            console.info('[PageProtection] Already protected, skipping');
+            
             return;
         }
 
@@ -29,7 +29,7 @@ const PageProtection = {
 
         // Wait for Auth to initialize
         if (typeof Auth === 'undefined') {
-            console.error('Auth module not loaded');
+            
             window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.pathname);
             return;
         }
@@ -48,7 +48,7 @@ const PageProtection = {
             }
         }
 
-        console.info('[PageProtection] Access granted');
+        
     },
 
     /**
@@ -58,7 +58,7 @@ const PageProtection = {
     requireAuth(redirectTo = null) {
         // Check if Auth module is loaded
         if (typeof Auth === 'undefined') {
-            console.error('Auth module not loaded');
+            
             const redirect = redirectTo || window.location.pathname;
             window.location.href = 'login.html?redirect=' + encodeURIComponent(redirect);
             return;
@@ -76,7 +76,7 @@ const PageProtection = {
     requireAdmin() {
         // Idempotent check - prevent double protection
         if (this.isProtected()) {
-            console.info('[PageProtection] Already protected, skipping');
+            
             return;
         }
 
@@ -84,7 +84,7 @@ const PageProtection = {
         window._pageProtectionActive = true;
 
         if (typeof Auth === 'undefined') {
-            console.error('Auth module not loaded');
+            
             window.location.href = '403.html';
             return;
         }

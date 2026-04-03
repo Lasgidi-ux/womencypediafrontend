@@ -18,7 +18,7 @@ const scriptsToAdd = `    <script src="../js/i18n.js"><\/script>
 const scriptsReplacement = `    <script src="../js/navigation.js"><\/script>`;
 
 if (!fs.existsSync(COLLECTIONS_DIR)) {
-    console.log('Collections directory not found');
+    
     process.exit(0);
 }
 
@@ -30,7 +30,7 @@ for (const file of files) {
 
     // Check if it already has i18n.js
     if (html.includes('js/i18n.js')) {
-        console.log(`  · ${file} — Already has i18n.js`);
+        
         continue;
     }
 
@@ -38,10 +38,10 @@ for (const file of files) {
     if (html.includes(scriptsReplacement)) {
         html = html.replace(scriptsReplacement, scriptsToAdd);
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${file} — Added i18n.js`);
+        
     } else {
-        console.log(`  · ${file} — navigation.js not found at expected location`);
+        
     }
 }
 
-console.log('\n✅ Done!');
+

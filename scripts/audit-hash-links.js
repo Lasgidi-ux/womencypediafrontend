@@ -20,9 +20,9 @@ function findHTMLFiles(dir) {
 const htmlFiles = findHTMLFiles(ROOT);
 
 // 1. Find all href="#" links with their context (surrounding text)
-console.log('========================================');
-console.log('AUDIT: href="#" PLACEHOLDER LINKS');
-console.log('========================================\n');
+
+
+
 
 const hrefHashRegex = /href=["']#["'][^>]*>([^<]*)/g;
 const results = {};
@@ -73,9 +73,9 @@ Object.entries(results).forEach(([file, matches]) => {
     const buttons = matches.filter(m => m.isButton && !m.isSocial);
 
     if (actionable.length > 0) {
-        console.log(`\n📄 ${file}:`);
+        
         actionable.forEach(m => {
-            console.log(`   ❌ Line ${m.line}: "${m.text}"`);
+            
             actionableCount++;
         });
     }
@@ -83,18 +83,18 @@ Object.entries(results).forEach(([file, matches]) => {
     buttonCount += buttons.length;
 });
 
-console.log('\n\n========================================');
-console.log('SUMMARY');
-console.log('========================================');
-console.log(`Total href="#" found: ${totalPlaceholders}`);
-console.log(`  ❌ Actionable (need real links): ${actionableCount}`);
-console.log(`  🐦 Social media (OK as #): ${socialCount}`);
-console.log(`  🔘 Buttons/toggles (OK as #): ${buttonCount}`);
+
+
+
+
+: ${actionableCount}`);
+: ${socialCount}`);
+: ${buttonCount}`);
 
 // 2. Check page completeness - look for placeholder content
-console.log('\n\n========================================');
-console.log('AUDIT: PAGE COMPLETENESS');
-console.log('========================================\n');
+
+
+
 
 htmlFiles.forEach(file => {
     const relFile = path.relative(ROOT, file).replace(/\\/g, '/');
@@ -134,16 +134,16 @@ htmlFiles.forEach(file => {
     }
 
     if (issues.length > 0) {
-        console.log(`📄 ${relFile}:`);
-        issues.forEach(i => console.log(`   ⚠️  ${i}`));
-        console.log('');
+        
+        issues.forEach(i => );
+        
     }
 });
 
 // 3. List all unique href="#" link texts to map them
-console.log('\n========================================');
-console.log('ALL UNIQUE href="#" LINK TEXTS (non-social, non-button)');
-console.log('========================================\n');
+
+');
+
 
 const uniqueTexts = new Map();
 Object.entries(results).forEach(([file, matches]) => {
@@ -156,5 +156,5 @@ Object.entries(results).forEach(([file, matches]) => {
 });
 
 [...uniqueTexts.entries()].sort((a, b) => b[1].length - a[1].length).forEach(([text, files]) => {
-    console.log(`"${text}" → found in ${files.length} file(s): ${files.slice(0, 3).join(', ')}${files.length > 3 ? '...' : ''}`);
+    : ${files.slice(0, 3).join(', ')}${files.length > 3 ? '...' : ''}`);
 });

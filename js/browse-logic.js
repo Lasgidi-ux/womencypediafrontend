@@ -14,7 +14,6 @@ let dynamicFilters = {
     categories: []
 }
 
-let usingStaticData = false
 let browseLogicErrorCount = 0
 const MAX_API_ERRORS = 3
 
@@ -203,32 +202,31 @@ async function loadFilterOptions() {
 
     catch (e) {
 
-        console.error("Filter load error:", e)
+        console.warn('Failed to load filter options from Strapi:', e.message);
 
-        usingStaticData = true
+        // Disable filter dropdowns and show error message
 
-        loadStaticFilterOptions()
+        const filterElements = ['eraFilter', 'regionFilter', 'categoryFilter'];
+
+        filterElements.forEach(id => {
+
+            const el = document.getElementById(id);
+
+            if (el) {
+
+                el.disabled = true;
+
+                el.innerHTML = '<option value="">Filters unavailable</option>';
+
+            }
+
+        });
 
     }
 
 }
 
 
-
-/* ================= STATIC FILTER FALLBACK ================= */
-
-function loadStaticFilterOptions() {
-
-    if (!staticFilters) return
-
-
-    populateDropdown("eraFilter", staticFilters.eras, "Era")
-
-    populateDropdown("regionFilter", staticFilters.regions, "Region")
-
-    populateDropdown("categoryFilter", staticFilters.categories, "Category")
-
-}
 
 
 
@@ -291,11 +289,31 @@ async function loadEntries() {
 
     catch (e) {
 
-        console.error("Entries load error:", e)
+        console.warn('Failed to load biographies from Strapi:', e.message);
 
-        usingStaticData = true
+        // Show error message in the grid
 
-        loadStaticEntries()
+        const gridEl = document.getElementById("entries-grid");
+
+        if (gridEl) {
+
+            gridEl.innerHTML = `
+
+                <div class="col-span-full text-center py-8 text-text-secondary">
+
+                    <p>Unable to load biographies at this time.</p>
+
+                    <p class="text-sm mt-2">Please try again later.</p>
+
+                </div>
+
+            `;
+
+        }
+
+        // Update pagination to show no results
+
+        updatePagination({ page: 1, pageCount: 1, total: 0 });
 
     }
 
@@ -303,66 +321,6 @@ async function loadEntries() {
 
 
 
-/* ================= STATIC FALLBACK ================= */
-
-function loadStaticEntries() {
-
-    let data = biographies
-
-
-    if (filters.era) {
-
-        data = data.filter(x => x.era === filters.era.slug)
-
-    }
-
-    if (filters.region) {
-
-        data = data.filter(x => x.region === filters.region.slug)
-
-    }
-
-    if (filters.category) {
-
-        data = data.filter(x => x.category === filters.category.slug)
-
-    }
-
-
-    if (searchQuery) {
-
-        const q = searchQuery.toLowerCase()
-
-        data = data.filter(x =>
-
-            x.name.toLowerCase().includes(q) ||
-
-            x.summary?.toLowerCase().includes(q)
-
-        )
-
-    }
-
-
-    const start = (currentPage - 1) * pageSize
-
-    const paginated = data.slice(start, start + pageSize)
-
-
-    renderEntries(paginated, "entries-grid")
-
-
-    updatePagination({
-
-        page: currentPage,
-
-        pageCount: Math.ceil(data.length / pageSize),
-
-        total: data.length
-
-    })
-
-}
 
 
 

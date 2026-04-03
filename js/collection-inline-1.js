@@ -89,7 +89,7 @@
                 entriesGrid.classList.remove('hidden');
 
             } catch (error) {
-                console.error('Failed to load collection:', error);
+                
                 loadingState.classList.add('hidden');
                 errorState.classList.remove('hidden');
             }
@@ -181,7 +181,7 @@
                 }).join('');
 
             } catch (error) {
-                console.warn('Failed to load related collections:', error);
+                
             }
         }
 

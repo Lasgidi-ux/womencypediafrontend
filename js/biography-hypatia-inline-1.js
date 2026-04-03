@@ -20,7 +20,7 @@
                     currentBio = await API.entries.getById(id);
                 }
             } catch (error) {
-                console.warn('API not available, using static data:', error.message);
+                
                 useAPI = false;
 
                 // Fallback to static data
@@ -30,7 +30,7 @@
             }
 
             if (!currentBio) {
-                console.error('Biography not found');
+                
                 // Show error state
                 const main = document.querySelector('main');
                 if (main) {

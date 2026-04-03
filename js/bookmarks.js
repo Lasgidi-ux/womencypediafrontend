@@ -33,11 +33,11 @@ const Bookmarks = {
                         return;
                     }
                 } catch (error) {
-                    console.log('API bookmark load failed:', error.message);
+                    
                 }
             }
         } catch (error) {
-            console.log('API bookmark load failed, using localStorage:', error.message);
+            
         }
 
         // Fallback to localStorage
@@ -54,7 +54,7 @@ const Bookmarks = {
                 this._bookmarks = JSON.parse(stored);
             }
         } catch (error) {
-            console.error('Failed to load bookmarks from localStorage:', error);
+            
             this._bookmarks = [];
         }
         this._isLoaded = true;
@@ -67,7 +67,7 @@ const Bookmarks = {
         try {
             localStorage.setItem('womencypedia_bookmarks', JSON.stringify(this._bookmarks));
         } catch (error) {
-            console.error('Failed to save bookmarks:', error);
+            
         }
     },
 
@@ -132,7 +132,7 @@ const Bookmarks = {
                 await window.StrapiAPI.userBookmarks.create(data);
             }
         } catch (error) {
-            console.log('API bookmark save failed, saved locally:', error.message);
+            
         }
 
         this._bookmarks.push(bookmark);
@@ -164,7 +164,7 @@ const Bookmarks = {
                 await window.StrapiAPI.userBookmarks.delete(entryId);
             }
         } catch (error) {
-            console.log('API bookmark remove failed, removed locally:', error.message);
+            
         }
 
         this._bookmarks.splice(index, 1);
@@ -204,7 +204,7 @@ const Bookmarks = {
                 await window.StrapiAPI.userBookmarks.clearAll();
             }
         } catch (error) {
-            console.log('API bookmark clear failed, cleared locally:', error.message);
+            
         }
 
         this._bookmarks = [];
@@ -405,7 +405,7 @@ const Bookmarks = {
                 return { success: true, count: imported.length };
             }
         } catch (error) {
-            console.error('Failed to import bookmarks:', error);
+            
             if (typeof UI !== 'undefined' && UI.showToast) {
                 UI.showToast('Failed to import bookmarks', 'error');
             }

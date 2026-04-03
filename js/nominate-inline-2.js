@@ -2,7 +2,7 @@
             (async function () {
                 try {
                     const cmsUrl = window.API_STRAPI_URL || window.API_BASE_URL || 'https://womencypedia-cms.onrender.com';
-                    console.log('[HealthCheck] Testing CMS connectivity:', cmsUrl);
+                    
 
                     const response = await fetch(`${cmsUrl}/api/contributions?pagination[limit]=1`, {
                         method: 'GET',
@@ -11,12 +11,12 @@
                     });
 
                     if (response.ok) {
-                        console.log('[HealthCheck] CMS is accessible - Status:', response.status);
+                        
                     } else {
-                        console.warn('[HealthCheck] CMS returned error - Status:', response.status);
+                        
                     }
                 } catch (error) {
-                    console.error('[HealthCheck] CMS is not accessible:', error.message);
+                    
                     // Show warning to user
                     const warningDiv = document.createElement('div');
                     warningDiv.className = 'fixed top-4 right-4 z-50 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 max-w-md';

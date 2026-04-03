@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Guard: check if Leaflet loaded
             if (typeof L === 'undefined') {
-                console.warn('Leaflet not loaded — map disabled (check network)');
+                ');
                 mapContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#5A5454;font-size:14px;">Map unavailable offline</div>';
                 return;
             }

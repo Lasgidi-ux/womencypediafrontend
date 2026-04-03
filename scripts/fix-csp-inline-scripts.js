@@ -62,17 +62,17 @@ function processFile(filePath) {
 }
 
 // Main execution
-console.log('Fixing inline scripts for CSP compliance...\n');
+
 
 const htmlFiles = getHtmlFiles('.');
-console.log(`Found ${htmlFiles.length} HTML files\n`);
+
 
 let processed = 0;
 let skipped = 0;
 
 for (const file of htmlFiles) {
     const relativePath = path.relative('.', file);
-    console.log(`Processing: ${relativePath}`);
+    
 
     if (processFile(file)) {
         processed++;
@@ -81,4 +81,4 @@ for (const file of htmlFiles) {
     }
 }
 
-console.log(`\n✓ Done! Processed: ${processed}, Skipped: ${skipped}`);
+

@@ -220,9 +220,9 @@ function processFile(filePath) {
         fs.writeFileSync(filePath, html);
         report[filename] = fixes;
         totalAdded += fixes.length;
-        console.log(`  ✓ ${filename} — ${fixes.length} additions: ${fixes.join(', ')}`);
+        }`);
     } else {
-        console.log(`  · ${filename} — OK`);
+        
     }
 }
 
@@ -245,17 +245,17 @@ function processDirectory(dirPath) {
 }
 
 function main() {
-    console.log('🔧 Adding Missing Navigation Elements to All Pages...\n');
-    console.log(`Processing HTML files in ${ROOT}...\n`);
+    
+    
 
     processDirectory(ROOT);
 
-    console.log(`\n✅ Done! ${totalAdded} additions applied across ${Object.keys(report).length} files`);
+    .length} files`);
 
     if (Object.keys(report).length > 0) {
-        console.log('\nFiles modified:');
+        
         for (const [filename, fixes] of Object.entries(report)) {
-            console.log(`  - ${filename}: ${fixes.join(', ')}`);
+            }`);
         }
     }
 }

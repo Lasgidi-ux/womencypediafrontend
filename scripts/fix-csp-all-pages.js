@@ -46,7 +46,7 @@ function fixCspInFile(filePath) {
 
         // Check if file has CSP meta tag
         if (!CSP_META_REGEX.test(content)) {
-            console.log(`⚠️  No CSP meta tag found in: ${filePath}`);
+            
             return false;
         }
 
@@ -57,23 +57,23 @@ function fixCspInFile(filePath) {
         const newContent = content.replace(CSP_META_REGEX, NEW_CSP_META);
         if (newContent !== content) {
             fs.writeFileSync(filePath, newContent, 'utf8');
-            console.log(`✅ Fixed CSP in: ${filePath}`);
+            
             return true;
         } else {
-            console.log(`ℹ️  CSP already correct in: ${filePath}`);
+            
             return false;
         }
     } catch (error) {
-        console.error(`❌ Error processing ${filePath}:`, error.message);
+        
         return false;
     }
 }
 
 // Main execution
-console.log('🔧 Fixing CSP meta tags in all HTML files...\n');
+
 
 const htmlFiles = findHtmlFiles('.');
-console.log(`Found ${htmlFiles.length} HTML files\n`);
+
 
 let fixedCount = 0;
 for (const file of htmlFiles) {
@@ -82,4 +82,4 @@ for (const file of htmlFiles) {
     }
 }
 
-console.log(`\n✅ Done! Fixed ${fixedCount} files.`);
+

@@ -66,12 +66,12 @@ function processFile(filePath) {
     if (html !== original) {
         fs.writeFileSync(filePath, html);
         totalFixes += fixes.length;
-        console.log(`  ✓ ${filename} — ${fixes.join(', ')}`);
+        }`);
     }
 }
 
 function main() {
-    console.log('🔧 Targeted Nav/Footer cleanup (pass 2)...\n');
+    ...\n');
 
     const htmlFiles = fs.readdirSync(ROOT)
         .filter(f => f.endsWith('.html'))
@@ -82,7 +82,7 @@ function main() {
         processFile(file);
     }
 
-    console.log(`\n✅ Done! ${totalFixes} additional fixes applied`);
+    
 }
 
 main();

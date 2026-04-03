@@ -14,16 +14,16 @@ const Security = {
      */
     async init() {
         if (typeof DOMPurify !== 'undefined') {
-            console.info('[Security] DOMPurify already loaded');
+            
             return;
         }
 
         // Try to load DOMPurify from CDN
         try {
             await this.loadDOMPurify();
-            console.info('[Security] DOMPurify loaded successfully');
+            
         } catch (error) {
-            console.warn('[Security] Failed to load DOMPurify, using fallback sanitizer');
+            
         }
     },
 
@@ -226,7 +226,7 @@ const Security = {
                 element.innerHTML = this.sanitize(value);
             } else if (key.startsWith('on')) {
                 // Skip event handlers for security
-                console.warn(`[Security] Skipping event handler: ${key}`);
+                
             } else {
                 element.setAttribute(key, this.escapeHtml(value));
             }

@@ -84,7 +84,7 @@ function fixCSP(content) {
 
     // Check if CSP exists
     if (!content.includes('Content-Security-Policy')) {
-        console.log('  No CSP found, skipping');
+        
         return content;
     }
 
@@ -115,7 +115,7 @@ function fixCSP(content) {
     return updated;
 }
 
-console.log('Fixing CSP for OpenStreetMap tiles...\n');
+
 
 let fixedCount = 0;
 let errorCount = 0;
@@ -124,7 +124,7 @@ htmlFiles.forEach(file => {
     const filePath = path.join(HTML_DIR, file);
 
     if (!fs.existsSync(filePath)) {
-        console.log(`⚠ File not found: ${file}`);
+        
         return;
     }
 
@@ -136,19 +136,19 @@ htmlFiles.forEach(file => {
 
         if (content !== original) {
             fs.writeFileSync(filePath, content, 'utf8');
-            console.log(`✓ Fixed CSP: ${file}`);
+            
             fixedCount++;
         } else {
-            console.log(`○ No changes: ${file}`);
+            
         }
     } catch (err) {
-        console.error(`✗ Error processing ${file}: ${err.message}`);
+        
         errorCount++;
     }
 });
 
-console.log(`\n✓ Fixed ${fixedCount} files`);
-console.log(`○ Skipped ${htmlFiles.length - fixedCount - errorCount} files (no changes needed)`);
+
+`);
 if (errorCount > 0) {
-    console.log(`✗ Errors: ${errorCount}`);
+    
 }

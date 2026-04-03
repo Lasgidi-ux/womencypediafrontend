@@ -139,7 +139,7 @@ async function loadBiography(slug) {
     setupAdminFeatures();
 
   } catch (error) {
-    console.error('Biography load error:', error);
+    
 
     if (error.status === 404 || error.message?.includes('not found')) {
       showNotFound();

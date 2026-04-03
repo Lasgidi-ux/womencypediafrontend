@@ -25,7 +25,7 @@ const Realtime = {
             }
         });
 
-        console.log('[Realtime] Initialized');
+        
     },
 
     /**
@@ -39,7 +39,7 @@ const Realtime = {
         }, this._pollFrequency);
 
         this._isConnected = true;
-        console.log('[Realtime] Polling started');
+        
     },
 
     /**
@@ -50,7 +50,7 @@ const Realtime = {
             clearInterval(this._pollInterval);
             this._pollInterval = null;
             this._isConnected = false;
-            console.log('[Realtime] Polling paused');
+            
         }
     },
 
@@ -78,7 +78,7 @@ const Realtime = {
                 await this.checkBookmarkSync();
             }
         } catch (error) {
-            console.log('[Realtime] Update check failed:', error.message);
+            
         }
     },
 
@@ -106,7 +106,7 @@ const Realtime = {
             // Compare with current comments
             const currentCommentCount = this.getCurrentCommentCount(entryId);
             if (latestComments.length > currentCommentCount) {
-                console.log(`[Realtime] ${latestComments.length - currentCommentCount} new comments found`);
+                
 
                 // Update comments and show notification
                 if (typeof Comments !== 'undefined') {
@@ -115,7 +115,7 @@ const Realtime = {
                 }
             }
         } catch (error) {
-            console.log('[Realtime] Comment check failed:', error.message);
+            
         }
     },
 
@@ -139,7 +139,7 @@ const Realtime = {
                 const removedOnServer = localBookmarks.filter(b => !serverIds.includes(b.id));
 
                 if (newOnServer.length > 0 || removedOnServer.length > 0) {
-                    console.log('[Realtime] Bookmark sync needed');
+                    
                     Bookmarks._bookmarks = serverBookmarks;
                     Bookmarks.saveToLocalStorage();
                     Bookmarks.updateAllBookmarkButtons();
@@ -150,7 +150,7 @@ const Realtime = {
                 }
             }
         } catch (error) {
-            console.log('[Realtime] Bookmark sync check failed:', error.message);
+            
         }
     },
 
@@ -245,7 +245,7 @@ const Realtime = {
      */
     destroy() {
         this.pausePolling();
-        console.log('[Realtime] Destroyed');
+        
     }
 };
 

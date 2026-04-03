@@ -399,7 +399,7 @@ window.addEventListener('unhandledrejection', function (event) {
     event.preventDefault();
 
     // Log error for debugging
-    console.error('Unhandled Promise Rejection:', event.reason);
+    
 
     // Show user-friendly notification
     const errorMessage = event.reason?.message || event.reason || 'An unexpected error occurred';
@@ -409,7 +409,7 @@ window.addEventListener('unhandledrejection', function (event) {
         UI.showToast('Something went wrong. Please try again.', 'error');
     } else {
         // Fallback: log to console if UI not available
-        console.warn('UI not available for toast notification');
+        
     }
 });
 
@@ -418,7 +418,7 @@ window.addEventListener('unhandledrejection', function (event) {
  */
 window.addEventListener('error', function (event) {
     // Log error for debugging
-    console.error('Global Error:', event.error);
+    
 
     // Don't prevent default - let the error propagate for debugging
     // But we can show a notification for unexpected errors

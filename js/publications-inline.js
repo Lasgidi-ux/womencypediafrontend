@@ -10,7 +10,7 @@
     document.addEventListener('DOMContentLoaded', async () => {
         // Check if fetchStrapi is available
         if (typeof window.fetchStrapi !== 'function') {
-            console.error('fetchStrapi utility not found. Ensure js/inline-common.js is loaded.');
+            
             return;
         }
 
@@ -31,7 +31,7 @@
             const response = await window.fetchStrapi('/api/publications?populate=*&sort=publishedAt:desc');
 
             if (!response || !response.data || response.data.length === 0) {
-                console.log('No publications found in Strapi. Using static content.');
+                
                 return;
             }
 
@@ -69,7 +69,7 @@
             }
 
         } catch (error) {
-            console.error('Error loading publications:', error);
+            
             // Keep static content on error
         }
     }

@@ -40,7 +40,7 @@ const Homepage = {
             });
             clearTimeout(timeout);
             if (res.status === 404) {
-                console.info('[Homepage] CMS homepage content type not found (404). This is expected if the homepage single type has not been created/published in Strapi admin, or if public find permission is not enabled. Using static HTML fallback.');
+                // Homepage single type not found (404) - expected if not created/published in Strapi admin
                 this._cmsAvailable = false;
             } else {
                 this._cmsAvailable = res.ok;
@@ -55,13 +55,8 @@ const Homepage = {
      * Initialize homepage dynamic content
      */
     async init() {
-        // Quick check — skip all API calls if CMS is unreachable
-        const cmsReady = await this._isCmsAvailable();
-        if (!cmsReady) {
-            // Static HTML is already rendered; nothing to do
-            return;
-        }
-
+        // Load all sections concurrently — each section handles its own errors
+        // If CMS is unavailable, static HTML remains visible (graceful degradation)
         try {
             await Promise.allSettled([
                 this.loadHomepageContent(),
@@ -70,7 +65,7 @@ const Homepage = {
                 this.loadRecentBiographies()
             ]);
         } catch {
-            // Static HTML fallback remains visible
+            // Content sections will show loading/error states if API fails
         }
     },
 
@@ -105,7 +100,8 @@ const Homepage = {
 
             if (!data) return;
 
-            // Flatten Strapi v4 response (attributes nesting)
+            // Strapi v5: data is flat (no attributes nesting)
+            // Strapi v4: data is nested under .attributes
             const content = data.attributes ? data.attributes : data;
 
             // Hero Section
@@ -147,7 +143,7 @@ const Homepage = {
 
         } catch (error) {
             console.warn('Failed to load homepage content from CMS:', error);
-            // Static fallback remains visible
+            // Static HTML content remains as fallback
         }
     },
 
@@ -160,19 +156,43 @@ const Homepage = {
 
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort[0]=createdAt:desc`;
+            const headers = { 'Content-Type': 'application/json' };
+            if (CONFIG.API_TOKEN) {
+                headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
+            }
+
+            // First try featured biographies
+            let url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort[0]=createdAt:desc`;
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 5000);
-            const response = await fetch(url, {
+            const timeout = setTimeout(() => controller.abort(), 8000);
+            let response = await fetch(url, {
                 cache: 'no-store',
-                signal: controller.signal
+                signal: controller.signal,
+                headers: headers
             });
             clearTimeout(timeout);
 
             if (!response.ok) return;
 
-            const result = await response.json();
-            const entries = this.flattenCollection(result);
+            let result = await response.json();
+            let entries = this.flattenCollection(result);
+
+            // If no featured biographies, load the most recent ones instead
+            if (entries.length === 0) {
+                const controller2 = new AbortController();
+                const timeout2 = setTimeout(() => controller2.abort(), 8000);
+                url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=6&sort[0]=publishedAt:desc`;
+                response = await fetch(url, {
+                    cache: 'no-store',
+                    signal: controller2.signal,
+                    headers: headers
+                });
+                clearTimeout(timeout2);
+
+                if (!response.ok) return;
+                result = await response.json();
+                entries = this.flattenCollection(result);
+            }
 
             if (entries.length === 0) return;
 
@@ -193,19 +213,43 @@ const Homepage = {
 
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort[0]=createdAt:desc`;
+            const headers = { 'Content-Type': 'application/json' };
+            if (CONFIG.API_TOKEN) {
+                headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
+            }
+
+            // First try featured collections
+            let url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort[0]=order:asc&pagination[pageSize]=6`;
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 5000);
-            const response = await fetch(url, {
+            const timeout = setTimeout(() => controller.abort(), 8000);
+            let response = await fetch(url, {
                 cache: 'no-store',
-                signal: controller.signal
+                signal: controller.signal,
+                headers: headers
             });
             clearTimeout(timeout);
 
             if (!response.ok) return;
 
-            const result = await response.json();
-            const collections = this.flattenCollection(result);
+            let result = await response.json();
+            let collections = this.flattenCollection(result);
+
+            // If no featured collections, load all collections
+            if (collections.length === 0) {
+                const controller2 = new AbortController();
+                const timeout2 = setTimeout(() => controller2.abort(), 8000);
+                url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&populate=coverImage,biographies&sort[0]=order:asc&pagination[pageSize]=6`;
+                response = await fetch(url, {
+                    cache: 'no-store',
+                    signal: controller2.signal,
+                    headers: headers
+                });
+                clearTimeout(timeout2);
+
+                if (!response.ok) return;
+                result = await response.json();
+                collections = this.flattenCollection(result);
+            }
 
             if (collections.length === 0) return;
 
@@ -228,10 +272,15 @@ const Homepage = {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
             const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort[0]=publishedAt:desc`;
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 5000);
+            const timeout = setTimeout(() => controller.abort(), 8000);
+            const headers = { 'Content-Type': 'application/json' };
+            if (CONFIG.API_TOKEN) {
+                headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
+            }
             const response = await fetch(url, {
                 cache: 'no-store',
-                signal: controller.signal
+                signal: controller.signal,
+                headers: headers
             });
             clearTimeout(timeout);
 
@@ -380,34 +429,56 @@ const Homepage = {
         if (typeof DOMPurify !== 'undefined') {
             el.innerHTML = DOMPurify.sanitize(html);
         } else {
-            console.warn(`DOMPurify not available; skipping HTML content for #${id}`);
+            console.warn('DOMPurify not available; skipping HTML content update');
             // Static fallback content remains visible
         }
     },
     /**
-     * Flatten Strapi v4 collection response
+     * Flatten Strapi v4/v5 collection response
+     * v4: { data: [{ id, attributes: { ... } }] }
+     * v5: { data: [{ id, field1, field2, ... }] }
      */
     flattenCollection(result) {
         if (!result || !result.data) return [];
 
         return result.data.map(item => {
+            // v5 has flat data, v4 nests under .attributes
             const attrs = item.attributes || item;
             const flat = { id: item.id, ...attrs };
 
-            // Flatten nested relations
+            // Remove duplicate id if attrs already had one
+            if (item.attributes) {
+                delete flat.attributes;
+            }
+
+            // Flatten nested relations (both v4 and v5)
             Object.keys(flat).forEach(key => {
-                if (flat[key] && flat[key].data) {
-                    if (Array.isArray(flat[key].data)) {
-                        flat[key] = flat[key].data.map(rel => ({
-                            id: rel.id,
-                            ...(rel.attributes || rel)
-                        }));
-                    } else if (flat[key].data) {
-                        flat[key] = {
-                            id: flat[key].data.id,
-                            ...(flat[key].data.attributes || flat[key].data)
-                        };
+                const val = flat[key];
+                if (val && typeof val === 'object') {
+                    // Strapi v4 relation wrapper: { data: ... }
+                    if (val.data !== undefined) {
+                        if (Array.isArray(val.data)) {
+                            flat[key] = val.data.map(rel => ({
+                                id: rel.id,
+                                ...(rel.attributes || rel)
+                            }));
+                        } else if (val.data) {
+                            flat[key] = {
+                                id: val.data.id,
+                                ...(val.data.attributes || val.data)
+                            };
+                        } else {
+                            flat[key] = null;
+                        }
                     }
+                    // Strapi v5 single media object (has url + hash/provider)
+                    else if (val.url && (val.hash || val.provider)) {
+                        // keep as-is, getMediaUrl handles it
+                    }
+                }
+                // Strapi v5 array of related items with ids
+                if (Array.isArray(val) && val.length > 0 && val[0]?.id && !(val[0]?.url)) {
+                    flat[key] = val.map(rel => ({ id: rel.id, ...(rel.attributes || rel) }));
                 }
             });
 
@@ -416,20 +487,33 @@ const Homepage = {
     },
 
     /**
-     * Get full media URL from Strapi media object
+     * Get full media URL from Strapi media object (v4 and v5)
+     * v4: { data: { id, attributes: { url, formats: {...} } } }
+     * v5: { id, url, formats: {...}, hash, provider }
      */
     getMediaUrl(media) {
         if (!media) return 'images/placeholder-biography.jpg';
 
-        // Handle Strapi v4 nested media format
-        const mediaData = media.data ? (media.data.attributes || media.data) : media;
-        const url = mediaData.url || mediaData.formats?.medium?.url || mediaData.formats?.small?.url;
+        let url = null;
+
+        // Strapi v4 nested media format: { data: { attributes: { url } } }
+        if (media.data) {
+            const mediaData = media.data.attributes || media.data;
+            url = mediaData.url || mediaData.formats?.medium?.url || mediaData.formats?.small?.url;
+        }
+        // Strapi v5 flat media format or already transformed: { url, formats }
+        else if (media.url) {
+            url = media.url || media.formats?.medium?.url || media.formats?.small?.url;
+        }
+        // Already a string URL (from transformMedia)
+        else if (typeof media === 'string') {
+            url = media;
+        }
 
         if (!url) return 'images/placeholder-biography.jpg';
 
         // If URL is relative, prepend the Strapi base URL
         if (url.startsWith('/')) {
-            // Extract base URL without /api
             const baseUrl = CONFIG.API_BASE_URL.replace('/api', '');
             return `${baseUrl}${url}`;
         }

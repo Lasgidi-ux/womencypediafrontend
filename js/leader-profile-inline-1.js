@@ -51,7 +51,7 @@
                     currentLeader = mockLeader;
                 }
             } catch (error) {
-                console.log('Using mock data');
+                
                 currentLeader = mockLeader;
             }
 
@@ -98,12 +98,12 @@
             }
 
             // Overview tab
-            document.getElementById('org-overview').innerHTML = `<p>${currentLeader.institutionalOverview}</p>`;
+            document.getElementById('org-overview').innerHTML = `<p>${Security.escapeHtml(currentLeader.institutionalOverview)}</p>`;
             document.getElementById('org-mission').textContent = currentLeader.missionStatement || 'Mission statement pending.';
             document.getElementById('org-vision').textContent = currentLeader.visionStatement || 'Vision statement pending.';
 
             // Governance tab
-            document.getElementById('org-governance').innerHTML = `<p>${currentLeader.leadershipStructure}</p>`;
+            document.getElementById('org-governance').innerHTML = `<p>${Security.escapeHtml(currentLeader.leadershipStructure)}</p>`;
             document.getElementById('leadership-count').textContent = currentLeader.impactMetrics?.employees || 'N/A';
             document.getElementById('women-percent').textContent = (currentLeader.impactMetrics?.womenInLeadership || 0) + '%';
 

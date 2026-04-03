@@ -33,7 +33,7 @@
                     }
                 }
             } catch (error) {
-                console.error('Verification error:', error);
+                
                 // Only show success in demo mode
                 const isDemo = typeof window.DEMO_MODE !== 'undefined' || new URLSearchParams(window.location.search).has('demo');
                 if (isDemo) {
@@ -76,7 +76,7 @@
                     throw new Error('Failed to send email');
                 }
             } catch (error) {
-                console.error('Resend error:', error);
+                
                 // Only show success message in demo mode
                 const isDemo = typeof window.DEMO_MODE !== 'undefined' || new URLSearchParams(window.location.search).has('demo');
                 if (isDemo) {

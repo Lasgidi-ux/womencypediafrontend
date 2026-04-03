@@ -82,7 +82,7 @@ const Donate = (() => {
             });
         });
 
-        console.log('[Donate] Module initialized');
+        
     }
 
     // ─── Select Amount ─────────────────────────────────────
@@ -305,7 +305,7 @@ const Donate = (() => {
                 });
             }
         } catch (err) {
-            console.warn('[Donate] Could not save donation intent:', err);
+            
         }
 
         // Show thank you page regardless
@@ -429,7 +429,7 @@ const Donate = (() => {
                     });
                 }
             } catch (err) {
-                console.warn('[Donate] Legacy form save failed:', err);
+                
             }
 
             modal.remove();

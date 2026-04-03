@@ -21,10 +21,10 @@ async function fetchFeaturedBiographies() {
         // Use fetchStrapi for proper token handling
         var endpoint = '/api/biographies?filters[featured][$eq]=true&populate=*&pagination[pageSize]=8';
         var data = await fetchStrapi(endpoint);
-        return data.data || [];
+        return { data: data.data || [], error: null };
     } catch (error) {
         console.warn('Failed to fetch featured biographies:', error.message);
-        return [];
+        return { data: [], error: error.message };
     }
 }
 
@@ -58,20 +58,23 @@ function renderFeaturedCard(bio) {
 // Initialize featured page
 async function initFeatured() {
     // Find the grid container
-    const gridContainer = document.querySelector('.grid.sm\:grid-cols-2.lg\:grid-cols-4');
+    const gridContainer = document.querySelector('.grid.sm\\:grid-cols-2.lg\\:grid-cols-4');
     if (!gridContainer) return;
 
     // Show loading state
     gridContainer.innerHTML = '<div class="col-span-full text-center py-8 text-text-secondary">Loading featured biographies...</div>';
 
     // Fetch featured bios
-    const featuredBios = await fetchFeaturedBiographies();
+    const result = await fetchFeaturedBiographies();
 
-    if (featuredBios.length > 0) {
-        gridContainer.innerHTML = featuredBios.map(renderFeaturedCard).join('');
+    if (result.error) {
+        gridContainer.innerHTML = '<div class="col-span-full text-center py-8 text-text-secondary">Unable to load featured biographies at this time. Please try again later.</div>';
+    } else if (result.data.length > 0) {
+        gridContainer.innerHTML = result.data.map(renderFeaturedCard).join('');
     } else {
         gridContainer.innerHTML = '<div class="col-span-full text-center py-8 text-text-secondary">No featured biographies available.</div>';
     }
+}
 }
 
 // Run on page load

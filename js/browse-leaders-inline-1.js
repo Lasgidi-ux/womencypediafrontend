@@ -115,7 +115,7 @@
                     allLeaders = mockLeaders;
                 }
             } catch (error) {
-                console.log('Using mock data:', error.message);
+                
                 allLeaders = mockLeaders;
             }
 

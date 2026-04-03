@@ -182,10 +182,10 @@
                         const data = await res.json();
                         if (data && data.length > 0) uploadedIds.push(data[0].id);
                     } else {
-                        console.warn(`[MediaUpload] Failed to upload "${file.name}": ${res.status}`);
+                        
                     }
                 } catch (err) {
-                    console.warn(`[MediaUpload] Error uploading "${file.name}":`, err);
+                    
                 }
             }
             return uploadedIds;
@@ -265,9 +265,9 @@
                         const token = localStorage.getItem('womencypedia_access_token');
                         try {
                             mediaFileIds = await uploadMediaToStrapi(selectedFiles, token);
-                            console.log('[ShareStory] Uploaded media IDs:', mediaFileIds);
+                            
                         } catch (uploadErr) {
-                            console.warn('[ShareStory] Media upload failed, continuing without:', uploadErr);
+                            
                         }
                         submitBtn.innerHTML = '<span class="material-symbols-outlined text-[22px] animate-spin">progress_activity</span> Saving story...';
                     }
@@ -297,7 +297,7 @@
                     }
 
                     // Always use STRAPI_URL — never CONFIG.API_BASE_URL (may be localhost)
-                    console.log('[ShareStory] Submitting to:', `${STRAPI_URL}/api/contributions`);
+                    
                     const token = localStorage.getItem('womencypedia_access_token');
 
                     const response = await fetch(`${STRAPI_URL}/api/contributions`, {
@@ -316,7 +316,7 @@
                     }
 
                     const result = await response.json();
-                    console.log('✅ Story submitted successfully:', result);
+                    
 
                     // Build success message
                     let successMsg = '✅ Your story has been submitted successfully! Thank you.';
@@ -344,7 +344,7 @@
                     renderFilePreviews();
 
                 } catch (error) {
-                    console.error('❌ Story submission failed:', error);
+                    
                     showToast('❌ ' + (error.message || 'Failed to submit story. Please try again.'), 'error');
                 } finally {
                     submitBtn.disabled = false;
@@ -356,6 +356,6 @@
         // Service Worker registration
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js').then(function (reg) {
-                console.log('SW registered:', reg.scope);
+                
             }).catch(function () { /* SW not available */ });
         }

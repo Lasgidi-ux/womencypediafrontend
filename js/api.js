@@ -57,10 +57,10 @@ const LegacyAPI = {
             }
 
             const result = await response.json();
-            console.log("✅ Story successfully submitted to Strapi:", result);
+            
             return result;
         } catch (err) {
-            console.error("❌ Story submission failed:", err);
+            
             throw err;
         }
     },
@@ -73,7 +73,7 @@ const LegacyAPI = {
 
     async init() {
         this._useStrapi = typeof CONFIG !== 'undefined' && CONFIG.USE_STRAPI === true;
-        if (this._useStrapi) console.info('Using Strapi CMS mode');
+        if (this._useStrapi) 
     },
 
     isUsingStrapi() {
@@ -130,7 +130,7 @@ const LegacyAPI = {
     },
 
     async handleApiError(error, context = 'API request') {
-        console.error(`[API Error] ${context}:`, error);
+        
         return {
             error: true,
             message: error.message || 'An unexpected error occurred.',
@@ -178,4 +178,4 @@ if (!window.API) {
     // We do NOT override window.API.request or window.API._strapiRequest because that breaks StrapiAPI objects!
 }
 
-console.log("✅ Womencypedia API service (with fixed submitStory) merged successfully");
+ merged successfully");

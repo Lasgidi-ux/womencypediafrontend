@@ -88,7 +88,7 @@
 
                 UI.showToast('Profile updated successfully!', 'success');
             } catch (error) {
-                console.error('Profile update error:', error);
+                
                 UI.showToast('Failed to update profile', 'error');
             } finally {
                 submitBtn.disabled = false;
@@ -127,7 +127,7 @@
                 UI.showToast('Password updated successfully!', 'success');
                 this.reset();
             } catch (error) {
-                console.error('Password update error:', error);
+                
                 UI.showToast('Failed to update password', 'error');
             } finally {
                 submitBtn.disabled = false;

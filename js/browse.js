@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
  * Initialize browse page
  */
 async function initializeBrowse() {
-    console.log('[Browse] Initializing browse page...');
+    
 
     // Set up event listeners first
     setupSearch();
@@ -44,7 +44,7 @@ async function initializeBrowse() {
     // Load biographies
     await loadBiographies();
 
-    console.log('[Browse] Browse page initialization complete');
+    
 }
 
 /**
@@ -66,13 +66,13 @@ async function loadBiographies() {
         if (useAPI && typeof StrapiAPI !== 'undefined') {
             // If we've had too many API errors, skip API and use static data
             if (apiErrorCount >= MAX_API_ERRORS) {
-                console.log('[Browse] Using static data due to previous API errors');
+                
                 loadStaticFallback(container);
                 return;
             }
 
             const params = buildQueryParams();
-            console.log('[Browse] Attempting to load biographies from API...', params);
+            
 
             let timeoutId;
             const timeoutPromise = new Promise((_, reject) => {
@@ -94,26 +94,19 @@ async function loadBiographies() {
                 total: response.total || currentBiographies.length
             };
 
-            console.log('[Browse] Successfully loaded biographies from API:', {
-                count: currentBiographies.length,
-                pagination
-            });
+            
 
             displayBiographies();
         } else {
             // API not loaded — fall through to static fallback
-            console.log('[Browse] StrapiAPI not available, using static data');
+            
             useAPI = false;
             loadStaticFallback(container);
         }
     } catch (error) {
         apiErrorCount++;
-        console.error(`[Browse] Biographies load error (attempt ${apiErrorCount}/${MAX_API_ERRORS}):`, error);
-        console.error('[Browse] Error details:', {
-            message: error.message,
-            status: error.status,
-            raw: error.raw
-        });
+        :`, error);
+        
 
         useAPI = false;
         loadStaticFallback(container);
@@ -132,16 +125,14 @@ function loadStaticFallback(container) {
             total: biographies.length
         };
 
-        console.log('[Browse] Loaded static biographies:', {
-            count: currentBiographies.length
-        });
+        
 
         displayBiographies();
     } else if (container && typeof UI !== 'undefined' && UI.showError) {
         UI.showError(container, 'Unable to load biographies. Please try again later.', loadBiographies);
     } else {
         // Last resort: no static data, no UI.showError available
-        console.error('[Browse] Unable to load biographies: API unavailable and no static fallback data found.');
+        
 
         // Clear any loading spinner left in the container
         if (container) {
@@ -312,7 +303,7 @@ function setupFilterTabs() {
             }
 
             // Could implement specific filtering based on tab
-            console.log('Switched to filter:', filterType);
+            
         });
     });
 }

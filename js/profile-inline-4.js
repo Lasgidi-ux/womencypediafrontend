@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     try {
                         localStorage.setItem('womencypedia_avatar', e.target.result);
                     } catch (err) {
-                        console.warn('[Profile] Avatar too large to store in localStorage');
+                        
                     }
 
                     if (typeof UI !== 'undefined' && UI.showToast) {

@@ -26,7 +26,7 @@ const History = {
                 this._history = JSON.parse(stored);
             }
         } catch (error) {
-            console.error('Failed to load history:', error);
+            
             this._history = [];
         }
 
@@ -42,7 +42,7 @@ const History = {
                     this.saveHistory();
                 }
             } catch (error) {
-                console.log('History sync failed, using local data:', error.message);
+                
             }
         }
     },
@@ -54,7 +54,7 @@ const History = {
         try {
             localStorage.setItem('womencypedia_history', JSON.stringify(this._history));
         } catch (error) {
-            console.error('Failed to save history locally:', error);
+            
         }
 
         // Sync with backend if authenticated
@@ -62,7 +62,7 @@ const History = {
             try {
                 await window.StrapiAPI.userHistory.sync({ history: this._history });
             } catch (error) {
-                console.log('History sync failed:', error.message);
+                
             }
         }
     },

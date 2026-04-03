@@ -234,9 +234,9 @@ function processFile(filePath) {
     // ─── Write back ──────────────────────────────────────────
     if (modified) {
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${filename} — ${Object.keys(keysFound).length} keys`);
+        .length} keys`);
     } else {
-        console.log(`  · ${filename} — no changes`);
+        
     }
 
     return keysFound;
@@ -245,7 +245,7 @@ function processFile(filePath) {
 // ─── Main ────────────────────────────────────────────────────
 
 function main() {
-    console.log('🏷️  Womencypedia i18n Auto-Tagger\n');
+    
 
     // Find all HTML files in root
     const htmlFiles = fs.readdirSync(HTML_DIR)
@@ -253,7 +253,7 @@ function main() {
         .map(f => path.join(HTML_DIR, f))
         .sort();
 
-    console.log(`Found ${htmlFiles.length} HTML pages\n`);
+    
 
     const allKeys = {};
 
@@ -266,9 +266,9 @@ function main() {
     const manifestPath = path.join(ROOT, 'scripts', 'translation-keys.json');
     fs.writeFileSync(manifestPath, JSON.stringify(allKeys, null, 2));
 
-    console.log(`\n✅ Done! ${Object.keys(allKeys).length} unique keys found`);
-    console.log(`   Manifest: scripts/translation-keys.json`);
-    console.log(`\n💡 Next: Add missing keys to js/i18n.js translations object`);
+    .length} unique keys found`);
+    
+    
 }
 
 main();

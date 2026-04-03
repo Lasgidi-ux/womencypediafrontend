@@ -8,7 +8,7 @@
 
 // Ensure API object exists - define a fallback if not loaded
 if (typeof API === 'undefined') {
-    console.warn('[Forms] API object not found - defining fallback');
+    
     window.API = {
         isUsingStrapi: () => false,
         isUsingMockAPI: () => false,
@@ -21,8 +21,8 @@ const FormHandler = {
      * Initialize form handlers
      */
     init() {
-        console.log('[Forms] init() called');
-        console.log('[Forms] story-form exists:', !!document.getElementById('story-form'));
+         called');
+        );
         this.setupNominationForm();
         this.setupStoryForm();
     },
@@ -45,15 +45,15 @@ const FormHandler = {
      */
     setupStoryForm() {
         const form = document.getElementById('story-form');
-        console.log('[Forms] setupStoryForm called, form element:', form);
+        
         if (!form) {
-            console.log('[Forms] story-form not found on this page');
+            
             return;
         }
 
         // If the page already has its own inline handler, skip forms.js handler
         if (window.__storyFormHandledByPage) {
-            console.log('[Forms] story-form already handled by page inline script — skipping');
+            
             return;
         }
 
@@ -117,7 +117,7 @@ const FormHandler = {
         for (const file of files) {
             // Validate file type (MIME type) - security measure
             if (!allowedTypes.includes(file.type)) {
-                console.warn(`File "${file.name}" has invalid type "${file.type}". Allowed: ${friendlyFormats}`);
+                
                 if (typeof UI !== 'undefined' && UI.showToast) {
                     UI.showToast(`File "${file.name}" has an invalid format. Allowed: ${friendlyFormats}`, 'warning');
                 }
@@ -126,7 +126,7 @@ const FormHandler = {
 
             // Validate file size (max 10MB)
             if (file.size > 10 * 1024 * 1024) {
-                console.warn(`File "${file.name}" exceeds 10MB limit, skipping`);
+                
                 if (typeof UI !== 'undefined' && UI.showToast) {
                     UI.showToast(`File "${file.name}" exceeds 10MB limit`, 'warning');
                 }
@@ -154,10 +154,10 @@ const FormHandler = {
                         uploadedIds.push(uploadedFiles[0].id);
                     }
                 } else {
-                    console.warn(`Failed to upload "${file.name}":`, response.status);
+                    
                 }
             } catch (error) {
-                console.warn(`Error uploading "${file.name}":`, error);
+                
             }
         }
 
@@ -209,13 +209,13 @@ const FormHandler = {
         `;
 
         try {
-            console.log('[NominationForm] Starting submission...');
-            console.log('[NominationForm] CONFIG available:', typeof CONFIG !== 'undefined');
-            console.log('[NominationForm] CONFIG.API_BASE_URL:', CONFIG?.API_BASE_URL);
+            
+            
+            
 
             const token = (typeof Auth !== 'undefined' && Auth.isAuthenticated()) ? Auth.getAccessToken() : null;
-            console.log('[NominationForm] Auth available:', typeof Auth !== 'undefined');
-            console.log('[NominationForm] Token available:', !!token);
+            
+            
 
             const headers = { 'Content-Type': 'application/json' };
             if (token) {
@@ -227,7 +227,7 @@ const FormHandler = {
                 throw new Error('Configuration not loaded. Please refresh the page and try again.');
             }
 
-            console.log('[NominationForm] Submitting to:', `${CONFIG.API_BASE_URL}/api/contributions`);
+            
 
             const response = await fetch(`${CONFIG.API_BASE_URL}/api/contributions`, {
                 method: 'POST',
@@ -235,12 +235,12 @@ const FormHandler = {
                 body: JSON.stringify({ data: formData })
             });
 
-            console.log('[NominationForm] Response status:', response.status);
-            console.log('[NominationForm] Response ok:', response.ok);
+            
+            
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                console.log('[NominationForm] Error data:', errorData);
+                
                 // Provide more helpful error messages for common issues
                 if (response.status === 404) {
                     throw new Error('Unable to submit nomination. The server endpoint /api/contributions was not found. This may indicate the CMS needs to be rebuilt.');
@@ -267,7 +267,7 @@ const FormHandler = {
             form.reset();
 
         } catch (error) {
-            console.error('Nomination submission error:', error);
+            
 
             // Show user-friendly error message
             let errorMessage = error.message || 'Failed to submit nomination. Please try again.';
@@ -297,8 +297,8 @@ const FormHandler = {
      * @param {HTMLFormElement} form
      */
     async handleStorySubmit(form) {
-        console.log('[StoryForm] handleStorySubmit called');
-        console.log('[StoryForm] form element:', form);
+        
+        
 
         const submitBtn = form.querySelector('[type="submit"]');
         const originalText = submitBtn.innerHTML;
@@ -337,13 +337,13 @@ const FormHandler = {
 
         try {
             // Validate CONFIG first - fail fast before any API calls
-            console.log('[StoryForm] Starting submission...');
-            console.log('[StoryForm] CONFIG available:', typeof CONFIG !== 'undefined');
-            console.log('[StoryForm] CONFIG.API_BASE_URL:', CONFIG?.API_BASE_URL);
+            
+            
+            
 
             if (typeof CONFIG === 'undefined' || !CONFIG.API_BASE_URL) {
                 const errorMsg = 'Configuration not loaded. Please refresh the page and try again.';
-                console.error('[StoryForm]', errorMsg);
+                
                 if (typeof UI !== 'undefined' && UI.showToast) {
                     UI.showToast(errorMsg, 'error');
                 } else {
@@ -355,12 +355,12 @@ const FormHandler = {
             }
             // Ensure global API object exists for compatibility
             if (typeof API === 'undefined') {
-                console.warn('[StoryForm] API object not found, using fetch() directly');
+                 directly');
             }
 
             const token = (typeof Auth !== 'undefined' && Auth.isAuthenticated()) ? Auth.getAccessToken() : null;
-            console.log('[StoryForm] Auth available:', typeof Auth !== 'undefined');
-            console.log('[StoryForm] Token available:', !!token);
+            
+            
 
             const headers = { 'Content-Type': 'application/json' };
             if (token) {
@@ -378,10 +378,10 @@ const FormHandler = {
                 try {
                     mediaFileIds = await this.uploadMediaFiles(mediaInput.files, token);
                     if (mediaFileIds.length === 0 && mediaInput.files.length > 0) {
-                        console.warn('[StoryForm] Media upload skipped - files may be too large or upload endpoint requires auth');
+                        
                     }
                 } catch (uploadError) {
-                    console.warn('[StoryForm] Media upload failed, continuing without attachments:', uploadError);
+                    
                     // Continue without media - the story can still be submitted
                 }
             }
@@ -415,8 +415,8 @@ const FormHandler = {
                 successMessage += ' Note: Media upload failed, but your story text was submitted successfully.';
             }
 
-            console.log('[StoryForm] Submitting to:', `${CONFIG.API_BASE_URL}/api/contributions`);
-            console.log('[StoryForm] Form data:', JSON.stringify({ data: formData }));
+            
+            );
 
             submitBtn.innerHTML = `
                 <span class="material-symbols-outlined animate-spin">refresh</span>
@@ -429,12 +429,12 @@ const FormHandler = {
                 body: JSON.stringify({ data: formData })
             });
 
-            console.log('[StoryForm] Response status:', response.status);
-            console.log('[StoryForm] Response ok:', response.ok);
+            
+            
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                console.log('[StoryForm] Error data:', errorData);
+                
                 // Provide more helpful error messages for common issues
                 if (response.status === 404) {
                     throw new Error('Unable to submit story. The server endpoint /api/contributions was not found. This may indicate the CMS needs to be rebuilt or the content type needs to be created.');
@@ -465,7 +465,7 @@ const FormHandler = {
             if (fileDisplay) fileDisplay.textContent = '';
 
         } catch (error) {
-            console.error('[StoryForm] Submission error:', error);
+            
 
             // Show user-friendly error message
             let errorMessage = error.message || 'Failed to submit story. Please try again.';
@@ -567,13 +567,13 @@ const FormHandler = {
 
 // Initialize form handlers when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[Forms] DOMContentLoaded fired');
+    
     try {
         if (typeof FormHandler !== 'undefined') {
             FormHandler.init();
         }
     } catch (e) {
-        console.error('[Forms] Error initializing:', e);
+        
     }
 });
 

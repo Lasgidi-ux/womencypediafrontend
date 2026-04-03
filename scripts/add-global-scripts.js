@@ -46,28 +46,28 @@ function processFile(filePath) {
 
     if (modified) {
         fs.writeFileSync(filePath, html);
-        console.log(`  ✓ ${filename}`);
+        
     } else {
-        console.log(`  · ${filename} — already up to date`);
+        
     }
 }
 
 function main() {
-    console.log('📦 Adding global scripts to all pages...\n');
+    
 
     const htmlFiles = fs.readdirSync(ROOT)
         .filter(f => f.endsWith('.html'))
         .map(f => path.join(ROOT, f))
         .sort();
 
-    console.log(`Processing ${htmlFiles.length} pages\n`);
+    
 
     for (const file of htmlFiles) {
         processFile(file);
     }
 
-    console.log('\n✅ Done!');
-    console.log('   Added: darkmode.js, performance.js, Plausible analytics');
+    
+    
 }
 
 main();

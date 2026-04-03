@@ -61,7 +61,7 @@ const Share = {
                 return true;
             } catch (error) {
                 if (error.name !== 'AbortError') {
-                    console.error('Share failed:', error);
+                    
                 }
             }
         }

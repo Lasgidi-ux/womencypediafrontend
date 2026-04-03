@@ -59,7 +59,7 @@
                             entries = data.entries || data || [];
                         }
                     } catch (e) {
-                        console.warn('Legacy API unavailable');
+                        
                     }
                 }
 
@@ -76,7 +76,7 @@
                 entriesGrid.classList.remove('hidden');
 
             } catch (error) {
-                console.log('API unavailable, using fallback data');
+                
                 // Use fallback static data
                 if (typeof DATA !== 'undefined' && DATA.entries) {
                     const filteredEntries = DATA.entries.filter(e =>

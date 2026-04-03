@@ -77,8 +77,8 @@
 
     // Log configuration status (only in debug mode)
     if (window.DEBUG_MODE) {
-        console.log('[ENV-CONFIG] Environment configuration loaded');
-        console.log('[ENV-CONFIG] API_TOKEN:', window.API_TOKEN ? '*** (set)' : '(not set)');
-        console.log('[ENV-CONFIG] CONTACT_EMAIL:', window.CONTACT_EMAIL);
+        
+        ' : '(not set)');
+        
     }
 })();

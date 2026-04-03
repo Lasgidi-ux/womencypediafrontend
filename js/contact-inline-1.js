@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         submitBtn.classList.add('bg-text-main');
                     }, 3000);
                 } catch (error) {
-                    console.error('Contact form submission error:', error);
+                    
                     submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span> Failed to Send';
                     submitBtn.classList.add('bg-red-600');
                     submitBtn.classList.remove('bg-text-main');

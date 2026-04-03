@@ -208,7 +208,7 @@ const Search = {
                     results = response.entries || response.data || [];
                     this._state.totalResults = response.total || results.length;
                 } catch (apiError) {
-                    console.log('StrapiAPI search failed, using direct fetch');
+                    
                 }
             }
 
@@ -231,7 +231,7 @@ const Search = {
                         this._state.totalResults = (data.meta && data.meta.pagination && data.meta.pagination.total) || results.length;
                     }
                 } catch (strapiErr) {
-                    console.warn('Strapi search fallback failed:', strapiErr);
+                    
                 }
             }
 
@@ -240,7 +240,7 @@ const Search = {
             this.renderResults();
 
         } catch (error) {
-            console.error('Search error:', error);
+            
             this.showError('An error occurred while searching. Please try again.');
         } finally {
             this._state.isLoading = false;

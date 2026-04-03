@@ -74,7 +74,7 @@ const I18N = {
         // Setup MutationObserver to watch for dynamically added elements
         this._setupMutationObserver();
 
-        console.log(`[i18n] Locale set to: ${this.currentLocale}`);
+        
     },
 
     /**
@@ -897,7 +897,7 @@ const I18N = {
                 return;
             }
 
-            console.log(`[i18n] Auto-translating ${items.length} text nodes to ${this.currentLocale}...`);
+            
 
             // First pass: apply cached translations immediately
             const uncached = [];
@@ -911,16 +911,16 @@ const I18N = {
             });
 
             if (uncached.length > 0) {
-                console.log(`[i18n] ${items.length - uncached.length} from cache, ${uncached.length} need API translation`);
+                
                 // Translate uncached items via API
                 await this._batchTranslate(uncached, this.currentLocale);
                 // Save new translations to cache
                 this._saveAutoTranslateCache();
             }
 
-            console.log(`[i18n] Auto-translation complete`);
+            
         } catch (error) {
-            console.warn('[i18n] Auto-translation error:', error.message);
+            
         } finally {
             this._autoTranslating = false;
         }

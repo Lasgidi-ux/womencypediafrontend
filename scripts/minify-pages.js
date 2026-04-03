@@ -38,7 +38,7 @@ async function minifyFile(modulePath) {
     const filePath = path.join(ROOT, modulePath);
 
     if (!fs.existsSync(filePath)) {
-        console.warn(`  ⚠ Skipping missing: ${modulePath}`);
+        
         return;
     }
 
@@ -59,7 +59,7 @@ async function minifyFile(modulePath) {
     });
 
     if (result.error) {
-        console.error(`  ✗ Error: ${modulePath}`, result.error);
+        
         return;
     }
 
@@ -70,11 +70,10 @@ async function minifyFile(modulePath) {
     const minifiedSize = Buffer.byteLength(result.code, 'utf-8');
     const savings = ((1 - minifiedSize / originalSize) * 100).toFixed(1);
 
-    console.log(`  ✓ ${baseName}.min.js — ${(minifiedSize / 1024).toFixed(1)}KB (${savings}% smaller)`);
 }
 
 async function main() {
-    console.log('📦 Minifying page modules...\n');
+    
 
     // Ensure dist directory exists
     if (!fs.existsSync(DIST)) {
@@ -85,7 +84,6 @@ async function main() {
         await minifyFile(mod);
     }
 
-    console.log('\n✅ Page modules minified!');
+    
 }
 
-main().catch(console.error);

@@ -38,12 +38,12 @@
                 }
 
                 // Fallback
-                console.log('Contribution submitted:', submissionData);
+                
                 localStorage.setItem('contribution_submission', JSON.stringify(submissionData));
                 showSuccess();
 
             } catch (error) {
-                console.error('Submission error:', error);
+                
                 showSuccess();
             }
         });

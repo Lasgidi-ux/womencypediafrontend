@@ -56,7 +56,7 @@ const Notifications = {
                 }
             }
         } catch (error) {
-            console.log('Loading notifications from localStorage');
+            
         }
 
         // Fallback to localStorage
@@ -75,7 +75,7 @@ const Notifications = {
                 this._unreadCount = this._notifications.filter(n => !n.read).length;
             }
         } catch (error) {
-            console.error('Failed to load notifications from localStorage:', error);
+            
             this._notifications = [];
             this._unreadCount = 0;
         }
@@ -92,7 +92,7 @@ const Notifications = {
                 lastUpdated: new Date().toISOString()
             }));
         } catch (error) {
-            console.error('Failed to save notifications:', error);
+            
         }
     },
 
@@ -191,7 +191,7 @@ const Notifications = {
                     });
                 }
             } catch (error) {
-                console.log('Failed to sync read status with API');
+                
             }
         }
     },
@@ -216,7 +216,7 @@ const Notifications = {
                 });
             }
         } catch (error) {
-            console.log('Failed to sync read-all status with API');
+            
         }
     },
 
@@ -246,7 +246,7 @@ const Notifications = {
                     });
                 }
             } catch (error) {
-                console.log('Failed to delete notification from API');
+                
             }
         }
     },
@@ -271,7 +271,7 @@ const Notifications = {
                 });
             }
         } catch (error) {
-            console.log('Failed to clear notifications from API');
+            
         }
     },
 
@@ -442,7 +442,7 @@ const Notifications = {
      */
     async requestPushPermission() {
         if (!('Notification' in window)) {
-            console.log('This browser does not support notifications');
+            
             return false;
         }
 

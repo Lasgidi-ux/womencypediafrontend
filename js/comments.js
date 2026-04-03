@@ -43,7 +43,7 @@ const Comments = {
             this._isLoading = false;
             return this._comments[entryId];
         } catch (error) {
-            console.error('Failed to load comments:', error.message);
+            
             this._comments[entryId] = [];
             this._isLoading = false;
             return this._comments[entryId];
@@ -111,7 +111,7 @@ const Comments = {
 
             return newComment;
         } catch (error) {
-            console.error('Failed to post comment:', error);
+            
             if (typeof UI !== 'undefined' && UI.showToast) {
                 UI.showToast('Failed to post comment. Please try again.', 'error');
             }
@@ -146,7 +146,7 @@ const Comments = {
 
             // Handle error case
             if (result && result.error) {
-                console.error('Failed to like comment:', result.error);
+                
                 // Revert optimistic update on error
                 comment.isLiked = !isLiked;
                 comment.likes += isLiked ? -1 : 1;
@@ -165,7 +165,7 @@ const Comments = {
                 comment.isLiked = result.attributes.isLiked ?? comment.isLiked;
             }
         } catch (error) {
-            console.error('Failed to like comment:', error);
+            
             // Revert optimistic update on error
             comment.isLiked = !isLiked;
             comment.likes += isLiked ? -1 : 1;
