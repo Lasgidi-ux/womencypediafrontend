@@ -62,7 +62,7 @@ function renderFeaturedCard(bio) {
 // Initialize featured page
 async function initFeatured() {
     // Find the grid container
-    const gridContainer = document.querySelector('.grid.sm\\\\:grid-cols-2.lg\\\\:grid-cols-4');
+    const gridContainer = document.querySelector('.grid.sm\\:grid-cols-2.lg\\:grid-cols-4');
     if (!gridContainer) return;
 
     // Show loading state

@@ -105,8 +105,7 @@ async function loadBiographies() {
         }
     } catch (error) {
         apiErrorCount++;
-        :`, error);
-        
+        console.warn('[Browse] API error:', error);
 
         useAPI = false;
         loadStaticFallback(container);
