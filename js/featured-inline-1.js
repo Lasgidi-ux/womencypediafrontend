@@ -17,13 +17,17 @@ function getImageUrl(imageData) {
 
 // Fetch featured biographies from Strapi
 async function fetchFeaturedBiographies() {
+    console.log('🔍 [Featured] Starting fetchFeaturedBiographies');
     try {
         // Use fetchStrapi for proper token handling
         var endpoint = '/api/biographies?filters[featured][$eq]=true&populate=*&pagination[pageSize]=8';
+        console.log('🔍 [Featured] Calling fetchStrapi with endpoint:', endpoint);
         var data = await fetchStrapi(endpoint);
+        console.log('🔍 [Featured] Raw API response:', data);
+        console.log('🔍 [Featured] Processed data:', data.data || []);
         return { data: data.data || [], error: null };
     } catch (error) {
-        console.warn('Failed to fetch featured biographies:', error.message);
+        console.error('❌ [Featured] Failed to fetch featured biographies:', error.message);
         return { data: [], error: error.message };
     }
 }
@@ -75,7 +79,9 @@ async function initFeatured() {
         gridContainer.innerHTML = '<div class="col-span-full text-center py-8 text-text-secondary">No featured biographies available.</div>';
     }
 }
-}
 
 // Run on page load
-document.addEventListener('DOMContentLoaded', initFeatured);
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 [Featured] DOMContentLoaded - initializing featured biographies');
+    initFeatured();
+});

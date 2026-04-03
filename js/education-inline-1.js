@@ -214,11 +214,13 @@ function renderFeaturedModule(module) {
 
 // Load education modules from Strapi API with retry mechanism
 async function loadEducationModules(retryCount = 0) {
+    console.log('🔍 [Education] Starting loadEducationModules, retry:', retryCount);
     const grid = document.getElementById('modules-grid');
     const loading = document.getElementById('modules-loading');
     const maxRetries = 3;
 
     try {
+        console.log('🔍 [Education] Checking StrapiAPI availability:', typeof StrapiAPI);
         if (typeof StrapiAPI === 'undefined') {
             throw new Error('API client not available');
         }
@@ -227,17 +229,22 @@ async function loadEducationModules(retryCount = 0) {
         if (loading) loading.classList.remove('hidden');
         if (grid) grid.classList.add('hidden');
 
+        console.log('🔍 [Education] Calling StrapiAPI.educationModules.getAll...');
         const response = await StrapiAPI.educationModules.getAll({
             sort: 'order',
             pageSize: 50
         });
 
+        console.log('🔍 [Education] API Response received:', response);
         if (response && response.entries && response.entries.length > 0) {
+            console.log('🔍 [Education] Found', response.entries.length, 'modules, rendering...');
             renderModules(response.entries);
         } else {
+            console.log('🔍 [Education] No modules found in response');
             throw new Error('No education modules found');
         }
     } catch (error) {
+        console.error('❌ [Education] Error loading modules:', error);
         
 
         // Retry with exponential backoff for network errors
@@ -257,6 +264,7 @@ async function loadEducationModules(retryCount = 0) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('🔍 [Education] DOMContentLoaded - initializing education modules');
     loadEducationModules();
     loadFeaturedModule();
 });

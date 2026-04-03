@@ -263,9 +263,10 @@ function populateDropdown(id, data, label) {
 /* ================= LOAD ENTRIES ================= */
 
 async function loadEntries() {
+    console.log('🔍 [Browse] Starting loadEntries, page:', currentPage, 'filters:', filters, 'search:', searchQuery);
 
     try {
-
+        console.log('🔍 [Browse] Calling API.biographies.getAll...');
         const res = await API.biographies.getAll({
 
             page: currentPage,
@@ -280,6 +281,8 @@ async function loadEntries() {
 
         })
 
+        console.log('🔍 [Browse] API Response received:', res);
+        console.log('🔍 [Browse] Found', res.entries?.length || 0, 'entries');
 
         renderEntries(res.entries, "entries-grid")
 
@@ -289,7 +292,7 @@ async function loadEntries() {
 
     catch (e) {
 
-        console.warn('Failed to load biographies from Strapi:', e.message);
+        console.error('❌ [Browse] Failed to load biographies from Strapi:', e.message);
 
         // Show error message in the grid
 
@@ -500,9 +503,7 @@ function updatePagination(meta) {
 /* ================= INIT ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
+    console.log('🔍 [Browse] DOMContentLoaded - initializing browse functionality');
     loadFilterOptions()
-
     loadEntries()
-
 })
