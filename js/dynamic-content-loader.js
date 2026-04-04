@@ -362,8 +362,9 @@ const DynamicContentLoader = {
      * Render a biography card
      */
     renderBiographyCard(bio) {
+        // Handle both Strapi v4 (nested attributes) and v5 (flat) formats
         const attrs = bio.attributes || bio;
-        const imageUrl = this.getImageUrl(attrs.image?.data);
+        const imageUrl = this.getImageUrl(attrs.image);
         const region = attrs.region || 'Global';
         const category = attrs.category || 'Leadership';
 
@@ -398,7 +399,7 @@ const DynamicContentLoader = {
      */
     renderRecentEntry(bio) {
         const attrs = bio.attributes || bio;
-        const imageUrl = this.getImageUrl(attrs.image?.data);
+        const imageUrl = this.getImageUrl(attrs.image);
         const region = attrs.region || 'Global';
         const era = attrs.era || 'Contemporary';
 
@@ -427,7 +428,7 @@ const DynamicContentLoader = {
      */
     renderCollectionCard(collection) {
         const attrs = collection.attributes || collection;
-        const imageUrl = this.getImageUrl(attrs.coverImage?.data);
+        const imageUrl = this.getImageUrl(attrs.coverImage);
 
         return `
             <article class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
@@ -453,7 +454,7 @@ const DynamicContentLoader = {
      */
     renderFeaturedStory(bio) {
         const attrs = bio.attributes || bio;
-        const imageUrl = this.getImageUrl(attrs.image?.data);
+        const imageUrl = this.getImageUrl(attrs.image);
 
         return `
             <div class="grid lg:grid-cols-2 gap-0">
@@ -569,12 +570,17 @@ const DynamicContentLoader = {
         const timeoutId = setTimeout(() => controller.abort(), timeout);
 
         try {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            };
+            // Add API token for authenticated requests
+            if (typeof CONFIG !== 'undefined' && CONFIG.API_TOKEN) {
+                headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
+            }
             const response = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+                headers,
                 signal: controller.signal
             });
             return response;
@@ -584,20 +590,50 @@ const DynamicContentLoader = {
     },
 
     /**
-     * Get image URL from Strapi response
+     * Get image URL from Strapi response (handles v4 and v5 formats)
+     * v4: { data: { id, attributes: { url } } } or { data: [{ id, attributes: { url } }] }
+     * v5: { id, url, formats: {...} } or just url string
      */
     getImageUrl(imageData) {
         if (!imageData) return null;
 
-        const img = Array.isArray(imageData) ? imageData[0] : imageData;
-        if (!img?.attributes?.url) return null;
-
-        const url = img.attributes.url;
-        // Handle relative URLs
-        if (url.startsWith('/')) {
-            return `${this.config.apiBaseUrl}${url}`;
+        // Already a string URL
+        if (typeof imageData === 'string') {
+            if (imageData.startsWith('/')) {
+                return `${this.config.apiBaseUrl}${imageData}`;
+            }
+            return imageData;
         }
-        return url;
+
+        // Strapi v4 nested format: { data: { attributes: { url } } }
+        if (imageData.data) {
+            const img = Array.isArray(imageData.data) ? imageData.data[0] : imageData.data;
+            if (!img) return null;
+            const attrs = img.attributes || img;
+            const url = attrs.url;
+            if (!url) return null;
+            if (url.startsWith('/')) {
+                return `${this.config.apiBaseUrl}${url}`;
+            }
+            return url;
+        }
+
+        // Strapi v5 flat format: { id, url, formats: {...} }
+        if (imageData.url) {
+            const url = imageData.url || imageData.formats?.medium?.url || imageData.formats?.small?.url;
+            if (!url) return null;
+            if (url.startsWith('/')) {
+                return `${this.config.apiBaseUrl}${url}`;
+            }
+            return url;
+        }
+
+        // Transformed media object from StrapiAPI
+        if (imageData.id && !imageData.url && !imageData.data) {
+            return null;
+        }
+
+        return null;
     },
 
     /**

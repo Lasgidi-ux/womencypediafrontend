@@ -46,8 +46,8 @@ function renderFeaturedCard(bio) {
             <a href="biography.html?slug=${slug}" class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg transition-all">
                 <div class="aspect-[4/3] ${imageUrl ? '' : 'bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center'}">
                     ${imageUrl
-                        ? `<img src="${imageUrl}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`
-                        : `<span class="material-symbols-outlined text-primary/30 text-5xl">person</span>`
+                        ? '<img src="' + imageUrl + '" alt="' + name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">'
+                        : '<span class="material-symbols-outlined text-primary/30 text-5xl">person</span>'
                     }
                 </div>
                 <div class="p-4">

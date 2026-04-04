@@ -16,7 +16,12 @@ class StrapiAPIClient {
   // CORE REQUEST METHOD
   // =========================
   async request(endpoint, options = {}) {
-    const queryString = this.buildQueryString(options.query || {});
+    const query = options.query || {};
+    // Add locale for i18n support
+    if (!query.locale) {
+      query.locale = 'en';
+    }
+    const queryString = this.buildQueryString(query);
     const url = `${this.baseURL}${endpoint}${queryString}`;
     const cacheKey = `${options.method || 'GET'}:${url}`;
 
@@ -85,6 +90,7 @@ class StrapiAPIClient {
   // =========================
   // RESPONSE TRANSFORM
   // =========================
+  // Handles both Strapi v4 (nested attributes) and v5 (flat) responses
   transformResponse(response) {
     if (!response || !response.data) return response;
 
@@ -101,14 +107,36 @@ class StrapiAPIClient {
   transformItem(item) {
     if (!item) return null;
 
+    // Strapi v5: data is flat (no .attributes wrapper)
+    // Strapi v4: data is nested under .attributes
     const attrs = item.attributes || item;
+    const flat = { id: item.id };
 
-    return {
-      id: item.id,
-      ...this.flatten(attrs),
-    };
+    for (const key of Object.keys(attrs)) {
+      if (key === 'id') continue;
+      const value = attrs[key];
+
+      // Handle nested Strapi v4-style relations (data wrapper)
+      if (value && typeof value === 'object' && value.data !== undefined) {
+        flat[key] = this.handleRelation(value.data);
+      // Handle Strapi v5 media objects (has url + provider/hash)
+      } else if (value && typeof value === 'object' && !Array.isArray(value) && value.url && (value.hash || value.provider)) {
+        flat[key] = this.transformMedia(value);
+      // Handle arrays of media (gallery fields in v5)
+      } else if (Array.isArray(value) && value.length > 0 && value[0]?.url && (value[0]?.hash || value[0]?.provider)) {
+        flat[key] = value.map(m => this.transformMedia(m));
+      // Handle arrays of related items in v5 (objects with id)
+      } else if (Array.isArray(value) && value.length > 0 && value[0]?.id && !value[0]?.url) {
+        flat[key] = value.map(rel => this.transformItem(rel));
+      } else {
+        flat[key] = value;
+      }
+    }
+
+    return flat;
   }
 
+  // Kept for backward compatibility — transformItem now handles flattening inline
   flatten(obj) {
     const result = {};
 
@@ -117,7 +145,7 @@ class StrapiAPIClient {
 
       if (value?.data !== undefined) {
         result[key] = this.handleRelation(value.data);
-      } else if (value?.url) {
+      } else if (value && typeof value === 'object' && value.url && (value.hash || value.provider)) {
         result[key] = this.transformMedia(value);
       } else {
         result[key] = value;
@@ -136,12 +164,16 @@ class StrapiAPIClient {
   }
 
   transformMedia(media) {
+    if (!media) return null;
+    // v5 may nest formats differently
+    const url = media.url || media.formats?.medium?.url || media.formats?.small?.url || media.formats?.thumbnail?.url;
     return {
       id: media.id,
-      url: this.getMediaURL(media.url),
+      url: this.getMediaURL(url),
       width: media.width,
       height: media.height,
       alt: media.alternativeText || media.name,
+      formats: media.formats || null,
     };
   }
 
@@ -229,10 +261,10 @@ class StrapiAPIClient {
 
   biographies = {
     getAll: (params = {}) => {
-      // Deep populate for list view: images, tags, and related women with images
+      // Deep populate for list view: images and tags
       const { populate, ...rest } = params;
       const defaultPopulate = {
-        populate: 'image,tags,relatedWomen.image'
+        populate: 'image,tags'
       };
       return this.request("/api/biographies", {
         query: { ...defaultPopulate, ...rest }
@@ -248,11 +280,11 @@ class StrapiAPIClient {
       if (this.isSlug(idOrSlug)) {
         // Deep populate for single biography by slug
         const res = await this.request(
-          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=image,tags,relatedWomen.image,sources`
+          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=image,tags,sources`
         );
         return res.entries?.[0] || null;
       }
-      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=image,tags,relatedWomen.image,sources`);
+      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=image,tags,sources`);
     },
 
     search: (query, params = {}) =>
@@ -422,6 +454,7 @@ class StrapiAPIClient {
 
 const strapiAPI = new StrapiAPIClient({
   baseURL: typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : "https://womencypedia-cms.onrender.com",
+  apiToken: typeof CONFIG !== 'undefined' ? CONFIG.API_TOKEN : '',
   getAccessToken: () => typeof Auth !== 'undefined' ? Auth.getAccessToken() : localStorage.getItem("womencypedia_access_token"),
 });
 

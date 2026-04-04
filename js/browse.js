@@ -1,543 +1,436 @@
-/**
- * Browse functionality for Womencypedia
- * Implements search, filtering, and dynamic biography display with API integration.
- */
+/* ================= CONFIG ================= */
 
-// Current state
-let currentFilters = {
-    search: '',
-    regions: [],
+let currentPage = 1
+let pageSize = 9
+
+let filters = {}
+let searchQuery = ""
+
+let dynamicFilters = {
     eras: [],
-    domains: [],
-    tags: [],
-    page: 1
-};
+    regions: [],
+    categories: []
+}
 
-let currentBiographies = [];
-let pagination = {
-    page: 1,
-    totalPages: 1,
-    total: 0
-};
+let browseLogicErrorCount = 0
+const BROWSE_MAX_API_ERRORS = 3
 
-// Flag to check if API is available
-let useAPI = true;
-let apiErrorCount = 0;
-const MAX_API_ERRORS = 3;
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    initializeBrowse();
-});
+/* ================= API HELPERS ================= */
 
 /**
- * Initialize browse page
+ * Normalise a Strapi v4 or v5 item to a flat object.
+ * v4: { id, attributes: { name, slug, ... } }
+ * v5: { id, name, slug, ... }
  */
-async function initializeBrowse() {
-    
-
-    // Set up event listeners first
-    setupSearch();
-    setupFilters();
-    setupFilterTabs();
-
-    // Load biographies
-    await loadBiographies();
-
-    
+function normaliseItem(item) {
+    if (!item) return null;
+    const attrs = item.attributes || item;
+    return { id: item.id, ...attrs };
 }
 
 /**
- * Load biographies from API or fallback to static data
+ * Fetch helper that uses the global fetchStrapi if available,
+ * otherwise falls back to plain fetch.
  */
-async function loadBiographies() {
-    const container = document.querySelector('#entries-grid') ||
-        document.querySelector('section:last-of-type .grid');
+async function browseFetch(endpoint, params = {}) {
+    const baseUrl = typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com';
+    const url = new URL(`${baseUrl}/api/${endpoint}`);
 
-    if (!container) return;
+    Object.keys(params).forEach(key => {
+        if (params[key] !== undefined && params[key] !== null) {
+            url.searchParams.append(key, params[key]);
+        }
+    });
 
-    // Show loading state (guard in case UI module isn't loaded)
-    if (typeof UI !== 'undefined' && UI.showLoading) {
-        UI.showLoading(container, 'Loading biographies...');
+    // Use fetchStrapi if available (handles auth tokens)
+    if (typeof fetchStrapi !== 'undefined') {
+        return fetchStrapi(`/api/${endpoint}?${url.searchParams.toString()}`);
     }
+
+    const headers = { 'Content-Type': 'application/json' };
+    if (typeof CONFIG !== 'undefined' && CONFIG.API_TOKEN) {
+        headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
+    }
+
+    const res = await fetch(url.toString(), { headers });
+    if (!res.ok) {
+        throw new Error(`API error ${res.status}`);
+    }
+    return res.json();
+}
+
+
+/* ================= LOAD FILTER OPTIONS ================= */
+
+async function loadFilterOptions() {
 
     try {
-        // Try to fetch from Strapi API first using direct StrapiAPI calls
-        if (useAPI && typeof StrapiAPI !== 'undefined') {
-            // If we've had too many API errors, skip API and use static data
-            if (apiErrorCount >= MAX_API_ERRORS) {
-                
-                loadStaticFallback(container);
-                return;
+
+        // Collections may not have a 'type' field in this schema, so load
+        // filter values from the biography enum fields instead.
+        // If collections endpoint works, use it; otherwise degrade gracefully.
+
+        // Try to load eras/regions/categories from the available API
+        // Since biographies use enum fields, we can just populate the dropdowns
+        // with known values from the schema
+
+        const knownEras = [
+            { name: 'Ancient', slug: 'Ancient' },
+            { name: 'Pre-colonial', slug: 'Pre-colonial' },
+            { name: 'Colonial', slug: 'Colonial' },
+            { name: 'Post-colonial', slug: 'Post-colonial' },
+            { name: 'Contemporary', slug: 'Contemporary' }
+        ];
+
+        const knownRegions = [
+            { name: 'Africa', slug: 'Africa' },
+            { name: 'Europe', slug: 'Europe' },
+            { name: 'Asia', slug: 'Asia' },
+            { name: 'Middle East', slug: 'Middle East' },
+            { name: 'North America', slug: 'North America' },
+            { name: 'South America', slug: 'South America' },
+            { name: 'Oceania', slug: 'Oceania' },
+            { name: 'Global', slug: 'Global' }
+        ];
+
+        const knownCategories = [
+            { name: 'Leadership', slug: 'Leadership' },
+            { name: 'Culture & Arts', slug: 'Culture & Arts' },
+            { name: 'Spirituality & Faith', slug: 'Spirituality & Faith' },
+            { name: 'Politics & Governance', slug: 'Politics & Governance' },
+            { name: 'Science & Innovation', slug: 'Science & Innovation' },
+            { name: 'Community Builders', slug: 'Community Builders' },
+            { name: 'Activism & Justice', slug: 'Activism & Justice' },
+            { name: 'Education', slug: 'Education' },
+            { name: 'Diaspora Stories', slug: 'Diaspora Stories' }
+        ];
+
+        dynamicFilters.eras = knownEras;
+        dynamicFilters.regions = knownRegions;
+        dynamicFilters.categories = knownCategories;
+
+        populateDropdown("eraFilter", dynamicFilters.eras, "Era");
+        populateDropdown("regionFilter", dynamicFilters.regions, "Region");
+        populateDropdown("categoryFilter", dynamicFilters.categories, "Category");
+    }
+
+    catch (e) {
+
+        console.warn('Failed to load filter options:', e.message);
+
+        const filterElements = ['eraFilter', 'regionFilter', 'categoryFilter'];
+
+        filterElements.forEach(id => {
+
+            const el = document.getElementById(id);
+
+            if (el) {
+
+                el.disabled = true;
+
+                el.innerHTML = '<option value="">Filters unavailable</option>';
+
             }
 
-            const params = buildQueryParams();
-            
+        });
 
-            let timeoutId;
-            const timeoutPromise = new Promise((_, reject) => {
-                timeoutId = setTimeout(() => reject(new Error('API timeout')), 5000);
-            });
-            // Attach a no-op catch so the promise unhandled rejection doesn't spam the console if it rejects later.
-            timeoutPromise.catch(() => { });
-
-            const response = await Promise.race([
-                StrapiAPI.biographies.getAll(params),
-                timeoutPromise
-            ]);
-            clearTimeout(timeoutId);
-
-            currentBiographies = response.entries || response.data || response;
-            pagination = {
-                page: response.page || 1,
-                totalPages: response.total_pages || Math.ceil((response.total || currentBiographies.length) / CONFIG.PAGINATION.DEFAULT_PAGE_SIZE),
-                total: response.total || currentBiographies.length
-            };
-
-            
-
-            displayBiographies();
-        } else {
-            // API not loaded — fall through to static fallback
-            
-            useAPI = false;
-            loadStaticFallback(container);
-        }
-    } catch (error) {
-        apiErrorCount++;
-        console.warn('[Browse] API error:', error);
-
-        useAPI = false;
-        loadStaticFallback(container);
     }
+
 }
 
-/**
- * Fallback to static biography data when API is unavailable
- */
-function loadStaticFallback(container) {
-    if (typeof biographies !== 'undefined') {
-        currentBiographies = biographies;
-        pagination = {
-            page: 1,
-            totalPages: 1,
-            total: biographies.length
+
+
+/* ================= DROPDOWN ================= */
+
+function populateDropdown(id, data, label) {
+
+    const el = document.getElementById(id)
+
+    if (!el) return
+
+
+    el.innerHTML = `<option value="">${label}</option>`
+
+
+    data.forEach(item => {
+
+        el.innerHTML += `
+        <option value="${item.slug}">
+        ${item.name}
+        </option>
+        `
+
+    })
+
+}
+
+
+
+/* ================= LOAD ENTRIES ================= */
+
+async function loadEntries() {
+    console.log('🔍 [Browse] Starting loadEntries, page:', currentPage, 'filters:', filters, 'search:', searchQuery);
+
+    try {
+        console.log('🔍 [Browse] Calling browseFetch for biographies...');
+
+        const params = {
+            "pagination[page]": currentPage,
+            "pagination[pageSize]": pageSize,
+            "sort": "name:asc",
+            "populate": "image"
         };
 
-        
-
-        displayBiographies();
-    } else if (container && typeof UI !== 'undefined' && UI.showError) {
-        UI.showError(container, 'Unable to load biographies. Please try again later.', loadBiographies);
-    } else {
-        // Last resort: no static data, no UI.showError available
-        
-
-        // Clear any loading spinner left in the container
-        if (container) {
-            container.innerHTML = '<p class="text-center text-text-secondary py-8">Content is temporarily unavailable. Please refresh the page.</p>';
-            container.classList.remove('loading');
+        if (searchQuery) {
+            params["filters[name][$containsi]"] = searchQuery;
         }
 
-        // Dispatch event so other code can react (e.g. error tracking)
-        document.dispatchEvent(new CustomEvent('biographiesLoadError', {
-            detail: { reason: 'no-static-data', container }
-        }));
-    }
-}
-
-/**
- * Build query parameters from current filters
- */
-function buildQueryParams() {
-    const params = {
-        page: currentFilters.page,
-        pageSize: CONFIG.PAGINATION.DEFAULT_PAGE_SIZE,
-        // Deep populate for list view
-        populate: 'image,tags,relatedWomen.image'
-    };
-
-    if (currentFilters.search) {
-        params.search = currentFilters.search;
-    }
-
-    // Build Strapi-compatible filters object
-    const filters = {};
-
-    if (currentFilters.regions.length > 0) {
-        filters.region = { $eq: currentFilters.regions[0] };
-    }
-
-    if (currentFilters.eras.length > 0) {
-        filters.era = { $eq: currentFilters.eras[0] };
-    }
-
-    if (currentFilters.domains.length > 0) {
-        filters.category = { $eq: currentFilters.domains[0] };
-    }
-
-    if (Object.keys(filters).length > 0) {
-        params.filters = filters;
-    }
-
-    return params;
-}
-
-/**
- * Set up search functionality
- */
-function setupSearch() {
-    // Main search input in hero section
-    const searchInputs = document.querySelectorAll('input[type="search"]');
-
-    searchInputs.forEach(input => {
-        input.addEventListener('input', UI.debounce(async function (e) {
-            currentFilters.search = e.target.value.toLowerCase();
-            currentFilters.page = 1;
-
-            if (useAPI) {
-                await loadBiographies();
-            } else {
-                displayBiographies();
-            }
-        }, 300));
-
-        // Handle Enter key
-        input.addEventListener('keypress', async function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                currentFilters.search = e.target.value.toLowerCase();
-                currentFilters.page = 1;
-
-                if (useAPI) {
-                    await loadBiographies();
-                } else {
-                    displayBiographies();
-                }
-            }
-        });
-    });
-}
-
-/**
- * Set up filter modal and controls
- */
-function setupFilters() {
-    // Modal toggle
-    const filtersBtn = document.querySelector('button:has(.material-symbols-outlined)');
-    const modal = document.getElementById('filters-modal');
-    const closeBtn = document.getElementById('close-filters');
-    const applyBtn = document.getElementById('apply-filters');
-    const clearBtn = document.getElementById('clear-filters');
-
-    // Find the filters button by text content
-    document.querySelectorAll('button').forEach(btn => {
-        if (btn.textContent.includes('Filters')) {
-            btn.addEventListener('click', () => {
-                if (modal) modal.classList.remove('hidden');
-            });
-        }
-    });
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-    }
-
-    if (applyBtn) {
-        applyBtn.addEventListener('click', async () => {
-            collectFilters();
-            currentFilters.page = 1;
-
-            if (useAPI) {
-                await loadBiographies();
-            } else {
-                displayBiographies();
-            }
-
-            modal.classList.add('hidden');
-        });
-    }
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', async () => {
-            clearAllFilters();
-
-            if (useAPI) {
-                await loadBiographies();
-            } else {
-                displayBiographies();
-            }
-        });
-    }
-
-    // Close modal on outside click
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-            }
-        });
-    }
-}
-
-/**
- * Set up filter tabs (All Entries, By Region, etc.)
- */
-function setupFilterTabs() {
-    const tabs = document.querySelectorAll('.filter-tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', async function () {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            // Add active class to clicked tab
-            this.classList.add('active');
-
-            const filterType = this.textContent.trim().toLowerCase();
-
-            // Clear existing filters based on tab
-            if (filterType === 'all entries') {
-                await clearAllFilters();
-            }
-
-            // Could implement specific filtering based on tab
-            
-        });
-    });
-}
-
-/**
- * Collect filter values from checkboxes
- */
-function collectFilters() {
-    currentFilters.regions = [];
-    currentFilters.eras = [];
-    currentFilters.domains = [];
-    currentFilters.tags = [];
-
-    const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
-    checkboxes.forEach(checkbox => {
-        const filterType = checkbox.dataset.filter;
-        const value = checkbox.value;
-
-        switch (filterType) {
-            case 'region':
-                currentFilters.regions.push(value);
-                break;
-            case 'era':
-                currentFilters.eras.push(value);
-                break;
-            case 'domain':
-                currentFilters.domains.push(value);
-                break;
-            case 'tag':
-                currentFilters.tags.push(value);
-                break;
-        }
-    });
-}
-
-/**
- * Clear all filters
- */
-async function clearAllFilters() {
-    currentFilters = {
-        search: '',
-        regions: [],
-        eras: [],
-        domains: [],
-        tags: [],
-        page: 1
-    };
-
-    // Uncheck all checkboxes
-    const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
-    checkboxes.forEach(checkbox => checkbox.checked = false);
-
-    // Clear search inputs
-    const searchInputs = document.querySelectorAll('input[type="search"]');
-    searchInputs.forEach(input => input.value = '');
-
-    if (useAPI) {
-        await loadBiographies();
-    } else {
-        displayBiographies();
-    }
-}
-
-/**
- * Filter biographies locally (for static data fallback)
- */
-function filterBiographies() {
-    return currentBiographies.filter(bio => {
-        // Search filter
-        if (currentFilters.search) {
-            const searchTerm = currentFilters.search;
-            const searchableText = `${bio.name} ${bio.introduction || ''} ${bio.contributions || ''} ${(bio.tags || []).join(' ')}`.toLowerCase();
-            if (!searchableText.includes(searchTerm)) {
-                return false;
-            }
+        if (filters.era) {
+            params["filters[era][$eq]"] = filters.era.slug;
         }
 
-        // Region filter
-        if (currentFilters.regions.length > 0) {
-            if (!currentFilters.regions.includes(bio.region.toLowerCase().replace(' ', '-'))) {
-                return false;
-            }
+        if (filters.region) {
+            params["filters[region][$eq]"] = filters.region.slug;
         }
 
-        // Era filter
-        if (currentFilters.eras.length > 0) {
-            if (!currentFilters.eras.includes(bio.era.toLowerCase().replace(' ', '-'))) {
-                return false;
-            }
+        if (filters.category) {
+            params["filters[category][$eq]"] = filters.category.slug;
         }
 
-        // Domain filter
-        if (currentFilters.domains.length > 0) {
-            const bioDomain = bio.category.toLowerCase().replace(' & ', '-').replace(' ', '-');
-            if (!currentFilters.domains.includes(bioDomain)) {
-                return false;
+        const res = await browseFetch("biographies", params);
+
+        console.log('🔍 [Browse] API Response received:', res);
+
+        // Handle both v4 and v5 formats
+        const entries = (res.data || []).map(item => {
+            const attrs = item.attributes || item;
+            let imageUrl = null;
+
+            // v4 media: image.data.attributes.url
+            if (attrs.image && attrs.image.data && attrs.image.data.attributes) {
+                const baseUrl = typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com';
+                imageUrl = baseUrl + attrs.image.data.attributes.url;
             }
-        }
-
-        // Tags filter
-        if (currentFilters.tags.length > 0) {
-            const hasMatchingTag = currentFilters.tags.some(tag =>
-                (bio.tags || []).some(bioTag => bioTag.toLowerCase().includes(tag))
-            );
-            if (!hasMatchingTag) {
-                return false;
+            // v5 media: image.url
+            else if (attrs.image && attrs.image.url) {
+                imageUrl = attrs.image.url.startsWith('http')
+                    ? attrs.image.url
+                    : (typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com') + attrs.image.url;
             }
-        }
 
-        return true;
-    });
-}
-
-/**
- * Display biographies in the grid
- */
-function displayBiographies() {
-    const container = document.querySelector('#entries-grid') ||
-        document.querySelector('section:last-of-type .grid');
-
-    if (!container) return;
-
-    // Filter if using static data
-    const bios = useAPI ? currentBiographies : filterBiographies();
-
-    // Clear existing content
-    container.innerHTML = '';
-
-    if (bios.length === 0) {
-        UI.showEmpty(container, {
-            icon: 'search_off',
-            title: 'No biographies found',
-            message: 'Try adjusting your search terms or filters.',
-            actionText: 'Clear Filters',
-            actionUrl: '#'
+            return {
+                id: item.id,
+                name: attrs.name || '',
+                summary: attrs.introduction ? attrs.introduction.substring(0, 150) : (attrs.summary || ''),
+                image: imageUrl ? { url: imageUrl } : null,
+                slug: attrs.slug || '',
+                era: attrs.era || '',
+                region: attrs.region || '',
+                category: attrs.category || ''
+            };
         });
 
-        // Add event listener to clear filters link
-        const clearLink = container.querySelector('a');
-        if (clearLink) {
-            clearLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                clearAllFilters();
-            });
-        }
-        return;
+        const pagination = res.meta?.pagination || {
+            page: currentPage,
+            pageCount: 1,
+            total: entries.length
+        };
+
+        console.log('🔍 [Browse] Found', entries.length, 'entries');
+
+        renderEntries(entries, "entries-grid");
+        updatePagination(pagination);
     }
 
-    // Check if user is admin for showing edit/delete buttons
-    const isAdmin = typeof Auth !== 'undefined' && Auth.isAdmin();
+    catch (e) {
 
-    // Display biographies
-    bios.forEach(bio => {
-        const cardHtml = UI.createBiographyCard(bio, isAdmin);
-        container.insertAdjacentHTML('beforeend', cardHtml);
-    });
+        console.error('❌ [Browse] Failed to load biographies from Strapi:', e.message);
 
-    // Add pagination if using API
-    if (useAPI && pagination.totalPages > 1) {
-        const paginationContainer = document.querySelector('#pagination-container');
-        if (paginationContainer) {
-            paginationContainer.innerHTML = UI.createPagination(pagination, 'changePage');
-        } else {
-            container.insertAdjacentHTML('afterend', `
-                <div id="pagination-container">
-                    ${UI.createPagination(pagination, 'changePage')}
+        const gridEl = document.getElementById("entries-grid");
+
+        if (gridEl) {
+
+            gridEl.innerHTML = `
+                <div class="col-span-full text-center py-8 text-text-secondary">
+                    <p>Unable to load biographies at this time.</p>
+                    <p class="text-sm mt-2">Please try again later.</p>
+                    <button onclick="loadEntries()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors">
+                        Retry
+                    </button>
                 </div>
-            `);
+            `;
+
         }
-    }
-}
 
-/**
- * Change page (called from pagination)
- * @param {number} page - Page number
- */
-async function changePage(page) {
-    if (page < 1 || page > pagination.totalPages) return;
+        updatePagination({ page: 1, pageCount: 1, total: 0 });
 
-    currentFilters.page = page;
-
-    // Scroll to top of entries
-    const container = document.querySelector('#entries-grid') ||
-        document.querySelector('section:last-of-type');
-    if (container) {
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    await loadBiographies();
 }
 
-/**
- * Get era color class
- * @param {string} era - Era name
- * @returns {string} - Color class
- */
-function getEraColor(era) {
-    const colors = {
-        'Ancient': 'accent-gold',
-        'Pre-colonial': 'primary',
-        'Colonial': 'accent-teal',
-        'Post-colonial': 'divider',
-        'Contemporary': 'lavender'
-    };
-    return colors[era] || 'text-secondary';
-}
 
-/**
- * Get category color class
- * @param {string} category - Category name
- * @returns {string} - Color class
- */
-function getCategoryColor(category) {
-    const colors = {
-        'Leadership': 'primary',
-        'Culture & Arts': 'accent-gold',
-        'Spirituality & Faith': 'accent-teal',
-        'Politics & Governance': 'divider',
-        'Science & Innovation': 'lavender',
-        'Community Builders': 'primary',
-        'Activism & Justice': 'accent-gold',
-        'Education': 'accent-teal',
-        'Diaspora Stories': 'divider'
-    };
-    return colors[category] || 'text-secondary';
-}
 
-// Make functions globally available
-window.toggleFilters = function () {
-    const modal = document.getElementById('filters-modal');
-    if (modal) {
-        modal.classList.toggle('hidden');
+
+
+/* ================= RENDER ================= */
+
+function renderEntries(entries, containerId) {
+
+    const el = document.getElementById(containerId)
+
+    if (!el) return
+
+
+    if (!entries.length) {
+
+        el.innerHTML = `
+        <p class="col-span-full text-center text-gray-500">
+        No results found
+        </p>
+        `
+
+        return
+
     }
-};
 
-window.changePage = changePage;
-window.clearAllFilters = clearAllFilters;
-window.loadBiographies = loadBiographies;
+
+    el.innerHTML = entries.map(item => {
+
+        const image = item.image?.url ||
+            "images/placeholder-biography.jpg"
+
+        return `
+        <a href="biography.html?slug=${encodeURIComponent(item.slug || '')}"
+        class="bg-white rounded-xl border overflow-hidden hover:shadow-lg transition-shadow group">
+        <div
+        class="h-48 bg-cover bg-center"
+        style="background-image:url('${image}')">
+        </div>
+
+        <div class="p-4">
+        <h3 class="font-serif font-semibold text-text-main group-hover:text-primary transition-colors">
+        ${item.name}
+        </h3>
+
+        <p class="text-sm text-text-secondary mt-1 line-clamp-2">
+        ${item.summary || ""}
+        </p>
+
+        </div>
+        </a>
+        `
+
+    }).join("")
+
+}
+
+
+
+/* ================= FILTER ================= */
+
+function applyFilters() {
+
+    filters = {}
+
+    const era = document.getElementById("eraFilter")?.value
+
+    const region = document.getElementById("regionFilter")?.value
+
+    const category = document.getElementById("categoryFilter")?.value
+
+
+    if (era) filters.era = { slug: era }
+
+    if (region) filters.region = { slug: region }
+
+    if (category) filters.category = { slug: category }
+
+
+    currentPage = 1
+
+    loadEntries()
+
+}
+
+
+
+function resetFilters() {
+
+    filters = {}
+
+    searchQuery = ""
+
+    currentPage = 1
+
+    const searchEl = document.getElementById("searchInput");
+    if (searchEl) searchEl.value = "";
+
+    const eraEl = document.getElementById("eraFilter");
+    if (eraEl) eraEl.value = "";
+
+    const regionEl = document.getElementById("regionFilter");
+    if (regionEl) regionEl.value = "";
+
+    const categoryEl = document.getElementById("categoryFilter");
+    if (categoryEl) categoryEl.value = "";
+
+    loadEntries()
+
+}
+
+
+
+/* ================= SEARCH ================= */
+
+function applySearch() {
+
+    const searchEl = document.getElementById("searchInput");
+    searchQuery = searchEl ? searchEl.value : "";
+
+    currentPage = 1
+
+    loadEntries()
+
+}
+
+
+
+/* ================= PAGINATION ================= */
+
+function changePage(direction) {
+
+    currentPage += direction
+
+    if (currentPage < 1) currentPage = 1
+
+    loadEntries()
+
+}
+
+
+
+function updatePagination(meta) {
+
+    const pageInfo = document.getElementById("pageInfo");
+    if (pageInfo) {
+        pageInfo.innerText = `Page ${meta.page} of ${meta.pageCount}`;
+    }
+
+    const prevBtn = document.getElementById("prevPage");
+    if (prevBtn) prevBtn.disabled = meta.page === 1;
+
+    const nextBtn = document.getElementById("nextPage");
+    if (nextBtn) nextBtn.disabled = meta.page === meta.pageCount;
+
+}
+
+
+
+/* ================= INIT ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log('🔍 [Browse] DOMContentLoaded - initializing browse functionality');
+    loadFilterOptions()
+    loadEntries()
+})

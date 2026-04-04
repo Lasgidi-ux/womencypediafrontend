@@ -162,7 +162,7 @@ const Homepage = {
             }
 
             // First try featured biographies
-            let url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort[0]=createdAt:desc`;
+            let url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort=createdAt:desc`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             let response = await fetch(url, {
@@ -219,7 +219,7 @@ const Homepage = {
             }
 
             // First try featured collections
-            let url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort[0]=order:asc&pagination[pageSize]=6`;
+            let url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             let response = await fetch(url, {

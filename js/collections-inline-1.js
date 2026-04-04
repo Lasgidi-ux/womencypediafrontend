@@ -1,22 +1,22 @@
 
 
-        // Get media URL helper
-        function getCollectionImageUrl(collection) {
-            if (collection.coverImage && collection.coverImage.url) {
-                return collection.coverImage.url;
-            }
-            return 'images/womencypedia-logo.png';
-        }
+// Get media URL helper
+function getCollectionImageUrl(collection) {
+    if (collection.coverImage && collection.coverImage.url) {
+        return collection.coverImage.url;
+    }
+    return 'images/womencypedia-logo.png';
+}
 
-        // Render collections from API data
-        function renderCollections(collections) {
-            const grid = document.getElementById('collections-grid');
-            if (!grid) return;
+// Render collections from API data
+function renderCollections(collections) {
+    const grid = document.getElementById('collections-grid');
+    if (!grid) return;
 
-            grid.innerHTML = collections.map((collection, index) => {
-                const imageUrl = getCollectionImageUrl(collection);
-                const slug = collection.slug || collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                return `
+    grid.innerHTML = collections.map((collection, index) => {
+        const imageUrl = getCollectionImageUrl(collection);
+        const slug = collection.slug || collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        return `
                 <article class="group bg-white rounded-lg overflow-hidden border border-border-light hover:border-accent-gold/50 hover:shadow-lg transition-all">
                     <div class="relative h-56 overflow-hidden">
                         <span class="absolute top-4 left-4 z-10 size-8 bg-accent-gold text-white rounded-full flex items-center justify-center text-sm font-bold">${index + 1}</span>
@@ -32,49 +32,49 @@
                     </div>
                 </article>
             `;
-            }).join('');
+    }).join('');
 
-            // Hide loading, show grid
-            document.getElementById('collections-loading').classList.add('hidden');
-            grid.classList.remove('hidden');
-        }
+    // Hide loading, show grid
+    document.getElementById('collections-loading').classList.add('hidden');
+    grid.classList.remove('hidden');
+}
 
-        // Show error message when collections can't be loaded
-        function showCollectionsError() {
-            const grid = document.getElementById('collections-grid');
-            if (!grid) return;
+// Show error message when collections can't be loaded
+function showCollectionsError() {
+    const grid = document.getElementById('collections-grid');
+    if (!grid) return;
 
-            // Hide loading, show error in grid
-            document.getElementById('collections-loading').classList.add('hidden');
-            grid.innerHTML = `
+    // Hide loading, show error in grid
+    document.getElementById('collections-loading').classList.add('hidden');
+    grid.innerHTML = `
                 <div class="col-span-full text-center py-8 text-text-secondary">
                     <p>Unable to load collections at this time.</p>
                     <p class="text-sm mt-2">Please try again later.</p>
                 </div>
             `;
-            grid.classList.remove('hidden');
-        }
+    grid.classList.remove('hidden');
+}
 
-        // Load collections from Strapi API
-        async function loadCollections() {
-            try {
-                // Try Strapi API first
-                if (typeof StrapiAPI !== 'undefined') {
-                    const response = await StrapiAPI.collections.getAll();
-                    if (response && response.entries && response.entries.length > 0) {
-                        renderCollections(response.entries);
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.warn('Failed to load collections from Strapi:', error.message);
+// Load collections from Strapi API
+async function loadCollections() {
+    try {
+        // Try Strapi API first
+        if (typeof StrapiAPI !== 'undefined') {
+            const response = await StrapiAPI.collections.getAll();
+            if (response && response.entries && response.entries.length > 0) {
+                renderCollections(response.entries);
+                return;
             }
-
-            // If API fails or no data, show error
-            showCollectionsError();
         }
+    } catch (error) {
+        console.warn('Failed to load collections from Strapi:', error.message);
+    }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function () {
-            loadCollections();
-        });
+    // If API fails or no data, show error
+    showCollectionsError();
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function () {
+    loadCollections();
+});
