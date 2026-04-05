@@ -73,7 +73,7 @@ const LegacyAPI = {
 
     async init() {
         this._useStrapi = typeof CONFIG !== 'undefined' && CONFIG.USE_STRAPI === true;
-        if (this._useStrapi) 
+        console.log('[API] Initialized with _useStrapi:', this._useStrapi);
     },
 
     isUsingStrapi() {

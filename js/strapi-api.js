@@ -37,6 +37,7 @@ class StrapiAPIClient {
 
     const token =
       (this.getAccessToken && this.getAccessToken()) || this.apiToken;
+    console.log('[StrapiAPI] Request to', url, 'with token:', token ? 'present' : 'missing');
 
     const headers = {
       "Content-Type": "application/json",
@@ -280,11 +281,11 @@ class StrapiAPIClient {
       if (this.isSlug(idOrSlug)) {
         // Deep populate for single biography by slug
         const res = await this.request(
-          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=image,tags,sources`
+          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=*`
         );
         return res.entries?.[0] || null;
       }
-      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=image,tags,sources`);
+      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=*`);
     },
 
     search: (query, params = {}) =>
