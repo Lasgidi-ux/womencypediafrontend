@@ -444,28 +444,13 @@
                     <p class="text-text-secondary max-w-2xl mx-auto">Curated bibliographies organized by theme, region,
                         and historical period.</p>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-white rounded-xl p-6 border border-border-light">
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.africanWomenLeaders">African
-                            Women Leaders</h3>
-                        <ul class="text-text-secondary text-sm space-y-2 mb-4">
-                            <li>• "Warrior Women of Africa" by Mariama Bâ</li>
-                            <li>• "The Strength of Our Mothers" by Niara Sudarkasa</li>
-                            <li>• "African Women in Revolution" by Wunyabari O. Maloba</li>
-                        </ul>
-                        <a href="publications.html" class="text-accent-gold font-bold text-sm hover:underline">View Full
-                            List →</a>
-                    </div>
-                    <div class="bg-white rounded-xl p-6 border border-border-light">
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.medievalEuropeanQueens">Medieval
-                            European Queens</h3>
-                        <ul class="text-text-secondary text-sm space-y-2 mb-4">
-                            <li>• "Queens of the Conquest" by Alison Weir</li>
-                            <li>• "Eleanor of Aquitaine" by Marion Meade</li>
-                            <li>• "The She-Wolves" by Helen Castor</li>
-                        </ul>
-                        <a href="publications.html" class="text-accent-gold font-bold text-sm hover:underline">View Full
-                            List →</a>
+                <div id="reading-lists-grid" class="grid md:grid-cols-2 gap-8">
+                    <!-- Reading lists will be loaded dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <div class="inline-flex items-center gap-3 text-text-secondary">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-accent-gold border-t-transparent"></div>
+                            Loading reading lists...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -479,34 +464,13 @@
                     <p class="text-text-secondary max-w-2xl mx-auto">Essential terms and concepts explained with
                         scholarly precision.</p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-background-cream rounded-lg p-4">
-                        <h4 class="font-bold text-text-main mb-2">Matriarchy</h4>
-                        <p class="text-text-secondary text-sm">A social system where women hold primary power and
-                            authority.</p>
-                    </div>
-                    <div class="bg-background-cream rounded-lg p-4">
-                        <h4 class="font-bold text-text-main mb-2">Suffrage</h4>
-                        <p class="text-text-secondary text-sm">The right to vote in political elections.</p>
-                    </div>
-                    <div class="bg-background-cream rounded-lg p-4">
-                        <h4 class="font-bold text-text-main mb-2">Feminism</h4>
-                        <p class="text-text-secondary text-sm">Advocacy for women's rights on the basis of equality of
-                            the sexes.</p>
-                    </div>
-                    <div class="bg-background-cream rounded-lg p-4">
-                        <h4 class="font-bold text-text-main mb-2">Patriarchy</h4>
-                        <p class="text-text-secondary text-sm">A social system where men hold primary power and
-                            authority.</p>
-                    </div>
-                    <div class="bg-background-cream rounded-lg p-4">
-                        <h4 class="font-bold text-text-main mb-2">Intersectionality</h4>
-                        <p class="text-text-secondary text-sm">The overlapping of social identities that contribute to
-                            discrimination.</p>
-                    </div>
-                    <div class="bg-background-cream rounded-lg p-4">
-                        <h4 class="font-bold text-text-main mb-2">Empowerment</h4>
-                        <p class="text-text-secondary text-sm">The process of becoming stronger and more confident.</p>
+                <div id="glossary-terms-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Glossary terms will be loaded dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <div class="inline-flex items-center gap-3 text-text-secondary">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-divider border-t-transparent"></div>
+                            Loading glossary terms...
+                        </div>
                     </div>
                 </div>
                 <div class="text-center mt-8">
@@ -529,29 +493,12 @@
                     <div class="bg-white rounded-xl p-8 border border-border-light">
                         <h3 class="font-bold text-text-main mb-6 text-center"
                             data-i18n="resources.keyMilestonesInWomensHistory">Key Milestones in Women's History</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-20 text-accent-teal font-bold">3000 BCE</div>
-                                <div class="flex-1">
-                                    <p class="text-text-main font-medium">Enheduanna - First Known Poet</p>
-                                    <p class="text-text-secondary text-sm">Daughter of Sargon of Akkad becomes the
-                                        world's first known author.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-20 text-accent-teal font-bold">1848</div>
-                                <div class="flex-1">
-                                    <p class="text-text-main font-medium">Seneca Falls Convention</p>
-                                    <p class="text-text-secondary text-sm">First women's rights convention in the United
-                                        States.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-20 text-accent-teal font-bold">1920</div>
-                                <div class="flex-1">
-                                    <p class="text-text-main font-medium">19th Amendment Ratified</p>
-                                    <p class="text-text-secondary text-sm">Women gain the right to vote in the United
-                                        States.</p>
+                        <div id="timeline-events" class="space-y-4">
+                            <!-- Timeline events will be loaded dynamically -->
+                            <div class="text-center py-4">
+                                <div class="inline-flex items-center gap-3 text-text-secondary">
+                                    <div class="animate-spin rounded-full h-4 w-4 border-2 border-accent-teal border-t-transparent"></div>
+                                    Loading timeline events...
                                 </div>
                             </div>
                         </div>
@@ -573,26 +520,13 @@
                     <p class="text-text-secondary max-w-2xl mx-auto">Geographic visualizations of women's historical
                         impact across regions and cultures.</p>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
-                        <div class="aspect-video bg-primary/10 rounded-lg mb-4 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-6xl">map</span>
+                <div id="maps-grid" class="grid md:grid-cols-2 gap-8">
+                    <!-- Maps will be loaded dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <div class="inline-flex items-center gap-3 text-text-secondary">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
+                            Loading maps...
                         </div>
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.ancientKingdoms">Ancient Kingdoms
-                        </h3>
-                        <p class="text-text-secondary text-sm mb-4">Explore the territories ruled by legendary queens
-                            and empresses.</p>
-                        <a href="browse.html" class="text-primary font-bold text-sm hover:underline">View Map →</a>
-                    </div>
-                    <div class="bg-background-cream rounded-xl p-6 border border-border-light">
-                        <div class="aspect-video bg-accent-teal/10 rounded-lg mb-4 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-accent-teal text-6xl">map</span>
-                        </div>
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.migrationRoutes">Migration Routes
-                        </h3>
-                        <p class="text-text-secondary text-sm mb-4">Follow the paths of influential women across
-                            continents and eras.</p>
-                        <a href="browse.html" class="text-accent-teal font-bold text-sm hover:underline">View Map →</a>
                     </div>
                 </div>
             </div>
@@ -606,38 +540,13 @@
                     <p class="text-text-secondary max-w-2xl mx-auto">Advanced tools for academic research, data
                         analysis, and scholarly work.</p>
                 </div>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl p-6 border border-border-light text-center">
-                        <div
-                            class="size-16 bg-accent-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="material-symbols-outlined text-accent-gold text-3xl">search</span>
+                <div id="research-tools-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Research tools will be loaded dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <div class="inline-flex items-center gap-3 text-text-secondary">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-accent-gold border-t-transparent"></div>
+                            Loading research tools...
                         </div>
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.advancedSearch">Advanced Search
-                        </h3>
-                        <p class="text-text-secondary text-sm mb-4">Filter by region, era, and topic with boolean
-                            operators.</p>
-                        <a href="browse.html" class="text-accent-gold font-bold text-sm hover:underline">Try Search
-                            →</a>
-                    </div>
-                    <div class="bg-white rounded-xl p-6 border border-border-light text-center">
-                        <div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="material-symbols-outlined text-primary text-3xl">download</span>
-                        </div>
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.dataExport">Data Export</h3>
-                        <p class="text-text-secondary text-sm mb-4">Export biographies and data in multiple formats.</p>
-                        <a href="research.html" class="text-primary font-bold text-sm hover:underline">Export Data →</a>
-                    </div>
-                    <div class="bg-white rounded-xl p-6 border border-border-light text-center">
-                        <div
-                            class="size-16 bg-accent-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="material-symbols-outlined text-accent-teal text-3xl">format_quote</span>
-                        </div>
-                        <h3 class="font-bold text-text-main mb-3" data-i18n="resources.citationGenerator">Citation
-                            Generator</h3>
-                        <p class="text-text-secondary text-sm mb-4">Generate citations in APA, MLA, and Chicago styles.
-                        </p>
-                        <a href="research.html" class="text-accent-teal font-bold text-sm hover:underline">Generate
-                            →</a>
                     </div>
                 </div>
             </div>
@@ -647,30 +556,34 @@
             <div class="mx-auto max-w-[1200px] px-4 text-center">
                 <h2 class="font-serif text-3xl font-bold text-text-main mb-8" data-i18n="resources.downloadablePdfs">
                     Downloadable PDFs</h2>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div id="downloadable-resources-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-white rounded-xl p-6 border border-border-light">
                         <span class="material-symbols-outlined text-primary text-4xl mb-4">picture_as_pdf</span>
                         <h4 class="font-bold text-text-main mb-2">Educator's Guide</h4>
                         <button
-                            class="w-full py-2 bg-primary/10 text-primary font-bold rounded-lg text-sm hover:bg-primary hover:text-white">Download</button>
+                            class="downloadable-pdf-button w-full py-2 bg-primary/10 text-primary font-bold rounded-lg text-sm hover:bg-primary hover:text-white transition-colors"
+                            disabled>Loading...</button>
                     </div>
                     <div class="bg-white rounded-xl p-6 border border-border-light">
                         <span class="material-symbols-outlined text-accent-gold text-4xl mb-4">picture_as_pdf</span>
                         <h4 class="font-bold text-text-main mb-2">Timeline Poster</h4>
                         <button
-                            class="w-full py-2 bg-accent-gold/10 text-accent-gold font-bold rounded-lg text-sm hover:bg-accent-gold hover:text-white">Download</button>
+                            class="downloadable-pdf-button w-full py-2 bg-accent-gold/10 text-accent-gold font-bold rounded-lg text-sm hover:bg-accent-gold hover:text-white transition-colors"
+                            disabled>Loading...</button>
                     </div>
                     <div class="bg-white rounded-xl p-6 border border-border-light">
                         <span class="material-symbols-outlined text-accent-teal text-4xl mb-4">picture_as_pdf</span>
                         <h4 class="font-bold text-text-main mb-2">Research Guide</h4>
                         <button
-                            class="w-full py-2 bg-accent-teal/10 text-accent-teal font-bold rounded-lg text-sm hover:bg-accent-teal hover:text-white">Download</button>
+                            class="downloadable-pdf-button w-full py-2 bg-accent-teal/10 text-accent-teal font-bold rounded-lg text-sm hover:bg-accent-teal hover:text-white transition-colors"
+                            disabled>Loading...</button>
                     </div>
                     <div class="bg-white rounded-xl p-6 border border-border-light">
                         <span class="material-symbols-outlined text-divider text-4xl mb-4">picture_as_pdf</span>
                         <h4 class="font-bold text-text-main mb-2">Glossary Quick Ref</h4>
                         <button
-                            class="w-full py-2 bg-divider/10 text-divider font-bold rounded-lg text-sm hover:bg-divider hover:text-white">Download</button>
+                            class="downloadable-pdf-button w-full py-2 bg-divider/10 text-divider font-bold rounded-lg text-sm hover:bg-divider hover:text-white transition-colors"
+                            disabled>Loading...</button>
                     </div>
                 </div>
             </div>
@@ -863,6 +776,12 @@
     <script src="js/navigation.js"></script>
     <script src="js/strapi-api.js"></script>
     <script src="js/teaching-resources.js"></script>
+    <script src="js/reading-lists.js"></script>
+    <script src="js/glossaries.js"></script>
+    <script src="js/timelines-loader.js"></script>
+    <script src="js/maps-loader.js"></script>
+    <script src="js/research-tools.js"></script>
+    <script src="js/downloadable-resources.js"></script>
 
     <script>
         // Initialize teaching resources on page load

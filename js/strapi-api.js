@@ -37,7 +37,7 @@ class StrapiAPIClient {
 
     const token =
       (this.getAccessToken && this.getAccessToken()) || this.apiToken;
-    console.log('[StrapiAPI] Request to', url, 'with token:', token ? 'present' : 'missing');
+
 
     const headers = {
       "Content-Type": "application/json",
@@ -120,13 +120,13 @@ class StrapiAPIClient {
       // Handle nested Strapi v4-style relations (data wrapper)
       if (value && typeof value === 'object' && value.data !== undefined) {
         flat[key] = this.handleRelation(value.data);
-      // Handle Strapi v5 media objects (has url + provider/hash)
+        // Handle Strapi v5 media objects (has url + provider/hash)
       } else if (value && typeof value === 'object' && !Array.isArray(value) && value.url && (value.hash || value.provider)) {
         flat[key] = this.transformMedia(value);
-      // Handle arrays of media (gallery fields in v5)
+        // Handle arrays of media (gallery fields in v5)
       } else if (Array.isArray(value) && value.length > 0 && value[0]?.url && (value[0]?.hash || value[0]?.provider)) {
         flat[key] = value.map(m => this.transformMedia(m));
-      // Handle arrays of related items in v5 (objects with id)
+        // Handle arrays of related items in v5 (objects with id)
       } else if (Array.isArray(value) && value.length > 0 && value[0]?.id && !value[0]?.url) {
         flat[key] = value.map(rel => this.transformItem(rel));
       } else {
@@ -281,185 +281,332 @@ class StrapiAPIClient {
       if (this.isSlug(idOrSlug)) {
         // Deep populate for single biography by slug
         const res = await this.request(
-          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=*`
+          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=image,tags,sources`
         );
         return res.entries?.[0] || null;
       }
-      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=*`);
+      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=image,tags,sources`);
     },
 
-    search: (query, params = {}) =>
-      this.request("/api/biographies", {
-        query: { ...params, search: query },
-      }),
+      search: (query, params = {}) =>
+        this.request("/api/biographies", {
+          query: { ...params, search: query },
+        }),
   };
 
-  collections = {
-    getAll: (params = {}) => {
-      // Don't send populate by default - API may reject it
-      const { populate, ...rest } = params;
-      return this.request("/api/collections", { query: rest });
-    },
+    collections = {
+      getAll: (params = {}) => {
+        // Don't send populate by default - API may reject it
+        const { populate, ...rest } = params;
+        return this.request("/api/collections", { query: rest });
+      },
 
-    get: async (idOrSlug) => {
-      if (this.isSlug(idOrSlug)) {
+      get: async (idOrSlug) => {
+        if (this.isSlug(idOrSlug)) {
+          const res = await this.request(
+            `/api/collections?filters[slug][$eq]=${idOrSlug}`
+          );
+          return res.entries?.[0] || null;
+        }
+        return this.request(`/api/collections/${idOrSlug}`);
+      },
+    };
+
+    leaders = {
+      getAll: (params = {}) => {
+        // Don't send populate by default - API may reject it
+        const { populate, ...rest } = params;
+        return this.request("/api/leaders", { query: rest });
+      },
+
+      get: async (idOrSlug) => {
+        if (this.isSlug(idOrSlug)) {
+          const res = await this.request(
+            `/api/leaders?filters[slug][$eq]=${idOrSlug}`
+          );
+          return res.entries?.[0] || null;
+        }
+        return this.request(`/api/leaders/${idOrSlug}`);
+      },
+    };
+
+    contributions = {
+      submit: (data) =>
+        this.request("/api/contributions", {
+          method: "POST",
+          body: JSON.stringify({ data }),
+        }),
+    };
+
+    comments = {
+      getByBiography: (id) =>
+        this.request(
+          `/api/comments?filters[biography][id][$eq]=${id}&populate=*`
+        ),
+
+      create: (data) =>
+        this.request("/api/comments", {
+          method: "POST",
+          body: JSON.stringify({ data }),
+        }),
+
+      delete: (id) =>
+        this.request(`/api/comments/${id}`, {
+          method: "DELETE",
+        }),
+
+      like: (id) =>
+        this.request(`/api/comments/${id}/like`, {
+          method: "POST",
+        }),
+    };
+
+    educationModules = {
+      getAll: (params = {}) =>
+        this.request("/api/education-modules", { query: params }),
+
+      getBySlug: async (slug) => {
         const res = await this.request(
-          `/api/collections?filters[slug][$eq]=${idOrSlug}`
+          `/api/education-modules?filters[slug][$eq]=${slug}`
         );
         return res.entries?.[0] || null;
-      }
-      return this.request(`/api/collections/${idOrSlug}`);
-    },
-  };
+      },
+    };
 
-  leaders = {
-    getAll: (params = {}) => {
-      // Don't send populate by default - API may reject it
-      const { populate, ...rest } = params;
-      return this.request("/api/leaders", { query: rest });
-    },
+    teachingResources = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/teaching-resources", { query: rest });
+      },
 
-    get: async (idOrSlug) => {
-      if (this.isSlug(idOrSlug)) {
+      getBySlug: async (slug) => {
         const res = await this.request(
-          `/api/leaders?filters[slug][$eq]=${idOrSlug}`
+          `/api/teaching-resources?filters[slug][$eq]=${slug}`
         );
         return res.entries?.[0] || null;
+      },
+
+      getByType: (type) =>
+        this.request(`/api/teaching-resources?filters[type][$eq]=${type}`),
+
+      getDownloadUrl: (resource) => {
+        if (!resource || !resource.file) return null;
+        if (resource.file.url) {
+          return this.getMediaURL(resource.file.url);
+        }
+        return null;
+      },
+    };
+
+    readingLists = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/reading-lists", { query: rest });
+      },
+
+      getBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/reading-lists?filters[slug][$eq]=${slug}&populate=books`
+        );
+        return res.entries?.[0] || null;
+      },
+
+      getByCategory: (category) =>
+        this.request(`/api/reading-lists?filters[category][$eq]=${category}&populate=books`),
+    };
+
+    glossaries = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/glossaries", { query: rest });
+      },
+
+      getBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/glossaries?filters[slug][$eq]=${slug}&populate=terms`
+        );
+        return res.entries?.[0] || null;
+      },
+
+      getTerms: (params = {}) => {
+        return this.request("/api/glossary-terms", { query: params });
+      },
+
+      getTermBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/glossary-terms?filters[slug][$eq]=${slug}`
+        );
+        return res.entries?.[0] || null;
+      },
+    };
+
+    timelines = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/timelines", { query: rest });
+      },
+
+      getBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/timelines?filters[slug][$eq]=${slug}&populate=events`
+        );
+        return res.entries?.[0] || null;
+      },
+
+      getEvents: (params = {}) => {
+        return this.request("/api/timeline-events", { query: params });
+      },
+    };
+
+    maps = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/maps", { query: rest });
+      },
+
+      getBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/maps?filters[slug][$eq]=${slug}&populate=markers`
+        );
+        return res.entries?.[0] || null;
+      },
+
+      getByRegion: (region) =>
+        this.request(`/api/maps?filters[region][$eq]=${region}&populate=markers`),
+    };
+
+    researchTools = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/research-tools", { query: rest });
+      },
+
+      getBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/research-tools?filters[slug][$eq]=${slug}`
+        );
+        return res.entries?.[0] || null;
+      },
+    };
+
+    downloadableResources = {
+      getAll: (params = {}) => {
+        const { populate, ...rest } = params;
+        return this.request("/api/downloadable-resources", { query: rest });
+      },
+
+      getBySlug: async (slug) => {
+        const res = await this.request(
+          `/api/downloadable-resources?filters[slug][$eq]=${slug}&populate=file`
+        );
+        return res.entries?.[0] || null;
+      },
+
+      getByType: (type) =>
+        this.request(`/api/downloadable-resources?filters[type][$eq]=${type}&populate=file`),
+
+      getDownloadUrl: (resource) => {
+        if (!resource || !resource.file) return null;
+        if (resource.file.url) {
+          return this.getMediaURL(resource.file.url);
+        }
+        return null;
+      },
+    };
+
+    notifications = {
+      getAll: () => this.request("/api/notifications"),
+
+      markAsRead: (id) =>
+        this.request(`/api/notifications/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ data: { read: true } }),
+        }),
+    };
+
+    contact = {
+      submit: (data) =>
+        this.request("/api/contact-submissions", {
+          method: "POST",
+          body: JSON.stringify({ data }),
+        }),
+    };
+
+    userBookmarks = {
+      getAll: () =>
+        this.request("/api/user-bookmarks"),
+
+      create: (data) =>
+        this.request("/api/user-bookmarks", {
+          method: "POST",
+          body: JSON.stringify({ data }),
+        }),
+
+      delete: (id) =>
+        this.request(`/api/user-bookmarks/${id}`, {
+          method: "DELETE",
+        }),
+
+      clearAll: () =>
+        this.request("/api/user-bookmarks", {
+          method: "DELETE",
+        }),
+    };
+
+    userHistory = {
+      getAll: () =>
+        this.request("/api/user-history"),
+
+      sync: (data) =>
+        this.request("/api/user-history/sync", {
+          method: "POST",
+          body: JSON.stringify(data),
+        }),
+    };
+
+    enterprises = {
+      getAll: (params = {}) => {
+        // Get all biographies with enterprise categories
+        const enterpriseCategories = [
+          'Trade & Commerce',
+          'Agriculture & Food',
+          'Manufacturing',
+          'Healthcare & Medicine',
+          'Finance & Banking',
+          'Arts & Crafts',
+          'Technology'
+        ];
+
+        const filters = enterpriseCategories.map(cat => `filters[category][$eq]=${encodeURIComponent(cat)}`).join('&');
+        return this.request(`/api/biographies?${filters}&populate=*`, { query: params });
+      },
+
+      getByCategory: (category, params = {}) => {
+        return this.request("/api/biographies", {
+          query: { ...params, filters: { category: category } }
+        });
+      },
+
+      getCategoryCount: async (category) => {
+        const res = await this.request("/api/biographies", {
+          query: { filters: { category: category }, pagination: { pageSize: 1 } }
+        });
+        return res.pagination?.total || 0;
       }
-      return this.request(`/api/leaders/${idOrSlug}`);
-    },
-  };
+    };
+  }
 
-  contributions = {
-    submit: (data) =>
-      this.request("/api/contributions", {
-        method: "POST",
-        body: JSON.stringify({ data }),
-      }),
-  };
+  // =========================
+  // GLOBAL EXPORT INSTANCE
+  // =========================
 
-  comments = {
-    getByBiography: (id) =>
-      this.request(
-        `/api/comments?filters[biography][id][$eq]=${id}&populate=*`
-      ),
+  const strapiAPI = new StrapiAPIClient({
+    baseURL: typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : "https://womencypedia-cms.onrender.com",
+    apiToken: typeof CONFIG !== 'undefined' ? CONFIG.API_TOKEN : '',
+    getAccessToken: () => typeof Auth !== 'undefined' ? Auth.getAccessToken() : localStorage.getItem("womencypedia_access_token"),
+  });
 
-    create: (data) =>
-      this.request("/api/comments", {
-        method: "POST",
-        body: JSON.stringify({ data }),
-      }),
-
-    delete: (id) =>
-      this.request(`/api/comments/${id}`, {
-        method: "DELETE",
-      }),
-
-    like: (id) =>
-      this.request(`/api/comments/${id}/like`, {
-        method: "POST",
-      }),
-  };
-
-  educationModules = {
-    getAll: (params = {}) =>
-      this.request("/api/education-modules", { query: params }),
-
-    getBySlug: async (slug) => {
-      const res = await this.request(
-        `/api/education-modules?filters[slug][$eq]=${slug}`
-      );
-      return res.entries?.[0] || null;
-    },
-  };
-
-  teachingResources = {
-    getAll: (params = {}) => {
-      const { populate, ...rest } = params;
-      return this.request("/api/teaching-resources", { query: rest });
-    },
-
-    getBySlug: async (slug) => {
-      const res = await this.request(
-        `/api/teaching-resources?filters[slug][$eq]=${slug}`
-      );
-      return res.entries?.[0] || null;
-    },
-
-    getByType: (type) =>
-      this.request(`/api/teaching-resources?filters[type][$eq]=${type}`),
-
-    getDownloadUrl: (resource) => {
-      if (!resource || !resource.file) return null;
-      if (resource.file.url) {
-        return this.getMediaURL(resource.file.url);
-      }
-      return null;
-    },
-  };
-
-  notifications = {
-    getAll: () => this.request("/api/notifications"),
-
-    markAsRead: (id) =>
-      this.request(`/api/notifications/${id}`, {
-        method: "PUT",
-        body: JSON.stringify({ data: { read: true } }),
-      }),
-  };
-
-  contact = {
-    submit: (data) =>
-      this.request("/api/contact-submissions", {
-        method: "POST",
-        body: JSON.stringify({ data }),
-      }),
-  };
-
-  userBookmarks = {
-    getAll: () =>
-      this.request("/api/user-bookmarks"),
-
-    create: (data) =>
-      this.request("/api/user-bookmarks", {
-        method: "POST",
-        body: JSON.stringify({ data }),
-      }),
-
-    delete: (id) =>
-      this.request(`/api/user-bookmarks/${id}`, {
-        method: "DELETE",
-      }),
-
-    clearAll: () =>
-      this.request("/api/user-bookmarks", {
-        method: "DELETE",
-      }),
-  };
-
-  userHistory = {
-    getAll: () =>
-      this.request("/api/user-history"),
-
-    sync: (data) =>
-      this.request("/api/user-history/sync", {
-        method: "POST",
-        body: JSON.stringify(data),
-      }),
-  };
-}
-
-// =========================
-// GLOBAL EXPORT INSTANCE
-// =========================
-
-const strapiAPI = new StrapiAPIClient({
-  baseURL: typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : "https://womencypedia-cms.onrender.com",
-  apiToken: typeof CONFIG !== 'undefined' ? CONFIG.API_TOKEN : '',
-  getAccessToken: () => typeof Auth !== 'undefined' ? Auth.getAccessToken() : localStorage.getItem("womencypedia_access_token"),
-});
-
-if (typeof window !== 'undefined') {
+  if(typeof window !== 'undefined') {
   window.StrapiAPI = strapiAPI;
   window.API = strapiAPI;
 }

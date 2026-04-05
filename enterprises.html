@@ -49,6 +49,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <script defer data-domain="womencypedia.org" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Enterprises Page Scripts -->
+    <script src="js/strapi-api.js"></script>
+    <script src="js/enterprises.js"></script>
 </head>
 
 <body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
@@ -355,118 +359,14 @@
                         across different sectors and industries.</p>
                 </div>
 
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Category 1: Trade & Commerce -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                            <span class="material-symbols-outlined text-primary text-3xl">local_shipping</span>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 enterprise-categories-grid">
+                    <!-- Categories will be loaded dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <div class="inline-flex items-center gap-3 text-text-secondary">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
+                            Loading enterprise categories...
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                            data-i18n="enterprises.tradeCommerce">Trade & Commerce</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Market traders, merchants, and
-                            long-distance traders who built economic networks.</p>
-                        <span class="text-primary text-sm font-bold group-hover:underline">View 127 Entries →</span>
-                    </a>
-
-                    <!-- Category 2: Agriculture & Food -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-4 group-hover:bg-accent-teal/20 transition-colors">
-                            <span class="material-symbols-outlined text-accent-teal text-3xl">agriculture</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                            data-i18n="enterprises.agricultureFood">Agriculture & Food</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Farmers, food producers, and
-                            agricultural innovators who fed communities.</p>
-                        <span class="text-accent-teal text-sm font-bold group-hover:underline">View 98 Entries →</span>
-                    </a>
-
-                    <!-- Category 3: Manufacturing -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-4 group-hover:bg-accent-gold/20 transition-colors">
-                            <span class="material-symbols-outlined text-accent-gold text-3xl">factory</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                            data-i18n="enterprises.manufacturing">Manufacturing</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Artisans, weavers, pottery makers,
-                            and manufacturing pioneers.</p>
-                        <span class="text-accent-gold text-sm font-bold group-hover:underline">View 76 Entries →</span>
-                    </a>
-
-                    <!-- Category 4: Healthcare -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                            <span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                            data-i18n="enterprises.healthcareMedicine">Healthcare & Medicine</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Healers, midwives, physicians, and
-                            medical innovators.</p>
-                        <span class="text-primary text-sm font-bold group-hover:underline">View 112 Entries →</span>
-                    </a>
-
-                    <!-- Category 5: Finance -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-4 group-hover:bg-accent-teal/20 transition-colors">
-                            <span class="material-symbols-outlined text-accent-teal text-3xl">account_balance</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                            data-i18n="enterprises.financeBanking">Finance & Banking</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Early bankers, money lenders, and
-                            financial innovators.</p>
-                        <span class="text-accent-teal text-sm font-bold group-hover:underline">View 45 Entries →</span>
-                    </a>
-
-                    <!-- Category 6: Education -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-accent-gold/10 flex items-center justify-center mb-4 group-hover:bg-accent-gold/20 transition-colors">
-                            <span class="material-symbols-outlined text-accent-gold text-3xl">school</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="enterprises.education">
-                            Education</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Educators, school founders, and
-                            learning institution leaders.</p>
-                        <span class="text-accent-gold text-sm font-bold group-hover:underline">View 134 Entries →</span>
-                    </a>
-
-                    <!-- Category 7: Arts & Crafts -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                            <span class="material-symbols-outlined text-primary text-3xl">palette</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="enterprises.artsCrafts">
-                            Arts & Crafts</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Artists, craftswomen, and creative
-                            entrepreneurs.</p>
-                        <span class="text-primary text-sm font-bold group-hover:underline">View 189 Entries →</span>
-                    </a>
-
-                    <!-- Category 8: Technology -->
-                    <a href="about.html"
-                        class="group bg-white rounded-2xl p-6 border border-border-light hover:shadow-lg transition-all">
-                        <div
-                            class="size-16 rounded-2xl bg-accent-teal/10 flex items-center justify-center mb-4 group-hover:bg-accent-teal/20 transition-colors">
-                            <span class="material-symbols-outlined text-accent-teal text-3xl">memory</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-text-main mb-2" data-i18n="enterprises.technology">
-                            Technology</h3>
-                        <p class="text-text-secondary text-sm leading-relaxed mb-4">Inventors, engineers, and tech
-                            pioneers throughout history.</p>
-                        <span class="text-accent-teal text-sm font-bold group-hover:underline">View 67 Entries →</span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -484,87 +384,12 @@
                         transformed their economies and communities.</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Enterprise 1 -->
-                    <div
-                        class="bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow">
-                        <div
-                            class="h-48 bg-gradient-to-br from-primary/20 to-accent-gold/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-6xl opacity-30">storefront</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span
-                                    class="px-2 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider rounded">Trade
-                                    & Commerce</span>
-                                <span
-                                    class="px-2 py-1 bg-lavender-soft text-text-secondary text-xs font-medium rounded">15th
-                                    Century</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                                data-i18n="enterprises.theSanyuanBrokerageHouse">The Sanyuan Brokerage House
-                            </h3>
-                            <p class="text-text-secondary text-sm leading-relaxed mb-4">
-                                Zheng Yi Sao (China, 1765-1844) built the largest pirate fleet in history and
-                                established a powerful trading network across the South China Sea.
-                            </p>
-                            <a href="biography.html" class="text-primary font-bold hover:underline">Read Full Biography
-                                →</a>
-                        </div>
-                    </div>
-
-                    <!-- Enterprise 2 -->
-                    <div
-                        class="bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow">
-                        <div
-                            class="h-48 bg-gradient-to-br from-accent-teal/20 to-primary/20 flex items-center justify-center">
-                            <span
-                                class="material-symbols-outlined text-accent-teal text-6xl opacity-30">medication</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span
-                                    class="px-2 py-1 bg-accent-teal/10 text-accent-teal text-xs font-bold uppercase tracking-wider rounded">Healthcare</span>
-                                <span
-                                    class="px-2 py-1 bg-lavender-soft text-text-secondary text-xs font-medium rounded">19th
-                                    Century</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                                data-i18n="enterprises.marySeacolesBritishHotel">Mary Seacole's British Hotel
-                            </h3>
-                            <p class="text-text-secondary text-sm leading-relaxed mb-4">
-                                Mary Seacole (Jamaica/UK, 1805-1881) operated a successful hospitality business serving
-                                British soldiers during the Crimean War.
-                            </p>
-                            <a href="biography.html" class="text-primary font-bold hover:underline">Read Full Biography
-                                →</a>
-                        </div>
-                    </div>
-
-                    <!-- Enterprise 3 -->
-                    <div
-                        class="bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-lg transition-shadow">
-                        <div
-                            class="h-48 bg-gradient-to-br from-accent-gold/20 to-primary/20 flex items-center justify-center">
-                            <span
-                                class="material-symbols-outlined text-accent-gold text-6xl opacity-30">precision_manufacturing</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span
-                                    class="px-2 py-1 bg-accent-gold/10 text-accent-gold text-xs font-bold uppercase tracking-wider rounded">Manufacturing</span>
-                                <span
-                                    class="px-2 py-1 bg-lavender-soft text-text-secondary text-xs font-medium rounded">20th
-                                    Century</span>
-                            </div>
-                            <h3 class="font-serif text-xl font-bold text-text-main mb-2"
-                                data-i18n="enterprises.madamCjWalkersEmpire">Madam C.J. Walker's Empire</h3>
-                            <p class="text-text-secondary text-sm leading-relaxed mb-4">
-                                Madam C.J. Walker (USA, 1867-1919) built America's first female self-made millionaire
-                                status through her hair care empire.
-                            </p>
-                            <a href="biography.html" class="text-primary font-bold hover:underline">Read Full Biography
-                                →</a>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 featured-enterprises-grid">
+                    <!-- Featured enterprises will be loaded dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <div class="inline-flex items-center gap-3 text-text-secondary">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
+                            Loading featured enterprises...
                         </div>
                     </div>
                 </div>
@@ -600,16 +425,16 @@
                         </p>
                         <div class="flex flex-wrap gap-4">
                             <div class="bg-white rounded-lg px-5 py-3 border border-border-light">
-                                <div class="font-serif text-2xl font-bold text-primary">848</div>
+                                <div class="font-serif text-2xl font-bold text-primary enterprise-stats" data-stat="enterprises">0</div>
                                 <div class="text-xs text-text-secondary uppercase tracking-wider">Documented Enterprises
                                 </div>
                             </div>
                             <div class="bg-white rounded-lg px-5 py-3 border border-border-light">
-                                <div class="font-serif text-2xl font-bold text-accent-teal">90+</div>
+                                <div class="font-serif text-2xl font-bold text-accent-teal enterprise-stats" data-stat="countries">0</div>
                                 <div class="text-xs text-text-secondary uppercase tracking-wider">Countries</div>
                             </div>
                             <div class="bg-white rounded-lg px-5 py-3 border border-border-light">
-                                <div class="font-serif text-2xl font-bold text-accent-gold">5,000+</div>
+                                <div class="font-serif text-2xl font-bold text-accent-gold enterprise-stats" data-stat="years">0</div>
                                 <div class="text-xs text-text-secondary uppercase tracking-wider">Years of History</div>
                             </div>
                         </div>

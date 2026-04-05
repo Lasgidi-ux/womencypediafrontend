@@ -125,6 +125,36 @@ const CONFIG = {
             TEACHING_RESOURCE_BY_SLUG: (slug) => `/api/teaching-resources?filters[slug][$eq]=${slug}`,
             TEACHING_RESOURCES_BY_TYPE: (type) => `/api/teaching-resources?filters[type][$eq]=${type}`,
 
+            // Reading Lists
+            READING_LISTS: '/api/reading-lists',
+            READING_LIST_BY_SLUG: (slug) => `/api/reading-lists?filters[slug][$eq]=${slug}`,
+            READING_LISTS_BY_CATEGORY: (category) => `/api/reading-lists?filters[category][$eq]=${category}`,
+
+            // Glossaries
+            GLOSSARIES: '/api/glossaries',
+            GLOSSARY_BY_SLUG: (slug) => `/api/glossaries?filters[slug][$eq]=${slug}`,
+            GLOSSARY_TERMS: '/api/glossary-terms',
+            GLOSSARY_TERM_BY_SLUG: (slug) => `/api/glossary-terms?filters[slug][$eq]=${slug}`,
+
+            // Timelines
+            TIMELINES: '/api/timelines',
+            TIMELINE_BY_SLUG: (slug) => `/api/timelines?filters[slug][$eq]=${slug}`,
+            TIMELINE_EVENTS: '/api/timeline-events',
+
+            // Maps
+            MAPS: '/api/maps',
+            MAP_BY_SLUG: (slug) => `/api/maps?filters[slug][$eq]=${slug}`,
+            MAPS_BY_REGION: (region) => `/api/maps?filters[region][$eq]=${region}`,
+
+            // Research Tools
+            RESEARCH_TOOLS: '/api/research-tools',
+            RESEARCH_TOOL_BY_SLUG: (slug) => `/api/research-tools?filters[slug][$eq]=${slug}`,
+
+            // Downloadable Resources
+            DOWNLOADABLE_RESOURCES: '/api/downloadable-resources',
+            DOWNLOADABLE_RESOURCE_BY_SLUG: (slug) => `/api/downloadable-resources?filters[slug][$eq]=${slug}`,
+            DOWNLOADABLE_RESOURCE_BY_TYPE: (type) => `/api/downloadable-resources?filters[type][$eq]=${type}`,
+
             // Tags
             TAGS: '/api/tags',
 

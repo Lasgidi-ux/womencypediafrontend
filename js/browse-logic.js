@@ -103,7 +103,15 @@ async function loadFilterOptions() {
             { name: 'Community Builders', slug: 'Community Builders' },
             { name: 'Activism & Justice', slug: 'Activism & Justice' },
             { name: 'Education', slug: 'Education' },
-            { name: 'Diaspora Stories', slug: 'Diaspora Stories' }
+            { name: 'Diaspora Stories', slug: 'Diaspora Stories' },
+            // Enterprise categories
+            { name: 'Trade & Commerce', slug: 'Trade & Commerce' },
+            { name: 'Agriculture & Food', slug: 'Agriculture & Food' },
+            { name: 'Manufacturing', slug: 'Manufacturing' },
+            { name: 'Healthcare & Medicine', slug: 'Healthcare & Medicine' },
+            { name: 'Finance & Banking', slug: 'Finance & Banking' },
+            { name: 'Arts & Crafts', slug: 'Arts & Crafts' },
+            { name: 'Technology', slug: 'Technology' }
         ];
 
         dynamicFilters.eras = knownEras;
