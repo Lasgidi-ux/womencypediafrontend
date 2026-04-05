@@ -181,7 +181,7 @@ const Homepage = {
             if (entries.length === 0) {
                 const controller2 = new AbortController();
                 const timeout2 = setTimeout(() => controller2.abort(), 8000);
-                url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=6&sort[0]=publishedAt:desc`;
+                url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=6&sort=publishedAt:desc`;
                 response = await fetch(url, {
                     cache: 'no-store',
                     signal: controller2.signal,
@@ -238,7 +238,7 @@ const Homepage = {
             if (collections.length === 0) {
                 const controller2 = new AbortController();
                 const timeout2 = setTimeout(() => controller2.abort(), 8000);
-                url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&populate=coverImage,biographies&sort[0]=order:asc&pagination[pageSize]=6`;
+                url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6`;
                 response = await fetch(url, {
                     cache: 'no-store',
                     signal: controller2.signal,
@@ -270,7 +270,7 @@ const Homepage = {
 
         try {
             const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort[0]=publishedAt:desc`;
+            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort=publishedAt:desc`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             const headers = { 'Content-Type': 'application/json' };
