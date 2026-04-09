@@ -163,7 +163,7 @@ const Homepage = {
             }
 
             // First try featured biographies
-            let url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort=createdAt:desc`;
+            let url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate[]=image&populate[]=tags&pagination[pageSize]=6&sort[]=createdAt:desc`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             let response = await fetch(url, {
@@ -220,7 +220,7 @@ const Homepage = {
             }
 
             // First try featured collections
-            let url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6`;
+            let url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate[]=coverImage&populate[]=biographies&sort[]=order:asc&pagination[pageSize]=6`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             let response = await fetch(url, {
@@ -239,7 +239,7 @@ const Homepage = {
             if (collections.length === 0) {
                 const controller2 = new AbortController();
                 const timeout2 = setTimeout(() => controller2.abort(), 8000);
-                url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6`;
+                url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&populate[]=coverImage&populate[]=biographies&sort[]=order:asc&pagination[pageSize]=6`;
                 response = await fetch(url, {
                     cache: 'no-store',
                     signal: controller2.signal,

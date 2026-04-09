@@ -202,7 +202,11 @@ class StrapiAPIClient {
       if (params.populate === true || params.populate === "*") {
         query.append("populate", "*");
       } else if (typeof params.populate === "string") {
-        query.append("populate", params.populate);
+        // Split by comma and add multiple populate[] for Strapi v5
+        const fields = params.populate.split(',').map(f => f.trim()).filter(f => f);
+        fields.forEach((field, index) => {
+          query.append(`populate[${index}]`, field);
+        });
       }
     }
 
@@ -281,11 +285,11 @@ class StrapiAPIClient {
       if (this.isSlug(idOrSlug)) {
         // Deep populate for single biography by slug
         const res = await this.request(
-          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=image,tags,sources`
+          `/api/biographies?filters[slug][$eq]=${encodeURIComponent(idOrSlug)}&populate=*`
         );
         return res.entries?.[0] || null;
       }
-      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=image,tags,sources`);
+      return this.request(`/api/biographies/${encodeURIComponent(idOrSlug)}?populate=*`);
     },
 
       search: (query, params = {}) =>
