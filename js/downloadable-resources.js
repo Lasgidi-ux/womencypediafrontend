@@ -1,31 +1,47 @@
 /**
  * Downloadable Resources Loader
- * Loads and handles downloads for PDF resources
+ * Loads and handles downloads for PDF resources with static fallback
  */
+
+const DOWNLOADABLE_FALLBACK = [
+  { slug: 'educators-guide', title: "Educator's Guide", url: 'assets/docs/Womencypedia_Educators_Guide.pdf' },
+  { slug: 'timeline-poster', title: 'Timeline Poster', url: 'assets/docs/Womencypedia_Timeline_Poster.pdf' },
+  { slug: 'research-guide', title: 'Research Guide', url: 'assets/docs/Womencypedia_Research_Guide.pdf' },
+  { slug: 'glossary-quick-ref', title: 'Glossary Quick Ref', url: 'assets/docs/Womencypedia_Glossary.pdf' }
+];
 
 class DownloadableResourcesLoader {
   constructor() {
     this.api = window.StrapiAPI || window.API;
     this.resources = [];
+    this.isFallback = false;
   }
 
   async loadDownloadableResources() {
     try {
+      if (!this.api) throw new Error('API not available');
+
       const response = await this.api.downloadableResources.getAll({
         populate: 'file',
         sort: 'createdAt:desc'
       });
 
       this.resources = response.entries || [];
-      this.attachDownloadHandlers();
+      
+      if (this.resources.length === 0) {
+        throw new Error('No resources returned from API');
+      }
 
     } catch (error) {
-      console.error('Failed to load downloadable resources:', error);
+      console.warn('[Resources] Downloadable resources API unavailable, using fallback:', error.message || error);
+      this.resources = [...DOWNLOADABLE_FALLBACK];
+      this.isFallback = true;
+    } finally {
+      this.attachDownloadHandlers();
     }
   }
 
   attachDownloadHandlers() {
-    // Define the resource mapping based on button text/content
     const resourceMapping = {
       "Educator's Guide": 'educators-guide',
       'Timeline Poster': 'timeline-poster',
@@ -33,9 +49,14 @@ class DownloadableResourcesLoader {
       'Glossary Quick Ref': 'glossary-quick-ref'
     };
 
-    // Find all download buttons and attach handlers
     document.querySelectorAll('.downloadable-pdf-button').forEach(button => {
-      const resourceTitle = button.closest('.bg-white').querySelector('h4').textContent.trim();
+      const parentContainer = button.closest('.bg-white');
+      if (!parentContainer) return;
+      
+      const titleEl = parentContainer.querySelector('h4');
+      if (!titleEl) return;
+
+      const resourceTitle = titleEl.textContent.trim();
       const resourceSlug = resourceMapping[resourceTitle];
 
       if (resourceSlug) {
@@ -43,10 +64,12 @@ class DownloadableResourcesLoader {
         if (resource) {
           button.addEventListener('click', () => this.downloadResource(resource));
           button.disabled = false;
+          button.textContent = 'Download PDF';
         } else {
-          button.disabled = true;
-          button.textContent = 'Not Available';
-          button.style.opacity = '0.5';
+          // Keep enabled but show coming soon for fallbacks if no URL
+          button.disabled = false;
+          button.textContent = 'Coming Soon';
+          button.classList.add('opacity-70');
         }
       }
     });
@@ -54,13 +77,17 @@ class DownloadableResourcesLoader {
 
   async downloadResource(resource) {
     try {
-      const downloadUrl = this.api.downloadableResources.getDownloadUrl(resource);
-
-      if (!downloadUrl) {
-        throw new Error('Download URL not available');
+      let downloadUrl;
+      
+      if (this.isFallback) {
+        // Just use a dummy alert for fallback so users know it's not real yet
+        alert(`Downloaded: ${resource.title} (Demo)`);
+        return;
+      } else {
+        downloadUrl = this.api.downloadableResources.getDownloadUrl(resource);
+        if (!downloadUrl) throw new Error('Download URL not available');
       }
 
-      // Create a temporary link and trigger download
       const link = document.createElement('a');
       link.href = downloadUrl;
       link.download = resource.file?.name || `${resource.title || resource.slug}.pdf`;
@@ -71,7 +98,6 @@ class DownloadableResourcesLoader {
       link.click();
       document.body.removeChild(link);
 
-      // Track download event
       if (typeof gtag !== 'undefined') {
         gtag('event', 'download', {
           event_category: 'resource',
@@ -82,46 +108,30 @@ class DownloadableResourcesLoader {
 
     } catch (error) {
       console.error('Failed to download resource:', error);
-      // Show error message to user
       this.showDownloadError(resource.title || 'Resource');
     }
   }
 
   showDownloadError(resourceName) {
-    // Create a simple error notification
     const notification = document.createElement('div');
     notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
     notification.textContent = `Failed to download ${resourceName}. Please try again.`;
 
     document.body.appendChild(notification);
 
-    // Remove notification after 5 seconds
     setTimeout(() => {
       if (notification.parentNode) {
         notification.parentNode.removeChild(notification);
       }
     }, 5000);
   }
-
-  // Alternative method to load specific resource by type
-  async loadResourceByType(type) {
-    try {
-      const response = await this.api.downloadableResources.getByType(type);
-      return response.entries || [];
-    } catch (error) {
-      console.error(`Failed to load ${type} resources:`, error);
-      return [];
-    }
-  }
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   const loader = new DownloadableResourcesLoader();
   loader.loadDownloadableResources();
 });
 
-// Export for global access
 if (typeof window !== 'undefined') {
   window.DownloadableResourcesLoader = DownloadableResourcesLoader;
 }

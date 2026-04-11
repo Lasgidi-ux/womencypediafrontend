@@ -43,11 +43,14 @@ async function browseFetch(endpoint, params = {}) {
         }
     });
 
-    // Use fetchStrapi if available (handles auth tokens)
-    if (typeof fetchStrapi !== 'undefined') {
+    // Only delegate to fetchStrapi for biographies (it auto-adds populate[]=image&tags).
+    // Other endpoints (e.g. collections) may not have those relations and will 400.
+    const isBiographies = endpoint === 'biographies' || endpoint.startsWith('biographies?');
+    if (isBiographies && typeof fetchStrapi !== 'undefined') {
         return fetchStrapi(`/api/${endpoint}?${url.searchParams.toString()}`);
     }
 
+    // Direct fetch for non-biography endpoints
     const headers = { 'Content-Type': 'application/json' };
     if (typeof CONFIG !== 'undefined' && CONFIG.API_TOKEN) {
         headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
@@ -55,7 +58,7 @@ async function browseFetch(endpoint, params = {}) {
 
     const res = await fetch(url.toString(), { headers });
     if (!res.ok) {
-        throw new Error(`API error ${res.status}`);
+        throw new Error(`API error: ${res.status}`);
     }
     return res.json();
 }

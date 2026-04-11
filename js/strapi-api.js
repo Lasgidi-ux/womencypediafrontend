@@ -17,10 +17,6 @@ class StrapiAPIClient {
   // =========================
   async request(endpoint, options = {}) {
     const query = options.query || {};
-    // Add locale for i18n support
-    if (!query.locale) {
-      query.locale = 'en';
-    }
     const queryString = this.buildQueryString(query);
     const url = `${this.baseURL}${endpoint}${queryString}`;
     const cacheKey = `${options.method || 'GET'}:${url}`;
@@ -213,16 +209,21 @@ class StrapiAPIClient {
       }
     }
 
-    if (params.page) {
-      query.append("pagination[page]", params.page);
+    // Handle pagination — support both flat (page, pageSize) and nested (pagination: {page, pageSize})
+    const paginationPage = params.page || params.pagination?.page;
+    const paginationPageSize = params.pageSize || params.pagination?.pageSize;
+
+    if (paginationPage) {
+      query.append("pagination[page]", paginationPage);
     }
 
-    if (params.pageSize) {
-      query.append("pagination[pageSize]", params.pageSize);
+    if (paginationPageSize) {
+      query.append("pagination[pageSize]", paginationPageSize);
     }
 
     if (params.sort) {
-      // If sort already contains direction (e.g. "createdAt:desc"), use as-is
+      // If sort already contains a direction colon (e.g. "createdAt:desc"), use it as-is.
+      // Do NOT append params.order — it would create "createdAt:desc:asc".
       const sortValue = params.sort.includes(':') ? params.sort : `${params.sort}:${params.order || "asc"}`;
       query.append("sort[0]", sortValue);
     }
@@ -240,6 +241,11 @@ class StrapiAPIClient {
         "filters[$or][1][description][$containsi]",
         params.search
       );
+    }
+
+    // Add locale for i18n (if not already in params)
+    if (params.locale) {
+      query.append("locale", params.locale);
     }
 
     return query.toString() ? `?${query.toString()}` : "";

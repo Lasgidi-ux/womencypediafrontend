@@ -1,7 +1,20 @@
 /**
  * Timelines Loader
- * Loads timelines and timeline events from Strapi API
+ * Loads timeline events from Strapi API with static fallback
  */
+
+const TIMELINE_FALLBACK = [
+  { date: "3100 BCE", title: "Merneith rules as regent of Egypt", description: "One of the earliest known female rulers in recorded history, Merneith held power during Egypt's First Dynasty.", category: "Ancient" },
+  { date: "69 BCE", title: "Cleopatra VII ascends to the throne", description: "The last active ruler of the Ptolemaic Kingdom of Egypt, Cleopatra became one of history's most discussed women leaders.", category: "Classical" },
+  { date: "624 CE", title: "Khadijah bint Khuwaylid recognized", description: "The first wife of Prophet Muhammad, Khadijah was a successful businesswoman considered one of the most powerful women in early Islamic history.", category: "Medieval" },
+  { date: "1429", title: "Joan of Arc lifts the Siege of Orléans", description: "A pivotal moment in the Hundred Years' War, led by a teenage peasant girl who changed the course of European history.", category: "Medieval" },
+  { date: "1792", title: "Mary Wollstonecraft publishes 'A Vindication of the Rights of Woman'", description: "A foundational text of feminist philosophy, arguing for women's education and rational equality.", category: "Enlightenment" },
+  { date: "1848", title: "Seneca Falls Convention", description: "The first women's rights convention in the United States, producing the Declaration of Sentiments.", category: "Modern" },
+  { date: "1893", title: "New Zealand grants women the right to vote", description: "New Zealand becomes the first self-governing country in the world to grant all women the right to vote.", category: "Modern" },
+  { date: "1903", title: "Marie Curie wins her first Nobel Prize", description: "The first woman to win a Nobel Prize and the only person to win Nobel Prizes in two different sciences.", category: "Modern" },
+  { date: "1960", title: "Sirimavo Bandaranaike becomes world's first female PM", description: "Sri Lanka's Sirimavo Bandaranaike became the world's first female head of government.", category: "Contemporary" },
+  { date: "2005", title: "Ellen Johnson Sirleaf elected President of Liberia", description: "Became the first elected female head of state in Africa, later winning the Nobel Peace Prize in 2011.", category: "Contemporary" }
+];
 
 class TimelinesLoader {
   constructor() {
@@ -10,14 +23,11 @@ class TimelinesLoader {
 
   async loadTimelineEvents(containerId, limit = 10) {
     const container = document.getElementById(containerId);
-
-    if (!container) {
-      console.error('Timeline container not found');
-      return;
-    }
+    if (!container) return;
 
     try {
-      // Fetch timeline events
+      if (!this.api) throw new Error('API not available');
+
       const response = await this.api.timelines.getEvents({
         sort: 'date:desc',
         pagination: { pageSize: limit }
@@ -26,12 +36,11 @@ class TimelinesLoader {
       const events = response.entries || [];
 
       if (events.length === 0) {
-        container.innerHTML = '<p class="text-center text-text-secondary">No timeline events available.</p>';
+        this.renderFallback(container);
         return;
       }
 
-      // Render timeline events
-      const html = events.map(event => {
+      container.innerHTML = events.map(event => {
         const title = event.title || 'Untitled Event';
         const description = event.description || '';
         const date = event.date ? this.formatDate(event.date) : '';
@@ -51,109 +60,48 @@ class TimelinesLoader {
         `;
       }).join('');
 
-      container.innerHTML = html;
-
     } catch (error) {
-      console.error('Failed to load timeline events:', error);
-      container.innerHTML = '<p class="text-center text-red-600">Failed to load timeline events. Please try again later.</p>';
+      console.warn('[Resources] Timeline API unavailable, using fallback:', error.message || error);
+      this.renderFallback(container);
     }
   }
 
-  async loadTimelines(containerId) {
-    const container = document.getElementById(containerId);
-
-    if (!container) {
-      console.error('Timelines container not found');
-      return;
-    }
-
-    try {
-      // Fetch timelines
-      const response = await this.api.timelines.getAll({
-        populate: 'events',
-        sort: 'createdAt:desc',
-        pagination: { pageSize: 6 }
-      });
-
-      const timelines = response.entries || [];
-
-      if (timelines.length === 0) {
-        container.innerHTML = '<p class="text-center text-text-secondary">No timelines available.</p>';
-        return;
-      }
-
-      // Render timelines
-      const html = timelines.map(timeline => {
-        const title = timeline.title || 'Untitled Timeline';
-        const description = timeline.description || '';
-        const events = timeline.events || [];
-
-        return `
-          <div class="bg-white rounded-xl p-8 border border-border-light">
-            <h3 class="font-bold text-text-main mb-6 text-center">${title}</h3>
-            ${description ? `<p class="text-text-secondary text-sm mb-6 text-center">${description}</p>` : ''}
-            <div class="space-y-4">
-              ${events.slice(0, 5).map(event => `
-                <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 w-20 text-accent-teal font-bold text-sm">${event.date ? this.formatDate(event.date) : ''}</div>
-                  <div class="flex-1">
-                    <p class="text-text-main font-medium text-sm">${event.title}</p>
-                    <p class="text-text-secondary text-xs">${event.description}</p>
-                  </div>
-                </div>
-              `).join('')}
-              ${events.length > 5 ? `<p class="text-center text-accent-teal text-sm mt-4">...and ${events.length - 5} more events</p>` : ''}
-            </div>
-            <div class="text-center mt-6">
-              <a href="timelines.html?slug=${timeline.slug}" class="text-accent-teal font-bold hover:underline">View Full Timeline →</a>
-            </div>
+  renderFallback(container) {
+    container.innerHTML = TIMELINE_FALLBACK.map(e => `
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 w-24 text-accent-teal font-bold text-sm">${e.date}</div>
+        <div class="flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <p class="text-text-main font-medium">${e.title}</p>
+            <span class="px-2 py-0.5 bg-accent-teal/10 text-accent-teal text-xs rounded">${e.category}</span>
           </div>
-        `;
-      }).join('');
-
-      container.innerHTML = html;
-
-    } catch (error) {
-      console.error('Failed to load timelines:', error);
-      container.innerHTML = '<p class="text-center text-red-600">Failed to load timelines. Please try again later.</p>';
-    }
+          <p class="text-text-secondary text-sm">${e.description}</p>
+        </div>
+      </div>
+    `).join('');
   }
 
   formatDate(dateString) {
     try {
       const date = new Date(dateString);
       const year = date.getFullYear();
-
-      // For ancient dates, just show the year
-      if (year < 0) {
-        return `${Math.abs(year)} BCE`;
-      } else if (year < 100) {
-        return `${year} CE`;
-      } else {
-        return year.toString();
-      }
+      if (year < 0) return `${Math.abs(year)} BCE`;
+      if (year < 100) return `${year} CE`;
+      return year.toString();
     } catch (error) {
       return dateString;
     }
   }
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   const loader = new TimelinesLoader();
   const eventsContainer = document.getElementById('timeline-events');
-  const timelinesContainer = document.getElementById('timelines-grid');
-
   if (eventsContainer) {
     loader.loadTimelineEvents('timeline-events');
   }
-
-  if (timelinesContainer) {
-    loader.loadTimelines('timelines-grid');
-  }
 });
 
-// Export for global access
 if (typeof window !== 'undefined') {
   window.TimelinesLoader = TimelinesLoader;
 }

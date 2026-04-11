@@ -1,7 +1,22 @@
 /**
  * Glossaries Loader
- * Loads glossary terms from Strapi API
+ * Loads glossary terms from Strapi API with static fallback
  */
+
+const GLOSSARY_FALLBACK = [
+  { term: "Matrilineal", definition: "A kinship system in which ancestry is traced through the mother's line. Common in many African, Southeast Asian, and indigenous American societies.", category: "Kinship" },
+  { term: "Suffrage", definition: "The right to vote in political elections, historically denied to women until various reforms in the 19th and 20th centuries.", category: "Politics" },
+  { term: "Patriarchy", definition: "A social system in which men hold primary power and predominate in roles of political leadership, moral authority, social privilege, and property control.", category: "Social Systems" },
+  { term: "Purdah", definition: "The practice of screening women from men or strangers, especially by means of a curtain or veil. Observed in some Muslim and Hindu communities.", category: "Cultural Practice" },
+  { term: "Dowry", definition: "Property or money brought by a bride to her husband on their marriage, a practice with deep historical roots across many cultures.", category: "Marriage Custom" },
+  { term: "Amazons", definition: "In Greek mythology, a nation of all-female warriors. Archaeological evidence suggests real warrior women existed in Scythian and Sarmatian cultures.", category: "Mythology" },
+  { term: "Feminism", definition: "A range of socio-political movements sharing a common goal: to define and advance political, economic, personal, and social equality of the sexes.", category: "Ideology" },
+  { term: "Intersectionality", definition: "A theoretical framework for understanding how aspects of identity (gender, race, class, sexuality) combine to create unique modes of discrimination and privilege.", category: "Theory" },
+  { term: "Sati", definition: "The historical Hindu practice of a widow immolating herself on her husband's funeral pyre. Banned in British India in 1829.", category: "Historical Practice" },
+  { term: "Bride Price", definition: "Payment from the groom's family to the bride's family at marriage. Distinct from dowry, found across African, Asian, and Oceanian cultures.", category: "Marriage Custom" },
+  { term: "Harem", definition: "The separate quarters reserved for wives and concubines in Muslim households, often misunderstood by Western scholars.", category: "Architecture" },
+  { term: "Womanist", definition: "A term coined by Alice Walker describing a Black feminist or feminist of color, centering the experiences of women of African descent.", category: "Theory" }
+];
 
 class GlossariesLoader {
   constructor() {
@@ -10,14 +25,11 @@ class GlossariesLoader {
 
   async loadGlossaryTerms(containerId, limit = 12) {
     const container = document.getElementById(containerId);
-
-    if (!container) {
-      console.error('Glossary container not found');
-      return;
-    }
+    if (!container) return;
 
     try {
-      // Fetch glossary terms
+      if (!this.api) throw new Error('API not available');
+
       const response = await this.api.glossaries.getTerms({
         sort: 'term:asc',
         pagination: { pageSize: limit }
@@ -26,12 +38,11 @@ class GlossariesLoader {
       const terms = response.entries || [];
 
       if (terms.length === 0) {
-        container.innerHTML = '<p class="text-center text-text-secondary col-span-full">No glossary terms available.</p>';
+        this.renderFallback(container);
         return;
       }
 
-      // Render glossary terms
-      const html = terms.map(term => {
+      container.innerHTML = terms.map(term => {
         const termName = term.term || term.title || 'Unknown Term';
         const definition = term.definition || term.description || '';
         const category = term.category || '';
@@ -47,68 +58,25 @@ class GlossariesLoader {
         `;
       }).join('');
 
-      container.innerHTML = html;
-
     } catch (error) {
-      console.error('Failed to load glossary terms:', error);
-      container.innerHTML = '<p class="text-center text-red-600 col-span-full">Failed to load glossary terms. Please try again later.</p>';
+      console.warn('[Resources] Glossary API unavailable, using fallback:', error.message || error);
+      this.renderFallback(container);
     }
   }
 
-  async loadGlossaryBySlug(containerId, slug) {
-    const container = document.getElementById(containerId);
-
-    if (!container) {
-      console.error('Glossary container not found');
-      return;
-    }
-
-    try {
-      // Fetch specific glossary
-      const glossary = await this.api.glossaries.getBySlug(slug);
-
-      if (!glossary) {
-        container.innerHTML = '<p class="text-center text-text-secondary">Glossary not found.</p>';
-        return;
-      }
-
-      // Render glossary
-      const title = glossary.title || 'Glossary';
-      const description = glossary.description || '';
-      const terms = glossary.terms || [];
-
-      let html = `
-        <div class="text-center mb-8">
-          <h2 class="font-serif text-3xl font-bold text-text-main mb-4">${title}</h2>
-          ${description ? `<p class="text-text-secondary max-w-2xl mx-auto">${description}</p>` : ''}
+  renderFallback(container) {
+    container.innerHTML = GLOSSARY_FALLBACK.map(t => `
+      <div class="bg-background-cream rounded-lg p-4 hover:bg-white transition-colors border border-transparent hover:border-border-light">
+        <div class="flex items-start justify-between mb-2">
+          <h4 class="font-bold text-text-main">${t.term}</h4>
+          <span class="text-xs text-accent-teal font-medium">${t.category}</span>
         </div>
-      `;
-
-      if (terms.length > 0) {
-        html += `
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${terms.map(term => `
-              <div class="bg-background-cream rounded-lg p-4">
-                <h4 class="font-bold text-text-main mb-2">${term.term}</h4>
-                <p class="text-text-secondary text-sm">${term.definition}</p>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } else {
-        html += '<p class="text-center text-text-secondary">No terms in this glossary.</p>';
-      }
-
-      container.innerHTML = html;
-
-    } catch (error) {
-      console.error('Failed to load glossary:', error);
-      container.innerHTML = '<p class="text-center text-red-600">Failed to load glossary. Please try again later.</p>';
-    }
+        <p class="text-text-secondary text-sm">${t.definition}</p>
+      </div>
+    `).join('');
   }
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   const loader = new GlossariesLoader();
   const container = document.getElementById('glossary-terms-grid');
@@ -117,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Export for global access
 if (typeof window !== 'undefined') {
   window.GlossariesLoader = GlossariesLoader;
 }

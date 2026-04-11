@@ -44,11 +44,14 @@ async function browseFetch(endpoint, params = {}) {
         }
     });
 
-    // Use fetchStrapi if available (handles auth tokens)
-    if (typeof fetchStrapi !== 'undefined') {
+    // Only delegate to fetchStrapi for biographies (it auto-adds populate[]=image&tags).
+    // Other endpoints (e.g. collections) may not have those relations and will 400.
+    const isBiographies = endpoint === 'biographies' || endpoint.startsWith('biographies?');
+    if (isBiographies && typeof fetchStrapi !== 'undefined') {
         return fetchStrapi(`/api/${endpoint}?${url.searchParams.toString()}`);
     }
 
+    // Direct fetch for non-biography endpoints
     const headers = { 'Content-Type': 'application/json' };
     if (typeof CONFIG !== 'undefined' && CONFIG.API_TOKEN) {
         headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
@@ -56,7 +59,7 @@ async function browseFetch(endpoint, params = {}) {
 
     const res = await fetch(url.toString(), { headers });
     if (!res.ok) {
-        throw new Error(`API error ${res.status}`);
+        throw new Error(`API error: ${res.status}`);
     }
     return res.json();
 }
@@ -454,8 +457,8 @@ function updatePagination(meta) {
 /* ================= DYNAMIC STATS ================= */
 
 async function loadDynamicStats() {
+    // Load biographies count
     try {
-        // Fetch total biographies count via pagination metadata
         const bioRes = await browseFetch("biographies", {
             "pagination[page]": 1,
             "pagination[pageSize]": 1
@@ -467,8 +470,13 @@ async function loadDynamicStats() {
                 ? totalBiographies.toLocaleString() + '+'
                 : '—';
         }
+    } catch (e) {
+        console.warn('[Browse] Could not load biography stats:', e.message);
+    }
 
-        // Fetch total collections count
+    // Load collections count — use direct fetch to avoid populate[]=image&tags
+    // which causes 400 on the collections endpoint
+    try {
         const colRes = await browseFetch("collections", {
             "pagination[page]": 1,
             "pagination[pageSize]": 1
@@ -481,7 +489,7 @@ async function loadDynamicStats() {
                 : '—';
         }
     } catch (e) {
-        console.warn('[Browse] Could not load dynamic stats:', e.message);
+        console.warn('[Browse] Could not load collection stats:', e.message);
     }
 }
 
@@ -559,7 +567,11 @@ function readUrlFilters() {
 
 /* ================= INIT ================= */
 
+let browseInitialized = false;
+
 document.addEventListener("DOMContentLoaded", () => {
+    if (browseInitialized) return;
+    browseInitialized = true;
     console.log('🔍 [Browse] DOMContentLoaded - initializing browse functionality');
     loadFilterOptions();
     readUrlFilters();

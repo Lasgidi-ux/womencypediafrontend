@@ -45,12 +45,42 @@
     <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
     <link rel="canonical" href="https://womencypedia.org/profile.html">
 
-    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#D67D7D">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <script defer data-domain="womencypedia.org" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Toggle switch CSS (no external framework needed) -->
+    <style>
+        .toggle-switch {
+            appearance: none;
+            width: 2.75rem;
+            height: 1.5rem;
+            background: #d1d5db;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform .2s;
+        }
+        .toggle-switch:checked {
+            background: var(--color-primary, #D67D7D);
+        }
+        .toggle-switch:checked::after {
+            transform: translateX(1.25rem);
+        }
+    </style>
 </head>
 
 <body class="bg-background-cream text-text-main antialiased font-display selection:bg-primary/30 min-h-screen">
@@ -329,7 +359,7 @@
         </div>
     </header>
 
-    <main class="py-8 lg:py-12">
+    <main id="main-content" class="py-8 lg:py-12">
         <div class="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-12">
             <!-- Profile Header -->
             <div id="profile-card" class="bg-white rounded-2xl border border-border-light p-8 mb-8">
@@ -366,6 +396,10 @@
                                 <span class="material-symbols-outlined text-text-secondary text-[18px]">email</span>
                                 <span id="profile-email" class="text-text-secondary">...</span>
                             </div>
+                            <div class="flex items-center gap-2" id="profile-location-wrap">
+                                <span class="material-symbols-outlined text-text-secondary text-[18px]">location_on</span>
+                                <span id="profile-location" class="text-text-secondary"></span>
+                            </div>
                             <div class="flex items-center gap-2">
                                 <span
                                     class="material-symbols-outlined text-text-secondary text-[18px]">calendar_today</span>
@@ -376,8 +410,7 @@
 
                     <!-- Actions -->
                     <div class="flex flex-wrap gap-3">
-                        <button
-                            onclick="document.getElementById('settings-section').classList.remove('hidden'); document.getElementById('settings-section').scrollIntoView({behavior:'smooth'})"
+                        <button onclick="showEditModal()"
                             class="px-6 py-2.5 border border-border-light text-text-main font-medium rounded-lg hover:bg-lavender-soft transition-colors flex items-center gap-2">
                             <span class="material-symbols-outlined text-[18px]">edit</span><span
                                 data-i18n="editProfile">Edit Profile</span></button>
@@ -575,49 +608,16 @@
                 </div>
             </div>
 
-            <!-- Badges Section -->
+            <!-- Badges Section (dynamically populated by profile.js) -->
             <div class="mt-8">
                 <h3 class="font-serif text-xl font-bold text-text-main mb-6" data-i18n="profile.recognitionBadges">
                     Recognition Badges</h3>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="badges-grid">
-                    <div
-                        class="bg-white rounded-xl p-6 border border-border-light flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left hover:shadow-md hover:border-primary/20 transition-all">
-                        <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-2xl">workspace_premium</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-text-main">Top Contributor</h4>
-                            <p class="text-xs text-text-secondary">50+ contributions</p>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-white rounded-xl p-6 border border-border-light flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left hover:shadow-md hover:border-primary/20 transition-all">
-                        <div class="size-14 rounded-full bg-accent-teal/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-accent-teal text-2xl">star</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-text-main">Expert Reviewer</h4>
-                            <p class="text-xs text-text-secondary">50+ reviews</p>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-white rounded-xl p-6 border border-border-light flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left hover:shadow-md hover:border-primary/20 transition-all">
-                        <div class="size-14 rounded-full bg-accent-gold/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-accent-gold text-2xl">military_tech</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-text-main">Research Lead</h4>
-                            <p class="text-xs text-text-secondary">10+ original</p>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-white rounded-xl p-6 border border-border-light flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left hover:shadow-md hover:border-primary/20 transition-all">
-                        <div class="size-14 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-2xl">verified</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-text-main">Verified Expert</h4>
-                            <p class="text-xs text-text-secondary">PhD verified</p>
+                    <!-- Loading skeleton -->
+                    <div class="animate-pulse bg-white rounded-xl p-6 border border-border-light">
+                        <div class="flex items-center gap-4">
+                            <div class="size-14 rounded-full bg-border-light"></div>
+                            <div class="flex-1"><div class="h-4 bg-border-light rounded w-3/4 mb-2"></div><div class="h-3 bg-border-light rounded w-1/2"></div></div>
                         </div>
                     </div>
                 </div>
@@ -836,7 +836,7 @@
                                 <h4 class="font-medium text-text-main">Export Data</h4>
                                 <p class="text-sm text-text-secondary">Download all your data and contributions</p>
                             </div>
-                            <button
+                            <button onclick="profileToast('Export started — you will receive an email with your data.', 'info')"
                                 class="px-4 py-2 border border-border-light text-text-main font-medium rounded-lg hover:bg-lavender-soft transition-colors">
                                 Export
                             </button>
@@ -846,7 +846,7 @@
                                 <h4 class="font-medium text-red-600">Delete Account</h4>
                                 <p class="text-sm text-text-secondary">Permanently delete your account and all data</p>
                             </div>
-                            <button
+                            <button onclick="confirmDeleteAccount()"
                                 class="px-4 py-2 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition-colors">
                                 Delete Account
                             </button>
@@ -858,7 +858,6 @@
     </main>
 
     <!-- Footer -->
-        <!-- Footer -->
     <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
         <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
