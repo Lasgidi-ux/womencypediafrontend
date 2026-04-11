@@ -222,10 +222,9 @@ class StrapiAPIClient {
     }
 
     if (params.sort) {
-      query.append(
-        "sort[0]",
-        `${params.sort}:${params.order || "asc"}`
-      );
+      // If sort already contains direction (e.g. "createdAt:desc"), use as-is
+      const sortValue = params.sort.includes(':') ? params.sort : `${params.sort}:${params.order || "asc"}`;
+      query.append("sort[0]", sortValue);
     }
 
     if (params.filters) {

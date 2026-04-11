@@ -27,9 +27,10 @@
         const baseUrl = 'https://womencypedia-cms.onrender.com';
         const apiToken = (typeof CONFIG !== 'undefined') ? CONFIG.API_TOKEN : '';
 
-        // Build URL with populate (exclude sensitive relations)
+        // Build URL with populate — only for endpoints known to have image/tags relations
         const urlObj = new URL(endpoint, baseUrl);
-        if (!endpoint.includes('populate=')) {
+        const isBiographyEndpoint = endpoint.includes('/api/biographies');
+        if (isBiographyEndpoint && !endpoint.includes('populate=')) {
             // Populate relations/media only — JSON fields (e.g. sources) are returned automatically
             urlObj.searchParams.append('populate[]', 'image');
             urlObj.searchParams.append('populate[]', 'tags');
