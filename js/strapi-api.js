@@ -505,7 +505,8 @@ class StrapiAPIClient {
     downloadableResources = {
       getAll: (params = {}) => {
         const { populate, ...rest } = params;
-        return this.request("/api/teaching-resources", { query: rest });
+        const defaultPopulate = { populate: 'file' };
+        return this.request("/api/teaching-resources", { query: { ...defaultPopulate, ...rest } });
       },
 
       getBySlug: async (slug) => {

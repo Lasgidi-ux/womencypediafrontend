@@ -88,7 +88,11 @@ class DownloadableResourcesLoader {
         }
       } else {
         downloadUrl = this.api.downloadableResources.getDownloadUrl(resource);
-        if (!downloadUrl) throw new Error('Download URL not available');
+        if (!downloadUrl) {
+          console.warn('Download URL not available for resource:', resource.title || resource.slug);
+          alert(`${resource.title || 'Resource'} is not available for download yet.`);
+          return;
+        }
       }
 
       const link = document.createElement('a');
