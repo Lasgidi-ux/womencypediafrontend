@@ -10,7 +10,7 @@
     document.addEventListener('DOMContentLoaded', async () => {
         // Check if fetchStrapi is available
         if (typeof window.fetchStrapi !== 'function') {
-            
+            console.warn('fetchStrapi function not available.');
             return;
         }
 
@@ -24,7 +24,7 @@
     async function loadTimelines() {
         const timelineContainer = document.getElementById('timeline-chart');
         if (!timelineContainer) {
-             not found.');
+            console.warn('Timeline container not found.');
             return;
         }
 
@@ -56,7 +56,7 @@
             renderTimelines(response.data, timelineContainer);
 
         } catch (error) {
-            
+            console.error('Error loading timelines:', error);
             timelineContainer.innerHTML = `
                 <div class="text-center py-12">
                     <span class="material-symbols-outlined text-4xl text-red-500 mb-4 block">error</span>
