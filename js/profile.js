@@ -1310,7 +1310,7 @@ async function saveNotificationPreferences() {
 async function loadNotificationPreferences() {
     try {
         const response = await ProfileAPI.request(
-            `${ProfileAPI.base}/api/users/me?populate=preferences`,
+            `${ProfileAPI.base}/api/users/me`,
             { headers: ProfileAPI.getAuthHeaders() }
         );
 
