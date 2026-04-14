@@ -202,7 +202,7 @@ async function loadContributions() {
 async function loadNominations() {
     try {
         const res = await ProfileAPI.request(
-            `${ProfileAPI.base}/api/nominations?filters[author][id][$eq]=${profileData.id}&sort=createdAt:desc&pagination[pageSize]=5`,
+            `${ProfileAPI.base}/api/nominations?filters[user][id][$eq]=${profileData.id}&sort=createdAt:desc&pagination[pageSize]=5`,
             { headers: ProfileAPI.getAuthHeaders() }
         );
 
@@ -211,8 +211,8 @@ async function loadNominations() {
             return { id: item.id, ...attrs };
         });
     } catch (err) {
-        if (err.message?.includes('403') || err.message?.includes('Forbidden')) {
-            console.warn('[Profile] Access denied to nominations');
+        if (err.message?.includes('403') || err.message?.includes('Forbidden') || err.message?.includes('Invalid key')) {
+            console.warn('[Profile] Unable to load nominations');
             profileData.nominations = [];
         }
     }
@@ -1118,6 +1118,10 @@ function prefillSettingsForms() {
     if (bioField) bioField.value = profileData.bio || '';
     if (locField) locField.value = profileData.location || '';
     if (webField) webField.value = profileData.website || '';
+
+    // Set hidden username for password form accessibility
+    const usernameField = qs('password-username');
+    if (usernameField) usernameField.value = profileData.email || '';
 }
 
 function setupSettingsForm() {
