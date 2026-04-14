@@ -491,6 +491,50 @@ async function loadDynamicStats() {
     } catch (e) {
         console.warn('[Browse] Could not load collection stats:', e.message);
     }
+
+    // Load region counts
+    loadRegionCounts();
+}
+
+/* ================= REGION COUNTS ================= */
+
+async function loadRegionCounts() {
+    const regionMappings = {
+        'africa': 'Africa',
+        'europe': 'Europe',
+        'asia': 'Asia',
+        'middle-east': 'Middle East',
+        'north-america': 'North America',
+        'south-america': 'South America',
+        'oceania': 'Oceania',
+        'antarctica': 'Antarctica'
+    };
+
+    // Process each region concurrently
+    const regionPromises = Object.entries(regionMappings).map(async ([slug, displayName]) => {
+        try {
+            const res = await browseFetch("biographies", {
+                "pagination[page]": 1,
+                "pagination[pageSize]": 1,
+                "filters[region][$eq]": displayName
+            });
+
+            const count = res.meta?.pagination?.total || 0;
+            const countEl = document.querySelector(`a[href*="region=${slug}"] .text-sm.text-text-secondary`);
+
+            if (countEl) {
+                countEl.textContent = count > 0
+                    ? `${count.toLocaleString()}+ entries`
+                    : '0 entries';
+            }
+        } catch (e) {
+            console.warn(`[Browse] Could not load ${displayName} region count:`, e.message);
+            // Keep the existing hardcoded text as fallback
+        }
+    });
+
+    // Wait for all region counts to load
+    await Promise.all(regionPromises);
 }
 
 
