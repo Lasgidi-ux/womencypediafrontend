@@ -210,13 +210,18 @@ async function loadNominations() {
             const attrs = item.attributes || item;
             return { id: item.id, ...attrs };
         });
-    } catch { }
+    } catch (err) {
+        if (err.message?.includes('403') || err.message?.includes('Forbidden')) {
+            console.warn('[Profile] Access denied to nominations');
+            profileData.nominations = [];
+        }
+    }
 }
 
 async function loadSaved() {
     try {
         const res = await ProfileAPI.request(
-            `${ProfileAPI.base}/api/users/me?populate=savedBiographies`,
+            `${ProfileAPI.base}/api/users/me`,
             { headers: ProfileAPI.getAuthHeaders() }
         );
 
@@ -947,7 +952,10 @@ function confirmDeleteAccount() {
         profileToast('Account deleted.', 'success');
         setTimeout(handleLogout, 1500);
     }).catch((err) => {
-        const errorMessage = err.message || 'Could not delete account. Please contact support.';
+        let errorMessage = err.message || 'Could not delete account. Please contact support.';
+        if (errorMessage.includes('403') || errorMessage.includes('Forbidden')) {
+            errorMessage = 'You don\'t have permission to delete this account. Please contact support.';
+        }
         profileToast(`Could not delete account: ${errorMessage}`, 'error');
     });
 }
@@ -1317,3 +1325,16 @@ async function loadNotificationPreferences() {
         console.log('[Profile] Could not load notification preferences');
     }
 }
+
+// Ensure functions are globally available for onclick handlers
+window.exportUserData = exportUserData;
+window.confirmDeleteAccount = confirmDeleteAccount;
+window.handleLogout = handleLogout;
+window.showEditModal = showEditModal;
+window.closeEditModal = closeEditModal;
+window.saveProfile = saveProfile;
+window.handleAvatarUpload = handleAvatarUpload;
+window.showTab = showTab;
+window.openPasswordModal = openPasswordModal;
+window.closePasswordModal = closePasswordModal;
+window.handlePasswordSubmit = handlePasswordSubmit;
