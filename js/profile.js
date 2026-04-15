@@ -372,6 +372,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+    cleanupEventListeners();
+});
+
 function initUI() {
     initTabs();
 
@@ -1627,7 +1632,12 @@ function setupSettingsForm() {
 
                 await saveProfile();
                 profileToast('Profile updated!', 'success');
-            } catch {
+            } catch (error) {
+                console.error('[Profile] Settings form save failed:', {
+                    error: error.message,
+                    stack: error.stack,
+                    timestamp: new Date().toISOString()
+                });
                 profileToast('Save failed. Please try again.', 'error');
             } finally {
                 if (submitBtn) {
@@ -1667,7 +1677,12 @@ function setupSettingsForm() {
                 await saveProfile();
                 profileToast('Profile updated!', 'success');
                 closeEditModal();
-            } catch {
+            } catch (error) {
+                console.error('[Profile] Modal form save failed:', {
+                    error: error.message,
+                    stack: error.stack,
+                    timestamp: new Date().toISOString()
+                });
                 profileToast('Save failed. Please try again.', 'error');
             } finally {
                 if (submitBtn) {
@@ -1884,6 +1899,43 @@ const performanceMonitor = {
     }
 };
 
+/**
+ * Cleanup function to remove event listeners and prevent memory leaks
+ * Call this when the profile page is unloaded or component is destroyed
+ */
+function cleanupEventListeners() {
+    // Remove global event listeners
+    if (typeof handleEscape !== 'undefined') {
+        document.removeEventListener('keydown', handleEscape);
+    }
+
+    // Remove form event listeners (if they exist)
+    const forms = [
+        qs('edit-profile-form'),
+        qs('edit-profile-modal-form'),
+        qs('password-form')
+    ];
+
+    forms.forEach(form => {
+        if (form) {
+            // Clone and replace to remove all event listeners
+            const clonedForm = form.cloneNode(true);
+            form.parentNode.replaceChild(clonedForm, form);
+        }
+    });
+
+    // Clear any timers
+    if (window.toastTimeout) {
+        clearTimeout(window.toastTimeout);
+        window.toastTimeout = null;
+    }
+
+    // Clear API cache
+    ProfileAPI.clearCache();
+
+    console.log('[Profile] Event listeners and resources cleaned up');
+}
+
 // Make functions globally available for onclick handlers
 window.exportUserData = exportUserData;
 window.confirmDeleteAccount = confirmDeleteAccount;
@@ -1896,3 +1948,4 @@ window.showTab = showTab;
 window.openPasswordModal = openPasswordModal;
 window.closePasswordModal = closePasswordModal;
 window.handlePasswordSubmit = handlePasswordSubmit;
+window.cleanupEventListeners = cleanupEventListeners;
