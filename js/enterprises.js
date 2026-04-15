@@ -94,7 +94,7 @@ class EnterprisesLoader {
       // Get featured biographies from enterprise categories
       const enterpriseCategories = this.categories.map(cat => cat.slug);
       const filters = enterpriseCategories.map(cat => `filters[category][$eq]=${encodeURIComponent(cat)}`).join('&');
-      const featuredQuery = `${filters}&filters[featured][$eq]=true&populate=image,tags&sort=createdAt:desc&pagination[pageSize]=3`;
+      const featuredQuery = `${filters}&filters[featured][$eq]=true&populate[]=image&populate[]=tags&sort=createdAt:desc&pagination[pageSize]=3`;
 
       const res = await this.api.request(`/api/biographies?${featuredQuery}`);
       return res.entries || [];
