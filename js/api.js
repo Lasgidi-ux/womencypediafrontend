@@ -116,34 +116,17 @@ const LegacyAPI = {
 
         const config = { ...options, headers: { ...defaultHeaders, ...options.headers } };
 
-        const response = await fetch(url, config);
+        try {
+            const response = await fetch(url, config);
+            const data = await response.json();
 
-        // Safely parse response based on content-type
-        let data;
-        const contentType = response.headers.get('content-type');
-
-        if (contentType && contentType.includes('application/json')) {
-            try {
-                data = await response.json();
-            } catch (parseError) {
-                // If JSON parsing fails, fall back to text
-                data = { message: 'Invalid JSON response from server' };
+            if (!response.ok) {
+                throw new APIError(data.message || 'Request failed', response.status, data);
             }
-        } else {
-            // Handle non-JSON responses (HTML error pages, plain text, etc.)
-            try {
-                const text = await response.text();
-                data = { message: text || 'Server returned non-JSON response' };
-            } catch (textError) {
-                data = { message: 'Unable to read server response' };
-            }
+            return data;
+        } catch (error) {
+            throw new APIError(error.message || 'Network error', 0, error);
         }
-
-        if (!response.ok) {
-            throw new APIError(data.message || `HTTP ${response.status}`, response.status, data);
-        }
-
-        return data;
     },
 
     async handleApiError(error, context = 'API request') {

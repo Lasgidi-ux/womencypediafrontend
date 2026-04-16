@@ -270,7 +270,7 @@ async function loadModuleNavigation(currentModule) {
             }
         }
     } catch (error) {
-        console.error('[Education] Failed to load module navigation:', error);
+        
     }
 }
 
