@@ -286,8 +286,7 @@
                             lessons: formData.lessons,
                             contactName: formData.contactName,
                             contactEmail: formData.contactEmail,
-                            permissionGranted: formData.permissionGranted,
-                            status: 'draft'
+                            permissionGranted: formData.permissionGranted
                         }
                     };
 
