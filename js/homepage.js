@@ -75,9 +75,9 @@ const Homepage = {
      */
     async loadHomepageContent() {
         try {
-            var locale = 'en';
+            var localeParam = '';
             if (typeof I18N !== 'undefined') {
-                locale = I18N.currentLocale;
+                localeParam = '&locale=' + I18N.currentLocale;
             }
             var controller = new AbortController();
             var timeout = setTimeout(function () { controller.abort(); }, 5000);
@@ -87,7 +87,7 @@ const Homepage = {
             if (CONFIG.API_TOKEN) {
                 headers['Authorization'] = 'Bearer ' + CONFIG.API_TOKEN;
             }
-            var response = await fetch(CONFIG.API_BASE_URL + '/api/homepage?locale=' + locale + '&populate=*', {
+            var response = await fetch(CONFIG.API_BASE_URL + '/api/homepage?populate=*' + localeParam, {
                 cache: 'no-store',
                 signal: controller.signal,
                 headers: headers
@@ -156,7 +156,7 @@ const Homepage = {
         if (!container) return;
 
         try {
-            const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
+            const localeParam = typeof I18N !== 'undefined' ? `&locale=${I18N.currentLocale}` : '';
             const headers = { 'Content-Type': 'application/json' };
             // Public endpoint - don't send auth
             // if (CONFIG.API_TOKEN) {
@@ -164,7 +164,7 @@ const Homepage = {
             // }
 
             // First try featured biographies
-            let url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort=createdAt:desc`;
+            let url = `${CONFIG.API_BASE_URL}/api/biographies?filters[featured][$eq]=true&populate=image,tags&pagination[pageSize]=6&sort=createdAt:desc${localeParam}`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             let response = await fetch(url, {
@@ -183,7 +183,7 @@ const Homepage = {
             if (entries.length === 0) {
                 const controller2 = new AbortController();
                 const timeout2 = setTimeout(() => controller2.abort(), 8000);
-                url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=6&sort=publishedAt:desc`;
+                url = `${CONFIG.API_BASE_URL}/api/biographies?populate=image,tags&pagination[pageSize]=6&sort=publishedAt:desc${localeParam}`;
                 response = await fetch(url, {
                     cache: 'no-store',
                     signal: controller2.signal,
@@ -214,7 +214,7 @@ const Homepage = {
         if (!container) return;
 
         try {
-            const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
+            const localeParam = typeof I18N !== 'undefined' ? `&locale=${I18N.currentLocale}` : '';
             const headers = { 'Content-Type': 'application/json' };
             // Public endpoint - don't send auth
             // if (CONFIG.API_TOKEN) {
@@ -222,7 +222,7 @@ const Homepage = {
             // }
 
             // First try featured collections
-            let url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&filters[featured][$eq]=true&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6`;
+            let url = `${CONFIG.API_BASE_URL}/api/collections?filters[featured][$eq]=true&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6${localeParam}`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             let response = await fetch(url, {
@@ -241,7 +241,7 @@ const Homepage = {
             if (collections.length === 0) {
                 const controller2 = new AbortController();
                 const timeout2 = setTimeout(() => controller2.abort(), 8000);
-                url = `${CONFIG.API_BASE_URL}/api/collections?locale=${locale}&populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6`;
+                url = `${CONFIG.API_BASE_URL}/api/collections?populate=coverImage,biographies&sort=order:asc&pagination[pageSize]=6${localeParam}`;
                 response = await fetch(url, {
                     cache: 'no-store',
                     signal: controller2.signal,
@@ -272,8 +272,8 @@ const Homepage = {
         if (!container) return;
 
         try {
-            const locale = typeof I18N !== 'undefined' ? I18N.currentLocale : 'en';
-            const url = `${CONFIG.API_BASE_URL}/api/biographies?locale=${locale}&populate=image,tags&pagination[pageSize]=4&sort=publishedAt:desc`;
+            const localeParam = typeof I18N !== 'undefined' ? `&locale=${I18N.currentLocale}` : '';
+            const url = `${CONFIG.API_BASE_URL}/api/biographies?populate=image,tags&pagination[pageSize]=4&sort=publishedAt:desc${localeParam}`;
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 8000);
             const headers = { 'Content-Type': 'application/json' };
