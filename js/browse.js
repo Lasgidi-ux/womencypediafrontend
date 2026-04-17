@@ -492,6 +492,9 @@ async function loadDynamicStats() {
         console.warn('[Browse] Could not load collection stats:', e.message);
     }
 
+    // Load collection biography counts
+    loadCollectionBiographyCounts();
+
     // Load region counts
     loadRegionCounts();
 }
@@ -609,11 +612,49 @@ function readUrlFilters() {
 }
 
 
+/* ================= COLLECTION BIOGRAPHY COUNTS ================= */
+
+async function loadCollectionBiographyCounts() {
+    const collectionMappings = {
+        'women-of-the-pcn': 'stat-collection-pcn',
+        'missionary-encounters': 'stat-collection-missionary',
+        'indigenous-matriarchs': 'stat-collection-indigenous',
+        'resistance-and-rebellion': 'stat-collection-resistance',
+        'scientific-pioneers': 'stat-collection-scientific',
+        'oral-traditions': 'stat-collection-oral'
+    };
+
+    // Process each collection concurrently
+    const collectionPromises = Object.entries(collectionMappings).map(async ([slug, elementId]) => {
+        try {
+            // Fetch collection with populated biographies to get the count
+            const res = await browseFetch(`collections`, {
+                "filters[slug][$eq]": slug,
+                "populate": "biographies"
+            });
+
+            if (res.data && res.data.length > 0) {
+                const collection = normaliseItem(res.data[0]);
+                const biographyCount = collection.biographies ? collection.biographies.length : 0;
+
+                const el = document.getElementById(elementId);
+                if (el) {
+                    el.textContent = `${biographyCount} ${biographyCount === 1 ? 'biography' : 'biographies'}`;
+                }
+            }
+        } catch (e) {
+            console.warn(`[Browse] Could not load biography count for collection ${slug}:`, e.message);
+        }
+    });
+
+    // Wait for all collection counts to load
+    await Promise.allSettled(collectionPromises);
+}
+
 /* ================= INIT ================= */
 
 let browseInitialized = false;
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     if (browseInitialized) return;
     browseInitialized = true;
     console.log('🔍 [Browse] DOMContentLoaded - initializing browse functionality');
