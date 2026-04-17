@@ -43,7 +43,7 @@
         };
 
         // Add Authorization header if token exists, but skip for public GET endpoints
-        const isPublicGet = !options.method || options.method === 'GET' && (endpoint.startsWith('/api/biographies') || endpoint.startsWith('/api/collections'));
+        const isPublicGet = !options.method || options.method === 'GET';
         if (apiToken && !isPublicGet) {
             headers['Authorization'] = `Bearer ${apiToken}`;
         }

@@ -40,7 +40,7 @@
             `;
 
             // Fetch timelines from Strapi
-            const response = await window.fetchStrapi('/api/timelines?populate=*&sort=year:asc');
+            const response = await window.fetchStrapi('/api/timelines?populate=*');
 
             if (!response || !response.data || response.data.length === 0) {
                 timelineContainer.innerHTML = `

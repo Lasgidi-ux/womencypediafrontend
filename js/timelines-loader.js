@@ -29,7 +29,7 @@ class TimelinesLoader {
       if (!this.api) throw new Error('API not available');
 
       const response = await this.api.timelines.getEvents({
-        sort: 'year:desc',
+        sort: 'createdAt:desc',
         pagination: { pageSize: limit }
       });
 
