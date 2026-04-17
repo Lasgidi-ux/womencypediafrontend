@@ -201,10 +201,10 @@ class StrapiAPIClient {
       if (params.populate === true || params.populate === "*") {
         query.append("populate", "*");
       } else if (typeof params.populate === "string") {
-        // Split by comma and add multiple populate[] for Strapi v5
+        // Split by comma and add multiple populate[] for compatibility with both v4 and v5
         const fields = params.populate.split(',').map(f => f.trim()).filter(f => f);
-        fields.forEach((field, index) => {
-          query.append(`populate[${index}]`, field);
+        fields.forEach(field => {
+          query.append(`populate[]`, field);
         });
       }
     }
@@ -225,7 +225,7 @@ class StrapiAPIClient {
       // If sort already contains a direction colon (e.g. "createdAt:desc"), use it as-is.
       // Do NOT append params.order — it would create "createdAt:desc:asc".
       const sortValue = params.sort.includes(':') ? params.sort : `${params.sort}:${params.order || "asc"}`;
-      query.append("sort[0]", sortValue);
+      query.append("sort", sortValue);
     }
 
     if (params.filters) {
