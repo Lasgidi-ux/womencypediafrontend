@@ -180,7 +180,6 @@ const FormHandler = {
         // Collect form data — map to Strapi nomination schema fields
         const nomineeName = form.querySelector('#nomineeName')?.value || '';
         const formData = {
-            type: 'nomination',
             nomineeName: nomineeName,
             nomineeEra: form.querySelector('#era')?.value || '',
             nomineeRegion: form.querySelector('#region')?.value || '',
@@ -188,15 +187,7 @@ const FormHandler = {
             reason: form.querySelector('#bio')?.value || '',
             sources: form.querySelector('#sources')?.value ? [form.querySelector('#sources').value] : [],
             nominatorName: form.querySelector('#yourName')?.value || '',
-            nominatorEmail: form.querySelector('#yourEmail')?.value || '',
-
-            // Standard contribution fields (for compatibility)
-            subjectName: nomineeName,
-            content: form.querySelector('#bio')?.value || '',
-            contactName: form.querySelector('#yourName')?.value || '',
-            contactEmail: form.querySelector('#yourEmail')?.value || '',
-            region: form.querySelector('#region')?.value || '',
-            status: 'pending'
+            nominatorEmail: form.querySelector('#yourEmail')?.value || ''
         };
 
         // Show loading state
@@ -388,8 +379,10 @@ const FormHandler = {
             // Collect form data — map to Strapi contribution schema
             const storyType = form.querySelector('[name="storyType"]:checked');
             const subjectName = form.querySelector('#subjectName')?.value || '';
+            const title = subjectName ? `Story: ${subjectName}` : 'Untitled Story';
             const formData = {
-                title: subjectName ? `Story: ${subjectName}` : 'Untitled Story',
+                title: title,
+                slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
                 type: 'story',
                 content: story,
                 storyType: storyType ? storyType.value : 'other',

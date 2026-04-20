@@ -273,9 +273,11 @@
                     }
 
                     // Build Strapi payload
+                    const title = formData.subjectName ? `Story: ${formData.subjectName}` : 'Untitled Story';
                     const payload = {
                         data: {
-                            title: formData.subjectName ? `Story: ${formData.subjectName}` : 'Untitled Story',
+                            title: title,
+                            slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
                             type: 'story',
                             status: 'draft',
                             content: formData.story,
