@@ -228,24 +228,32 @@ const FormHandler = {
 
             
 
+            console.log('[FormHandler] Submitting nomination data');
+
             const response = await fetch(`${CONFIG.API_BASE_URL}/api/nominations`, {
                 method: 'POST',
                 headers,
                 body: JSON.stringify({ data: formData })
             });
 
-            
-            
-
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                
+                console.error('[FormHandler] Nomination submission failed:', response.status, errorData);
+
                 // Provide more helpful error messages for common issues
                 if (response.status === 404) {
-                    throw new Error('Unable to submit nomination. The server endpoint /api/contributions was not found. This may indicate the CMS needs to be rebuilt.');
+                    throw new Error('Unable to submit nomination. The server endpoint /api/nominations was not found. This may indicate the nominations content type does not exist in the CMS.');
                 } if (response.status === 401) {
                     throw new Error('Please sign in to submit a nomination.');
                 }
+                if (response.status === 403) {
+                    throw new Error('You do not have permission to submit nominations. This may indicate the Public role needs to be granted POST permission for nominations in Strapi admin panel.');
+                }
+                if (response.status === 500) {
+                    throw new Error('Server error occurred. The CMS may have an internal issue. Please try again later or contact support if the problem persists.');
+                }
+                throw new Error(errorData.error?.message || errorData.message || `Server error (${response.status})`);
+            }
                 if (response.status === 403) {
                     throw new Error('You do not have permission to submit nominations. This may indicate the Public role needs to be granted POST permission for contributions in Strapi admin panel.');
                 }
