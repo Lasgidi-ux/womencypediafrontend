@@ -1,17 +1,84 @@
-# Dependencies
+# ============================================
+# Womencypedia — .gitignore
+# SECURITY: Ensure secrets are never committed to version control
+# ============================================
+# ─── ENVIRONMENT & SECRETS (CRITICAL) ───────
+# NEVER commit secrets to version control
+.env
+.env.*
+.env.local
+.env.development
+.env.staging
+.env.production
+*.pem
+*.key
+*.cert
+*.secret
+
+# ─── Dependencies ───────────────────────────
 node_modules/
+package-lock.json
+yarn.lock
 
-# OS files
+# ─── OS files ───────────────────────────────
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# IDE
+# ─── IDE / Editor ───────────────────────────
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
 
-# Logs
+# ─── Logs ───────────────────────────────────
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Temporary files
+# ─── Temporary files ───────────────────────
 *.tmp
 *.temp
+*.bak
+*.orig
+tmp/
+
+# ─── Strapi CMS (separate backend — has its own repo) ─
+# The CMS runs on Render independently; do NOT include in frontend deploy
+womencypedia-cms/
+
+# ─── Build artifacts ────────────────────────
+# NOTE: dist/ is NOT ignored — Cloudflare Pages serves pre-built files from git
+# If you switch to Cloudflare Pages with a build step, you can re-add dist/
+build/
+css/tailwind.css.map
+
+# ─── Script-generated reports ───────────────
+scripts/*.json
+!scripts/translation-keys.json
+
+# ─── Python helper scripts (dev-only) ───────
+__pycache__/
+*.pyc
+*.pyo
+
+# ─── Setup/install logs (one-time use) ──────
+cms_setup.log
+strapi_install.log
+strapi_setup_log.txt
+
+# ─── Validation reports ────────────────────
+check*.txt
+vnu_output.txt
+
+# ─── AI agent files ─────────────────────────
+.gemini/
+.cursor/
+.copilot/

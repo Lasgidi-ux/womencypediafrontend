@@ -1,0 +1,12 @@
+# Womencypedia - robots.txt
+User-agent: *
+Allow: /
+
+# Disallow private/utility pages
+Disallow: /403
+Disallow: /404
+Disallow: /500
+Disallow: /scripts/
+
+# Sitemap
+Sitemap: https://womencypedia.org/sitemap.xml

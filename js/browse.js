@@ -1,284 +1,673 @@
-// Browse functionality for Womencypedia
-// Implements search, filtering, and dynamic biography display
+/* ================= CONFIG ================= */
 
-let currentFilters = {
-    search: '',
-    regions: [],
+let currentPage = 1
+let pageSize = 9
+
+let filters = {}
+let searchQuery = ""
+let sortOrder = "name:asc"
+
+let dynamicFilters = {
     eras: [],
-    domains: [],
-    tags: []
-};
-
-let currentBiographies = [];
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    initializeBrowse();
-});
-
-function initializeBrowse() {
-    // Load data
-    loadBiographies();
-
-    // Set up event listeners
-    setupSearch();
-    setupFilters();
-    setupFilterTabs();
-
-    // Initial display
-    displayBiographies();
+    regions: [],
+    categories: []
 }
 
-function loadBiographies() {
-    // In a real headless setup, this would fetch from API
-    // For now, using the static data
-    currentBiographies = biographies;
+let browseLogicErrorCount = 0
+const BROWSE_MAX_API_ERRORS = 3
+
+
+/* ================= API HELPERS ================= */
+
+/**
+ * Normalise a Strapi v4 or v5 item to a flat object.
+ * v4: { id, attributes: { name, slug, ... } }
+ * v5: { id, name, slug, ... }
+ */
+function normaliseItem(item) {
+    if (!item) return null;
+    const attrs = item.attributes || item;
+    return { id: item.id, ...attrs };
 }
 
-function setupSearch() {
-    const searchInput = document.querySelector('#main-content input[type="search"]');
-    if (searchInput) {
-        searchInput.addEventListener('input', function (e) {
-            currentFilters.search = e.target.value.toLowerCase();
-            displayBiographies();
-        });
-    }
-}
+/**
+ * Fetch helper that uses the global fetchStrapi if available,
+ * otherwise falls back to plain fetch.
+ */
+async function browseFetch(endpoint, params = {}) {
+    const baseUrl = typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com';
+    const url = new URL(`${baseUrl}/api/${endpoint}`);
 
-function setupFilters() {
-    // Modal toggle
-    const filtersBtn = document.querySelector('button:has(.material-symbols-outlined:contains("tune"))');
-    const modal = document.getElementById('filters-modal');
-    const closeBtn = document.getElementById('close-filters');
-    const applyBtn = document.getElementById('apply-filters');
-    const clearBtn = document.getElementById('clear-filters');
-
-    if (filtersBtn) {
-        filtersBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-    }
-
-    if (applyBtn) {
-        applyBtn.addEventListener('click', () => {
-            collectFilters();
-            displayBiographies();
-            modal.classList.add('hidden');
-        });
-    }
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            clearAllFilters();
-            displayBiographies();
-        });
-    }
-}
-
-function setupFilterTabs() {
-    const tabs = document.querySelectorAll('.filter-tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            // Add active class to clicked tab
-            this.classList.add('active');
-
-            // For now, just visual feedback - could implement tab-specific filtering
-            const filterType = this.textContent.trim().toLowerCase().replace(' ', '-');
-            console.log('Switched to filter:', filterType);
-        });
-    });
-}
-
-function collectFilters() {
-    currentFilters.regions = [];
-    currentFilters.eras = [];
-    currentFilters.domains = [];
-    currentFilters.tags = [];
-
-    const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
-    checkboxes.forEach(checkbox => {
-        const filterType = checkbox.dataset.filter;
-        const value = checkbox.value;
-
-        switch (filterType) {
-            case 'region':
-                currentFilters.regions.push(value);
-                break;
-            case 'era':
-                currentFilters.eras.push(value);
-                break;
-            case 'domain':
-                currentFilters.domains.push(value);
-                break;
-            case 'tag':
-                currentFilters.tags.push(value);
-                break;
+    Object.keys(params).forEach(key => {
+        if (params[key] !== undefined && params[key] !== null) {
+            url.searchParams.append(key, params[key]);
         }
     });
-}
 
-function clearAllFilters() {
-    currentFilters = {
-        search: '',
-        regions: [],
-        eras: [],
-        domains: [],
-        tags: []
-    };
-
-    // Uncheck all checkboxes
-    const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
-    checkboxes.forEach(checkbox => checkbox.checked = false);
-
-    // Clear search
-    const searchInput = document.querySelector('#main-content input[type="search"]');
-    if (searchInput) {
-        searchInput.value = '';
-    }
-}
-
-function filterBiographies() {
-    return currentBiographies.filter(bio => {
-        // Search filter
-        if (currentFilters.search) {
-            const searchTerm = currentFilters.search;
-            const searchableText = `${bio.name} ${bio.introduction} ${bio.contributions} ${bio.tags.join(' ')}`.toLowerCase();
-            if (!searchableText.includes(searchTerm)) {
-                return false;
-            }
-        }
-
-        // Region filter
-        if (currentFilters.regions.length > 0) {
-            if (!currentFilters.regions.includes(bio.region.toLowerCase().replace(' ', '-'))) {
-                return false;
-            }
-        }
-
-        // Era filter
-        if (currentFilters.eras.length > 0) {
-            if (!currentFilters.eras.includes(bio.era.toLowerCase().replace(' ', '-'))) {
-                return false;
-            }
-        }
-
-        // Domain filter
-        if (currentFilters.domains.length > 0) {
-            const bioDomain = bio.category.toLowerCase().replace(' & ', '-').replace(' ', '-');
-            if (!currentFilters.domains.includes(bioDomain)) {
-                return false;
-            }
-        }
-
-        // Tags filter
-        if (currentFilters.tags.length > 0) {
-            const hasMatchingTag = currentFilters.tags.some(tag =>
-                bio.tags.some(bioTag => bioTag.toLowerCase().includes(tag))
-            );
-            if (!hasMatchingTag) {
-                return false;
-            }
-        }
-
-        return true;
-    });
-}
-
-function displayBiographies() {
-    const filteredBios = filterBiographies();
-    const container = document.querySelector('#main-content section:has(h2:contains("Recent Entries")) .grid');
-
-    if (!container) return;
-
-    // Clear existing content
-    container.innerHTML = '';
-
-    if (filteredBios.length === 0) {
-        container.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <span class="material-symbols-outlined text-6xl text-text-secondary/50 mb-4">search_off</span>
-                <h3 class="font-serif text-xl font-bold text-text-main mb-2">No biographies found</h3>
-                <p class="text-text-secondary">Try adjusting your search terms or filters.</p>
-            </div>
-        `;
-        return;
+    // Only delegate to fetchStrapi for biographies (it auto-adds populate[]=image&tags).
+    // Other endpoints (e.g. collections) may not have those relations and will 400.
+    const isBiographies = endpoint === 'biographies' || endpoint.startsWith('biographies?');
+    if (isBiographies && typeof fetchStrapi !== 'undefined') {
+        return fetchStrapi(`/api/${endpoint}?${url.searchParams.toString()}`);
     }
 
-    // Display filtered biographies
-    filteredBios.forEach(bio => {
-        const card = createBiographyCard(bio);
-        container.appendChild(card);
-    });
+    // Direct fetch for non-biography endpoints
+    const headers = { 'Content-Type': 'application/json' };
+    if (typeof CONFIG !== 'undefined' && CONFIG.API_TOKEN) {
+        headers['Authorization'] = `Bearer ${CONFIG.API_TOKEN}`;
+    }
+
+    const res = await fetch(url.toString(), { headers });
+    if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
+    }
+    return res.json();
 }
 
-function createBiographyCard(bio) {
-    const card = document.createElement('a');
-    card.href = `biography.html?id=${bio.id}`;
-    card.className = 'group bg-white rounded-2xl overflow-hidden border border-border-light hover:shadow-xl transition-all';
 
-    const eraColor = getEraColor(bio.era);
-    const categoryColor = getCategoryColor(bio.category);
+/* ================= LOAD FILTER OPTIONS ================= */
 
-    card.innerHTML = `
-        <div class="aspect-[4/3] bg-lavender-soft/50 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-${categoryColor}/20 to-${eraColor}/20 flex items-center justify-center">
-                <span class="material-symbols-outlined text-${categoryColor}/40 text-6xl">person</span>
-            </div>
-            ${bio.id <= 2 ? '<span class="absolute top-3 left-3 bg-accent-gold text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>' : ''}
+async function loadFilterOptions() {
+
+    try {
+
+        // Collections may not have a 'type' field in this schema, so load
+        // filter values from the biography enum fields instead.
+        // If collections endpoint works, use it; otherwise degrade gracefully.
+
+        // Try to load eras/regions/categories from the available API
+        // Since biographies use enum fields, we can just populate the dropdowns
+        // with known values from the schema
+
+        const knownEras = [
+            { name: 'Ancient', slug: 'Ancient' },
+            { name: 'Pre-colonial', slug: 'Pre-colonial' },
+            { name: 'Colonial', slug: 'Colonial' },
+            { name: 'Post-colonial', slug: 'Post-colonial' },
+            { name: 'Contemporary', slug: 'Contemporary' }
+        ];
+
+        const knownRegions = [
+            { name: 'Africa', slug: 'Africa' },
+            { name: 'Europe', slug: 'Europe' },
+            { name: 'Asia', slug: 'Asia' },
+            { name: 'Middle East', slug: 'Middle East' },
+            { name: 'North America', slug: 'North America' },
+            { name: 'South America', slug: 'South America' },
+            { name: 'Oceania', slug: 'Oceania' },
+            { name: 'Global', slug: 'Global' }
+        ];
+
+        const knownCategories = [
+            { name: 'Leadership', slug: 'Leadership' },
+            { name: 'Culture & Arts', slug: 'Culture & Arts' },
+            { name: 'Spirituality & Faith', slug: 'Spirituality & Faith' },
+            { name: 'Politics & Governance', slug: 'Politics & Governance' },
+            { name: 'Science & Innovation', slug: 'Science & Innovation' },
+            { name: 'Community Builders', slug: 'Community Builders' },
+            { name: 'Activism & Justice', slug: 'Activism & Justice' },
+            { name: 'Education', slug: 'Education' },
+            { name: 'Diaspora Stories', slug: 'Diaspora Stories' },
+            // Enterprise categories
+            { name: 'Trade & Commerce', slug: 'Trade & Commerce' },
+            { name: 'Agriculture & Food', slug: 'Agriculture & Food' },
+            { name: 'Manufacturing', slug: 'Manufacturing' },
+            { name: 'Healthcare & Medicine', slug: 'Healthcare & Medicine' },
+            { name: 'Finance & Banking', slug: 'Finance & Banking' },
+            { name: 'Arts & Crafts', slug: 'Arts & Crafts' },
+            { name: 'Technology', slug: 'Technology' }
+        ];
+
+        dynamicFilters.eras = knownEras;
+        dynamicFilters.regions = knownRegions;
+        dynamicFilters.categories = knownCategories;
+
+        populateDropdown("eraFilter", dynamicFilters.eras, "Era");
+        populateDropdown("regionFilter", dynamicFilters.regions, "Region");
+        populateDropdown("categoryFilter", dynamicFilters.categories, "Category");
+    }
+
+    catch (e) {
+
+        console.warn('Failed to load filter options:', e.message);
+
+        const filterElements = ['eraFilter', 'regionFilter', 'categoryFilter'];
+
+        filterElements.forEach(id => {
+
+            const el = document.getElementById(id);
+
+            if (el) {
+
+                el.disabled = true;
+
+                el.innerHTML = '<option value="">Filters unavailable</option>';
+
+            }
+
+        });
+
+    }
+
+}
+
+
+
+/* ================= DROPDOWN ================= */
+
+function populateDropdown(id, data, label) {
+
+    const el = document.getElementById(id)
+
+    if (!el) return
+
+
+    el.innerHTML = `<option value="">${label}</option>`
+
+
+    data.forEach(item => {
+
+        el.innerHTML += `
+        <option value="${item.slug}">
+        ${item.name}
+        </option>
+        `
+
+    })
+
+}
+
+
+
+/* ================= LOAD ENTRIES ================= */
+
+async function loadEntries() {
+    console.log('🔍 [Browse] Starting loadEntries, page:', currentPage, 'filters:', filters, 'search:', searchQuery);
+
+    try {
+        console.log('🔍 [Browse] Calling browseFetch for biographies...');
+
+        const params = {
+            "pagination[page]": currentPage,
+            "pagination[pageSize]": pageSize,
+            "sort": sortOrder,
+            "populate": "image"
+        };
+
+        if (searchQuery) {
+            params["filters[name][$containsi]"] = searchQuery;
+        }
+
+        if (filters.era) {
+            params["filters[era][$eq]"] = filters.era.slug;
+        }
+
+        if (filters.region) {
+            params["filters[region][$eq]"] = filters.region.slug;
+        }
+
+        if (filters.category) {
+            params["filters[category][$eq]"] = filters.category.slug;
+        }
+
+        const res = await browseFetch("biographies", params);
+
+        console.log('🔍 [Browse] API Response received:', res);
+
+        // Handle both v4 and v5 formats
+        const entries = (res.data || []).map(item => {
+            const attrs = item.attributes || item;
+            let imageUrl = null;
+
+            // v4 media: image.data.attributes.url
+            if (attrs.image && attrs.image.data && attrs.image.data.attributes) {
+                const baseUrl = typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com';
+                imageUrl = baseUrl + attrs.image.data.attributes.url;
+            }
+            // v5 media: image.url
+            else if (attrs.image && attrs.image.url) {
+                imageUrl = attrs.image.url.startsWith('http')
+                    ? attrs.image.url
+                    : (typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com') + attrs.image.url;
+            }
+
+            return {
+                id: item.id,
+                name: attrs.name || '',
+                summary: attrs.introduction ? attrs.introduction.substring(0, 150) : (attrs.summary || ''),
+                image: imageUrl ? { url: imageUrl } : null,
+                slug: attrs.slug || '',
+                era: attrs.era || '',
+                region: attrs.region || '',
+                category: attrs.category || ''
+            };
+        });
+
+        const pagination = res.meta?.pagination || {
+            page: currentPage,
+            pageCount: 1,
+            total: entries.length
+        };
+
+        console.log('🔍 [Browse] Found', entries.length, 'entries');
+
+        renderEntries(entries, "entries-grid");
+        updatePagination(pagination);
+    }
+
+    catch (e) {
+
+        console.error('❌ [Browse] Failed to load biographies from Strapi:', e.message);
+
+        const gridEl = document.getElementById("entries-grid");
+
+        if (gridEl) {
+
+            gridEl.innerHTML = `
+                <div class="col-span-full text-center py-8 text-text-secondary">
+                    <p>Unable to load biographies at this time.</p>
+                    <p class="text-sm mt-2">Please try again later.</p>
+                    <button onclick="loadEntries()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors">
+                        Retry
+                    </button>
+                </div>
+            `;
+
+        }
+
+        updatePagination({ page: 1, pageCount: 1, total: 0 });
+
+    }
+
+}
+
+
+
+
+
+/* ================= RENDER ================= */
+
+function renderEntries(entries, containerId) {
+
+    const el = document.getElementById(containerId)
+
+    if (!el) return
+
+
+    if (!entries.length) {
+
+        el.innerHTML = `
+        <p class="col-span-full text-center text-gray-500">
+        No results found
+        </p>
+        `
+
+        return
+
+    }
+
+
+    el.innerHTML = entries.map(item => {
+
+        const image = item.image?.url ||
+            (CONFIG.API_BASE_URL + '/images/placeholder-biography.jpg')
+
+        return `
+        <a href="biography.html?slug=${encodeURIComponent(item.slug || '')}"
+        class="bg-white rounded-xl border overflow-hidden hover:shadow-lg transition-shadow group">
+        <div
+        class="h-48 bg-cover bg-center"
+        style="background-image:url('${image}')">
         </div>
-        <div class="p-5">
-            <span class="text-xs font-bold text-${eraColor} uppercase tracking-wider">${bio.era} • ${bio.region}</span>
-            <h3 class="font-serif text-lg font-bold text-text-main mt-2 mb-2 group-hover:text-primary transition-colors">
-                ${bio.name}
-            </h3>
-            <p class="text-sm text-text-secondary line-clamp-2">${bio.introduction}</p>
-            <div class="flex flex-wrap gap-1 mt-3">
-                ${bio.tags.slice(0, 3).map(tag => `<span class="text-xs bg-lavender-soft px-2 py-1 rounded">${tag}</span>`).join('')}
-            </div>
+
+        <div class="p-4">
+        <h3 class="font-serif font-semibold text-text-main group-hover:text-primary transition-colors">
+        ${item.name}
+        </h3>
+
+        <p class="text-sm text-text-secondary mt-1 line-clamp-2">
+        ${item.summary || ""}
+        </p>
+
         </div>
-    `;
+        </a>
+        `
 
-    return card;
+    }).join("")
+
 }
 
-function getEraColor(era) {
-    const colors = {
-        'Ancient': 'accent-gold',
-        'Pre-colonial': 'primary',
-        'Colonial': 'accent-teal',
-        'Post-colonial': 'divider',
-        'Contemporary': 'lavender'
-    };
-    return colors[era] || 'text-secondary';
+
+
+/* ================= FILTER ================= */
+
+function applyFilters() {
+
+    filters = {}
+
+    const era = document.getElementById("eraFilter")?.value
+
+    const region = document.getElementById("regionFilter")?.value
+
+    const category = document.getElementById("categoryFilter")?.value
+
+
+    if (era) filters.era = { slug: era }
+
+    if (region) filters.region = { slug: region }
+
+    if (category) filters.category = { slug: category }
+
+
+    currentPage = 1
+
+    loadEntries()
+
 }
 
-function getCategoryColor(category) {
-    const colors = {
-        'Leadership': 'primary',
-        'Culture & Arts': 'accent-gold',
-        'Spirituality & Faith': 'accent-teal',
-        'Politics & Governance': 'divider',
-        'Science & Innovation': 'lavender',
-        'Community Builders': 'primary',
-        'Activism & Justice': 'accent-gold',
-        'Education': 'accent-teal',
-        'Diaspora Stories': 'divider'
-    };
-    return colors[category] || 'text-secondary';
+
+
+function resetFilters() {
+
+    filters = {}
+
+    searchQuery = ""
+
+    currentPage = 1
+
+    const searchEl = document.getElementById("searchInput");
+    if (searchEl) searchEl.value = "";
+
+    const eraEl = document.getElementById("eraFilter");
+    if (eraEl) eraEl.value = "";
+
+    const regionEl = document.getElementById("regionFilter");
+    if (regionEl) regionEl.value = "";
+
+    const categoryEl = document.getElementById("categoryFilter");
+    if (categoryEl) categoryEl.value = "";
+
+    loadEntries()
+
 }
 
-// Make functions globally available for inline event handlers
-window.toggleFilters = function () {
-    const modal = document.getElementById('filters-modal');
-    if (modal) {
-        modal.classList.toggle('hidden');
+
+
+/* ================= SEARCH ================= */
+
+function applySearch() {
+
+    const searchEl = document.getElementById("searchInput");
+    searchQuery = searchEl ? searchEl.value : "";
+
+    currentPage = 1
+
+    loadEntries()
+
+}
+
+
+
+/* ================= SORT ================= */
+
+function applySort() {
+
+    const sortEl = document.getElementById("sortSelect");
+    sortOrder = sortEl ? sortEl.value : "name:asc";
+
+    currentPage = 1
+
+    loadEntries()
+
+}
+
+
+
+/* ================= PAGINATION ================= */
+
+function changePage(direction) {
+
+    currentPage += direction
+
+    if (currentPage < 1) currentPage = 1
+
+    loadEntries()
+
+}
+
+
+
+function updatePagination(meta) {
+
+    const pageInfo = document.getElementById("pageInfo");
+    if (pageInfo) {
+        pageInfo.innerText = `Page ${meta.page} of ${meta.pageCount}`;
     }
-};
+
+    const prevBtn = document.getElementById("prevPage");
+    if (prevBtn) prevBtn.disabled = meta.page === 1;
+
+    const nextBtn = document.getElementById("nextPage");
+    if (nextBtn) nextBtn.disabled = meta.page === meta.pageCount;
+
+}
+
+
+
+/* ================= DYNAMIC STATS ================= */
+
+async function loadDynamicStats() {
+    // Load biographies count
+    try {
+        const bioRes = await browseFetch("biographies", {
+            "pagination[page]": 1,
+            "pagination[pageSize]": 1
+        });
+        const totalBiographies = bioRes.meta?.pagination?.total || 0;
+        const statEl = document.getElementById("stat-biographies");
+        if (statEl) {
+            statEl.textContent = totalBiographies > 0
+                ? totalBiographies.toLocaleString() + '+'
+                : '—';
+        }
+    } catch (e) {
+        console.warn('[Browse] Could not load biography stats:', e.message);
+    }
+
+    // Load collections count — use direct fetch to avoid populate[]=image&tags
+    // which causes 400 on the collections endpoint
+    try {
+        const colRes = await browseFetch("collections", {
+            "pagination[page]": 1,
+            "pagination[pageSize]": 1
+        });
+        const totalCollections = colRes.meta?.pagination?.total || 0;
+        const colEl = document.getElementById("stat-collections");
+        if (colEl) {
+            colEl.textContent = totalCollections > 0
+                ? totalCollections.toLocaleString()
+                : '—';
+        }
+    } catch (e) {
+        console.warn('[Browse] Could not load collection stats:', e.message);
+    }
+
+    // Load collection biography counts
+    loadCollectionBiographyCounts();
+
+    // Load region counts
+    loadRegionCounts();
+}
+
+/* ================= REGION COUNTS ================= */
+
+async function loadRegionCounts() {
+    const regionMappings = {
+        'africa': 'Africa',
+        'europe': 'Europe',
+        'asia': 'Asia',
+        'middle-east': 'Middle East',
+        'north-america': 'North America',
+        'south-america': 'South America',
+        'oceania': 'Oceania',
+        'antarctica': 'Antarctica'
+    };
+
+    // Process each region concurrently
+    const regionPromises = Object.entries(regionMappings).map(async ([slug, displayName]) => {
+        try {
+            const res = await browseFetch("biographies", {
+                "pagination[page]": 1,
+                "pagination[pageSize]": 1,
+                "filters[region][$eq]": displayName
+            });
+
+            const count = res.meta?.pagination?.total || 0;
+            const countEl = document.querySelector(`a[href*="region=${slug}"] .text-sm.text-text-secondary`);
+
+            if (countEl) {
+                countEl.textContent = count > 0
+                    ? `${count.toLocaleString()}+ entries`
+                    : '0 entries';
+            }
+        } catch (e) {
+            console.warn(`[Browse] Could not load ${displayName} region count:`, e.message);
+            // Keep the existing hardcoded text as fallback
+        }
+    });
+
+    // Wait for all region counts to load
+    await Promise.all(regionPromises);
+}
+
+
+/* ================= RECENT ENTRIES ================= */
+
+async function loadRecentEntries() {
+    try {
+        const res = await browseFetch("biographies", {
+            "pagination[page]": 1,
+            "pagination[pageSize]": 4,
+            "sort": "createdAt:desc",
+            "populate": "image"
+        });
+
+        const entries = (res.data || []).map(item => {
+            const attrs = item.attributes || item;
+            let imageUrl = null;
+
+            if (attrs.image && attrs.image.data && attrs.image.data.attributes) {
+                const baseUrl = typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com';
+                imageUrl = baseUrl + attrs.image.data.attributes.url;
+            } else if (attrs.image && attrs.image.url) {
+                imageUrl = attrs.image.url.startsWith('http')
+                    ? attrs.image.url
+                    : (typeof CONFIG !== 'undefined' ? CONFIG.API_BASE_URL : 'https://womencypedia-cms.onrender.com') + attrs.image.url;
+            }
+
+            return {
+                id: item.id,
+                name: attrs.name || '',
+                summary: attrs.introduction ? attrs.introduction.substring(0, 120) : (attrs.summary || ''),
+                image: imageUrl ? { url: imageUrl } : null,
+                slug: attrs.slug || '',
+                era: attrs.era || '',
+                region: attrs.region || ''
+            };
+        });
+
+        renderEntries(entries, "recent-entries-grid");
+    } catch (e) {
+        console.warn('[Browse] Could not load recent entries:', e.message);
+    }
+}
+
+
+/* ================= URL QUERY PARAMS ================= */
+
+function readUrlFilters() {
+    const params = new URLSearchParams(window.location.search);
+
+    const region = params.get('region');
+    const era = params.get('era');
+    const category = params.get('category');
+
+    if (region) {
+        filters.region = { slug: region.charAt(0).toUpperCase() + region.slice(1).replace(/-/g, ' ') };
+        const regionEl = document.getElementById("regionFilter");
+        if (regionEl) regionEl.value = filters.region.slug;
+    }
+
+    if (era) {
+        filters.era = { slug: era };
+        const eraEl = document.getElementById("eraFilter");
+        if (eraEl) eraEl.value = filters.era.slug;
+    }
+
+    if (category) {
+        filters.category = { slug: decodeURIComponent(category) };
+        const catEl = document.getElementById("categoryFilter");
+        if (catEl) catEl.value = filters.category.slug;
+    }
+}
+
+
+/* ================= COLLECTION BIOGRAPHY COUNTS ================= */
+
+async function loadCollectionBiographyCounts() {
+    const collectionMappings = {
+        'women-of-the-pcn': 'stat-collection-pcn',
+        'missionary-encounters': 'stat-collection-missionary',
+        'indigenous-matriarchs': 'stat-collection-indigenous',
+        'resistance-and-rebellion': 'stat-collection-resistance',
+        'scientific-pioneers': 'stat-collection-scientific',
+        'oral-traditions': 'stat-collection-oral'
+    };
+
+    // Process each collection concurrently
+    const collectionPromises = Object.entries(collectionMappings).map(async ([slug, elementId]) => {
+        try {
+            // First get the collection to find its ID
+            const collectionRes = await browseFetch(`collections`, {
+                "filters[slug][$eq]": slug,
+                "fields[0]": "id"
+            });
+
+            if (collectionRes.data && collectionRes.data.length > 0) {
+                const collectionId = collectionRes.data[0].id;
+
+                // Then query biographies that belong to this collection
+                const bioRes = await browseFetch(`biographies`, {
+                    "filters[collections][id][$eq]": collectionId,
+                    "pagination[pageSize]": 1 // Just need the count
+                });
+
+                const biographyCount = bioRes.meta?.pagination?.total || 0;
+
+                const el = document.getElementById(elementId);
+                if (el) {
+                    el.textContent = `${biographyCount} ${biographyCount === 1 ? 'biography' : 'biographies'}`;
+                }
+            }
+        } catch (e) {
+            console.warn(`[Browse] Could not load biography count for collection ${slug}:`, e.message);
+        }
+    });
+
+    // Wait for all collection counts to load
+    await Promise.allSettled(collectionPromises);
+}
+
+/* ================= INIT ================= */
+
+let browseInitialized = false;
+document.addEventListener('DOMContentLoaded', () => {
+    if (browseInitialized) return;
+    browseInitialized = true;
+    console.log('🔍 [Browse] DOMContentLoaded - initializing browse functionality');
+    loadFilterOptions();
+    readUrlFilters();
+    loadEntries();
+    loadRecentEntries();
+    loadDynamicStats();
+})

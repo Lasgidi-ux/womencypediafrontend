@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your Womencypedia account settings, preferences, and privacy options.">
+    <title>Account Settings | Womencypedia</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #e5e7eb;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background: linear-gradient(135deg, #be185d, #0d9488);
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        .settings-nav-item.active {
+            background: linear-gradient(135deg, rgba(190, 24, 93, 0.1), rgba(13, 148, 136, 0.1));
+            border-color: #be185d;
+        }
+    </style>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/womencypedia-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/womencypedia-logo.png">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://womencypedia.org/settings.html">
+    <meta property="og:title" content="Settings — Womencypedia">
+    <meta property="og:description" content="Manage your Womencypedia account settings.">
+    <meta property="og:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <meta property="og:site_name" content="Womencypedia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Settings — Womencypedia">
+    <meta name="twitter:description" content="Manage your Womencypedia account settings.">
+    <meta name="twitter:image" content="https://womencypedia.org/images/womencypedia-logo.png">
+    <link rel="canonical" href="https://womencypedia.org/settings.html">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D67D7D">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <script defer data-domain="womencypedia.org" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Redirect to profile.html with settings tab -->
+    <script src="js/settings-inline-1.js"></script>
+</head>
+
+<body class="bg-background-cream min-h-screen text-text-main antialiased">
+
+                        <!-- Skip Link -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[200] focus:bg-accent-teal focus:text-white focus:px-4 focus:py-2">
+        Skip to main content
+    </a>
+
+    <!-- Mobile Search Sheet -->
+    <div id="searchSheet" class="search-sheet hidden fixed top-0 left-0 right-0 z-[150] bg-accent-teal/10 p-4">
+        <div class="flex items-center gap-3">
+            <div class="flex-1 flex items-center bg-white border border-border-light rounded-lg px-4 h-12">
+                <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                <input type="search" placeholder="Search women, cultures, eras…"
+                    class="flex-1 bg-transparent border-none focus:ring-0 text-sm text-text-main placeholder-text-secondary ml-2"
+                    data-i18n-placeholder="search.placeholder">
+            </div>
+            <button onclick="toggleSearch()"
+                class="size-12 flex items-center justify-center bg-white border border-border-light rounded-lg">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay hidden fixed inset-0 z-[140] bg-black/40" onclick="toggleMenu()"></div>
+
+    <!-- Mobile Bottom Sheet Menu -->
+    <nav id="mobileMenu"
+        class="mobile-menu hidden fixed bottom-0 left-0 right-0 z-[150] bg-background-cream rounded-t-2xl border-t border-border-light max-h-[85vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-border-light rounded-full mx-auto mt-3 mb-4"></div>
+
+        <!-- Explore -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="browse.explore">
+                Explore</h3>
+            <a href="index.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Home</a>
+            <a href="browse.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Browse</a>
+            <a href="featured.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Featured</a>
+            <a href="collections.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Collections</a>
+            <a href="timelines.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Timelines</a>
+        </div>
+
+        <!-- Learn -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="browse.learn">
+                Learn</h3>
+            <a href="education.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Education</a>
+            <a href="enterprises.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Enterprises</a>
+            <a href="research.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Research</a>
+            <a href="publications.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Publications</a>
+            <a href="resources.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Resources</a>
+        </div>
+
+        <!-- Participate -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="browse.participate">
+                Participate</h3>
+            <a href="nominate.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Nominate
+                a Woman</a>
+            <a href="share-story.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary"
+                data-i18n="shareYourStory">Share
+                Your Story</a>
+            <a href="contributor-guidelines.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributor
+                Guidelines</a>
+            <a href="donate.html" class="block py-3 text-base font-medium text-text-main hover:text-primary"
+                data-i18n="donate">Donate</a>
+        </div>
+
+        <!-- About -->
+        <div class="px-6 pb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-text-secondary mb-3 pb-2 border-b border-border-light"
+                data-i18n="browse.about">
+                About</h3>
+            <a href="about.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">About
+                Us</a>
+            <a href="contributors.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Contributors</a>
+            <a href="methodology.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Methodology</a>
+            <a href="editorial-standards.html"
+                class="block py-3 text-base font-medium text-text-main border-b border-border-light/50 hover:text-primary">Editorial
+                Standards</a>
+            <a href="contact.html"
+                class="block py-3 text-base font-medium text-text-main hover:text-primary">Contact</a>
+        </div>
+        <!-- CTA -->
+        <div class="px-6 pb-8">
+            <a href="share-story.html"
+                class="block w-full h-12 bg-primary text-white text-base font-bold rounded-lg flex items-center justify-center hover:bg-primary-hover transition-colors"><span
+                    data-i18n="shareYourStory">Share Your Story</span></a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="navbar" class="transition-transform duration-300 w-full border-b border-divider bg-background-cream sticky top-0 z-50">
+        <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Left Section: Logo + Desktop Nav -->
+                <div class="flex items-center gap-8 lg:gap-12">
+                    <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                        <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                        <span
+                            class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                    </a>
+                    <nav class="hidden lg:flex items-center gap-6">
+                        <!-- Explore Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-primary text-sm font-medium uppercase tracking-wider py-2 border-b-2 border-primary">
+                                Explore
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="index.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Home</a>
+                                    <a href="browse.html"
+                                        class="block px-4 py-2.5 text-sm text-primary font-medium hover:bg-primary/10 transition-colors">Browse</a>
+                                    <a href="featured.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Featured</a>
+                                    <a href="collections.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Collections</a>
+                                    <a href="timelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Timelines</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learn Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Learn
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[180px]">
+                                    <a href="education.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Education</a>
+                                    <a href="enterprises.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Enterprises</a>
+                                    <a href="research.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Research</a>
+                                    <a href="publications.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Publications</a>
+                                    <a href="resources.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Resources</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Participate Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                Participate
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    <a href="nominate.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Nominate
+                                        a Woman</a>
+                                    <a href="share-story.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        data-i18n="shareYourStory">Share
+                                        Your Story</a>
+                                    <a href="contributor-guidelines.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributor
+                                        Guidelines</a>
+                                    <a href="donate.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors"
+                                        data-i18n="donate">Donate</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- About Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-text-main text-sm font-medium hover:text-primary transition-colors uppercase tracking-wider py-2">
+                                About
+                                <span
+                                    class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div
+                                    class="bg-white  border border-border-light rounded-xl shadow-xl py-2 min-w-[200px]">
+                                    <a href="about.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">About
+                                        Us</a>
+                                    <a href="contributors.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contributors</a>
+                                    <a href="methodology.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Methodology</a>
+                                    <a href="editorial-standards.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Editorial
+                                        Standards</a>
+                                    <a href="contact.html"
+                                        class="block px-4 py-2.5 text-sm text-text-main hover:bg-primary/10 hover:text-primary transition-colors">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- Right Section: Actions -->
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-white/50 border border-divider/30 rounded-full px-4 h-10 w-64 focus-within:border-accent-teal focus-within:ring-1 focus-within:ring-accent-teal transition-all">
+                        <span class="material-symbols-outlined text-accent-teal text-[20px]">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full text-text-main placeholder-text-main/50 ml-2"
+                            placeholder="Search the archive..." type="search"
+                            data-i18n-placeholder="search" />
+                    </div>
+                    <button onclick="toggleSearch()"
+                        class="md:hidden size-11 flex items-center justify-center rounded-lg hover:bg-accent-teal/10 transition-colors"
+                        aria-label="Open search">
+                        <span class="material-symbols-outlined text-accent-teal">search</span>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <div id="language-switcher"></div>
+                        <a class="text-sm font-bold text-text-main hover:text-primary uppercase tracking-wide"
+                            href="donate.html" data-i18n="donate">Donate</a>
+                        <button data-auth="signin"
+                            class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity"
+                            data-i18n="signIn">
+                            Sign In
+                        </button>
+                        <div data-auth="signout" class="hidden flex items-center gap-3">
+                            <span data-auth="user-info" class="text-sm text-text-secondary"></span>
+                            <button
+                                class="flex items-center justify-center h-10 px-6 rounded-full bg-text-main text-background-cream text-sm font-bold tracking-wide hover:bg-opacity-90 transition-opacity"
+                                data-i18n="signOut">
+                                Sign Out
+                            </button>
+                        </div>
+                    </div>
+                    <button onclick="toggleMenu()"
+                        class="lg:hidden size-11 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
+                        aria-label="Open menu">
+                        <span class="material-symbols-outlined text-text-main">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Settings Navigation Sidebar -->
+            <aside class="md:w-64 flex-shrink-0">
+                <nav class="space-y-2">
+                    <button onclick="showSection('profile')"
+                        class="settings-nav-item active w-full flex items-center px-4 py-3 text-left text-text-main rounded-xl border-2 border-primary hover:bg-primary/10 transition-all"
+                        data-section="profile">
+                        <span class="material-symbols-outlined mr-3 text-primary">person</span>
+                        Profile
+                    </button>
+                    <button onclick="showSection('security')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="security">
+                        <span class="material-symbols-outlined mr-3">lock</span>
+                        Security
+                    </button>
+                    <button onclick="showSection('notifications')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="notifications">
+                        <span class="material-symbols-outlined mr-3">notifications</span>
+                        Notifications
+                    </button>
+                    <button onclick="showSection('privacy')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="privacy">
+                        <span class="material-symbols-outlined mr-3 text-accent-teal">security</span>
+                        Privacy
+                    </button>
+                    <button onclick="showSection('appearance')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="appearance">
+                        <span class="material-symbols-outlined mr-3 text-accent-gold">palette</span>
+                        Appearance
+                    </button>
+                    <button onclick="showSection('connected')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-text-secondary rounded-xl border-2 border-transparent hover:bg-gray-100 transition-all"
+                        data-section="connected">
+                        <span class="material-symbols-outlined mr-3">link</span>
+                        Connected Accounts
+                    </button>
+                    <button onclick="showSection('danger')"
+                        class="settings-nav-item w-full flex items-center px-4 py-3 text-left text-red-500 rounded-xl border-2 border-transparent hover:bg-red-50 transition-all"
+                        data-section="danger">
+                        <span class="material-symbols-outlined mr-3">warning</span>
+                        Danger Zone
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- Settings Content -->
+            <div class="flex-grow">
+                <!-- Profile Section -->
+                <section id="section-profile"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6"
+                        data-i18n="settings.profileSettings">Profile Settings</h2>
+
+                    <!-- Avatar Upload -->
+                    <div class="flex items-center gap-6 mb-8 pb-8 border-b border-border-light">
+                        <div id="language-switcher"></div>
+                        <div class="relative">
+                            <div id="user-avatar"
+                                class="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent-teal flex items-center justify-center text-white text-3xl font-bold overflow-hidden">
+                                <span id="avatar-initials">JD</span>
+                            </div>
+                            <button
+                                class="absolute -bottom-2 -right-2 p-2 bg-primary rounded-full text-white hover:bg-primary-hover transition-colors shadow-lg">
+                                <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                            </button>
+                        </div>
+                        <div>
+                            <h3 class="text-text-main font-semibold mb-1" data-i18n="settings.profilePhoto">Profile
+                                Photo</h3>
+                            <p class="text-text-secondary text-sm mb-3">Upload a photo to personalize your profile</p>
+                            <div class="flex gap-3">
+                                <button
+                                    class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors">Upload
+                                    Photo</button>
+                                <button
+                                    class="px-4 py-2 text-text-secondary text-sm font-medium hover:text-red-500 transition-colors">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Completeness -->
+                    <div class="mb-8 pb-8 border-b border-border-light">
+                        <h3 class="text-text-main font-semibold mb-4" data-i18n="settings.profileCompleteness">Profile Completeness</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Complete your profile to unlock all features</span>
+                                <span id="completeness-percentage" class="text-sm font-medium text-primary">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="completeness-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Profile completeness percentage" class="bg-gradient-to-r from-primary to-accent-teal h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <span id="avatar-check" class="material-symbols-outlined text-red-500 text-lg">close</span>
+                                    <span class="text-text-secondary">Profile photo</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span id="bio-check" class="material-symbols-outlined text-red-500 text-lg">close</span>
+                                    <span class="text-text-secondary">Bio</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span id="location-check" class="material-symbols-outlined text-red-500 text-lg">close</span>
+                                    <span class="text-text-secondary">Location</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span id="website-check" class="material-symbols-outlined text-red-500 text-lg">close</span>
+                                    <span class="text-text-secondary">Website</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Form -->
+                    <form id="profile-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">First Name</label>
+                                <input type="text" name="firstName" id="firstName"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter first name">
+                            </div>
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">Last Name</label>
+                                <input type="text" name="lastName" id="lastName"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter last name">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Email Address</label>
+                            <input type="email" name="email" id="email"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                placeholder="your@email.com">
+                            <p class="text-text-secondary text-xs mt-2">This email is used for account notifications and
+                                login.</p>
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Bio</label>
+                            <textarea name="bio" id="bio" rows="4"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+                                placeholder="Tell us about yourself..."></textarea>
+                            <p class="text-text-secondary text-xs mt-2">Brief description for your profile. Max 160
+                                characters.</p>
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Location</label>
+                            <input type="text" name="location" id="location"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                placeholder="City, Country">
+                        </div>
+                        <div>
+                            <label class="block text-text-main text-sm font-medium mb-2">Website</label>
+                            <input type="url" name="website" id="website"
+                                class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                placeholder="https://yourwebsite.com">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit"
+                                class="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-colors shadow-lg shadow-primary/25"><span
+                                    data-i18n="saveChanges">Save Changes</span></button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Security Section -->
+                <section id="section-security"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6"
+                        data-i18n="settings.securitySettings">Security Settings</h2>
+
+                    <!-- Change Password -->
+                    <div class="mb-8 pb-8 border-b border-border-light">
+                        <h3 class="text-lg font-semibold text-text-main mb-4" data-i18n="settings.changePassword">Change
+                            Password</h3>
+                        <form id="password-form" class="space-y-4">
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">Current Password</label>
+                                <input type="password" name="currentPassword" autocomplete="current-password"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter current password">
+                            </div>
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">New Password</label>
+                                <input type="password" name="newPassword" autocomplete="new-password"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Enter new password">
+                            </div>
+                            <div>
+                                <label class="block text-text-main text-sm font-medium mb-2">Confirm New
+                                    Password</label>
+                                <input type="password" name="confirmPassword" autocomplete="new-password"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-border-light rounded-xl text-text-main placeholder-text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    placeholder="Confirm new password">
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit"
+                                    class="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-colors shadow-lg shadow-primary/25">
+                                    Update Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Two-Factor Authentication -->
+                    <div class="mb-8 pb-8 border-b border-border-light">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-main"
+                                    data-i18n="settings.twofactorAuthentication">Two-Factor Authentication</h3>
+                                <p class="text-text-secondary text-sm">Add an extra layer of security to your account
+                                </p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="2fa-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Active Sessions -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-text-main mb-4" data-i18n="settings.activeSessions">Active
+                            Sessions</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="p-2 bg-green-100 rounded-lg">
+                                        <span class="material-symbols-outlined text-green-600">computer</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-main font-medium">Current Session</p>
+                                        <p class="text-text-secondary text-sm">Windows • Chrome • Lagos, Nigeria</p>
+                                    </div>
+                                </div>
+                                <span
+                                    class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Active
+                                    Now</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 text-red-500 text-sm hover:text-red-600 transition-colors">
+                            Sign out of all other sessions
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section id="section-notifications"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6"
+                        data-i18n="settings.notificationPreferences">Notification Preferences</h2>
+
+                    <div class="space-y-6">
+                        <!-- Email Notifications -->
+                        <div class="pb-6 border-b border-border-light">
+                            <h3 class="text-lg font-semibold text-text-main mb-4"
+                                data-i18n="settings.emailNotifications">Email Notifications</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">New biography published</p>
+                                        <p class="text-text-secondary text-sm">Get notified when a new biography
+                                            matching your interests is published</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Weekly digest</p>
+                                        <p class="text-text-secondary text-sm">Receive a weekly summary of trending
+                                            biographies</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Nomination updates</p>
+                                        <p class="text-text-secondary text-sm">Updates on nominations you've submitted
+                                        </p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Marketing emails</p>
+                                        <p class="text-text-secondary text-sm">News, updates, and promotional content
+                                        </p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Push Notifications -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-main mb-4"
+                                data-i18n="settings.pushNotifications">Push Notifications</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-text-main">Enable push notifications</p>
+                                        <p class="text-text-secondary text-sm">Receive real-time notifications in your
+                                            browser</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy Section -->
+                <section id="section-privacy"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6"
+                        data-i18n="settings.privacySettings">Privacy Settings</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between pb-6 border-b border-border-light">
+                            <div>
+                                <p class="text-text-main">Profile visibility</p>
+                                <p class="text-text-secondary text-sm">Make your profile visible to other users</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between pb-6 border-b border-border-light">
+                            <div>
+                                <p class="text-text-main">Show reading history</p>
+                                <p class="text-text-secondary text-sm">Allow others to see what you've been reading</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between pb-6 border-b border-border-light">
+                            <div>
+                                <p class="text-text-main">Show saved collections</p>
+                                <p class="text-text-secondary text-sm">Display your bookmarked biographies on your
+                                    profile</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-text-main">Data collection</p>
+                                <p class="text-text-secondary text-sm">Allow us to collect usage data to improve your
+                                    experience</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-4 bg-gray-50 rounded-xl">
+                        <p class="text-text-secondary text-sm">
+                            <strong class="text-text-main">Data Export:</strong> You can request a copy of your data at
+                            any time.
+                            <a href="profile.html" class="text-primary hover:underline">Request Data Export</a>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Appearance Section -->
+                <section id="section-appearance"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6"
+                        data-i18n="settings.appearanceSettings">Appearance Settings</h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-main mb-4" data-i18n="settings.theme">Theme</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <button class="p-4 bg-gray-900 border-2 border-primary rounded-xl text-center">
+                                    <div class="w-full h-12 bg-gray-800 rounded-lg mb-2"></div>
+                                    <span class="text-white text-sm">Dark</span>
+                                </button>
+                                <button
+                                    class="p-4 bg-gray-50 border-2 border-border-light rounded-xl text-center hover:border-gray-400 transition-colors">
+                                    <div class="w-full h-12 bg-gray-200 rounded-lg mb-2"></div>
+                                    <span class="text-text-main text-sm">Light</span>
+                                </button>
+                                <button
+                                    class="p-4 bg-gray-100 border-2 border-transparent rounded-xl text-center hover:border-gray-400 transition-colors">
+                                    <div class="w-full h-12 bg-gradient-to-b from-gray-800 to-white rounded-lg mb-2">
+                                    </div>
+                                    <span class="text-text-main text-sm">System</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="pb-6 border-b border-border-light">
+                            <h3 class="text-lg font-semibold text-text-main mb-4" data-i18n="settings.fontSize">Font
+                                Size</h3>
+                            <input type="range" min="12" max="20" value="16" class="w-full accent-primary">
+                            <div class="flex justify-between text-text-secondary text-sm mt-2">
+                                <span>Small</span>
+                                <span>Default</span>
+                                <span>Large</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Connected Accounts Section -->
+                <section id="section-connected"
+                    class="settings-section bg-white rounded-2xl border border-border-light p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-text-main mb-6"
+                        data-i18n="settings.connectedAccounts">Connected Accounts</h2>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-border-light">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                            fill="#4285F4" />
+                                        <path
+                                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                            fill="#34A853" />
+                                        <path
+                                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                                            fill="#FBBC05" />
+                                        <path
+                                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                            fill="#EA4335" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-text-main font-medium">Google</p>
+                                    <p class="text-text-secondary text-sm">Not connected</p>
+                                </div>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shadow-md">
+                                Connect
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-border-light">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-text-main font-medium">GitHub</p>
+                                    <p class="text-text-secondary text-sm">Not connected</p>
+                                </div>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shadow-md">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Danger Zone Section -->
+                <section id="section-danger"
+                    class="settings-section bg-white rounded-2xl border border-red-200 p-6 md:p-8 hidden">
+                    <h2 class="font-serif-display text-2xl font-bold text-red-500 mb-6" data-i18n="settings.dangerZone">
+                        Danger Zone</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 bg-red-50 rounded-xl border border-red-200">
+                            <div>
+                                <p class="text-text-main font-medium">Delete Account</p>
+                                <p class="text-text-secondary text-sm">Permanently delete your account and all
+                                    associated data</p>
+                            </div>
+                            <button
+                                class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+        <!-- Footer -->
+    <footer class="bg-text-main text-white py-12 lg:py-16 border-t-4 border-primary">
+        <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <a href="index.html" class="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+                            <img src="images/womencypedia-logo.png" alt="Womencypedia" class="h-8 w-auto">
+                            <span
+                                class="font-heading text-xl font-semibold text-primary hidden sm:block">Womencypedia</span>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">The world's first interpretive encyclopedia of
+                        women.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/womencypedia" class="text-gray-400 hover:text-primary"
+                            aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="https://x.com/womencypedia" class="text-gray-400 hover:text-primary"
+                            aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/womencypedia" class="text-gray-400 hover:text-primary"
+                            aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Explore -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary" data-i18n="browse.explore">Explore</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="index.html" data-i18n="footer.home">Home</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="browse.html" data-i18n="footer.browse">Browse</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="featured.html" data-i18n="footer.featured">Featured</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="collections.html" data-i18n="footer.collections">Collections</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="timelines.html" data-i18n="footer.timelines">Timelines</a>
+                </div>
+
+                <!-- Learn -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary" data-i18n="browse.learn">Learn</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="education.html" data-i18n="footer.education">Education</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="enterprises.html" data-i18n="footer.enterprises">Enterprises</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="research.html" data-i18n="footer.research">Research</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="publications.html" data-i18n="footer.publications">Publications</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="resources.html" data-i18n="footer.resources">Resources</a>
+                </div>
+
+                <!-- Participate -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary" data-i18n="browse.participate">Participate</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="nominate.html" data-i18n="nominateWoman">Nominate a Woman</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="share-story.html" data-i18n="shareYourStory">Share Your Story</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contributor-guidelines.html" data-i18n="footer.contributorGuidelines">Contributor Guidelines</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors" 
+                        href="donate.html" data-i18n="donate">Donate</a>
+                </div>
+
+                <!-- About -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-primary" data-i18n="browse.about">About</h4>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="about.html" data-i18n="footer.aboutUs">About Us</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contributors.html" data-i18n="footer.contributors">Contributors</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="methodology.html" data-i18n="footer.methodology">Methodology</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="editorial-standards.html" data-i18n="footer.editorialStandards">Editorial Standards</a>
+                    <a class="block text-gray-400 hover:text-white text-sm py-1.5 transition-colors"
+                        href="contact.html" data-i18n="footer.contact">Contact</a>
+                </div>
+            </div>
+
+            <!-- Quick Links Row -->
+            <div class="border-t border-gray-800 pt-8 mt-8">
+                <div class="text-center">
+                    <p class="text-xs text-gray-500">© 2026 Womencypedia Foundation. All rights reserved. | <a
+                            href="privacy-policy.html" class="text-gray-400 hover:text-white"
+                            data-i18n="privacyPolicy">Privacy Policy</a> | <a href="terms-of-use.html"
+                            class="text-gray-400 hover:text-white" data-i18n="termsOfUse">Terms of Use</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/env.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/settings-inline-2.js"></script>
+
+    <script src="js/inline-common.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/performance.js"></script>
+    <script src="js/timeline.js" defer></script>
+</body>
+
+</html>
