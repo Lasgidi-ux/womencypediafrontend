@@ -1793,7 +1793,7 @@ async function saveNotificationPreferences() {
 
     try {
         await ProfileAPI.request(
-            `${ProfileAPI.base}/api/users/me/preferences`,
+            `${ProfileAPI.base}/api/users/me`,
             {
                 method: 'PUT',
                 headers: {
