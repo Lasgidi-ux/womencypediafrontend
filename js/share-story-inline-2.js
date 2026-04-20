@@ -274,10 +274,11 @@
 
                     // Build Strapi payload
                     const title = formData.subjectName ? `Story: ${formData.subjectName}` : 'Untitled Story';
+                    const timestamp = Date.now();
                     const payload = {
                         data: {
                             title: title,
-                            slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+                            slug: `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${timestamp}`,
                             type: 'story',
                             status: 'draft',
                             content: formData.story,

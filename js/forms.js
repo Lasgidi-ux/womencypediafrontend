@@ -380,9 +380,10 @@ const FormHandler = {
             const storyType = form.querySelector('[name="storyType"]:checked');
             const subjectName = form.querySelector('#subjectName')?.value || '';
             const title = subjectName ? `Story: ${subjectName}` : 'Untitled Story';
+            const timestamp = Date.now();
             const formData = {
                 title: title,
-                slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+                slug: `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${timestamp}`,
                 type: 'story',
                 content: story,
                 storyType: storyType ? storyType.value : 'other',
