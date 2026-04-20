@@ -173,7 +173,7 @@
                 if (token) headers['Authorization'] = `Bearer ${token}`;
 
                 try {
-                    const res = await fetch(`${STRAPI_URL}/api/upload`, {
+                    const res = await fetch(`${CONFIG.API_BASE_URL}/api/upload`, {
                         method: 'POST',
                         headers,
                         body: fd
@@ -277,16 +277,17 @@
                         data: {
                             title: formData.subjectName ? `Story: ${formData.subjectName}` : 'Untitled Story',
                             type: 'story',
+                            status: 'draft',
                             content: formData.story,
-                            storyType: formData.storyType,
-                            subjectName: formData.subjectName,
+                            story_type: formData.storyType,
+                            subject_name: formData.subjectName,
                             relationship: formData.relationship,
                             region: formData.storyRegion,
                             theme: formData.theme,
                             lessons: formData.lessons,
-                            contactName: formData.contactName,
-                            contactEmail: formData.contactEmail,
-                            permissionGranted: formData.permissionGranted
+                            contact_name: formData.contactName,
+                            contact_email: formData.contactEmail,
+                            permission_granted: formData.permissionGranted
                         }
                     };
 
@@ -295,11 +296,11 @@
                         payload.data.media = mediaFileIds;
                     }
 
-                    // Always use STRAPI_URL — never CONFIG.API_BASE_URL (may be localhost)
-                    
+                    // Use CONFIG.API_BASE_URL for consistency with other forms
+
                     const token = localStorage.getItem('womencypedia_access_token');
 
-                    const response = await fetch(`${STRAPI_URL}/api/contributions`, {
+                    const response = await fetch(`${CONFIG.API_BASE_URL}/api/contributions`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -310,6 +311,7 @@
 
                     if (!response.ok) {
                         const errData = await response.json().catch(() => ({}));
+                        console.error('[Share Story] Submission failed:', response.status, errData);
                         const msg = errData?.error?.message || errData?.message || `Server error: ${response.status}`;
                         throw new Error(msg);
                     }
